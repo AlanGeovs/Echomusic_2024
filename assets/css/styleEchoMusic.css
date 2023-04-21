@@ -1,0 +1,171 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 29/03/2023, 12:05:46 PM
+    Author     : AlanGeovs
+*/
+
+
+.home-cta-2{
+
+    background: url("../images/avatars/13.jpg") rgba(0, 0, 0, .5) no-repeat fixed;
+    /*background-color:  #6500CC;*/
+}
+.home-cta-1-azul{     background: url("../images/bg/bg-echomusic-Eventos-artistas-Azul-min.jpg") rgba(0, 0, 0, .5) no-repeat ; background-size: 100% 100%;   }
+.home-cta-1-azul h2{    color:white; }
+.home-cta-2-azul{     background: url("../images/bg/bg-echomusic-2-azul-min.jpg") rgba(0, 0, 0, .5) no-repeat ; background-size: 100% 100%;    }
+.home-cta-2-azul h2{    color:white; }
+.home-cta-3-azul{     background: url("../images/bg/bg-echomusic-3-azul-min.jpg") rgba(0, 0, 0, .5) no-repeat ; background-size: 100% 100%;    }
+.home-cta-3-azul h2{    color:white; }
+.home-cta-1-naranja { background: url("../images/bg/bg-echomusic-1-naranja-min.jpg") rgba(0, 0, 0, .5) no-repeat ; background-size: 100% 100%;   }
+.home-cta-1-naranja h2{    color:white; }
+.home-cta-2-naranja { background: url("../images/bg/bg-echomusic-2-naranja-min.jpg") rgba(0, 0, 0, .5) no-repeat ; background-size: 100% 100%;    }
+.home-cta-2-naranja h2{    color:white; } 
+.home-cta-3-naranja { background: url("../images/bg/bg-echomusic-Crowfounding-ok-min.jpg") rgba(0, 0, 0, .5) no-repeat ; background-size: 100% 100%;   }
+.home-cta-3-naranja  h2{    color:white; }
+.home-cta-1-morado {  background: url("../images/bg/bg-echomusic-1-morado-min.jpg") rgba(0, 0, 0, .5) no-repeat ; background-size: 100% 100%;    }
+.home-cta-1-morado  h2{    color:white; }
+.home-cta-2-morado {  background: url("../images/bg/bg-echomusic-artistaproductor-min.jpg") rgba(0, 0, 0, .5) no-repeat ; background-size: 100% 100%;    }
+.home-cta-2-morado  h2{    color:white; }
+.home-cta-3-morado {  background: url("../images/bg/bg-echomusic-3-morado-min.jpg") rgba(0, 0, 0, .5) no-repeat ; background-size: 100% 100%;    }
+.home-cta-3-morado  h2{    color:white; }
+.home-cta-gris { background-color: #EDEDED;     }
+.home-cta-gris .section-title  h2{    color:#FF6600; }
+  .perfil{      
+      height: 50px;
+      left: -65px;
+      position: absolute;
+      width: 50px;
+      border-radius: 50%;
+} 
+
+
+/*Estilos para Tarjetas con slide*/
+#myCarousel {
+    margin-top: 50px;
+}
+
+@media (max-width: 768px) {
+    .carousel-inner .carousel-item>div {
+        display: none;
+    }
+
+    .carousel-inner .carousel-item>div:first-child {
+        display: block;
+    }
+}
+
+.carousel-inner .carousel-item.active,
+.carousel-inner .carousel-item-start,
+.carousel-inner .carousel-item-next,
+.carousel-inner .carousel-item-prev {
+    display: flex;
+}
+
+@media (min-width: 768px) {
+
+    .carousel-inner .carousel-item-right.active,
+    .carousel-inner .carousel-item-next,
+    .carousel-item-next:not(.carousel-item-start) {
+        transform: translateX(25%) !important;
+    }
+
+    .carousel-inner .carousel-item-left.active,
+    .carousel-item-prev:not(.carousel-item-end),
+    .active.carousel-item-start,
+    .carousel-item-prev:not(.carousel-item-end) {
+        transform: translateX(-25%) !important;
+    }
+
+    .carousel-item-next.carousel-item-start,
+    .active.carousel-item-end {
+        transform: translateX(0) !important;
+    }
+
+    .carousel-inner .carousel-item-prev,
+    .carousel-item-prev:not(.carousel-item-end) {
+        transform: translateX(-25%) !important;
+    }
+}  
+
+
+.carousel-indicators {
+    margin-bottom: -20px;
+}
+
+.carousel-indicators button[data-bs-target] {
+    width: 100px;
+
+}
+
+/*Estilos para video*/
+
+header {
+  position: relative;
+  background-color: black;
+  height: 75vh;
+  min-height: 25rem;
+  width: 100%;
+  overflow: hidden;
+}
+
+header video {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  min-width: 100%;
+  min-height: 100%;
+  width: auto;
+  height: auto;
+  z-index: 0;
+  -ms-transform: translateX(-50%) translateY(-50%);
+  -moz-transform: translateX(-50%) translateY(-50%);
+  -webkit-transform: translateX(-50%) translateY(-50%);
+  transform: translateX(-50%) translateY(-50%);
+}
+
+header .container {
+  position: relative;
+  z-index: 2;
+}
+
+header .overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background-color: black;
+  opacity: 0.5;
+  z-index: 1;
+}
+
+/* Media Query for devices withi coarse pointers and no hover functionality */
+
+/* This will use a fallback image instead of a video for devices that commonly do not support the HTML5 video element */
+
+@media (pointer: coarse) and (hover: none) {
+  header {
+    background: url('https://source.unsplash.com/XT5OInaElMw/1600x900') black no-repeat center center scroll;
+  }
+
+  header video {
+    display: none;
+  }
+}
+
+
+.video-container 
+{
+  top: 0%;
+  left: 0%;
+  height: 400px;
+  width: 100%;
+  overflow: hidden;
+}
+video.fillWidth {
+  width: 100%;
+}
