@@ -646,7 +646,7 @@ if ($_SESSION["tipoUsuario"] == "admin") {
             <div class="relative">
                 <div class="d-flex">
                     <div class="d-none d-md-block">
-                        <img src="assets/img/echomusic-LOGO-HOR-BIC.png" width="300px" alt=""/> 
+                        <img src="../assets/images/logo/echomusic-LOGO-HOR-BIC.png" width="300px" alt=""/>  
                         <!--<h1 class="nav-title">AutoMayoreo</h1>-->
                     </div>
                 </div>
