@@ -214,7 +214,7 @@ if (!isset($_SESSION["idUser"])) {
                                                 [<?php echo count($totalMarcas) . "," . count($totalUsuarios) . "," . count($totalCategorias); ?>],
 
                                                 ]"
-                                                data-labels="[['Hatchback'],['SUV'],['Sedan']]"
+                                                data-labels="[['Aristas'],['Espacios'],['Usuarios']]"
                                                 data-dataset-options="[
                                                 {
                                                 label: 'Totales',
