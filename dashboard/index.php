@@ -23,7 +23,7 @@
     <meta name="msapplication-TileImage" content="/assets/favico/ms-icon-144x144.png">
     <meta name="theme-color" content="#ffffff">
     
-    <title>Admin | AutoMayoreo </title>
+    <title>Admin | EchoMusic </title>
     <!-- CSS -->
     <link rel="stylesheet" href="assets/css/app.css">
 
@@ -81,7 +81,7 @@
         <div class="container"> 
             <div class="row">
                 <div class="col-lg-6"> 
-                    <img src="assets/img/logo-am-23-ta-negro.png" width="400px" alt="logo"/>  
+                    <img src="../assets/images/logo/echomusic-logo-144x30px.png" width="400px" alt="logo" /> 
                     
                 </div>
                 <div class="col-lg-6 p-t-100">
