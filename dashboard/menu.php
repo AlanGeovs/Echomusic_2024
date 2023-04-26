@@ -67,21 +67,26 @@ for ($i = 0; $i < count($fotosArray); $i++) {
                         <!--Inventario-->
                         <li class="treeview"><a href="#">
                                 <i class="icon icon icon-directions_car s-24"></i>
-                                Inventario <i
+                                Artistas <i
                                     class=" icon-angle-left  pull-right"></i>
                                 <!--<span class="badge r-3 badge-primary pull-right">4</span>-->
                             </a> 
                             <ul class="treeview-menu">
-                                <li><a href="listar_inventario.php"><i class="icon icon-search-plus"></i>Listar Inventario</a>
+                                <!--<li><a href="listar_inventario.php"><i class="icon icon-search-plus"></i>Listar Inventario</a>-->
+                                <li><a href="#"><i class="icon icon-user"></i>Perfil</a>
+                                </li> 
+                                <li><a href="#"><i class="icon icon-calendar"></i>Eventos</a>
                                 </li>
-                                <li><a href="registrar_inventario.php"><i class="icon icon-add"></i>Agregar al inventario </a>
+                                <li><a href="#"><i class="icon icon-add"></i>Crowdfunding</a>
+                                </li>
+                                <li><a href="#"><i class="icon icon-support"></i>Soporte</a>
                                 </li>
                             </ul>
                         </li> 
                         <!--Marcas-->
                         <li class="treeview"><a href="#">
                                 <i class="icon icon icon-business_center s-24"></i>
-                                Marcas<i
+                                Adminsitración<i
                                     class=" icon-angle-left  pull-right"></i>
                                 <!--<span class="badge r-3 badge-primary pull-right">4</span>-->
                             </a>
