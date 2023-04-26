@@ -81,8 +81,7 @@
         <div class="container"> 
             <div class="row">
                 <div class="col-lg-6"> 
-                    <img src="../assets/images/logo/echomusic-LOGO-HOR-BIC.png" width="400px" alt="logo" /> 
-                    
+                    <img src="../assets/images/logo/echomusic-LOGO-HOR-BIC.png" width="400px" alt="logo" />  
                 </div>
                 <div class="col-lg-6 p-t-100">
                     <div class="text">
