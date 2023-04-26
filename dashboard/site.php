@@ -16,7 +16,7 @@ if (!isset($_SESSION["idUser"])) {
             <meta name="description" content="">
             <meta name="author" content="">  
      <?php    require  'includes/favicon.php'; ?>             
-            <title>Admin | AutoMayoreo</title> 
+            <title>Admin | Echomusic</title> 
             <!-- CSS -->
             <link rel="stylesheet" href="assets/css/app.css">
 
@@ -114,7 +114,7 @@ if (!isset($_SESSION["idUser"])) {
                                             </div>
                                             <div class="text-center">
                                                 <div class="s-48 my-3 font-weight-lighter"><?php echo count($totalInventario); ?></div>
-                                                Autos en Inventario
+                                                Artistas
                                             </div>
 
                                         </div>
@@ -135,7 +135,7 @@ if (!isset($_SESSION["idUser"])) {
                                                 $totalAsociados = Consultas::listarInventarioAsociados();
                                                 ?>
                                                 <div class="s-48 my-3 font-weight-lighter"><?php echo count($totalAsociados); ?></div>
-                                                Total de Asociados
+                                                Total de Eventos
                                             </div>                                            
 
                                         </div>
