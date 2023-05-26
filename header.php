@@ -27,6 +27,13 @@
         <!-- Responsive CSS -->
         <link rel="stylesheet" href="assets/css/responsive.css"/>
         
+<!--Para Artistas-->
+        <!-- jQuery Min JS -->
+        <script src="assets/js/jquery.min.js"></script>
+        <!-- Bootstrap Bundle Min JS -->
+        <script src="assets/js/bootstrap.bundle.min.js"></script>    
+        <!--fin artistas-->
+        
         <!-- Favicon -->
         <link rel="apple-touch-icon" sizes="57x57" href="assets/images/apple-icon-57x57.png">
         <link rel="apple-touch-icon" sizes="60x60" href="assets/images/apple-icon-60x60.png">
@@ -77,7 +84,7 @@
                 <div class="row align-items-center">
                     <div class="col-lg-2 col-sm-0">
                         <div class="logo">   
-                            <a href="index.html"><img src="assets/images/logo/echomusic-LOGO-HOR-BIC.png" alt="logo" /></a>
+                            <a href="index.php"><img src="assets/images/logo/echomusic-LOGO-HOR-BIC.png" alt="logo" /></a>
                         </div>
                     </div>
                     <div class="col-lg-8 col-sm-8 text-right pr-0">
@@ -114,7 +121,7 @@
         <!--Navbar Area -->
         <div class="navbar-area">  
             <div class="mobile-nav">
-                <a href="index.html" class="logo">
+                <a href="index.php" class="logo">
                     <img src="assets/images/logo/echomusic-logo-144x30px.png" alt="logo"/> 
                     <!--<img src="assets/images/logo.png" alt="logo" />-->
                 </a>
@@ -126,10 +133,10 @@
                         <div class="collapse navbar-collapse mean-menu" id="navbarSupportedContent">
                             <ul class="navbar-nav text-left">
                                 <li class="nav-item">
-                                    <a href="#" class="nav-link dropdown-toggle active">Inicio</a>
+                                    <a href="index.php" class="nav-link dropdown-toggle active">Inicio</a>
                                     <ul class="dropdown-menu">
                                         <li class="nav-item">
-                                            <a href="index.html" class="nav-link active">Inicio Ingreso</a>
+                                            <a href="index.php" class="nav-link active">Inicio Ingreso</a>
                                         </li>
 <!--                                        <li class="nav-item">
                                             <a href="index-2.html" class="nav-link">Home Two</a>

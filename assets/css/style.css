@@ -898,7 +898,7 @@ Navbar Area Css
 }
 
 .navbar-area .main-nav .navbar .navbar-nav .nav-item a:hover, .navbar-area .main-nav .navbar .navbar-nav .nav-item a:focus, .navbar-area .main-nav .navbar .navbar-nav .nav-item a.active {
-  color: #70a1ff;
+  color: #FF6600;
 }
 
 .navbar-area .main-nav .navbar .navbar-nav .nav-item a i {
@@ -909,7 +909,7 @@ Navbar Area Css
 }
 
 .navbar-area .main-nav .navbar .navbar-nav .nav-item:hover a, .navbar-area .main-nav .navbar .navbar-nav .nav-item.active a {
-  color: #70a1ff;
+  color: #FF6600;
 }
 
 .navbar-area .main-nav .navbar .navbar-nav .nav-item .dropdown-menu {
@@ -5233,6 +5233,35 @@ Team Area Css
           transform: translateY(-5px);
 }
 
+/*feature-area*/ 
+
+.feature-area  .social li {
+  display: inline-block;
+  margin-right: 10px;
+}
+
+.feature-area .social li a {
+  width: 30px;
+  height: 30px;
+  background: #121e4c;
+  border-radius: 50%;
+  line-height: 32px;
+  text-align: center;
+  -webkit-transition: 0.3s;
+  transition: 0.3s;
+  color: #f5faff;
+  transition: 0.3s;
+}
+
+.feature-area  .social li a i {
+  font-size: 15px;
+}
+
+.feature-area .social li a:hover {
+  -webkit-transform: translateY(-3px);
+          transform: translateY(-3px);
+} 
+
 /*
 Error Area Css
 ======================================================*/
@@ -5835,7 +5864,7 @@ Page Title Area Css
   position: absolute;
   top: 10px;
   right: -7px;
-  background-color: #70a1ff;
+  background-color: #FF6600;
   width: 8px;
   height: 8px;
 }
@@ -5853,7 +5882,7 @@ Page Title Area Css
 }
 
 .page-title-area .page-title-content ul .active {
-  color: #70a1ff;
+  color: #FF6600;
 }
 
 .page-title-area .page-shape .shape1 {

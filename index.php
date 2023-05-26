@@ -1,7 +1,6 @@
 <?php 
-
-include 'header.php';
-
+include "model/models.php";
+include "header.php";
 ?>
 
         
@@ -22,35 +21,36 @@ include 'header.php';
   <div class="carousel-inner">
     <!-- Single item -->
     <div class="carousel-item active">
-      <video class="img-fluid" autoplay loop muted>
-        <source src="https://mdbcdn.b-cdn.net/img/video/Tropical.mp4" type="video/mp4" />
-      </video>
-      <div class="carousel-caption d-none d-md-block">
-        <h5>First slide label</h5>
-        <p>
-          Nulla vitae elit libero, a pharetra augue mollis interdum.
-        </p>
-      </div>
+        <div class="carousel-caption d-none d-md-block">
+            <img src="assets/images/logo/logo-naranja-blanco.png" alt="" width="450px"/>
+            <h4>Marketplace de servicios musicales </h4>
+            <p>
+                Encuentra eventos presenciales o streaming, contrata servicios musicales de artistas o patrocina proyectos musicales (Crowdfunding).
+            </p>
+        </div>
+        <video class="img-fluid" autoplay loop muted>
+            <source src="assets/videos/echomusic-home-2.mp4" type="video/mp4"  />
+        </video>
     </div>
 
     <!-- Single item -->
-    <div class="carousel-item">
+<!--    <div class="carousel-item">
       <video class="img-fluid" autoplay loop muted>
         <source src="https://mdbcdn.b-cdn.net/img/video/forest.mp4" type="video/mp4" />
       </video>
       <div class="carousel-caption d-none d-md-block">
-        <h5>Second slide label</h5>
+        <h5>2 Second slide label</h5>
         <p>
           Lorem ipsum dolor sit amet, consectetur adipiscing elit.
         </p>
       </div>
-    </div>
+    </div>-->
 
     <!-- Single item -->
-    <div class="carousel-item">
+<!--    <div class="carousel-item">
       <video class="img-fluid" autoplay loop muted>
         <source src="https://mdbcdn.b-cdn.net/img/video/Agua-natural.mp4" type="video/mp4" />
-        <!--<source src="https://player.vimeo.com/video/813569550?h=1dc8d8f438&autoplay=1&title=0&byline=0&portrait=0" type="video/mp4" />-->
+        <source src="https://player.vimeo.com/video/813569550?h=1dc8d8f438&autoplay=1&title=0&byline=0&portrait=0" type="video/mp4" />
       </video>
       <div class="carousel-caption d-none d-md-block">
                                         <div class="banner-content">
@@ -66,7 +66,7 @@ include 'header.php';
                                     </div>
                                 </div> 
       </div>
-    </div>
+    </div>-->
   </div>
   <!-- Inner -->
 
@@ -418,7 +418,83 @@ include 'header.php';
                     </ul>
                 </div>
 
-                <div class="row case-list">
+                <div class="row case-list">   
+                    
+                        <?php
+                            $respuesta=Consultas::ultimosEventos2();
+                            //Busca CIudad y Región
+                            $respuestaCiudadRegion = Consultas::buscaCiudadRegion($respuesta[0]["id_city"], $respuesta[0]["id_region"]);                            
+
+                            #Notar que es lo mismo que hacer
+                            # date("Y-m-d H:i:s")                                
+                            for ($j=0; $j < count($respuesta); $j++) { 
+                                
+                                $fechaEntera = strtotime($respuesta[$j]["date_event"]);
+                                $anio = date("Y", $fechaEntera);
+                                $mes = date("m", $fechaEntera);
+                                $dia = date("d", $fechaEntera);
+
+                                $hora = date("H", $fechaEntera);
+                                $minutos = date("i", $fechaEntera); 
+                            
+                                if (preg_match("/|\b/", $respuesta[$j]["IMG"])) {
+                                        $fotos=explode("|",$respuesta[$j]["IMG"]);
+                                        //var_dump($fotos);
+                                        $total=count($fotos) - 1;
+                                        $indice=mt_rand(0,intval($total));
+                                        $img=substr($fotos[0],16);
+                                        //echo $img."<br>";
+                                        //echo "verdadero";
+                                    }else{
+                                        $img=substr($respuesta[$j]["IMG"], 16);
+                                        //echo "falso";
+                                    }
+                                echo     '                    
+                    <div class="col-lg-4 col-sm-6 item cyber">
+                        <div class="single-case">
+                            <div class="case-img ">
+                                <a href="eventos.php?e='.$respuesta[$j]["id_event"].'">
+                                    <img class="imgEvent tamano-1" src="https://echomusic.cl/images/events/'.$respuesta[$j]["img"].'.jpg" height="100%"  alt="case"/> 
+                                </a>
+                            </div>
+
+                            <div class="content">
+                                <!--Titulo-->
+                                <div class="row text-center">
+                                    <div class="col-12"> 
+                                        <a href="eventos.php?e='.$respuesta[$j]["id_event"].'"> <h3>'.$respuesta[$j]["name_event"].'</h3></a>
+                                    </div> 
+                                </div>
+                                
+                                <!--Entrada Fecha hora Costo Compra-->
+                                <div class="row text-center ">
+                                    <div class="col-lg-6 col-sm-6">
+                                        <p>'.$dia.'-'.$mes.'-'.$anio.' | '.$hora.':'.$minutos.' hrs.</p>
+
+                                        <a href="#" class="line-bnt">
+                                            Ciudad '.$respuestaCiudadRegion[$j]["name_region"].', '.$respuesta[$j]["name_location"].'
+                                        </a>
+                                    </div>
+                                    
+                                     <div class="col-lg-6 col-sm-6">';
+                                        if($respuesta[$j]["ticket_value"]==0 ){
+                                            echo  '<h3>Gratuito</h3>
+                                                    <a href="eventos.php?e=' . $respuesta[$j]["id_event"] . '" class="box-btn">Reservar</a>';
+                                        }else{
+                                            echo  '<h4>$ ' . number_format( ($respuesta[$j]["ticket_value"]+$respuesta[$j]["ticket_commission"]), 0, ',', '.') . '</h4>
+                                                    <a href="eventos.php?e=' . $respuesta[$j]["id_event"] . '" class="box-btn">Comprar</a>';
+                                        }   
+
+                                        echo '
+                                    </div> 
+                                </div>                                                                                               
+                            </div>
+                            
+                        </div>
+                    </div>'  ;
+                            }
+                        ?>                    
+<!--                    
                     <div class="col-lg-4 col-sm-6 item cyber">
                         <div class="single-case">
                             <div class="case-img">
@@ -428,20 +504,20 @@ include 'header.php';
                             </div>
 
                             <div class="content">
-                                <!--Titulo-->
+                                Titulo
                                 <div class="row text-center">
                                     <div class="col-12">
                                         <a href="#"> <h3>JCatStevens Experience</h3></a>
                                     </div> 
                                 </div>
                                 
-                                <!--Entrada Fecha hora Costo Compra-->
+                                Entrada Fecha hora Costo Compra
                                 <div class="row text-center ">
                                     <div class="col-lg-6 col-sm-6">
                                         <p>20 Abril | 19:30 hrs</p>
 
                                         <a href="#" class="line-bnt">
-                                            Presencial Online
+                                            Presencial Online 
                                         </a>
                                     </div>
                                     
@@ -455,180 +531,7 @@ include 'header.php';
                         </div>
                     </div>
 
-                    <div class="col-lg-4 col-sm-6 item dev design">
-                        <div class="single-case">
-                            <div class="case-img">
-                                <a href="#">
-                                    <img src="assets/images/avatars/echo-2.jpg" alt="case"/>
-                                </a>
-                            </div>
-
-                            <div class="content">
-                                <!--Titulo-->
-                                <div class="row text-center">
-                                    <div class="col-12">
-                                        <a href="#"> <h3>JCatStevens Experience</h3></a>
-                                    </div> 
-                                </div>
-                                
-                                <!--Entrada Fecha hora Costo Compra-->
-                                <div class="row text-center ">
-                                    <div class="col-lg-6 col-sm-6">
-                                        <p>20 Abril | 19:30 hrs</p>
-
-                                        <a href="#" class="line-bnt">
-                                            Presencial Online
-                                        </a>
-                                    </div>
-                                    
-                                    <div class="col-lg-6 col-sm-6">
-                                        <h4>$5.000</h4>
-                                        <a href class="box-btn">Comprar</a>
-                                    </div> 
-                                </div>                                                                                               
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-4 col-sm-6 item dev">
-                        <div class="single-case">
-                            <div class="case-img">
-                                <a href="#">
-                                    <img src="assets/images/avatars/echo-1.jpg" alt="case"/>
-                                </a>
-                            </div>
-
-                            <div class="content">
-                                <!--Titulo-->
-                                <div class="row text-center">
-                                    <div class="col-12">
-                                        <a href="#"> <h3>JCatStevens Experience</h3></a>
-                                    </div> 
-                                </div>
-                                
-                                <!--Entrada Fecha hora Costo Compra-->
-                                <div class="row text-center ">
-                                    <div class="col-lg-6 col-sm-6">
-                                        <p>20 Abril | 19:30 hrs</p>
-
-                                        <a href="#" class="line-bnt">
-                                            Presencial Online
-                                        </a>
-                                    </div>
-                                    
-                                    <div class="col-lg-6 col-sm-6">
-                                        <h4>$5.000</h4>
-                                        <a href class="box-btn">Comprar</a>
-                                    </div> 
-                                </div>                                                                                               
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-4 col-sm-6 item dev cyber">
-                        <div class="single-case">
-                            <div class="case-img">
-                                <a href="#"> 
-                                    <img src="assets/images/avatars/82221714963ac6948db15e0_17273848.jpg" alt="case"/>
-                                </a>
-                            </div>
-
-                            <div class="content">
-                                <!--Titulo-->
-                                <div class="row text-center">
-                                    <div class="col-12">
-                                        <a href="#"> <h3>JCatStevens Experience</h3></a>
-                                    </div> 
-                                </div>
-                                
-                                <!--Entrada Fecha hora Costo Compra-->
-                                <div class="row text-center ">
-                                    <div class="col-lg-6 col-sm-6">
-                                        <p>20 Abril | 19:30 hrs</p>
-
-                                        <a href="#" class="line-bnt">
-                                            Presencial Online
-                                        </a>
-                                    </div>
-                                    
-                                    <div class="col-lg-6 col-sm-6">
-                                        <h4>$5.000</h4>
-                                        <a href class="box-btn">Comprar</a>
-                                    </div> 
-                                </div>                                                                                               
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-4 col-sm-6 item dev design">
-                        <div class="single-case">
-                            <div class="case-img">
-                                <a href="#">
-                                    <img src="assets/images/avatars/echo-4.jpg" alt="case"/>
-                                </a>
-                            </div>
-
-                            <div class="content">
-                                <!--Titulo-->
-                                <div class="row text-center">
-                                    <div class="col-12">
-                                        <a href="#"> <h3>JCatStevens Experience</h3></a>
-                                    </div> 
-                                </div>
-                                
-                                <!--Entrada Fecha hora Costo Compra-->
-                                <div class="row text-center ">
-                                    <div class="col-lg-6 col-sm-6">
-                                        <p>20 Abril | 19:30 hrs</p>
-
-                                        <a href="#" class="line-bnt">
-                                            Presencial Online
-                                        </a>
-                                    </div>
-                                    
-                                    <div class="col-lg-6 col-sm-6">
-                                        <h4>$5.000</h4>
-                                        <a href class="box-btn">Comprar</a>
-                                    </div> 
-                                </div>                                                                                               
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-4 col-sm-6 item dev cyber design">
-                        <div class="single-case">
-                            <div class="case-img">
-                                <a href="#">
-                                    <img src="assets/images/avatars/echo-3.jpg" alt="case"/>
-                                </a>
-                            </div>
-
-                            <div class="content">
-                                <!--Titulo-->
-                                <div class="row text-center">
-                                    <div class="col-12">
-                                        <a href="#"> <h3>JCatStevens Experience</h3></a>
-                                    </div> 
-                                </div>
-                                
-                                <!--Entrada Fecha hora Costo Compra-->
-                                <div class="row text-center ">
-                                    <div class="col-lg-6 col-sm-6">
-                                        <p>20 Abril | 19:30 hrs</p>
-
-                                        <a href="#" class="line-bnt">
-                                            Presencial Online
-                                        </a>
-                                    </div>
-                                    
-                                    <div class="col-lg-6 col-sm-6">
-                                        <h4>$5.000</h4>
-                                        <a href class="box-btn">Comprar</a>
-                                    </div> 
-                                </div>                                                                                               
-                            </div>
-                        </div>
-                    </div>
+                    -->
                 </div>
 
                 <div class="case-btn text-center">
@@ -670,6 +573,10 @@ include 'header.php';
          
 
         <!-- Artistas - Características  -->
+<?php
+        $respuestaArtistas = Consultas::ultimosArtistas();        
+?>                            
+        
         <section class="feature-area bg-color ptb-100">
             <div class="container">
                 <div class="row align-items-center ">
@@ -693,13 +600,15 @@ include 'header.php';
 
                                 <div class="home-team-slider owl-carousel owl-theme">
 
-
+                        <?php     
+                            for ($i=0; $i < count($respuesta); $i++) { 
+                            echo '          
                                     <div class="single-team">
                                         <div class="team-img">
-                                            <img src="assets/images/avatars/echo-1.jpg" alt="descatado" />
+                                            <img src="https://echomusic.cl/images/avatars/'.$respuestaArtistas[$i]["id_user"].'.jpg" alt="descatado" />
                                             <ul class="social">
                                                 <li>
-                                                    <a href="#" target="_blank"><i class='bx bx-search'></i></a>
+                                                    <a href="#" target="_blank"><i class="bx bx-search"></i></a>
                                                 </li> 
                                             </ul>
                                         </div> 
@@ -708,136 +617,24 @@ include 'header.php';
                                             <!--Titulo-->
                                             <div class="row text-center">
                                                 <div class="col-12">
-                                                    <a href="#"> <h3>Frank White Canvas</h3></a>
+                                                    <a href="#"> <h3>'.$respuestaArtistas[$i]["nick_user"].'</h3></a>
                                                 </div> 
                                             </div>
                                             <!--Entrada Fecha hora Costo Compra-->
                                             <div class="row ">
                                                 <div class="col-lg-6 col-sm-6">
-                                                    <p>Rock <br>Región Metropolitana</p>
+                                                    <p>Rock <br>'.$respuestaArtistas[$i]["id_region"].' - '.$respuestaArtistas[$i]["id_city"].'</p>
                                                 </div>
                                                 <div class="col-lg-6 col-sm-6 text-center ">
-                                                    <a href class="box-btn">Ver perfil</a>
+                                                    <a href="artistas.php?a='.$respuestaArtistas[$i]["id_user"].'" class="box-btn">Ver perfil</a>
                                                 </div> 
                                             </div>                                                                                               
                                         </div>                                        
-                                    </div>
-
-                                    <div class="single-team">
-                                        <div class="team-img">
-                                            <img src="assets/images/avatars/echo-2.jpg" alt="descatado" />
-                                            <ul class="social">
-                                                <li>
-                                                    <a href="#" target="_blank"><i class='bx bx-search'></i></a>
-                                                </li> 
-                                            </ul>
-                                        </div>
-
-                                        <div class="content">
-                                            <!--Titulo-->
-                                            <div class="row text-center">
-                                                <div class="col-12">
-                                                    <a href="#"> <h3>Frank White Canvas</h3></a>
-                                                </div> 
-                                            </div>
-                                            <!--Entrada Fecha hora Costo Compra-->
-                                            <div class="row ">
-                                                <div class="col-lg-6 col-sm-6">
-                                                    <p>Rock <br>Región Metropolitana</p>
-                                                </div>
-                                                <div class="col-lg-6 col-sm-6 text-center ">
-                                                    <a href class="box-btn">Ver perfil</a>
-                                                </div> 
-                                            </div>                                                                                               
-                                        </div>
-                                    </div>
-
-                                    <div class="single-team">
-                                        <div class="team-img">
-                                            <img src="assets/images/avatars/echo-3.jpg" alt="descatado" />
-                                            <ul class="social">
-                                                <li>
-                                                    <a href="#" target="_blank"><i class='bx bx-search'></i></a>
-                                                </li> 
-                                            </ul>
-                                        </div>
-
-                                        <div class="content">
-                                            <!--Titulo-->
-                                            <div class="row text-center">
-                                                <div class="col-12">
-                                                    <a href="#"> <h3>Frank White Canvas</h3></a>
-                                                </div> 
-                                            </div>
-                                            <!--Entrada Fecha hora Costo Compra-->
-                                            <div class="row ">
-                                                <div class="col-lg-6 col-sm-6">
-                                                    <p>Rock <br>Región Metropolitana</p>
-                                                </div>
-                                                <div class="col-lg-6 col-sm-6 text-center ">
-                                                    <a href class="box-btn">Ver perfil</a>
-                                                </div> 
-                                            </div>                                                                                               
-                                        </div>
-                                    </div>
-
-                                    <div class="single-team">
-                                        <div class="team-img">
-                                            <img src="assets/images/avatars/echo-4.jpg" alt="descatado" />
-                                            <ul class="social">
-                                                <li>
-                                                    <a href="#" target="_blank"><i class='bx bx-search'></i></a>
-                                                </li> 
-                                            </ul>
-                                        </div>
-
-                                        <div class="content">
-                                            <!--Titulo-->
-                                            <div class="row text-center">
-                                                <div class="col-12">
-                                                    <a href="#"> <h3>Frank White Canvas</h3></a>
-                                                </div> 
-                                            </div>
-                                            <!--Entrada Fecha hora Costo Compra-->
-                                            <div class="row ">
-                                                <div class="col-lg-6 col-sm-6">
-                                                    <p>Rock <br>Región Metropolitana</p>
-                                                </div>
-                                                <div class="col-lg-6 col-sm-6 text-center ">
-                                                    <a href class="box-btn">Ver perfil</a>
-                                                </div> 
-                                            </div>                                                                                               
-                                        </div>
-                                    </div>
-                                     
-                                    <div class="single-team">
-                                        <div class="team-img">
-                                            <img src="assets/images/avatars/echo-2.jpg" alt="descatado" />
-                                            <ul class="social">
-                                                <li>
-                                                    <a href="#" target="_blank"><i class='bx bx-search'></i></a>
-                                                </li> 
-                                            </ul>
-                                        </div>
-
-                                        <div class="content">
-                                            <!--Titulo-->
-                                            <div class="row text-center">
-                                                <div class="col-12">
-                                                    <a href="#"> <h3>Frank White Canvas</h3></a>
-                                                </div> 
-                                            </div>
-                                            <!--Entrada Fecha hora Costo Compra-->
-                                            <div class="row ">
-                                                <div class="col-lg-6 col-sm-6">
-                                                    <p>Rock <br>Región Metropolitana</p>
-                                                </div>
-                                                <div class="col-lg-6 col-sm-6 text-center ">
-                                                    <a href class="box-btn">Ver perfil</a>
-                                                </div> 
-                                            </div>                                                                                               
-                                        </div>
-                                    </div>
+                                    </div> ';
+                            } //fin del for
+                        
+                        ?>
+ 
                                      
                                 </div>
                             </div>

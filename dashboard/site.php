@@ -82,12 +82,12 @@ if (!isset($_SESSION["idUser"])) {
                                                 $respuesta = Consultas::listarInventarioCapturista($_SESSION["idUser"]);
                                                 ?>
                                                 <!--<div><i class="icon-package s-18"></i></div>-->
-                                                <div class="text-success"><i class="icon-local_car_wash s-48"></i></div>
+                                                <div class="text-success"><i class="icon-investment-3 s-48"></i></div>
 
                                             </div>
                                             <div class="text-center">
                                                 <div><span class="s-48 my-3 font-weight-lighter" ><?php echo count($respuesta); ?></span><br></div>
-                                                Autos subidos <br>por este usuario (<?php echo $_SESSION["usuario"]; ?>)
+                                                Projectos con <br><b>Crowdfunding</b>  (<?php echo $_SESSION["usuario"]; ?>)
                                             </div>
 
                                         </div>
@@ -109,7 +109,7 @@ if (!isset($_SESSION["idUser"])) {
 //                                                $totalREst[]= Consultas::listarCategorias();
 //                                                echo "Datos ".$totalREst[0][1];
                                                 ?>
-                                                <div><i class="icon-car s-48  "></i></div>
+                                                <div><i class="icon-headset s-48  "></i></div>
                                                 <!--<div><span class="text-danger">50</span></div>-->
                                             </div>
                                             <div class="text-center">
@@ -127,7 +127,7 @@ if (!isset($_SESSION["idUser"])) {
                                         <div class="card-body">
                                             <div class="d-flex justify-content-between align-items-center">
                                                 
-                                                <div><i class="icon-vcard s-48"></i></div>
+                                                <div><i class="icon-ticket s-48"></i></div>
                                                 <!--<div><span class="badge badge-pill badge-danger">4:30</span></div>-->
                                             </div>
                                             <div class="text-center">
