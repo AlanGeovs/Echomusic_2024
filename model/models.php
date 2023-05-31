@@ -163,9 +163,9 @@ class Consultas{
         $stmt->close();
 	}
         
-        static public function eventosRelacionadosSINGenero(){ 
-                $stmt=Conexion::conectar()->prepare("SELECT e.*, t.*, gu.* FROM events_public as e JOIN tickets_public as t ON e.id_event = t.id_event JOIN genre_user as gu ON e.id_user=gu.id_user WHERE e.active_event=1  GROUP BY e.id_user ORDER BY RAND() LIMIT 6;");
-//        $stmt->bindParam(":id",$id,PDO::PARAM_INT);
+        static public function eventosRelacionadosRegion($id){ 
+                $stmt=Conexion::conectar()->prepare("SELECT e.*, t.*, gu.* FROM events_public as e JOIN tickets_public as t ON e.id_event = t.id_event JOIN genre_user as gu ON e.id_user=gu.id_user WHERE e.active_event=1 AND e.id_region=:id GROUP BY e.id_user ORDER BY RAND() LIMIT 6;");
+        $stmt->bindParam(":id",$id,PDO::PARAM_INT);
         $stmt->execute();
         return $stmt->fetchAll();
         //return $id;
@@ -182,5 +182,52 @@ class Consultas{
         //return $id;
         $stmt->close();
 	} 
+        
+        //Solo selecciona la última pla list del artesta 
+        static public function playListArtista($id){ 
+                $stmt=Conexion::conectar()->prepare("SELECT * FROM `multimedia_feature` WHERE `id_user`=:id ORDER BY id_multimedia_featured DESC LIMIT 1;");
+        $stmt->bindParam(":id",$id,PDO::PARAM_INT);
+        $stmt->execute();
+        return $stmt->fetchAll();
+        //return $id;
+        $stmt->close();
+	}
+//        Selecciona todos los videos
+        static public function videoArtista($id){ 
+                $stmt=Conexion::conectar()->prepare("SELECT * FROM `multimedia` WHERE `id_user`=:id ORDER BY id_multi DESC;");
+        $stmt->bindParam(":id",$id,PDO::PARAM_INT);
+        $stmt->execute();
+            return $stmt->fetchAll();
+        //return $id;
+        $stmt->close();
+	}
+        
+      //Próximos eventos por artista
+	static public function eventosPorArtista($id){
+		$stmt=Conexion::conectar()->prepare("SELECT * FROM `events_public` WHERE `id_user`=292 AND active_event=1 AND `date_event`>= NOW() ORDER BY `date_event` DESC;");
+		$stmt->bindParam(":id",$id,PDO::PARAM_INT);
+                $stmt->execute();
+		return $stmt->fetchAll();
+        $stmt->close();       
+        }        
+        // eventos Pasadps por artista
+	static public function eventosPasadosArtista($id){
+		$stmt=Conexion::conectar()->prepare("SELECT * FROM `events_public` WHERE `id_user`=292 AND active_event=1 AND `date_event`< NOW() ORDER BY `date_event` DESC; ");
+		$stmt->bindParam(":id",$id,PDO::PARAM_INT);
+                $stmt->execute();
+		return $stmt->fetchAll();
+        $stmt->close();       
+        }        
+//        Crowdfunding Temporalmete dejo `status_project` != 0 para enlistar todos los crowd activos o que pasaron
+//        falta definir qué hacer cada uno de los estados
+        static public function crowdfunding($id){ 
+//                $stmt=Conexion::conectar()->prepare("SELECT * FROM `projects_crowdfunding` WHERE `id_user`=:id AND `status_project` != 0");
+                $stmt=Conexion::conectar()->prepare("SELECT pc.*, pd.* FROM `projects_crowdfunding` pc INNER JOIN project_desc pd ON pd.id_project = pc.id_project WHERE pc.status_project!=0 AND pc.id_user=:id;");
+        $stmt->bindParam(":id",$id,PDO::PARAM_INT);
+        $stmt->execute();
+        return $stmt->fetchAll();
+        //return $id;
+        $stmt->close();
+	}
       
 }

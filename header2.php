@@ -21,18 +21,10 @@
         <link rel="stylesheet" href="assets/css/owl.carousel.min.css"/>
         <!-- Main CSS -->
         <link rel="stylesheet" href="assets/css/style.css"/>
-        <link rel="stylesheet" href="assets/css/styleEchoMusic.css"  type="text/css"/>
         <!-- Dark CSS -->
         <link rel="stylesheet" href="assets/css/dark.css"/>
         <!-- Responsive CSS -->
         <link rel="stylesheet" href="assets/css/responsive.css"/>
-        
-<!--Para Artistas-->
-        <!-- jQuery Min JS -->
-        <script src="assets/js/jquery.min.js"></script>
-        <!-- Bootstrap Bundle Min JS -->
-        <script src="assets/js/bootstrap.bundle.min.js"></script>    
-        <!--fin artistas-->
         
         <!-- Favicon -->
         <link rel="apple-touch-icon" sizes="57x57" href="assets/images/apple-icon-57x57.png">
@@ -55,8 +47,7 @@
         
         <link rel="icon" type="image/png" href="assets/images/favicon-96x96.png"/>
         <!-- Tittle -->
-        <title>EchoMusic - Marketplace de servicios musicales </title> 
-       
+        <title>EchoMusic - Conectamos artistas con audiencias y espacios de difusión -- </title>
     </head>
 
     <body>
@@ -149,10 +140,10 @@
                                 <li class="nav-item">
 
 
-                                    <a href="cartelera.php" class="nav-link">Cartelera</a>
+                                    <a href="#" class="nav-link">Cartelera</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="cartelera.php" class="nav-link dropdown-toggle">Artistas</a>
+                                    <a href="#" class="nav-link dropdown-toggle">Artistas</a>
 <!--                                    <ul class="dropdown-menu">
                                         <li class="nav-item">
                                             <a href="#" class="nav-link">Apoya Crowdfunding</a>

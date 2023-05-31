@@ -167,6 +167,14 @@ textarea.form-control {
   padding-top: 100px;
   padding-bottom: 100px;
 }
+.ptb-70 {
+  padding-top: 70px;
+  padding-bottom: 70px;
+}
+.ptb-35 {
+  padding-top: 35px;
+  padding-bottom: 35px;
+}
 
 .pt-100 {
   padding-top: 100px;
@@ -182,6 +190,14 @@ textarea.form-control {
 
 .pb-70 {
   padding-bottom: 70px;
+}
+
+.pt-35 {
+  padding-top: 35px;
+}
+
+.pb-35 {
+  padding-bottom: 35px;
 }
 
 .mb-30 {
@@ -1230,14 +1246,14 @@ Slider 2 Area Css
   background-repeat: no-repeat;
   background-size: cover;
   /*border-bottom-left-radius: 90px;*/
-  height: 100vh;
+  height: 55vh;
   /*border-bottom-right-radius: 90px;*/
 }
 
 .slider-area-2 .home-slider .single-slider::before {
   position: absolute;
   content: "";
-  background: #000;
+  background: #6610f2;
   opacity: 0.6;
   width: 100%;
   height: 100%;
@@ -5262,6 +5278,18 @@ Team Area Css
           transform: translateY(-3px);
 } 
 
+.feature-area .simple-evento-artista {
+    text-align: center;
+    position: relative;
+    -webkit-box-shadow: 0 0 20px 3px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 0 20px 3px rgba(0, 0, 0, 0.05);
+    padding: 30px;
+    border-radius: 10px;
+    -webkit-transition: all 0.5s;
+    transition: all 0.5s;
+    margin-bottom: 30px;
+}
+
 /*
 Error Area Css
 ======================================================*/
@@ -5827,8 +5855,8 @@ Page Title Area Css
 .page-title-area {
   position: relative;
   overflow: hidden;
-  padding-top: 200px;
-  padding-bottom: 150px;
+  padding-top: 80px;
+  padding-bottom: 30px;
   text-align: center;
   background-color: #051242;
   height: 100%;

@@ -14,153 +14,258 @@ if (isset($_GET["a"])) {
 $biografia=Consultas::bioArtistas($id);
 ?>
 
-        <!-- Detalle de Perfil de Artista  -->
-        <section class="feature-area bg-color ptb-10">
+        <!-- Start Page Title Area -->
+        <div class="page-title-area">
             <div class="container">
-                <div class="row align-items-center ">
+                <div class="page-title-content">
+                    <h2><?php echo $respuesta[0]["nick_user"]; ?></h2>
+                    <ul>
+                        <li> <a href="index.php"> Inicio </a> </li>
+                        <li> <a href="artistas.php"> Artistas </a> </li>
+                        <li class="active"><?php echo $respuesta[0]["nick_user"]; ?></li> 
+                    </ul>
+                </div>
+            </div>
+<!--            <div class="page-shape">
+                <div class="shape1">
+                    <img src="assets/images/shape/1.png" alt="shape" />
+                </div>
+                <div class="shape3">
+                    <img src="assets/images/shape/3.png" alt="shape" />
+                </div>
+                <div class="shape4">
+                    <img src="assets/images/shape/4.png" alt="shape" />
+                </div>
+                <div class="shape5">
+                    <img src="assets/images/shape/5.png" alt="shape" />
+                </div>
+                <div class="shape6">
+                    <img src="assets/images/shape/6.png" alt="shape" />
+                </div>
+            </div>-->
+        </div>
+        <!-- End Page Title Area -->
 
-                    <div class="col-lg-12  ">
-                        <p>Inicio / Artistas / <?php echo $respuesta[0]["nick_user"]; ?></p>
-                        <br> 
-                    </div>
-                    
+        <!-- Detalle de Perfil de Artista  -->
+        <section class="feature-area bg-color ptb-35">
+            <div class="container">
+                <div class="row align-items-center "> 
                     <!--Perfil-->
                     <div class="col-lg-5 col-sm-5 item dev design">
                         <div class="single-case text-center">
-                            <div class=" ">
+                            <div class="simple-evento-artista">
                                 <a href="#">   
                                     <img src="https://echomusic.cl/images/avatars/<?php echo $respuesta[0]["id_user"]; ?>.jpg" alt="descatado" /> 
                                 </a>
                             </div> 
-                            
-                             <div class="feature-tittle">
+
+                            <div class="feature-tittle">
                                 <h2> <?php echo $respuesta[0]["nick_user"]; ?></h2>
                                 <span style="font-size: 20px">Seguidores 1 Seguidos 0 Publicaciones 2</span> 
-                                
+
                                 <h3>Biografía</h3>
-                                <p><?php echo $biografia[0]["bio_user"]; ?></p>
-                               </div> 
+                                <p style="text-align: left;"><?php echo $biografia[0]["bio_user"]; ?></p>
+                            </div> 
                         </div>
-                        
-                        
+
                         <!--Playlist-->
+                        <?php
+                        $playlist = Consultas::playListArtista($respuesta[0]["id_user"]);
+                        ?>
                         <div>
-                            <iframe style="border-radius:12px" src="https://open.spotify.com/embed/playlist/37i9dQZF1DWSpF87bP6JSF?utm_source=generator" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>                            
+                            <?php
+                            echo $playlist[0]["embed_multi"];
+                            ?>
                         </div>
                     </div>                    
-                    
-                    
+
+
                     <!--Eventos-->
+                    <?php
+                    $resultadosProxEventos = Consultas::eventosPorArtista($respuesta[0]["id_user"]);
+                    $resultadosEventosPasa = Consultas::eventosPasadosArtista($respuesta[0]["id_user"]);
+                    
+                    ?>
                     <div class=" col-lg-7">
-                        
-                        <div class="row">
-                            <div class="col-12 col-sm-12">
-                                <h2>Eventos</h2>
-                            </div>
-                            <div class="col-12 col-sm-12">
-                                <div class="feature-tittle"> 
-                                    <img src="assets/images/eventos.jpg" alt=""/>
-                                </div> 
-                            </div>
-                            <div class="col-12 col-sm-12">
-                                <div class="feature-tittle"> 
-                                    <img src="assets/images/eventos.jpg" alt=""/>
-                                </div> 
-                            </div>
-                            <div class="col-12 col-sm-12">
-                                <div class="feature-tittle"> 
-                                    <img src="assets/images/eventos.jpg" alt=""/>
-                                </div> 
-                            </div> 
-
-                        </div> 
-                        
-                        
-                        
- 
-                    </div>
-
-                    <!--<div class="">-->
-
-                        
-                       
+                        <!-- Próximos eventos -->
+                        <?php
+                                            if (empty($resultadosProxEventos)) {
+//                                                echo 'no hay prox eventos';
                                                 
-                    <!--</div>-->
+                                            }else{
+                        ?>
+                        <h3 class="text-center">Próximos Eventos (<?php echo count($resultadosProxEventos); ?>)</h3> 
+
+                            <?php
+                                for ($e = 0; $e < count($resultadosProxEventos); $e++) {
+                             ?>
+                            <div class="home-2-contact col-lg-12">                       
+                                <div class="content"> 
+                                    <div class="row">
+                                        <!--img-->
+                                        <div class="col-12 col-sm-6  choose-img">  
+                                            <img src="https://echomusic.cl/images/events/<?php echo $resultadosProxEventos[$e]["img"]; ?>.jpg" alt="<?php echo ''; ?>" width="350px"/> 
+
+
+                                        </div>
+                                        <!--Descripción-->
+                                        <div class="col-12 col-sm-6" style="vertical-align: middle;">
+                                            <ul>
+                                                <li>
+                                                    <?php echo $resultadosProxEventos[$e]["name_event"]; ?>                                                    
+                                                </li> 
+                                            </ul>
+
+                                            <a href=" ">
+                                                <h3><?php echo $resultadosProxEventos[$e]["name_event"]; ?> </h3> 
+                                            </a>
+
+
+                                            <p><?php echo $resultadosProxEventos[$e]["desc_event"]; ?> </p>
+
+
+                                            <a href=" " class="box-btn">Ver evento</a>
+                                        </div>
+                                    </div>
+                                    <!--fin del Row-->
+                                </div>
+                            </div>
+                                <?php
+                                }//termina el for 
+                            } 
+//                            Termina else de Proximos Eventos     
+                        if (empty($resultadosEventosPasa)) {
+//                            echo 'no hay eventos pasados';
+
+                        }else{
+                        ?>
+                        <!-- Eventos Pasados -->
+                        <h3 class="text-center">  Eventos Pasados (<?php echo count($resultadosEventosPasa); ?>)</h3> 
+
+                            <?php
+                                for ($p = 0; $p < count($resultadosEventosPasa); $p++) {
+                             ?>
+                            <div class="home-2-contact col-lg-12">                       
+                                <div class="content"> 
+                                    <div class="row">
+                                        <!--img-->
+                                        <div class="col-12 col-sm-6  choose-img">  
+                                            <img src="https://echomusic.cl/images/events/<?php echo $resultadosEventosPasa[$p]["img"]; ?>.jpg" alt="<?php echo ''; ?>" width="350px"/> 
+                                        </div>
+                                        <!--Descripción-->
+                                        <div class="col-12 col-sm-6" style="vertical-align: middle;">
+                                            <ul>
+                                                <li>
+                                                    <?php echo $resultadosEventosPasa[$p]["name_event"]; ?>                                                    
+                                                </li> 
+                                            </ul>  
+                                            <h3><?php echo $resultadosEventosPasa[$p]["name_event"]; ?> </h3>  
+                                            <p>Organizado: 
+                                                <?php echo $resultadosEventosPasa[$p]["organizer"]; ?>
+                                                <?php echo $resultadosEventosPasa[$p]["name_location"]; ?>
+                                                / <?php echo $resultadosEventosPasa[$p]["location"]; ?> </p>
+                                            <p><?php echo $resultadosEventosPasa[$p]["desc_event"]; ?> </p>
+ 
+                                        </div>
+                                    </div>
+                                    <!--fin del Row-->
+                                </div>
+                            </div>
+                            <?php
+                            }//termina el for
+                            
+                        } 
+                        //termina else de Eventos Pasados
+                        ?>                        
+                    </div> 
                 </div>
-                
-                
-                
+
+
+
                 <!--Videos Primera Versión-->
                 <section class="choose-area ptb-100">
                     <div class="container">
                         <div class="row align-items-center justify-content-md-center"> 
-<!--                            Principa-->
+                            <!--  Principa-->
                             <div class="col-lg-10 col-sm-10 item dev design">
                                 <div class="single-case text-center">
                                     <div class="" >
-                                        <iframe width="100%" height="430px" src="https://www.youtube.com/embed/pjxa_BEZOHU" title="Dua Lipa, Calvin Harris, Coldplay, Martin Garrix &amp; Kygo, The Chainsmokers Style - Feeling Me" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+
+                                        <?php
+                                        $videos = Consultas::videoArtista($respuesta[0]["id_user"]);
+                                        ?>
+                                        <div>
+                                            <?php
+                                            for ($i = 0; $i < count($videos); $i++) {
+                                                echo '<iframe width="100%" height="430px" src="https://www.youtube.com/embed/' . $videos[$i]["embed_multi"] . '" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>';
+                                            }
+                                            ?>
+                                        </div>  
+
+<!--<iframe width="100%" height="430px" src="https://www.youtube.com/embed/pjxa_BEZOHU" title="Dua Lipa, Calvin Harris, Coldplay, Martin Garrix &amp; Kygo, The Chainsmokers Style - Feeling Me" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>-->
+
                                     </div> 
 
                                 </div> 
                             </div>                    
 
-<!--                            Secundarios-->
-<!--                            <div class=" col-lg-5">                        
-                                <div class="row text-center"> 
-                                    <div class="col-12 col-sm-12">
-                                        <div class="feature-tittle"> 
-                                            <iframe width="70%" height="200px" src="https://www.youtube.com/embed/2JVAUzx1BsE" title="Korolova - Live @ Cordoba, Argentina / Melodic Techno &amp; Progressive House Mix" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-                                        </div> 
-                                    </div>
-                                    <div class="col-12 col-sm-12">
-                                        <div class="feature-tittle"> 
-                                            <iframe width="70%" height="200px" src="https://www.youtube.com/embed/sGnjY5IgKP0" title="TOMORROWLAND 2020 🔥 La Mejor Música Electrónica 🔥 Lo Mas Nuevo - Electronica Mix" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-                                        </div> 
-                                    </div> 
-
-                                </div> 
-
-
-
-
-                            </div>-->
+                            <!--                            Secundarios-->
+                            <!--                            <div class=" col-lg-5">                        
+                                                            <div class="row text-center"> 
+                                                                <div class="col-12 col-sm-12">
+                                                                    <div class="feature-tittle"> 
+                                                                        <iframe width="70%" height="200px" src="https://www.youtube.com/embed/2JVAUzx1BsE" title="Korolova - Live @ Cordoba, Argentina / Melodic Techno &amp; Progressive House Mix" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                                                                    </div> 
+                                                                </div>
+                                                                <div class="col-12 col-sm-12">
+                                                                    <div class="feature-tittle"> 
+                                                                        <iframe width="70%" height="200px" src="https://www.youtube.com/embed/sGnjY5IgKP0" title="TOMORROWLAND 2020 🔥 La Mejor Música Electrónica 🔥 Lo Mas Nuevo - Electronica Mix" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                                                                    </div> 
+                                                                </div> 
+                            
+                                                            </div> 
+                            
+                            
+                            
+                            
+                                                        </div>-->
 
                             <div class="">
 
 
 
 
-                            <!--Row-->
-                        </div>
-
-                    <!--</div>  Container--> 
-
-                </section>
-            
-            
-            <!--Divisione smúltiples-->
-<!--            <div class="container">
-                <div class="row">
-                    <div class="col-sm-3">
-                        Level 1: .col-sm-3
-                    </div>
-                    <div class="col-sm-9">
-                        <div class="row">
-                            <div class="col-8 col-sm-6">
-                                Level 2: .col-8 .col-sm-6
+                                <!--Row-->
                             </div>
-                            <div class="col-4 col-sm-6">
-                                Level 2: .col-4 .col-sm-6
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>-->
-            
-            
-        </section>
-        <!-- End Destacados - Características  -->        
-        
+
+                            <!--</div>  Container--> 
+
+                            </section>
+
+
+                            <!--Divisione smúltiples-->
+                            <!--            <div class="container">
+                                            <div class="row">
+                                                <div class="col-sm-3">
+                                                    Level 1: .col-sm-3
+                                                </div>
+                                                <div class="col-sm-9">
+                                                    <div class="row">
+                                                        <div class="col-8 col-sm-6">
+                                                            Level 2: .col-8 .col-sm-6
+                                                        </div>
+                                                        <div class="col-4 col-sm-6">
+                                                            Level 2: .col-4 .col-sm-6
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>-->
+
+
+                            </section>
+                            <!-- End Destacados - Características  -->        
+
         
 
         <!-- Sección flotante ****************************************** --> 
@@ -288,275 +393,24 @@ $biografia=Consultas::bioArtistas($id);
         </section>
         <!-- End Video Area -->         
         
-        
-      
-
-        <!-- Team Area -->
-<!--        <section class="home-team-area ptb-100">
-            <div class="container">
-                <div class="section-title">
-                    <span>Team Members</span>
-                    <h2>People Who are Behind the Achievements</h2>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse.</p>
-                </div>
-
-                <div class="home-team-slider owl-carousel owl-theme">
-                    <div class="single-team">
-                        <div class="team-img">
-                            <img src="assets/images/team/t1.jpg" alt="team" />
-                            <ul class="social">
-                                <li>
-                                    <a href="#" target="_blank"><i class='bx bxl-linkedin'></i></a>
-                                </li>
-                                <li>
-                                    <a href="#" target="_blank"><i class="bx bxl-facebook"></i></a>
-                                </li>
-                                <li>
-                                    <a href="#" target="_blank"><i class="bx bxl-twitter"></i></a>
-                                </li>
-                                <li>
-                                    <a href="#" target="_blank"><i class="bx bxs-envelope"></i></a>
-                                </li>
-                            </ul>
-                        </div>
-
-                        <div class="content text-center">
-                            <h3>John Smith</h3>
-                            <p>Full Stack Developer</p>
-                        </div>
-                    </div>
-
-                    <div class="single-team">
-                        <div class="team-img">
-                            <img src="assets/images/team/t2.jpg" alt="team" />
-                            <ul class="social">
-                                <li>
-                                    <a href="#" target="_blank"><i class='bx bxl-linkedin'></i></a>
-                                </li>
-                                <li>
-                                    <a href="#" target="_blank"><i class="bx bxl-facebook"></i></a>
-                                </li>
-                                <li>
-                                    <a href="#" target="_blank"><i class="bx bxl-twitter"></i></a>
-                                </li>
-                                <li>
-                                    <a href="#" target="_blank"><i class="bx bxs-envelope"></i></a>
-                                </li>
-                            </ul>
-                        </div>
-
-                        <div class="content text-center">
-                            <h3>Evana Doe</h3>
-                            <p>Web Developer</p>
-                        </div>
-                    </div>
-
-                    <div class="single-team">
-                        <div class="team-img">
-                            <img src="assets/images/team/t3.jpg" alt="team" />
-                            <ul class="social">
-                                <li>
-                                    <a href="#" target="_blank"><i class='bx bxl-linkedin'></i></a>
-                                </li>
-                                <li>
-                                    <a href="#" target="_blank"><i class="bx bxl-facebook"></i></a>
-                                </li>
-                                <li>
-                                    <a href="#" target="_blank"><i class="bx bxl-twitter"></i></a>
-                                </li>
-                                <li>
-                                    <a href="#" target="_blank"><i class="bx bxs-envelope"></i></a>
-                                </li>
-                            </ul>
-                        </div>
-
-                        <div class="content text-center">
-                            <h3>Bread Mc</h3>
-                            <p>IT Consulting</p>
-                        </div>
-                    </div>
-
-                    <div class="single-team">
-                        <div class="team-img">
-                            <img src="assets/images/team/t4.jpg" alt="team" />
-                            <ul class="social">
-                                <li>
-                                    <a href="#" target="_blank"><i class='bx bxl-linkedin'></i></a>
-                                </li>
-                                <li>
-                                    <a href="#" target="_blank"><i class="bx bxl-facebook"></i></a>
-                                </li>
-                                <li>
-                                    <a href="#" target="_blank"><i class="bx bxl-twitter"></i></a>
-                                </li>
-                                <li>
-                                    <a href="#" target="_blank"><i class="bx bxs-envelope"></i></a>
-                                </li>
-                            </ul>
-                        </div>
-
-                        <div class="content text-center">
-                            <h3>Maria Fread</h3>
-                            <p>UI/UX Designer</p>
-                        </div>
-                    </div>
-
-                    <div class="single-team">
-                        <div class="team-img">
-                            <img src="assets/images/team/t1.jpg" alt="team" />
-                            <ul class="social">
-                                <li>
-                                    <a href="#" target="_blank"><i class='bx bxl-linkedin'></i></a>
-                                </li>
-                                <li>
-                                    <a href="#" target="_blank"><i class="bx bxl-facebook"></i></a>
-                                </li>
-                                <li>
-                                    <a href="#" target="_blank"><i class="bx bxl-twitter"></i></a>
-                                </li>
-                                <li>
-                                    <a href="#" target="_blank"><i class="bx bxs-envelope"></i></a>
-                                </li>
-                            </ul>
-                        </div>
-
-                        <div class="content text-center">
-                            <h3>John Smith</h3>
-                            <p>Full Stack Developer</p>
-                        </div>
-                    </div>
-
-                    <div class="single-team">
-                        <div class="team-img">
-                            <img src="assets/images/team/t2.jpg" alt="team" />
-                            <ul class="social">
-                                <li>
-                                    <a href="#" target="_blank"><i class='bx bxl-linkedin'></i></a>
-                                </li>
-                                <li>
-                                    <a href="#" target="_blank"><i class="bx bxl-facebook"></i></a>
-                                </li>
-                                <li>
-                                    <a href="#" target="_blank"><i class="bx bxl-twitter"></i></a>
-                                </li>
-                                <li>
-                                    <a href="#" target="_blank"><i class="bx bxs-envelope"></i></a>
-                                </li>
-                            </ul>
-                        </div>
-
-                        <div class="content text-center">
-                            <h3>Evana Doe</h3>
-                            <p>Web Developer</p>
-                        </div>
-                    </div>
-
-                    <div class="single-team">
-                        <div class="team-img">
-                            <img src="assets/images/team/t3.jpg" alt="team" />
-                            <ul class="social">
-                                <li>
-                                    <a href="#" target="_blank"><i class='bx bxl-linkedin'></i></a>
-                                </li>
-                                <li>
-                                    <a href="#" target="_blank"><i class="bx bxl-facebook"></i></a>
-                                </li>
-                                <li>
-                                    <a href="#" target="_blank"><i class="bx bxl-twitter"></i></a>
-                                </li>
-                                <li>
-                                    <a href="#" target="_blank"><i class="bx bxs-envelope"></i></a>
-                                </li>
-                            </ul>
-                        </div>
-
-                        <div class="content text-center">
-                            <h3>Bread Mc</h3>
-                            <p>IT Consulting</p>
-                        </div>
-                    </div>
-
-                    <div class="single-team">
-                        <div class="team-img">
-                            <img src="assets/images/team/t4.jpg" alt="team" />
-                            <ul class="social">
-                                <li>
-                                    <a href="#" target="_blank"><i class='bx bxl-linkedin'></i></a>
-                                </li>
-                                <li>
-                                    <a href="#" target="_blank"><i class="bx bxl-facebook"></i></a>
-                                </li>
-                                <li>
-                                    <a href="#" target="_blank"><i class="bx bxl-twitter"></i></a>
-                                </li>
-                                <li>
-                                    <a href="#" target="_blank"><i class="bx bxs-envelope"></i></a>
-                                </li>
-                            </ul>
-                        </div>
-
-                        <div class="content text-center">
-                            <h3>Maria Fread</h3>
-                            <p>UI/UX Designer</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>-->
-        <!-- End Team Area -->
-
-        
-        <!-- Crowdfunding 1-->
-<!--        <section class="home-blog-area ptb-100">
-            <div class="container">
-                <div class="section-title">
-                    <span>Blog Post</span>
-                    <h2>Crowdfunding</h2>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. A facilis vel consequatur tempora atque blanditiis exercitationem incidunt, alias corporis quam assumenda dicta.</p>
-                </div>
-
-                <div class="row">
-                    <div class="col-lg-3 col-md-6"></div>
-                    <div class="col-lg-6 col-md-6">
-                        <div class="single-blog">
-                            <div class="blog-img">
-                                <a href="#">
-                                    <img src="assets/images/avatars/13.jpg" alt=""/> 
-                                </a>
-                            </div>
-
-                            <div class="content">
-                                <ul>
-                                    <li>
-                                        EP Sinceridad 
-                                    </li> 
-                                </ul>
-                                
-                                <a href=" ">
-                                    <h3>Cari Monteci</h3>
-                                </a>
-                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptas in fugit minima modi perspiciatis nam aspernatur porro</p>
-                                
-                                <a href=" " class="box-btn">Patrocinar</a>
-                            </div>
-                        </div>
-                    </div> 
- 
-                </div> 
-            </div>
-        </section>-->
-        <!-- End Blog Area -->
-
-        
-                <!-- Crowdfunding 2 -->
-        <section class="pricing-area pt-100 pb-70">
+    
+        <!-- Crowdfunding 2 -->
+<?php  
+    $respuestaCrowdfunding = Consultas::crowdfunding($respuesta[0]["id_user"]);
+    
+//    si No hay Crowdfunding, no muestra nada
+    if( empty($respuestaCrowdfunding) ){
+//        echo '<h2>No hay Crowdfunding</h2>';
+    }else{
+?> 
+       
+        <section class="pricing-area ptb-35">
             <div class="container">
                 <div class="row align-items-center choose-c justify-content-md-center">
                     
                     <div class="section-title ">
                         
-                        <h2>Crowdfunding</h2>
-                        
+                        <h2>Crowdfunding</h2> 
                     </div> 
 
                     <div class="home-2-contact col-lg-8">                       
@@ -564,25 +418,26 @@ $biografia=Consultas::bioArtistas($id);
                             <div class="row">
                                 <!--img-->
                                 <div class="col-12 col-sm-6  choose-img">  
-                                    <img src="assets/images/avatars/13.jpg" alt="choose" width="350px" />
+                                    <img src="https://echomusic.cl/images/avatars/<?php echo $respuesta[0]["id_user"]; ?>.jpg" alt="<?php echo $respuesta[0]["nick_user"]; ?>" width="350px"/> 
+                                    
 
                                 </div>
                                 <!--Descripción-->
                                 <div class="col-12 col-sm-6" style="vertical-align: middle;">
                                     <ul>
                                         <li>
-                                            EP Sinceridad 
+                                           <?php echo $respuesta[0]["nick_user"]; ?>
                                         </li> 
                                     </ul>
 
                                     <a href=" ">
-                                        <h3>Cari Monteci</h3>
+                                        <h3><?php echo $respuestaCrowdfunding[0]["project_title"]; ?> </h3>
                                     </a>
 
                                     <div class="progress">
                                         <div class="progress-bar progress-bar-striped bg-warning progress-bar-animated" role="progressbar" style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
                                     </div>
-                                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptas in fugit minima modi perspiciatis nam aspernatur porro</p>
+                                    <p><?php echo $respuestaCrowdfunding[0]["project_desc"]; ?> </p>
 
                                     <a href=" " class="box-btn">Patrocinar</a>
                                 </div>
@@ -593,14 +448,17 @@ $biografia=Consultas::bioArtistas($id);
                 </div>
             </div>
         </section>
-        <!-- End Technology Area -->
+        <!-- End Crwdfunding -->
+<?php
+    } //fin del else 
+?>
         
         
 
         
         
         <!--  Tarifas Area -->
-        <section class="home-blog-area bg-color ptb-100">
+        <section class="home-blog-area bg-color ptb-35">
             <div class="container">
                 <div class="section-title">
                     <!--<span>What We Offer</span>-->
