@@ -278,7 +278,7 @@ include "header.php";
  
 
         <!-- Destacados - Características  -->
-        <section class="feature-area bg-color ptb-100">
+        <section class="feature-area bg-color pt-70 pb-35">
             <div class="container">
                 <div class="row align-items-center ">
                     <div class=" col-lg-4">
@@ -401,7 +401,7 @@ include "header.php";
         
         
         <!--  Case Eventos Artistas Proyectos  Espacios  -->
-        <section class="home-case ptb-100">
+        <section class="home-case ptb-35">
             <div class="container">
                 <div class="section-title">
                     <!--<span>Descubre</span>-->
@@ -412,8 +412,8 @@ include "header.php";
 
                 <div class="case">
                     <ul class="all-case">
-                        <li class="active" data-filter="*"><span>Todo</span></li>
-                        <li data-filter=".design"><span>Presencial</span></li>
+                        <!--<li class="active" data-filter="*"><span>Todo</span></li>-->
+                        <li class="active" data-filter="*"><span>Presencial</span></li>
                         <li data-filter=".dev"><span>Online</span></li> 
                     </ul>
                 </div>
@@ -536,7 +536,7 @@ include "header.php";
 
                 <div class="case-btn text-center">
                     <!--<p>  <a href="#">Ver más eventos</a></p>-->
-                    <p>    <a href="#" class="box-btn">Ver más eventos</a></p>
+                    <p>    <a href="cartelera.php" class="box-btn">Ver más eventos</a></p>
                 </div>
             </div>
         </section>
@@ -577,7 +577,7 @@ include "header.php";
         $respuestaArtistas = Consultas::ultimosArtistas();        
 ?>                            
         
-        <section class="feature-area bg-color ptb-100">
+        <section class="feature-area bg-color ptb-70">
             <div class="container">
                 <div class="row align-items-center ">
                     <div class=" col-lg-3">
@@ -597,18 +597,21 @@ include "header.php";
                         <!-- Artistas Carrusel Area -->
                         <section class="home-team-area  ">
                             <div class="container"> 
-
                                 <div class="home-team-slider owl-carousel owl-theme">
 
-                        <?php     
+                        <?php   
                             for ($i=0; $i < count($respuesta); $i++) { 
+//                                BUscar nombre Ciudad Region
+                                $respuestaArtistasCiudadRegion = Consultas::buscaCiudadRegion($respuestaArtistas[$i]["id_city"], $respuestaArtistas[$i]["id_region"] ) ; 
                             echo '          
                                     <div class="single-team">
                                         <div class="team-img">
-                                            <img src="https://echomusic.cl/images/avatars/'.$respuestaArtistas[$i]["id_user"].'.jpg" alt="descatado" />
+                                            <a href="artistas.php?a='.$respuestaArtistas[$i]["id_user"].'"  >
+                                                <img src="https://echomusic.cl/images/avatars/'.$respuestaArtistas[$i]["id_user"].'.jpg" alt="descatado" />
+                                            </a>
                                             <ul class="social">
-                                                <li>
-                                                    <a href="#" target="_blank"><i class="bx bx-search"></i></a>
+                                                <li> 
+                                                    <a href="artistas.php?a='.$respuestaArtistas[$i]["id_user"].'" target="_blank"><i class="bx bx-search"></i></a>
                                                 </li> 
                                             </ul>
                                         </div> 
@@ -617,13 +620,13 @@ include "header.php";
                                             <!--Titulo-->
                                             <div class="row text-center">
                                                 <div class="col-12">
-                                                    <a href="#"> <h3>'.$respuestaArtistas[$i]["nick_user"].'</h3></a>
+                                                    <a href="artistas.php?a='.$respuestaArtistas[$i]["id_user"].'"> <h3>'.$respuestaArtistas[$i]["nick_user"].'</h3></a>
                                                 </div> 
                                             </div>
                                             <!--Entrada Fecha hora Costo Compra-->
                                             <div class="row ">
                                                 <div class="col-lg-6 col-sm-6">
-                                                    <p>Rock <br>'.$respuestaArtistas[$i]["id_region"].' - '.$respuestaArtistas[$i]["id_city"].'</p>
+                                                    <p>'.$respuestaArtistas[$i]["name_genre"].' <br>'.$respuestaArtistasCiudadRegion[0]["name_city"].' / '.$respuestaArtistasCiudadRegion[0]["name_region"].'</p>
                                                 </div>
                                                 <div class="col-lg-6 col-sm-6 text-center ">
                                                     <a href="artistas.php?a='.$respuestaArtistas[$i]["id_user"].'" class="box-btn">Ver perfil</a>
@@ -652,7 +655,7 @@ include "header.php";
         
         
         <!-- CTA 2 unete -->
-        <section class="home-cta-2-morado pt-100 pb-70">
+        <section class="home-cta-2-morado pt-100 pb-35">
             <div class="container">
                 
 
@@ -680,7 +683,7 @@ include "header.php";
         <!-- End CTA 2 unete-->        
        
         <!-- Crowdfunding - Características  -->
-        <section class="feature-area bg-color ptb-100">
+        <section class="feature-area bg-color ptb-70">
             <div class="container">
                 <div class="row align-items-center ">
                     <div class=" col-lg-3">
@@ -868,7 +871,7 @@ include "header.php";
             
         <!-- CTA -->
         <!--<section class="home-process-area pt-100 pb-70">-->
-        <section class="home-cta-3-naranja pt-100 pb-70">
+        <section class="home-cta-3-naranja pt-100 pb-35">
             <div class="container">
                 
 
@@ -896,7 +899,7 @@ include "header.php";
         <!-- End CTA --> 
         
         <!-- Blog Area -->
-        <section class="home-blog-area ptb-100">
+        <section class="home-blog-area ptb-70">
             <div class="container">
                 <div class="section-title">
                     <span>Aprende</span>
@@ -1001,7 +1004,7 @@ include "header.php";
         
         
         <!--  Contacto Area -->
-        <section class="home-contact-area   ptb-100">
+        <section class="home-contact-area   ptb-35">
             <div class="container">
                 <div class="section-title">
                     <span>Escríbenos</span>
