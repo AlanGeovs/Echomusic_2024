@@ -12,6 +12,12 @@ if (isset($_GET["a"])) {
 }
  
 $biografia=Consultas::bioArtistas($id);
+$descripcion=Consultas::descArtistas($id);
+
+//Eventos                    
+$resultadosProxEventos = Consultas::eventosPorArtista($respuesta[0]["id_user"]);
+$resultadosEventosPasa = Consultas::eventosPasadosArtista($respuesta[0]["id_user"]);                    
+                   
 ?>
 
         <!-- Start Page Title Area -->
@@ -51,20 +57,49 @@ $biografia=Consultas::bioArtistas($id);
             <div class="container">
                 <div class="row align-items-center "> 
                     <!--Perfil-->
-                    <div class="col-lg-5 col-sm-5 item dev design">
+                    <?php
+//                    Determino si No hay EVENTOS, si nuevos ni pasados para ajustar diseño
+                    if(empty($resultadosProxEventos) AND empty($resultadosEventosPasa) ){
+                        $AnchoColumna = 'col-lg-12 col-sm-12';
+                        
+                    }else{
+                        $AnchoColumna = 'col-lg-5 col-sm-5';
+                    }
+                    ?>
+                    <div class=" item dev design">
                         <div class="single-case text-center">
                             <div class="simple-evento-artista">
                                 <a href="#">   
-                                    <img src="https://echomusic.cl/images/avatars/<?php echo $respuesta[0]["id_user"]; ?>.jpg" alt="descatado" /> 
+                                    <img class="responsiveArtista" src="https://echomusic.cl/images/avatars/<?php echo $respuesta[0]["id_user"]; ?>.jpg" alt="descatado" /> 
                                 </a>
                             </div> 
 
                             <div class="feature-tittle">
                                 <h2> <?php echo $respuesta[0]["nick_user"]; ?></h2>
                                 <span style="font-size: 20px">Seguidores 1 Seguidos 0 Publicaciones 2</span> 
-
-                                <h3>Biografía</h3>
-                                <p style="text-align: left;"><?php echo $biografia[0]["bio_user"]; ?></p>
+                                
+                                 <!--Descripción-->
+                                <?php
+                                if (!empty($descripcion[0]["desc_user"])) {
+                                    ?>  
+                                    <h3>Descripción</h3>
+                                    <p style="text-align: center;"><?php echo $descripcion[0]["desc_user"]; ?></p>
+                                    <?php
+                                } else {
+                                    echo '<br>';
+                                }
+                                ?>
+                                    
+                                <!-- Biogración - Button to Open the Modal -->
+                                <?php
+                                if (!empty($biografia[0]["bio_user"])) {
+                                    ?>
+                                    <a type="button" class="box-btn" data-bs-toggle="modal" data-bs-target="#ModalBio">Ver Biografía</a>
+                                    <?php
+                                } else {
+                                    echo '<br>';
+                                }
+                                ?>
                             </div> 
                         </div>
 
@@ -81,11 +116,6 @@ $biografia=Consultas::bioArtistas($id);
 
 
                     <!--Eventos-->
-                    <?php
-                    $resultadosProxEventos = Consultas::eventosPorArtista($respuesta[0]["id_user"]);
-                    $resultadosEventosPasa = Consultas::eventosPasadosArtista($respuesta[0]["id_user"]);
-                    
-                    ?>
                     <div class=" col-lg-7">
                         <!-- Próximos eventos -->
                         <?php
@@ -142,17 +172,15 @@ $biografia=Consultas::bioArtistas($id);
                         <!-- Eventos Pasados -->
                         <h3 class="text-center">  Eventos Pasados (<?php echo count($resultadosEventosPasa); ?>)</h3> 
 
-                            <?php
-                                for ($p = 0; $p < count($resultadosEventosPasa); $p++) {
-                             ?>
                             <div class="home-2-contact col-lg-12">                       
                                 <div class="content"> 
-                                    <div class="row">
-                                        <!--img-->
+                                    <!--Diseño ANterior-->
+                    <!--             <div class="row">
+                                        img
                                         <div class="col-12 col-sm-6  choose-img">  
                                             <img src="https://echomusic.cl/images/events/<?php echo $resultadosEventosPasa[$p]["img"]; ?>.jpg" alt="<?php echo ''; ?>" width="350px"/> 
                                         </div>
-                                        <!--Descripción-->
+                                        Descripción
                                         <div class="col-12 col-sm-6" style="vertical-align: middle;">
                                             <ul>
                                                 <li>
@@ -167,17 +195,67 @@ $biografia=Consultas::bioArtistas($id);
                                             <p><?php echo $resultadosEventosPasa[$p]["desc_event"]; ?> </p>
  
                                         </div>
-                                    </div>
-                                    <!--fin del Row-->
+                                    </div> fin del Row-->
+                                    
+                                    <!--Diseño Nuevvo-->
+                                    <div class="row">
+                                        <div class="home-team-slider owl-carousel owl-theme">
+                                            <?php
+                                            for ($p = 0; $p < count($resultadosEventosPasa); $p++) {
+                                                ?>
+                                                <div class="single-team">
+                                                    <div class="team-img">  
+                                                        <img class="tamano-4" src="https://echomusic.cl/images/events/<?php echo $resultadosEventosPasa[$p]["img"]; ?>.jpg" alt="<?php echo ''; ?>" width="350px"/>
+                                                    </div>
+
+                                                    <div class="content text-center">
+                                                        <h6><?php echo $resultadosEventosPasa[$p]["name_event"]; ?> </h6>
+                                                        <p style="font-size: 10px;">Organizado: <?php echo $resultadosEventosPasa[$p]["organizer"]; ?>
+                                                            <?php echo $resultadosEventosPasa[$p]["name_location"]; ?>
+                                                            / <?php echo $resultadosEventosPasa[$p]["location"]; ?> 
+                                                        </p>
+                                                    </div>
+                                                </div>                                                                                        
+                                                <?php
+                                            }
+                                            ?>
+                                        </div>
+
+                                    </div>                    
                                 </div>
                             </div>
                             <?php
-                            }//termina el for
-                            
+                             
                         } 
                         //termina else de Eventos Pasados
-                        ?>                        
+                        ?>  
+                          <!--Nuevo diseño eventos pasados--> 
+                          <!--Solo Formato HTML-->
+<!--                        <div class="home-2-contact col-lg-12">                       
+                            <div class="content"> 
+                                <div class="row">
+                                    <div class="home-team-slider owl-carousel owl-theme">
+
+                                        <div class="single-team">
+                                            <div class="team-img">
+                                                <img src="assets/images/avatars/echo-1.jpg" alt="descatado" /> 
+                                            </div>
+
+                                            <div class="content text-center">
+                                                <h3>Destacado 1</h3>
+                                                <p>Texto de destacado 1</p>
+                                            </div>
+                                        </div>
+ 
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>                        -->
+
+
                     </div> 
+
                 </div>
 
 
@@ -402,6 +480,11 @@ $biografia=Consultas::bioArtistas($id);
     if( empty($respuestaCrowdfunding) ){
 //        echo '<h2>No hay Crowdfunding</h2>';
     }else{
+        $totalARecaudar  = $respuestaCrowdfunding[0]["project_amount"];
+    //  Extrae la suma de lo recaudado
+//        $sumaRecaudado = array_sum ( Consultas::recaudadoCrowdfunding( $respuestaCrowdfunding[0]["id_project"]) );
+        $sumaRecaudado =  Consultas::recaudadoCrowdfunding( $respuestaCrowdfunding[0]["id_project"]) ;
+        $recaudadoPorcentaje = Consultas::obtenerPorcentaje($sumaRecaudado[0], $totalARecaudar);
 ?> 
        
         <section class="pricing-area ptb-35">
@@ -432,14 +515,15 @@ $biografia=Consultas::bioArtistas($id);
 
                                     <a href=" ">
                                         <h3><?php echo $respuestaCrowdfunding[0]["project_title"]; ?> </h3>
-                                    </a>
-
+                                    </a> 
+                                    <h6>Avance del <?php echo $recaudadoPorcentaje; ?>% recaudado</h6>
                                     <div class="progress">
-                                        <div class="progress-bar progress-bar-striped bg-warning progress-bar-animated" role="progressbar" style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                                        
+                                        <div class="progress-bar progress-bar-striped bg-warning progress-bar-animated" role="progressbar" style="width: <?php echo $recaudadoPorcentaje; ?>%" aria-valuenow="" aria-valuemin="<?php echo $sumaRecaudado[0]; ?>" aria-valuemax="<?php echo $totalARecaudar; ?>"></div>
                                     </div>
                                     <p><?php echo $respuestaCrowdfunding[0]["project_desc"]; ?> </p>
-
-                                    <a href=" " class="box-btn">Patrocinar</a>
+                                     
+                                    <a href="crowdfunding.php?c=<?php echo $respuestaCrowdfunding[0]["id_project"]; ?>" class="box-btn">Patrocinar</a>
                                 </div>
                             </div>
                             <!--fin del Row-->
@@ -1035,30 +1119,9 @@ $biografia=Consultas::bioArtistas($id);
         
         
         <!--Modal area-->
-        <!-- The Modal -->
-        <div class="modal" id="myModal">
-            <div class="modal-dialog">
-                <div class="modal-content">
-
-                    <!-- Modal Header -->
-                    <div class="modal-header">
-                        <h4 class="modal-title">Video </h4>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                    </div>
-
-                    <!-- Modal body -->
-                    <div class="modal-body">
-                      <iframe width="450" height="300" src="https://www.youtube.com/embed/xXfyxX7tyBM" title="Group Therapy 523 with Above &amp; Beyond and Maor Levi" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-                    </div>
-
-                    <!-- Modal footer -->
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cerrar</button>
-                    </div>
-
-                </div>
-            </div>
-        </div>
+        <?php
+            include 'modal.php';
+        ?>
 
         <!-- Start Go Top Area -->
         <div class="go-top">
@@ -1093,7 +1156,8 @@ $biografia=Consultas::bioArtistas($id);
         <script src="assets/js/owl.carousel.min.js"></script>        
         <!--Script para OWL  
         Ver demos: https://owlcarousel2.github.io/OwlCarousel2/demos/demos.html
-        -->
+        -->       
+        
         <script>           
             
             $(document).ready(function(){
@@ -1112,7 +1176,7 @@ $biografia=Consultas::bioArtistas($id);
                                         items:2
                                     },
                                     600:{
-                                        items:4
+                                        items:3
                                     }
                                 }
                             });
@@ -1120,6 +1184,40 @@ $biografia=Consultas::bioArtistas($id);
             
                
         </script>  
-               
+       
+        
+<!--        
+        <script>             
+            var owl = $('.owl-carousel-artistas');
+                owl.owlCarousel({
+                    loop:true,
+                    margin:10,
+                    responsiveClass:true,
+                    autoplay:true,
+                    autoplayTimeout:2500,
+                    autoplayHoverPause:true,
+                    responsive:{
+                        0:{
+                            items:2,
+                            nav:false
+                        },
+                        600:{
+                            items:3,
+                            nav:false
+                        },
+                        1000:{
+                            items:3,
+                            nav:false 
+                        }
+                }
+            });
+            $('.play').on('click',function(){
+                owl.trigger('play.owl.autoplay',[1000]);
+            })
+            $('.stop').on('click',function(){
+                owl.trigger('stop.owl.autoplay');
+            })
+        </script>          
+               -->
     </body>
 </html>

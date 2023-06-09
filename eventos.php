@@ -787,9 +787,7 @@ if (empty($respuestaVideoEvento["embed_multi"])){
         </section>
         <!-- End CTA -->    
  
-        
-     
-     
+             
     <!--Footer-->
     <?php 
         include 'footer.php';

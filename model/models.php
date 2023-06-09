@@ -130,6 +130,15 @@ class Consultas{
         //return $id;
         $stmt->close();
 	}        
+        //Desc de Artistas
+	static public function descArtistas($id){
+                $stmt=Conexion::conectar()->prepare("SELECT * FROM `desc_user`  WHERE id_user=:id  ;");		
+        $stmt->bindParam(":id",$id,PDO::PARAM_INT);
+        $stmt->execute();
+        return $stmt->fetchAll();
+        //return $id;
+        $stmt->close();
+	}        
 	       
         
 	static public function ultimosEventos(){
@@ -172,6 +181,18 @@ class Consultas{
         $stmt->close();
 	}
         
+        //Eventos de Büsqeuda por Cartelera
+        static public function eventosCarteleraBusqueda($id){ 
+                $stmt=Conexion::conectar()->prepare("SELECT e.* FROM events_public as e WHERE e.active_event=1 AND e.name_event LIKE ? GROUP BY e.id_user ORDER BY RAND() LIMIT 6;");
+//                $stmt=Conexion::conectar()->prepare("SELECT e.* FROM events_public as e WHERE e.active_event=1 AND e.id_event =:id GROUP BY e.id_user ORDER BY RAND() LIMIT 3;");
+//        $stmt->bindParam(":id",$id,PDO::PARAM_INT);
+        $stmt->bindValue(1, "%$id%", PDO::PARAM_STR); 
+        $stmt->execute();
+        return $stmt->fetchAll();
+        //return $id;
+        $stmt->close();
+	}
+        
         //Busca Ciudad y Región
         static public function buscaCiudadRegion($idCity, $idReg){
                 $stmt=Conexion::conectar()->prepare("SELECT rc.*,c.*,r.* FROM regions_cities rc INNER JOIN regions r ON rc.id_region =r.id_region INNER JOIN cities c ON c.id_city = rc.id_city WHERE rc.id_region =:idReg AND rc.id_city=:idCity;");		
@@ -204,7 +225,7 @@ class Consultas{
         
       //Próximos eventos por artista
 	static public function eventosPorArtista($id){
-		$stmt=Conexion::conectar()->prepare("SELECT * FROM `events_public` WHERE `id_user`=292 AND active_event=1 AND `date_event`>= NOW() ORDER BY `date_event` DESC;");
+		$stmt=Conexion::conectar()->prepare("SELECT * FROM `events_public` WHERE `id_user`=:id AND active_event=1 AND `date_event`>= NOW() ORDER BY `date_event` DESC;");
 		$stmt->bindParam(":id",$id,PDO::PARAM_INT);
                 $stmt->execute();
 		return $stmt->fetchAll();
@@ -212,7 +233,7 @@ class Consultas{
         }        
         // eventos Pasadps por artista
 	static public function eventosPasadosArtista($id){
-		$stmt=Conexion::conectar()->prepare("SELECT * FROM `events_public` WHERE `id_user`=292 AND active_event=1 AND `date_event`< NOW() ORDER BY `date_event` DESC; ");
+		$stmt=Conexion::conectar()->prepare("SELECT * FROM `events_public` WHERE `id_user`=:id AND active_event=1 AND `date_event`< NOW() ORDER BY `date_event` DESC; ");
 		$stmt->bindParam(":id",$id,PDO::PARAM_INT);
                 $stmt->execute();
 		return $stmt->fetchAll();
@@ -229,5 +250,52 @@ class Consultas{
         //return $id;
         $stmt->close();
 	}
-      
+        
+        static public function recaudadoCrowdfunding($id){ 
+                $stmt=Conexion::conectar()->prepare("SELECT sum(`backer_amount`+`backer_added_amount`) FROM `project_backers` WHERE `id_project` =:id;");
+        $stmt->bindParam(":id",$id,PDO::PARAM_INT);
+        $stmt->execute();
+        return $stmt->fetch();
+        //return $id;
+        $stmt->close();
+	}
+        
+        static public function obtenerPorcentaje($cantidad, $total) {
+            $porcentaje = ((float)$cantidad * 100) / $total; // Regla de tres
+            $porcentaje = round($porcentaje, 0);  // Quitar los decimales
+            return $porcentaje;
+        }
+        
+        //Detalle de CrowdFunding
+	static public function detallesCrowdfunding($id){
+//                $stmt=Conexion::conectar()->prepare("SELECT pc.*, pd.* FROM `projects_crowdfunding` pc INNER JOIN project_desc pd ON pd.id_project = pc.id_project WHERE pc.status_project!=0 AND pc.id_project=:id;");		
+                $stmt=Conexion::conectar()->prepare("SELECT pc.*, pd.*,u.* FROM `projects_crowdfunding` pc INNER JOIN project_desc pd ON pd.id_project = pc.id_project INNER JOIN users u ON pc.id_user = u.id_user WHERE pc.status_project!=0 AND pc.id_project=:id;");		
+        $stmt->bindParam(":id",$id,PDO::PARAM_INT);
+        $stmt->execute();
+        return $stmt->fetchAll();
+        //return $id;
+        $stmt->close();
+	}   
+        //Multimedia de CrowdFunding
+	static public function multimaediaCrowdfunding($id){
+        $stmt=Conexion::conectar()->prepare("SELECT * FROM `project_multimedia` WHERE `id_project` =:id ORDER BY `id_project_multimedia` DESC;");		
+        $stmt->bindParam(":id",$id,PDO::PARAM_INT);
+        $stmt->execute();
+        return $stmt->fetchAll();
+        //return $id;
+        $stmt->close();
+	}   
+        
+        //Tiers de CrowdFunding
+	static public function tierCrowdfunding($id){
+        $stmt=Conexion::conectar()->prepare("SELECT * FROM `project_tiers` WHERE `id_project` =:id;");		
+        $stmt->bindParam(":id",$id,PDO::PARAM_INT);
+        $stmt->execute();
+        return $stmt->fetchAll();
+        //return $id;
+        $stmt->close();
+	}   
+        
+         
+
 }

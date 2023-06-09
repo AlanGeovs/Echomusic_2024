@@ -126,6 +126,7 @@ and open the template in the editor.
   width:420px;
   height:420px;
 }
+ 
 .tamano-2{
   width:140px;
   height:190px;
@@ -133,4 +134,34 @@ and open the template in the editor.
 .tamano-3{
   width:140px;
   height:230px;
+}
+.tamano-4{
+  width:150px;
+  height:150px;
+}
+
+/*Imágenes para Artistas Responsiva*/
+/* Estilo por defecto para desktop */
+img.responsiveArtista {
+    width: 466px;
+    max-width: 100%;
+    height: auto;
+}
+
+/* Estilo para tablets */
+@media screen and (max-width: 768px) {
+    img.responsiveArtista {
+        width: 400px;
+        max-width: 100%;
+        height: auto;
+    }
+}
+
+/* Estilo para móviles */
+@media screen and (max-width: 480px) {
+    img.responsiveArtista {
+        width: 306px;
+        max-width: 100%;
+        height: auto;
+    }
 }

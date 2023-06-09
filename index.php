@@ -21,17 +21,18 @@ include "header.php";
   <div class="carousel-inner">
     <!-- Single item -->
     <div class="carousel-item active">
-        <div class="carousel-caption d-none d-md-block">
+        <div class="carousel-caption d-none d-md-block"> 
             <img src="assets/images/logo/logo-naranja-blanco.png" alt="" width="450px"/>
-            <h4>Marketplace de servicios musicales </h4>
+            <h4>Marketplace de servicios musicales</h4>
             <p>
                 Encuentra eventos presenciales o streaming, contrata servicios musicales de artistas o patrocina proyectos musicales (Crowdfunding).
             </p>
         </div>
         <video class="img-fluid" autoplay loop muted>
-            <source src="assets/videos/echomusic-home-2.mp4" type="video/mp4"  />
+            <!--<source src="assets/videos/echomusic-home-2.mp4" type="video/mp4"  />-->
+            <source src="https://res.cloudinary.com/dsaz7y8t1/video/upload/v1685557254/Echomusic/BannerWeb2.0_Morado.mp4_vtjmui.mp4" type="video/mp4"  />
         </video>
-    </div>
+    </div> 
 
     <!-- Single item -->
 <!--    <div class="carousel-item">
@@ -302,7 +303,6 @@ include "header.php";
                             <div class="container"> 
 
                                 <div class="home-team-slider owl-carousel owl-theme">
-
 
                                     <div class="single-team">
                                         <div class="team-img">

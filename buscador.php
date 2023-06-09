@@ -40,89 +40,48 @@ $respuestaEventoCiudadRegion = Consultas::buscaCiudadRegion($respuesta[0]["id_ci
 
 ?>
 
-        <!-- Slider Area -->
-        <!--Cambio de imagen en style.css -> "single-slider-bg-1"   -->
-        <section class="slider-area-2">
-            <div class="home-slider owl-carousel owl-theme">
-                <div class="single-slider single-slider-bg-1">
-                    <div class="d-table">
-                        <div class="d-table-cell">
-                            <div class="container">
-                                <div class="row align-items-center">
-                                    <div class="col-lg-12 text-center">
-                                        <div class="slider-content one">
-                                            <h1>Crea tu evento presencial o streaming</h1>
-                                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida incididunt ut.</p>
-                                            
-                                            <div class="slider-btn text-center">
-                                                <a href="#" class="box-btn">Crear evento</a>
-                                                <a href="#" class="box-btn border-btn">Ver más</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="single-slider single-slider-bg-2">
-                    <div class="d-table">
-                        <div class="d-table-cell">
-                            <div class="container">
-                                <div class="row align-items-center">
-                                    <div class="col-lg-12 text-center">
-                                        <div class="slider-content one">
-                                            <h1>Recauda fondos para tu próximo evento musical</h1>
-                                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida incididunt ut.</p>
-                                            
-                                            <div class="slider-btn text-center">
-                                                <a href="#" class="box-btn">Recaudar fondos</a>
-                                                <a href="#" class="box-btn border-btn">Ver más</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="single-slider single-slider-bg-3">
-                    <div class="d-table">
-                        <div class="d-table-cell">
-                            <div class="container">
-                                <div class="row align-items-center">
-                                    <div class="col-lg-12 text-center">
-                                        <div class="slider-content one">
-                                            <h1>Regístrate hoy mismo, fácil, rápido y seguro.</h1>
-                                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida incididunt ut.</p>
-                                            
-                                            <div class="slider-btn text-center">
-                                                <a href="#" class="box-btn">Registrarme</a>
-                                                <a href="#" class="box-btn border-btn">Ver más</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+        <!-- Start Page Title Area -->
+        <div class="page-title-area">
+            <div class="container">
+                <div class="page-title-content">
+                    <h2>Búsqueda: <?php echo $id; ?></h2>
+                    <ul>
+                        <li> <a href="index.php"> Inicio </a> </li>
+                        <li> <a href="cartelera.php"> Cartelera</a> </li>
+                        <li class="active"><?php echo $id; ?></li> 
+                    </ul>
                 </div>
             </div>
-        </section>
-        <!-- End Slider Area -->
+<!--            <div class="page-shape">
+                <div class="shape1">
+                    <img src="assets/images/shape/1.png" alt="shape" />
+                </div>
+                <div class="shape3">
+                    <img src="assets/images/shape/3.png" alt="shape" />
+                </div>
+                <div class="shape4">
+                    <img src="assets/images/shape/4.png" alt="shape" />
+                </div>
+                <div class="shape5">
+                    <img src="assets/images/shape/5.png" alt="shape" />
+                </div>
+                <div class="shape6">
+                    <img src="assets/images/shape/6.png" alt="shape" />
+                </div>
+            </div>-->
+        </div>
+        <!-- End Page Title Area -->
 
         
-        <!-- Filtro  -->
+<!--         Filtro  
         <section class="feature-area bg-color ptb-35">
             <div class="container">
                 <div class="row align-items-center choose-c justify-content-md-center"> 
-                    <!--Filtro Avanzado-->
+                    Filtro Avanzado
                     <div class="col-lg-12 col-sm-12 item  ">
                         <div class="single-case text-center">
                             <h4>Búsqueda avanzada</h4>  
-                            <form id="form2" name="form2" method="GET" action="cartelera.php">
+                            <form id="form2" name="form2" method="POST" action="index.php">
                                 <div class="col-12 row">  
 
                                     <div class="col-11">
@@ -131,31 +90,31 @@ $respuestaEventoCiudadRegion = Consultas::buscaCiudadRegion($respuesta[0]["id_ci
                                             <thead>
                                                 <tr class="filters">
                                                     <th>
-                                                        <label  class="form-label">Evento, artista, organizador o espacio </label>
-                                                        <!--<input type="text" class="form-control" id="buscar" name="buscar" value="<?php // echo $_POST["buscar"]  ?>" >-->
-                                                        <input type="text" class="form-control" id="r" name="r" value=" " >   
+                                                        <label  class="form-label">Evento o artista </label>
+                                                        <input type="text" class="form-control" id="buscar" name="buscar" value="<?php // echo $_POST["buscar"]  ?>" >
+                                                        <input type="text" class="form-control" id="buscar" name="buscar" value=" " >   
                                                     </th>
                                                     <th>
                                                         Tipo
                                                         <select id="assigned-tutor-filter" id="buscadepartamento" name="buscadepartamento" class="form-control mt-2" style="border: #bababa 1px solid; color:#000000;" >
                                                             <?php // if ($_POST["buscadepartamento"] != '') { ?>
-                                                                <!--<option value="//<?php // echo $_POST["buscadepartamento"]; ?>"><?php // echo $_POST["buscadepartamento"]; ?></option>-->
+                                                                <option value="//<?php // echo $_POST["buscadepartamento"]; ?>"><?php // echo $_POST["buscadepartamento"]; ?></option>
                                                             <?php // } ?>
                                                             <option value="">Todos</option>
                                                             <option value="Compras">Presencial</option>
                                                             <option value="Ventas">Online</option>
-                                                            <!--<option value="Alquileres">Alquileres</option>-->
+                                                            <option value="Alquileres">Alquileres</option>
                                                         </select>
                                                     </th> 
 
                                                     <th>
                                                         Fecha desde:
-                                                        <!--<input type="date" id="buscafechadesde" name="buscafechadesde" class="form-control mt-2" value="<?php echo $_POST["buscafechadesde"]; ?>" style="border: #bababa 1px solid; color:#000000;" >-->
+                                                        <input type="date" id="buscafechadesde" name="buscafechadesde" class="form-control mt-2" value="<?php echo $_POST["buscafechadesde"]; ?>" style="border: #bababa 1px solid; color:#000000;" >
                                                         <input type="date" id="buscafechadesde" name="buscafechadesde" class="form-control mt-2" value=" " style="border: #bababa 1px solid; color:#000000;" >
                                                     </th>
                                                     <th>
                                                         Fecha hasta:
-                                                        <!--<input type="date" id="buscafechahasta" name="buscafechahasta" class="form-control mt-2" value="<?php echo $_POST["buscafechahasta"]; ?>" style="border: #bababa 1px solid; color:#000000;" >-->
+                                                        <input type="date" id="buscafechahasta" name="buscafechahasta" class="form-control mt-2" value="<?php echo $_POST["buscafechahasta"]; ?>" style="border: #bababa 1px solid; color:#000000;" >
                                                         <input type="date" id="buscafechahasta" name="buscafechahasta" class="form-control mt-2" value=" " style="border: #bababa 1px solid; color:#000000;" >
                                                     </th>
                                                     <th>
@@ -262,7 +221,7 @@ $respuestaEventoCiudadRegion = Consultas::buscaCiudadRegion($respuesta[0]["id_ci
 //
 //                                $numeroSql = mysqli_num_rows($sql);
                                 ?>
-                                <!--<p style="font-weight: bold; color:purple;"><i class="mdi mdi-file-document"></i> <?php // echo $numeroSql; ?> Resultados encontrados</p>-->
+                                <p style="font-weight: bold; color:purple;"><i class="mdi mdi-file-document"></i> <?php // echo $numeroSql; ?> Resultados encontrados</p>
                                 <p style="font-weight: bold; color:purple;"><i class="mdi mdi-file-document"></i>   Resultados encontrados</p>
                             </form>
 
@@ -277,8 +236,8 @@ $respuestaEventoCiudadRegion = Consultas::buscaCiudadRegion($respuesta[0]["id_ci
                 </div> 
             </div>            
         </section>
-        <!-- End Destacados - Características  -->        
-        
+         End Destacados - Características          
+        -->
  
         <!-- Eventos -->   
         <section class="home-case ptb-35">
@@ -286,7 +245,7 @@ $respuestaEventoCiudadRegion = Consultas::buscaCiudadRegion($respuesta[0]["id_ci
                 <div class="section-title">
                     <!--<span>Descubre</span>-->
                     <!--<h2>Conoce todo lo que EchoMusic tiene para ti</h2>-->
-                    <h2>Eventos recomendados</h2>
+                    <h2>Eventos sobre <?php echo $id; ?></h2>
                     <!--<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse.</p>-->
                 </div>
 

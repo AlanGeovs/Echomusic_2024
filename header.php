@@ -225,9 +225,9 @@
                             </ul>
                         </div>
                         <div class="nav-right">
-                            <form>
+                            <form method="GET" action="buscador.php">
                                 <div class="input-group">
-                                    <input type="text" class="form-control search" placeholder="Buscar..." />
+                                    <input type="text" class="form-control search" id="r" name="r" placeholder="Buscar evento..." />
                                 </div>
                                 <button type="submit">
                                     <i class="bx bx-search"></i>

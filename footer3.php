@@ -107,23 +107,7 @@
         </div>
         <!-- End Go Top Area -->
         
-        <!--Script Tarjetas carrusel-->
-        
 
-        
-        <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js'></script>
-        <script>
-            $('.carousel .carousel-item').each(function () {
-            var minPerSlide = 4; 
-            var next = $(this).next();
-            if (!next.length) {
-            next = $(this).siblings(':first');
-            }
-            next.children(':first-child').clone().appendTo($(this));
-
-            for (var i = 0; i < minPerSlide; i++) { next=next.next(); if (!next.length) { next=$(this).siblings(':first'); } next.children(':first-child').clone().appendTo($(this)); } });
-        </script> 
-        
         <!-- jQuery Min JS -->
         <script src="assets/js/jquery.min.js"></script>
         <!-- Bootstrap Bundle Min JS -->
@@ -132,7 +116,8 @@
         <script src="assets/js/meanmenu.min.js"></script>
         <!-- Magnific Popup Min JS -->
         <script src="assets/js/magnific-popup.min.js"></script>
-
+        <!-- Owl carasol Min Js -->
+        <script src="assets/js/owl.carousel.min.js"></script>
         <!-- Wow Min js -->
         <script src="assets/js/wow.min.js"></script>
         <!-- Isotope MinJs -->
@@ -145,75 +130,5 @@
         <script src="assets/js/contact-form-script.js"></script>
         <!-- Main js -->
         <script src="assets/js/main.js"></script>
-
-
-        <!-- Owl carasol Min Js -->
-        <script src="assets/js/owl.carousel.min.js"></script>        
-        <!--Script para OWL  
-        Ver demos: https://owlcarousel2.github.io/OwlCarousel2/demos/demos.html
-        -->
-        <script>             
-            var owl = $('.owl-carousel');
-                owl.owlCarousel({
-                    loop:true,
-                    margin:10,
-                    responsiveClass:true,
-                    autoplay:true,
-                    autoplayTimeout:2500,
-                    autoplayHoverPause:true,
-                    responsive:{
-                        0:{
-                            items:2,
-                            nav:false
-                        },
-                        600:{
-                            items:2,
-                            nav:false
-                        },
-                        1000:{
-                            items:3,
-                            nav:false 
-                        }
-                }
-            });
-            $('.play').on('click',function(){
-                owl.trigger('play.owl.autoplay',[1000]);
-            })
-            $('.stop').on('click',function(){
-                owl.trigger('stop.owl.autoplay');
-            })
-        </script>  
-<!--        
-        <script>             
-            var owl = $('.owl-carousel-artistas');
-                owl.owlCarousel({
-                    loop:true,
-                    margin:10,
-                    responsiveClass:true,
-                    autoplay:true,
-                    autoplayTimeout:2500,
-                    autoplayHoverPause:true,
-                    responsive:{
-                        0:{
-                            items:3,
-                            nav:false
-                        },
-                        600:{
-                            items:3,
-                            nav:false
-                        },
-                        1000:{
-                            items:3,
-                            nav:false 
-                        }
-                }
-            });
-            $('.play').on('click',function(){
-                owl.trigger('play.owl.autoplay',[1000])
-            })
-            $('.stop').on('click',function(){
-                owl.trigger('stop.owl.autoplay')
-            })
-        </script>        -->
     </body>
 </html>
