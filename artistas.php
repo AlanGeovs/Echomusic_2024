@@ -19,9 +19,9 @@ $resultadosProxEventos = Consultas::eventosPorArtista($respuesta[0]["id_user"]);
 $resultadosEventosPasa = Consultas::eventosPasadosArtista($respuesta[0]["id_user"]);                    
                    
 ?>
-
+ 
         <!-- Start Page Title Area -->
-        <div class="page-title-area">
+        <div class="page-title-area"> 
             <div class="container">
                 <div class="page-title-content">
                     <h2><?php echo $respuesta[0]["nick_user"]; ?></h2>
@@ -51,22 +51,22 @@ $resultadosEventosPasa = Consultas::eventosPasadosArtista($respuesta[0]["id_user
             </div>-->
         </div>
         <!-- End Page Title Area -->
-
+    
         <!-- Detalle de Perfil de Artista  -->
         <section class="feature-area bg-color ptb-35">
             <div class="container">
-                <div class="row align-items-center "> 
+                <div class="row  "> 
                     <!--Perfil-->
                     <?php
-//                    Determino si No hay EVENTOS, si nuevos ni pasados para ajustar diseño
-                    if(empty($resultadosProxEventos) AND empty($resultadosEventosPasa) ){
-                        $AnchoColumna = 'col-lg-12 col-sm-12';
-                        
+//                    Determino si No hay EVENTOS, si nuevos ni pasados para ajustar diseño  
+                    if( count($resultadosProxEventos) || count($resultadosEventosPasa) ){
+                        $AnchoColumna = 'col-lg-5 col-sm-5'; 
                     }else{
-                        $AnchoColumna = 'col-lg-5 col-sm-5';
-                    }
+                        $AnchoColumna = 'col-lg-12 col-sm-12';
+                    } 
                     ?>
-                    <div class=" item dev design">
+                    <div class="<?php echo $AnchoColumna; ?> item dev design">
+                        <h2 class="text-center"> <?php echo $respuesta[0]["nick_user"]; ?></h2>
                         <div class="single-case text-center">
                             <div class="simple-evento-artista">
                                 <a href="#">   
@@ -75,7 +75,7 @@ $resultadosEventosPasa = Consultas::eventosPasadosArtista($respuesta[0]["id_user
                             </div> 
 
                             <div class="feature-tittle">
-                                <h2> <?php echo $respuesta[0]["nick_user"]; ?></h2>
+                                
                                 <span style="font-size: 20px">Seguidores 1 Seguidos 0 Publicaciones 2</span> 
                                 
                                  <!--Descripción-->
@@ -133,25 +133,25 @@ $resultadosEventosPasa = Consultas::eventosPasadosArtista($respuesta[0]["id_user
                                 <div class="content"> 
                                     <div class="row">
                                         <!--img-->
-                                        <div class="col-12 col-sm-6  choose-img">  
-                                            <img src="https://echomusic.cl/images/events/<?php echo $resultadosProxEventos[$e]["img"]; ?>.jpg" alt="<?php echo ''; ?>" width="350px"/> 
+                                        <div class="col-12 col-sm-4  choose-img text-center">  
+                                            <img class="responsiveEveArtista" src="https://echomusic.cl/images/events/<?php echo $resultadosProxEventos[$e]["img"]; ?>.jpg" alt="<?php echo ''; ?>"  /> 
 
 
                                         </div>
                                         <!--Descripción-->
-                                        <div class="col-12 col-sm-6" style="vertical-align: middle;">
+                                        <div class="col-12 col-sm-8" style="vertical-align: middle;">
                                             <ul>
                                                 <li>
                                                     <?php echo $resultadosProxEventos[$e]["name_event"]; ?>                                                    
                                                 </li> 
                                             </ul>
 
-                                            <a href=" ">
+                                            <a class="textoCorto" href=" ">
                                                 <h3><?php echo $resultadosProxEventos[$e]["name_event"]; ?> </h3> 
                                             </a>
 
 
-                                            <p><?php echo $resultadosProxEventos[$e]["desc_event"]; ?> </p>
+                                            <p style="font-size: .9em; color: grey; "><?php echo substr($resultadosProxEventos[$e]["desc_event"],0,220); ?> </p>
 
 
                                             <a href=" " class="box-btn">Ver evento</a>
@@ -253,225 +253,62 @@ $resultadosEventosPasa = Consultas::eventosPasadosArtista($respuesta[0]["id_user
                             </div>
                         </div>                        -->
 
-
-                    </div> 
-
-                </div>
-
-
-
-                <!--Videos Primera Versión-->
-                <section class="choose-area ptb-100">
-                    <div class="container">
-                        <div class="row align-items-center justify-content-md-center"> 
-                            <!--  Principa-->
-                            <div class="col-lg-10 col-sm-10 item dev design">
-                                <div class="single-case text-center">
-                                    <div class="" >
-
-                                        <?php
-                                        $videos = Consultas::videoArtista($respuesta[0]["id_user"]);
-                                        ?>
-                                        <div>
-                                            <?php
-                                            for ($i = 0; $i < count($videos); $i++) {
-                                                echo '<iframe width="100%" height="430px" src="https://www.youtube.com/embed/' . $videos[$i]["embed_multi"] . '" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>';
-                                            }
-                                            ?>
-                                        </div>  
-
-<!--<iframe width="100%" height="430px" src="https://www.youtube.com/embed/pjxa_BEZOHU" title="Dua Lipa, Calvin Harris, Coldplay, Martin Garrix &amp; Kygo, The Chainsmokers Style - Feeling Me" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>-->
-
-                                    </div> 
-
-                                </div> 
-                            </div>                    
-
-                            <!--                            Secundarios-->
-                            <!--                            <div class=" col-lg-5">                        
-                                                            <div class="row text-center"> 
-                                                                <div class="col-12 col-sm-12">
-                                                                    <div class="feature-tittle"> 
-                                                                        <iframe width="70%" height="200px" src="https://www.youtube.com/embed/2JVAUzx1BsE" title="Korolova - Live @ Cordoba, Argentina / Melodic Techno &amp; Progressive House Mix" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-                                                                    </div> 
-                                                                </div>
-                                                                <div class="col-12 col-sm-12">
-                                                                    <div class="feature-tittle"> 
-                                                                        <iframe width="70%" height="200px" src="https://www.youtube.com/embed/sGnjY5IgKP0" title="TOMORROWLAND 2020 🔥 La Mejor Música Electrónica 🔥 Lo Mas Nuevo - Electronica Mix" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-                                                                    </div> 
-                                                                </div> 
-                            
-                                                            </div> 
-                            
-                            
-                            
-                            
-                                                        </div>-->
-
-                            <div class="">
-
-
-
-
-                                <!--Row-->
+                    <!--Condición para mostrar video-->
+                    <?php 
+                    if( count($resultadosProxEventos) == 0){ // si no hay eventos proximos
+                    ?> 
+                        <div class="row align-items-center choose-c justify-content-md-center pt-35">
+                            <div class="section-title ">
+                                <h3>Videos</h3> 
+                            </div> 
+                            <div class="home-2-contact col-lg-12">                       
+                                <div class="content"> 
+                                    <div class="row altoVideo">
+                                        <iframe src="https://echomusic.genesysapp.com/video/videos.php?a=<?php echo $id;?>" class="altoVideo" style="border: none;" width="100%"  ></iframe>
+                                    </div>
+                                    <!--fin del Row-->
+                                </div>
                             </div>
-
-                            <!--</div>  Container--> 
-
-                            </section>
-
-
-                            <!--Divisione smúltiples-->
-                            <!--            <div class="container">
-                                            <div class="row">
-                                                <div class="col-sm-3">
-                                                    Level 1: .col-sm-3
-                                                </div>
-                                                <div class="col-sm-9">
-                                                    <div class="row">
-                                                        <div class="col-8 col-sm-6">
-                                                            Level 2: .col-8 .col-sm-6
-                                                        </div>
-                                                        <div class="col-4 col-sm-6">
-                                                            Level 2: .col-4 .col-sm-6
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>-->
-
-
-                            </section>
-                            <!-- End Destacados - Características  -->        
-
-        
-
-        <!-- Sección flotante ****************************************** --> 
-<!--        <section class="bg-color ptb-10">
-            <div class="container bg-color pb-70  ">
-                <div class="row  align-items-center choose-c justify-content-md-center">
-
-                    <div class="section-title ">
-
-                        <h2>Videos</h2>
-
+                        </div>
+                                </div>  
+                          </div>  
+                      </div>
+                  </section>
+                    <?php  
+                    }else{            
+                    ?> 
                     </div> 
 
-                    <div class="home-2-contact col-lg-10">                       
+                </div> 
+ 
+            </div>
+        </section>
+        <!-- Fin Perfil Artista -->
+        
+        <!-- Videos -->
+        <section class="pricing-area ptb-35">
+            <div class="container">
+                <div class="row align-items-center choose-c justify-content-md-center">
+                    <div class="section-title ">
+                        <h2>Videos</h2> 
+                    </div> 
+                    <div class="home-2-contact col-lg-8">                       
                         <div class="content"> 
                             <div class="row">
-                                img
-                                <div class="col-12 col-sm-6  choose-img">  
-                                    <img src="assets/images/avatars/13.jpg" alt="choose" width="350px" />
-
-                                </div>
-                                Descripción
-                                <div class="col-12 col-sm-6" style="vertical-align: middle;">
-                                    <ul>
-                                        <li>
-                                            EP Sinceridad 
-                                        </li> 
-                                    </ul>
-
-                                    <a href=" ">
-                                        <h3>Cari Monteci</h3>
-                                    </a>
-
-                                    <div class="progress">
-                                        <div class="progress-bar progress-bar-striped bg-warning progress-bar-animated" role="progressbar" style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
-                                    </div>
-                                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptas in fugit minima modi perspiciatis nam aspernatur porro</p>
-
-                                    <a href=" " class="box-btn">Patrocinar</a>
-                                </div>
+                                <iframe src="https://echomusic.genesysapp.com/video/videos.php?a=<?php echo $id;?>" class="altoVideo" style="border: none;" width="100%" ></iframe>
                             </div>
-                            fin del Row
+                            <!--fin del Row-->
                         </div>
                     </div>
                 </div>
             </div>
-
-        </section>-->
-        <!-- End Video Area ******************************************** -->    
-        
-        <!-- Video Area --> 
-        <section class="bg-color ptb-10">
-            <div class="container bg-color pb-70  ">
-                <div class="row  align-items-center choose-c justify-content-md-center">
-
-<!--                    <div class="section-title ">
-
-                        <h2>Videos</h2>
-
-                    </div> -->
-
-                    
-                    
-                    
-                                           
-
-                        <!--Nuevo Código-->
-                        <!-- Destacados Carrusel Area -->
-                        <section class="content home-team-area  "> 
-                            <div class="row"> 
-                                
-
-                                <div class="home-team-slider owl-carousel owl-theme">
-
-                                    
-                                    <div class="single-team">
-                                        <div class="team-img">  
-                                            <a href="#" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal" > <img src="assets/images/case/play.jpg" alt="descatado" /></a>
-                                            
-                                        </div>
- 
-                                    </div>  
-                                    
-                                    <div class="single-team">
-                                        <div class="team-img">  
-                                            <a href="#"> <img src="assets/images/case/play.jpg" alt="descatado" /></a>
-                                            
-                                        </div>
- 
-                                    </div>  
-                                    
-                                    <div class="single-team">
-                                        <div class="team-img">  
-                                            <a href="#"> <img src="assets/images/case/play.jpg" alt="descatado" /></a>
-                                            
-                                        </div>
- 
-                                    </div>  
-                                    
-                                    <div class="single-team">
-                                        <div class="team-img">  
-                                            <a href="#"> <img src="assets/images/case/play.jpg" alt="descatado" /></a>
-                                            
-                                        </div>
- 
-                                    </div>  
-                                    
-                                    <div class="single-team">
-                                        <div class="team-img">  
-                                            <a href="#"> <img src="assets/images/case/play.jpg" alt="descatado" /></a>
-                                            
-                                        </div>
- 
-                                    </div>  
-                                     
-                                </div>
-                            </div>
-                        </section>
-                        <!-- End Destacados Carrusel Area -->                                                        
-
- 
-                </div>
-            </div>
-
         </section>
-        <!-- End Video Area -->         
+        <!-- End Videos -->  
         
-    
+        <?php
+         } //Fin del else de Video
+        ?>
+        
         <!-- Crowdfunding 2 -->
 <?php  
     $respuestaCrowdfunding = Consultas::crowdfunding($respuesta[0]["id_user"]);
@@ -501,9 +338,9 @@ $resultadosEventosPasa = Consultas::eventosPasadosArtista($respuesta[0]["id_user
                             <div class="row">
                                 <!--img-->
                                 <div class="col-12 col-sm-6  choose-img">  
-                                    <img src="https://echomusic.cl/images/avatars/<?php echo $respuesta[0]["id_user"]; ?>.jpg" alt="<?php echo $respuesta[0]["nick_user"]; ?>" width="350px"/> 
-                                    
-
+                                    <a href="crowdfunding.php?c=<?php echo $respuestaCrowdfunding[0]["id_project"]; ?>">
+                                        <img src="https://echomusic.cl/images/avatars/<?php echo $respuesta[0]["id_user"]; ?>.jpg" alt="<?php echo $respuesta[0]["nick_user"]; ?>" width="350px"/> 
+                                    </a> 
                                 </div>
                                 <!--Descripción-->
                                 <div class="col-12 col-sm-6" style="vertical-align: middle;">
@@ -513,7 +350,7 @@ $resultadosEventosPasa = Consultas::eventosPasadosArtista($respuesta[0]["id_user
                                         </li> 
                                     </ul>
 
-                                    <a href=" ">
+                                    <a href="crowdfunding.php?c=<?php echo $respuestaCrowdfunding[0]["id_project"]; ?>">
                                         <h3><?php echo $respuestaCrowdfunding[0]["project_title"]; ?> </h3>
                                     </a> 
                                     <h6>Avance del <?php echo $recaudadoPorcentaje; ?>% recaudado</h6>
@@ -1131,7 +968,17 @@ $resultadosEventosPasa = Consultas::eventosPasadosArtista($respuesta[0]["id_user
         <!-- End Go Top Area -->
         
   
-
+        <!-- Para Video -->
+        <!-- Javascript -->
+		<script src="video/assets/js/jquery-3.3.1.min.js"></script>
+		<script src="video/assets/js/jquery-migrate-3.0.0.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+		
+        <script src="video/assets/js/jquery.backstretch.min.js"></script>
+        <script src="video/assets/js/wow.min.js"></script>
+        <script src="video/assets/js/waypoints.min.js"></script>
+        <script src="video/assets/js/scripts.js"></script>
+        <!-- Fin VIDEO  -->        
 
         <!-- MeanMenu Min JS -->
         <script src="assets/js/meanmenu.min.js"></script>
@@ -1180,6 +1027,23 @@ $resultadosEventosPasa = Consultas::eventosPasadosArtista($respuesta[0]["id_user
                                     }
                                 }
                             });
+                  $('.owl-carousel-video').owlCarousel({
+                        items:1,
+                        merge:true,
+                        loop:true,
+                        margin:10,
+                        video:true,
+                        lazyLoad:true,
+                        center:true,
+                        responsive:{
+                            480:{
+                                items:2
+                            },
+                            600:{
+                                items:4
+                            }
+                        }
+                    });
             });            
             
                

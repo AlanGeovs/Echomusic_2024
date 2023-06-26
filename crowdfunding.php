@@ -274,7 +274,7 @@ $diff = $date1->diff($date2);
                                         </h2>
                                         <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
                                             <div class="accordion-body">
-                                                <strong>This is the second item's accordion body.</strong> It is hidden by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
+                                                Aún no cuenta con preguntas.
                                             </div>
                                         </div>
                                     </div>
@@ -286,7 +286,7 @@ $diff = $date1->diff($date2);
                                         </h2>
                                         <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
                                             <div class="accordion-body">
-                                                <strong>This is the third item's accordion body.</strong> It is hidden by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
+                                                Aún no hay avances.
                                             </div>
                                         </div>
                                     </div>
@@ -658,7 +658,9 @@ $diff = $date1->diff($date2);
                 <!--Tarifas formato blog-->
                 
                  
-                
+                <div class="row text-center pb-35">
+                    <h2>Recompensas</h2>
+                </div>
                 <div class="row">
                     
                     <!--TIERS Tarifas Bucle-->
@@ -675,20 +677,70 @@ $diff = $date1->diff($date2);
 
                                 <div class="pricing-top-heading">
                                     <h3><?php echo $respuestaTierCrow[$i]['tier_title']; ?></h3>
-                                    <p><?php echo $respuestaTierCrow[$i]['tier_desc']; ?></p>
-                                </div>
+                                    <!--<p><?php echo $respuestaTierCrow[$i]['tier_desc']; ?></p>-->
+                                </div> 
                                 <h3>$<?php echo number_format($respuestaTierCrow[$i]['tier_amount']); ?></h3>
-                                <ul>
-                                    <li>
-                                        <i class="bx bx-badge-check"></i>
-                                        100 colaboradores
-                                    </li>  
+                                <ul  style="  margin: 0 auto 10px;" > 
+                                    <li> <i class="bx bx-gift"></i> <?php echo $respuestaTierCrow[$i]['t_reward_01']; ?> </li> 
+                                    <li> <i class="bx bx-gift"></i> <?php echo $respuestaTierCrow[$i]['t_reward_02']; ?> </li> 
+                                    <li> <i class="bx bx-gift"></i> <?php echo $respuestaTierCrow[$i]['t_reward_03']; ?> </li> 
+
                                 </ul>
-                                <a class="box-btn" href="shared-hosting.html">
-                                    Colaborar
-                                </a>  
+                                <div style="  margin: 0 auto 10px;">
+                                    <i class="bx bx-arrow-to-right"></i><a type="button" class=" text-center" data-bs-toggle="modal" data-bs-target="#ModalRecompensa<?php echo $i; ?>">Ver todas las recompensas</a><br> 
+                                </div>
+                                <div>
+                                    <a class="box-btn" href="pago_crowdfunding.php?c=<?php echo $id; ?>&t=<?php echo $respuestaTierCrow[$i]['id_tier']; ?>">
+                                        Colaborar
+                                    </a>   
+                                </div>
+                               
+                                
                             </div>
                         </div> 
+                    
+                    
+    <!-- MODAL Croudfunding Recompensas  -->
+                        <div class="modal" id="ModalRecompensa<?php echo $i; ?>">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+
+                                    <!-- Modal Header -->
+                                    <div class="modal-header">
+                                        <h4 class="modal-title"><?php echo $respuestaTierCrow[$i]['tier_title']; ?> </h4>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                    </div>
+
+                                    <!-- Modal body -->
+                                    <div class="modal-body"> 
+                                        <p style="text-align: left;"><?php echo $respuestaTierCrow[$i]['tier_desc']; ?></p> 
+                                        <ul>
+                                            
+                                        <?php 
+                                        for ($j = 1; $j <= 4; $j++) {
+                                            $t_reward_num = 't_reward_0' . $j;
+                                            ?>
+                                            <?php if (!empty($respuestaTierCrow[$i][$t_reward_num])) { ?> 
+                                            <li> <i class="bx bx-gift"></i>  <?php echo $respuestaTierCrow[$i][$t_reward_num]; ?> </li>
+
+                                                    <?php
+                                                } //fin del IF
+                                            } // fin del FOR
+                                            ?>   
+                                                
+                                        </ul> 
+                                    </div>
+
+                                    <!-- Modal footer -->
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cerrar</button>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>                    
+    <!-- FINAL MODAL Croudfunding Recompensas  -->                    
+                    
                         <?php
                      } //fin del FOR
                     ?>

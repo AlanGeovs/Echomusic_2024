@@ -9,11 +9,11 @@ if (isset($_GET["r"])) {
     $fechaInicial   = $_GET["fi"];
     $fechaFinal   = $_GET["ff"]; 
     $region   = $_GET["reg"]; 
-    $titleBusqueda = "Eventos sobre ".$id;
+    $titleBusqueda = "Artistas sobre ".$id;
     
 //    $eventosRelacionados = Consultas::eventosCarteleraBusqueda($id);
 } else {
-    $titleBusqueda = "Eventos Recomendados";
+    $titleBusqueda = "Artistas Recomendados";
 //    $eventosRelacionados = Consultas::ultimosEventos2();
 }
 
@@ -62,32 +62,32 @@ $respuestaEventoCiudadRegion = Consultas::buscaCiudadRegion($respuesta[0]["id_ci
 
     if ( $_GET["r"] == '' AND $_GET["t"]== ''  AND $_GET["fi"] == '' AND $_GET["ff"] == '' AND  $_GET["reg"] == '') {
 //        $query = "SELECT * FROM datos_usuario ";
-        $eventosRelacionados = Consultas::ultimosEventos2();
+        $artistasRelacionados = Consultas::ultimosArtistas();;
     } else {
             //Ambas Fechas  
             if ($_GET["fi"] != '' && $_GET["ff"] != '') {
                 //Ambas Fechas con  Region 
                 if ($_GET["reg"] != '') {
                         echo "Fechas: Ambas + Region=".$_GET["reg"];
-                        $eventosRelacionados = Consultas::eventosFechasReg($id,$_GET["fi"],$_GET["ff"], $_GET["reg"]); 
+                        $artistasRelacionados = Consultas::eventosFechasReg($id,$_GET["fi"],$_GET["ff"], $_GET["reg"]); 
                     }
                     //Ambas Fechas sin  Region 
                      else {
                         echo "Fechas: Ambas";
-                        $eventosRelacionados = Consultas::eventosFechas($id, $_GET["fi"], $_GET["ff"]);
+                        $artistasRelacionados = Consultas::eventosFechas($id, $_GET["fi"], $_GET["ff"]);
                     }
                 }
             
             if($_GET["fi"] != '' AND $_GET["ff"] = ''){
                  echo "Fechas: Inicial";
-                $eventosRelacionados = Consultas::eventosFechaInicial($id,$_GET["fi"]);
+                $artistasRelacionados = Consultas::eventosFechaInicial($id,$_GET["fi"]);
             }
             if($_GET["ff"] != '' AND $_GET["fi"] = ''){
                  echo "Fechas: Final";
-                $eventosRelacionados = Consultas::eventosFechaFinal($id,$_GET["ff"]);
+                $artistasRelacionados = Consultas::eventosFechaFinal($id,$_GET["ff"]);
             }
             else{
-                $eventosRelacionados = Consultas::eventosCarteleraBusqueda($id);
+                $artistasRelacionados = Consultas::artistaBusqueda($id);
                 
             }
 //        $query = "SELECT * FROM datos_usuario ";
@@ -211,53 +211,75 @@ $respuestaEventoCiudadRegion = Consultas::buscaCiudadRegion($respuesta[0]["id_ci
             <div class="container">
                 <div class="section-title">
                     <span>Búsqueda avanzada</span>
-                    <h2>Encuentra tu evento, artista o espacio favorito</h2>
+                    <h2>Encuentra  artista </h2>
                     <!--<p>It is a long established fact that a reader will be distracted by the rea dable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more.</p>-->
                 </div>
 
-                <div class="row">
-                    <div class="col-lg-12 col-md-12">
-                        <div class="content">
-                            <form id="form2"  name="form2" method="GET" action="cartelera.php"> 
+                <div class="row align-items-center choose-c justify-content-md-center">
+                    <div class="col-lg-12 col-md-12 ">
+                        <div class="content"> 
+                            <form id="form2"  name="form2" method="GET" action="buscar_artista.php"> 
                                 <div class="row">
                                     <div class="col-lg-3 col-sm-3">
                                         <div class="form-group">
-                                            <input type="text" class="form-control" id="r" name="r" required data-error="Buscar un evento o artista" placeholder="Buscar evento, artista o espacio"  <?php echo $valueEvento; ?>  />
+                                            <input type="text" class="form-control" id="r" name="r" required data-error="Buscar un artista" placeholder="Buscar artista"  <?php echo $valueEvento; ?>  />
                                             <div class="help-block with-errors"></div>
                                         </div>
                                     </div>
-
-<!--                                     <div class="col-lg-2 col-md-2">
-                                        <div class="form-group">
-                                            <select  name="t" id="t" class="form-control"  data-error="Selecciona un tipo de evento"   />
-                                            <?php if ($_GET["t"] != '') { ?>
-                                                <option value="<?php echo $_GET["t"]; ?>"><?php echo $_GET["t"]; ?></option>
-                                            <?php } ?>                                            
-                                                <option value="">Tipo de evento</option>
-                                                <option value="Presencial">Presencial</option>
-                                                <option value="Online">Online</option>
+ 
+ 
+                                    <!--Género-->
+                                    <div class="col-lg-2 col-md-2">
+                                        <div class="form12-group">
+                                            <select  name="gen" id="gen" class="form-control"  data-error="Selecciona un Género"   />
+                                            <?php if ($_GET["gen"] != '') { 
+                                                $RegionesArregle = ['1'=>'Ambient','2'=>'Balada','3'=>'Blues','4'=>'Country','5'=>'Cumbia','6'=>'Electrónica','7'=>'Folk','8'=>'Folklore','9'=>'Funk','10'=>'Grunge','11'=>'Indie','12'=>'Jazz','13'=>'Latino','14'=>'Metal','15'=>'Pop' ]
+                                                ?>                                            
+                                                <option value="<?php echo $_GET["reg"]; ?>"><?php echo $RegionesArregle[$_GET["reg"]]; ?></option>
+                                            <?php } ?> 
+                                                <option value="">Género</option> 
+                                                <option value="1">Ambient</option>
+                                                <option value="2">Balada</option>
+                                                <option value="3">Blues</option>
+                                                <option value="4">Country</option>
+                                                <option value="5">Cumbia</option>
+                                                <option value="6">Electrónica</option>
+                                                <option value="7">Folk</option>
+                                                <option value="8">Folklore</option>
+                                                <option value="9">Funk</option>
+                                                <option value="10">Grunge</option>
+                                                <option value="11">Indie</option>
+                                                <option value="12">Jazz</option>
+                                                <option value="13">Latino</option>
+                                                <option value="14">Metal</option>
+                                                <option value="15">Pop</option>
                                             </select>
-                                            <div class="help-block with-errors"></div>
                                         </div>
-                                    </div>-->
-
-                                     <div class="col-lg-2 col-md-2">                                         
-                                        <div class="form-group">
-                                            <input type="date" id="fi" name="fi" data-error="Selecciona la fecha inicial" value="<?php echo $_GET["fi"]; ?>" class="form-control" placeholder="Fecha inicial" />
-                                            <div class="help-block with-errors"></div>
-                                        </div>
-                                        <div class="help-block texto-fechas" style="">Fecha inicial</div>
                                     </div>
-
-                                     <div class="col-lg-2 col-md-2">
-                                        <div class="form-group">
-                                            <input type="date" id="ff" name="ff" data-error="Selecciona la fecha final" value="<?php echo $_GET["ff"]; ?>" class="form-control" placeholder="Fecha final" />
-                                            <div class="help-block with-errors"></div>
+                                    
+                                    <!--Tipo de Artista-->
+                                    <div class="col-lg-2 col-md-2">
+                                        <div class="form12-group">
+                                            <select  name="tip" id="tip" class="form-control"  data-error="Selecciona un tipo de artista"   />
+                                            <?php if ($_GET["tip"] != '') { 
+                                                $RegionesArregle = ['1'=>'Cantante','2'=>'Banda','3'=>'Solista','4'=>'Músico Instrumentista','5'=>'Tributo','6'=>'DJ', '7'=>'Músico Home Studio'  ]
+                                                ?>                                            
+                                                <option value="<?php echo $_GET["reg"]; ?>"><?php echo $RegionesArregle[$_GET["reg"]]; ?></option>
+                                            <?php } ?> 
+                                                <option value="">Tipo</option>
+                                                <option value="1">Cantante</option>
+                                                <option value="2">Banda</option>
+                                                <option value="3">Solista</option>
+                                                <option value="4">Músico Instrumentista</option>
+                                                <option value="5">Tributo</option>
+                                                <option value="6">DJ</option>
+                                                <option value="7">Músico Home Studio</option> 
+                                            </select>
                                         </div>
-                                        <div class="help-block texto-fechas" style="">Fecha final</div>
                                     </div>
-
-                                    <div class="col-lg-3 col-md-3">
+                                    
+                                    <!--Region-->
+                                    <div class="col-lg-2 col-md-2">
                                         <div class="form12-group">
                                             <select  name="reg" id="reg" class="form-control"  data-error="Selecciona una región"   />
                                             <?php if ($_GET["reg"] != '') { 
@@ -275,9 +297,9 @@ $respuestaEventoCiudadRegion = Consultas::buscaCiudadRegion($respuesta[0]["id_ci
                                         </div>
                                     </div>
 
-                                    <div class="col-lg-2 col-md-2">
+                                    <div class="col-lg-3 col-md-3">
                                         <button type="submit" class="default-btn page-btn box-btn">
-                                           <i class="bx bx-search"></i>   Buscar 
+                                           <i class="bx bx-search"></i>   Buscar Artista
                                         </button>
                                         <div id="msgSubmit" class="h3 text-center hidden"></div>
                                         <div class="clearfix"></div>
@@ -293,7 +315,7 @@ $respuestaEventoCiudadRegion = Consultas::buscaCiudadRegion($respuesta[0]["id_ci
           
         
  
-        <!-- Eventos -->   
+        <!-- Artiestas -->   
         <section class="home-case ptb-35">
             <div class="container">
                 <div class="section-title">
@@ -318,11 +340,11 @@ $respuestaEventoCiudadRegion = Consultas::buscaCiudadRegion($respuesta[0]["id_ci
                     
                     #Notar que es lo mismo que hacer
                     # date("Y-m-d H:i:s")                                
-                    for ($k = 0; $k < count($eventosRelacionados); $k++) {                        
+                    for ($k = 0; $k < count($artistasRelacionados); $k++) {                        
                         //Busca CIudad y Región
-                        $respuestaCiudadRegion = Consultas::buscaCiudadRegion($eventosRelacionados[$k]["id_city"], $eventosRelacionados[$k]["id_region"]);
+                        $respuestaCiudadRegion = Consultas::buscaCiudadRegion($artistasRelacionados[$k]["id_city"], $artistasRelacionados[$k]["id_region"]);
                     
-                        $fechaEntera1 = strtotime($eventosRelacionados[$k]["date_event"]);
+                        $fechaEntera1 = strtotime($artistasRelacionados[$k]["date_event"]);
                         $anio = date("Y", $fechaEntera1);
                         $mes = date("m", $fechaEntera1);
                         $dia = date("d", $fechaEntera1);
@@ -330,8 +352,8 @@ $respuestaEventoCiudadRegion = Consultas::buscaCiudadRegion($respuesta[0]["id_ci
                         $hora = date("H", $fechaEntera1);
                         $minutos = date("i", $fechaEntera1);
 
-                        if (preg_match("/|\b/", $eventosRelacionados[$k]["IMG"])) {
-                            $fotos = explode("|", $eventosRelacionados[$k]["IMG"]);
+                        if (preg_match("/|\b/", $artistasRelacionados[$k]["IMG"])) { 
+                            $fotos = explode("|", $artistasRelacionados[$k]["IMG"]);
                             //var_dump($fotos);
                             $total = count($fotos) - 1;
                             $indice = mt_rand(0, intval($total));
@@ -339,15 +361,15 @@ $respuestaEventoCiudadRegion = Consultas::buscaCiudadRegion($respuesta[0]["id_ci
                             //echo $img."<br>";
                             //echo "verdadero";
                         } else {
-                            $img = substr($eventosRelacionados[$k]["IMG"], 16);
+                            $img = substr($artistasRelacionados[$k]["IMG"], 16);
                             //echo "falso";
                         }
                         echo '                    
                     <div class="col-lg-4 col-sm-6 item cyber">
                         <div class="single-case">
                             <div class="case-img ">
-                                <a href="eventos.php?e=' . $eventosRelacionados[$k]["id_event"] . '">
-                                    <img class="imgEvent tamano-1" src="https://echomusic.cl/images/events/' . $eventosRelacionados[$k]["img"] . '.jpg" height="100%"  alt="case"/> 
+                                <a href="artistas.php?a=' . $artistasRelacionados[$k]["id_user"] . '">
+                                    <img class="imgEvent tamano-1" src="https://echomusic.cl/images/avatars/' . $artistasRelacionados[$k]["id_user"] . '.jpg" height="100%"  alt="case"/> 
                                 </a>
                             </div>
 
@@ -355,30 +377,23 @@ $respuestaEventoCiudadRegion = Consultas::buscaCiudadRegion($respuesta[0]["id_ci
                                 <!--Titulo-->
                                 <div class="row text-center">
                                     <div class="col-12"> 
-                                        <a href="eventos.php?e=' . $eventosRelacionados[$k]["id_event"] . '"> <h3>' . $eventosRelacionados[$k]["name_event"] . '</h3></a>
+                                        <a href="artistas.php?a=' . $artistasRelacionados[$k]["id_user"] . '"> <h3>+++' . $artistasRelacionados[$k]["name_event"] . '</h3></a>
                                     </div> 
                                 </div>
                                 
                                 <!--Entrada Fecha hora Costo Compra-->
                                 <div class="row text-center ">
                                     <div class="col-lg-6 col-sm-6">
-                                        <p>' . $dia . '-' . $mes . '-' . $anio . ' | ' . $hora . ':' . $minutos . ' hrs.</p>
+                                        <p>-------------------------------' . $dia . '-' . $mes . '-' . $anio . ' | ' . $hora . ':' . $minutos . ' hrs.</p>
 
                                         <a href="#" class="line-bnt"> 
                                         '.$respuestaCiudadRegion[0]["name_region"].', '.$respuestaCiudadRegion[0]["name_city"].'
                                         </a>
                                     </div>
                                     
-                                    <div class="col-lg-6 col-sm-6">';
-                                    if($eventosRelacionados[$k]["ticket_value"]==0 ){
-                                        echo  '<h3>Gratuito</h3>
-                                                <a href="eventos.php?e=' . $eventosRelacionados[$k]["id_event"] . '" class="box-btn">Reservar</a>';
-                                    }else{
-                                        echo  '<h4>$ ' .number_format( ($eventosRelacionados[$k]["ticket_value"]+$eventosRelacionados[$k]["ticket_commission"]), 0, ',', '.'). '</h4>
-                                                <a href="eventos.php?e=' . $eventosRelacionados[$k]["id_event"] . '" class="box-btn">Comprar</a>';
-                                    }
-                                    
-                                    echo '
+                                    <div class="col-lg-6 col-sm-6"> 
+                                
+                                                <a href="artistas.php?a=' . $artistasRelacionados[$k]["id_user"] . '" class="box-btn">Ver más</a> 
                                     </div> 
                                 </div>                                                                                               
                             </div>

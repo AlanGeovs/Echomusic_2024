@@ -105,12 +105,24 @@ class Consultas{
         
         //Home Artistas
         static public function ultimosArtistas(){ 
-                $stmt=Conexion::conectar()->prepare("SELECT u.*, gu.*, g.* FROM users u INNER JOIN genre_user gu ON u.id_user=gu.id_user INNER JOIN genres g ON gu.id_genre = g.id_genre WHERE  picture_ready=1 AND verified like 'yes' AND user_destacado=1 ORDER BY RAND() LIMIT 6;");              
+                $stmt=Conexion::conectar()->prepare("SELECT u.*, gu.*, g.* FROM users u INNER JOIN genre_user gu ON u.id_user=gu.id_user INNER JOIN genres g ON gu.id_genre = g.id_genre WHERE  picture_ready=1 AND verified like 'yes' AND user_destacado=1 ORDER BY RAND() LIMIT 12;");              
                 $stmt->execute();
                 return $stmt->fetchAll();
                 //return $id;
         $stmt->close();
 	} 
+        
+        //Artista de Büsqeuda por Cartelera
+        static public function artistaBusqueda($id){ 
+                $stmt=Conexion::conectar()->prepare("SELECT u.*, gu.*, g.* FROM users u INNER JOIN genre_user gu ON u.id_user=gu.id_user INNER JOIN genres g ON gu.id_genre = g.id_genre WHERE picture_ready=1 AND verified like 'yes'  AND u.`nick_user` LIKE ? ORDER BY RAND() LIMIT 12;");
+//                $stmt=Conexion::conectar()->prepare("SELECT e.* FROM events_public as e WHERE e.active_event=1 AND e.id_event =:id GROUP BY e.id_user ORDER BY RAND() LIMIT 3;");
+//        $stmt->bindParam(":id",$id,PDO::PARAM_INT);
+        $stmt->bindValue(1, "%$id%", PDO::PARAM_STR); 
+        $stmt->execute();
+        return $stmt->fetchAll();
+        //return $id;
+        $stmt->close();
+	}        
         
         //Detalle de Artistas
 	static public function detallesArtistas($id){
@@ -149,11 +161,50 @@ class Consultas{
         }
         
 	static public function ultimosEventos2(){
-		$stmt=Conexion::conectar()->prepare("SELECT e.*, t.* FROM events_public as e JOIN tickets_public as t ON e.id_event = t.id_event WHERE e.active_event=1 GROUP BY e.id_user ORDER BY e.id_event DESC LIMIT 6;");
+		$stmt=Conexion::conectar()->prepare("SELECT e.*, t.* FROM events_public as e JOIN tickets_public as t ON e.id_event = t.id_event WHERE e.active_event=1 GROUP BY e.id_user ORDER BY e.date_event DESC  LIMIT 6;");
 		$stmt->execute();
 		return $stmt->fetchAll();
         $stmt->close();       
-        }  
+        }
+        
+	static public function ultimosCrowdfunding(){
+		$stmt=Conexion::conectar()->prepare("SELECT pc.*, pd.* FROM `projects_crowdfunding` pc INNER JOIN project_desc pd ON pd.id_project = pc.id_project WHERE pc.status_project>0 AND pc.status_project<5 ORDER BY pc.project_date_end DESC;");
+		$stmt->execute();
+		return $stmt->fetchAll();
+        $stmt->close();       
+        }   
+        
+        static public function ultimosCrowdfundingBusqueda($id){ 
+                $stmt=Conexion::conectar()->prepare("SELECT pc.*, pd.* FROM `projects_crowdfunding` pc INNER JOIN project_desc pd ON pd.id_project = pc.id_project WHERE pc.project_title LIKE ? AND pc.status_project>0 AND pc.status_project<5 ORDER BY pc.project_date_end DESC;");
+//                $stmt=Conexion::conectar()->prepare("SELECT e.* FROM events_public as e WHERE e.active_event=1 AND e.id_event =:id GROUP BY e.id_user ORDER BY RAND() LIMIT 3;");
+//        $stmt->bindParam(":id",$id,PDO::PARAM_INT);
+        $stmt->bindValue(1, "%$id%", PDO::PARAM_STR); 
+        $stmt->execute();
+        return $stmt->fetchAll();
+        //return $id;
+        $stmt->close();
+	}        
+        static public function ultimosCrowdfundingBusquedaRegion($id, $reg){ 
+                $stmt=Conexion::conectar()->prepare("SELECT u.*, pc.* FROM `users` u INNER JOIN `projects_crowdfunding` pc ON pc.id_user = u.id_user WHERE pc.project_title like ? AND u.id_region = ? AND pc.status_project>0 AND pc.status_project<5 ORDER BY pc.project_date_end DESC;");
+//                $stmt=Conexion::conectar()->prepare("SELECT e.* FROM events_public as e WHERE e.active_event=1 AND e.id_event =:id GROUP BY e.id_user ORDER BY RAND() LIMIT 3;");
+//        $stmt->bindParam(":id",$id,PDO::PARAM_INT); 
+        $stmt->bindValue(1, "%$id%", PDO::PARAM_STR); 
+        $stmt->bindValue(2, $reg, PDO::PARAM_STR);   
+        $stmt->execute();
+        return $stmt->fetchAll();
+        //return $id;
+        $stmt->close();
+	}        
+        static public function ultimosCrowdfundingRegion( $reg){ 
+                $stmt=Conexion::conectar()->prepare("SELECT u.*, pc.* FROM `users` u INNER JOIN `projects_crowdfunding` pc ON pc.id_user = u.id_user WHERE   u.id_region = ? AND pc.status_project>0 AND pc.status_project<5 ORDER BY pc.project_date_end DESC;");
+//                $stmt=Conexion::conectar()->prepare("SELECT e.* FROM events_public as e WHERE e.active_event=1 AND e.id_event =:id GROUP BY e.id_user ORDER BY RAND() LIMIT 3;");
+//        $stmt->bindParam(":id",$id,PDO::PARAM_INT);  
+        $stmt->bindValue(1, $reg, PDO::PARAM_STR);  
+        $stmt->execute();
+        return $stmt->fetchAll();
+        //return $id;
+        $stmt->close();
+	}        
         
 //	public function eventosRelacionadosGenero(){
 //		$stmt=Conexion::conectar()->prepare("SELECT e.*, t.* FROM events_public as e JOIN tickets_public as t ON e.id_event = t.id_event WHERE e.active_event=1 GROUP BY e.id_user ORDER BY e.id_event DESC LIMIT 6;");
@@ -183,7 +234,7 @@ class Consultas{
         
         //Eventos de Büsqeuda por Cartelera
         static public function eventosCarteleraBusqueda($id){ 
-                $stmt=Conexion::conectar()->prepare("SELECT e.* FROM events_public as e WHERE e.active_event=1 AND e.name_event LIKE ? GROUP BY e.id_user ORDER BY RAND() LIMIT 6;");
+                $stmt=Conexion::conectar()->prepare("SELECT e.* FROM events_public as e WHERE e.active_event=1 AND e.name_event LIKE ? GROUP BY e.id_user ORDER BY date_event DESC LIMIT 6;");
 //                $stmt=Conexion::conectar()->prepare("SELECT e.* FROM events_public as e WHERE e.active_event=1 AND e.id_event =:id GROUP BY e.id_user ORDER BY RAND() LIMIT 3;");
 //        $stmt->bindParam(":id",$id,PDO::PARAM_INT);
         $stmt->bindValue(1, "%$id%", PDO::PARAM_STR); 
@@ -192,6 +243,8 @@ class Consultas{
         //return $id;
         $stmt->close();
 	}
+        
+
         
         //Busca Ciudad y Región
         static public function buscaCiudadRegion($idCity, $idReg){
@@ -252,7 +305,7 @@ class Consultas{
 	}
         
         static public function recaudadoCrowdfunding($id){ 
-                $stmt=Conexion::conectar()->prepare("SELECT sum(`backer_amount`+`backer_added_amount`) FROM `project_backers` WHERE `id_project` =:id;");
+                $stmt=Conexion::conectar()->prepare("SELECT sum(`backer_amount`+`backer_added_amount`) FROM `project_backers` WHERE `id_project` =:id AND status_backer=1");
         $stmt->bindParam(":id",$id,PDO::PARAM_INT);
         $stmt->execute();
         return $stmt->fetch();
@@ -262,7 +315,7 @@ class Consultas{
         
         static public function obtenerPorcentaje($cantidad, $total) {
             $porcentaje = ((float)$cantidad * 100) / $total; // Regla de tres
-            $porcentaje = round($porcentaje, 0);  // Quitar los decimales
+            $porcentaje = round($porcentaje, 1);  // Quitar los decimales
             return $porcentaje;
         }
         
@@ -296,6 +349,70 @@ class Consultas{
         $stmt->close();
 	}   
         
-         
+        //Tiers de CrowdFunding +id_tier
+	static public function tierCrowdfundingIDtier($id){
+        $stmt=Conexion::conectar()->prepare("SELECT * FROM `project_tiers` WHERE `id_tier` =:id;");		
+        $stmt->bindParam(":id",$id,PDO::PARAM_INT);
+        $stmt->execute();
+        return $stmt->fetchAll();
+        //return $id;
+        $stmt->close();
+	}   
+        
+//         =============
+//         BUSCADOR AVANZADO
+//         =============
+        //Eventos de Búsqueda + Fecha Inicial + Fecha Final
+        static public function eventosFechas($id,$fi,$ff){ 
+                $stmt=Conexion::conectar()->prepare("SELECT e.* FROM events_public as e WHERE e.active_event=1 AND e.name_event LIKE ? AND e.date_event BETWEEN ? AND ? GROUP BY e.id_user ORDER BY date_event DESC LIMIT 6;");
+//                $stmt=Conexion::conectar()->prepare("SELECT e.* FROM events_public as e WHERE e.active_event=1 AND e.id_event =:id GROUP BY e.id_user ORDER BY RAND() LIMIT 3;");
+//        $stmt->bindParam(":id",$id,PDO::PARAM_INT);
+        $stmt->bindValue(1, "%$id%", PDO::PARAM_STR); 
+        $stmt->bindValue(2, $fi, PDO::PARAM_STR); 
+        $stmt->bindValue(3, $ff, PDO::PARAM_STR); 
+        $stmt->execute();
+        return $stmt->fetchAll();
+        //return $id;
+        $stmt->close();
+	}                 
+        //Eventos de Búsqueda + Fecha Inicial + Fecha Final + Region
+        static public function eventosFechasReg($id,$fi,$ff, $reg){ 
+                $stmt=Conexion::conectar()->prepare("SELECT e.* FROM events_public as e WHERE e.active_event=1 AND e.name_event LIKE ? AND e.date_event BETWEEN ? AND ? AND e.id_region = ? GROUP BY e.id_user ORDER BY date_event DESC LIMIT 6;");
+//                $stmt=Conexion::conectar()->prepare("SELECT e.* FROM events_public as e WHERE e.active_event=1 AND e.id_event =:id GROUP BY e.id_user ORDER BY RAND() LIMIT 3;");
+//        $stmt->bindParam(":id",$id,PDO::PARAM_INT);
+        $stmt->bindValue(1, "%$id%", PDO::PARAM_STR); 
+        $stmt->bindValue(2, $fi, PDO::PARAM_STR); 
+        $stmt->bindValue(3, $ff, PDO::PARAM_STR); 
+        $stmt->bindParam(4, $reg,PDO::PARAM_INT);
+        $stmt->execute();
+        return $stmt->fetchAll();
+        //return $id;
+        $stmt->close();
+	}                 
+        //Eventos de Búsqueda +  Fecha Inicial 
+        static public function eventosFechaInicial($id,$fi){ 
+                $stmt=Conexion::conectar()->prepare("SELECT e.* FROM events_public as e WHERE e.active_event=1 AND e.name_event LIKE ? AND e.date_event BETWEEN ? AND now() GROUP BY e.id_user ORDER BY date_event DESC LIMIT 6;");
+//                $stmt=Conexion::conectar()->prepare("SELECT e.* FROM events_public as e WHERE e.active_event=1 AND e.id_event =:id GROUP BY e.id_user ORDER BY RAND() LIMIT 3;");
+//        $stmt->bindParam(":id",$id,PDO::PARAM_INT);
+        $stmt->bindValue(1, "%$id%", PDO::PARAM_STR); 
+        $stmt->bindValue(2, $fi, PDO::PARAM_STR);   
+        $stmt->execute();
+        return $stmt->fetchAll();
+        //return $id;
+        $stmt->close();
+	}   
+        
+        //Eventos de Búsqueda +  Fecha Inicial 
+        static public function eventosFechaFinal($id,$ff){ 
+                $stmt=Conexion::conectar()->prepare("SELECT e.* FROM events_public as e WHERE e.active_event=1 AND e.name_event LIKE ? AND e.date_event BETWEEN now() AND ? GROUP BY e.id_user ORDER BY date_event DESC LIMIT 6;");
+//                $stmt=Conexion::conectar()->prepare("SELECT e.* FROM events_public as e WHERE e.active_event=1 AND e.id_event =:id GROUP BY e.id_user ORDER BY RAND() LIMIT 3;");
+//        $stmt->bindParam(":id",$id,PDO::PARAM_INT);
+        $stmt->bindValue(1, "%$id%", PDO::PARAM_STR); 
+        $stmt->bindValue(2, $ff, PDO::PARAM_STR); 
+        $stmt->execute();
+        return $stmt->fetchAll();
+        //return $id;
+        $stmt->close();
+	}                 
 
 }

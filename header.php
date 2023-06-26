@@ -28,6 +28,10 @@
         <link rel="stylesheet" href="assets/css/responsive.css"/>
         
 <!--Para Artistas-->
+
+        <link rel="stylesheet" href="video/assets/css/animate.css"> 
+        <link rel="stylesheet" href="video/assets/css/media-queries.css">
+        
         <!-- jQuery Min JS -->
         <script src="assets/js/jquery.min.js"></script>
         <!-- Bootstrap Bundle Min JS -->
@@ -151,8 +155,8 @@
 
                                     <a href="cartelera.php" class="nav-link">Cartelera</a>
                                 </li>
-                                <li class="nav-item">
-                                    <a href="cartelera.php" class="nav-link dropdown-toggle">Artistas</a>
+                                <li class="nav-item"> 
+                                    <a href="buscar_artista.php" class="nav-link dropdown-toggle">Artistas</a>
 <!--                                    <ul class="dropdown-menu">
                                         <li class="nav-item">
                                             <a href="#" class="nav-link">Apoya Crowdfunding</a>
@@ -162,8 +166,8 @@
                                         </li>
                                     </ul>-->
                                 </li>
-                                <li class="nav-item">
-                                    <a href="#" class="nav-link dropdown-toggle">Apoya Crowdfunding</a>
+                                <li class="nav-item"> 
+                                    <a href="buscar_crowdfunding.php" class="nav-link dropdown-toggle">Apoya Crowdfunding</a>
 <!--                                    <ul class="dropdown-menu">
                                         <li class="nav-item">
                                             <a href="#" class="nav-link">Case Studies</a>

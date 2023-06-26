@@ -137,7 +137,33 @@ and open the template in the editor.
 }
 .tamano-4{
   width:150px;
-  height:150px;
+  height:210px;
+}
+
+/*Imágenes para Eventos de Artistas Responsiva*/
+/* Estilo por defecto para desktop */
+img.responsiveEveArtista {
+    width: 200px;
+    height: 200px;
+    max-width: 100%; 
+}
+
+/* Estilo para tablets */
+@media screen and (max-width: 768px) {
+    img.responsiveEveArtista {
+        width: 150px;
+        height: 150px;
+        max-width: 100%; 
+    }
+}
+
+/* Estilo para móviles */
+@media screen and (max-width: 480px) {
+    img.responsiveEveArtista {
+        width: 180px;
+        height: 180px;
+        max-width: 100%; 
+    }
 }
 
 /*Imágenes para Artistas Responsiva*/
@@ -163,5 +189,64 @@ img.responsiveArtista {
         width: 306px;
         max-width: 100%;
         height: auto;
+    }
+}
+
+
+.home-contact-area .form-group {
+    margin-bottom: 1px;
+}
+
+.home-contact-area  .texto-fechas {
+    text-align: center; 
+    color: grey;
+    margin-bottom: 10px;
+}
+
+.home-contact-area .content input.form-control { 
+    margin-bottom: 2px;  
+}
+
+.home-contact-area .section-title{
+    margin: -8px auto 20px;
+}
+
+
+ .textoCorto {
+    width: 400px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+.section-title{
+    margin: -8px auto 10px;
+}
+
+
+/*Alto para VIdeo de Artistas*/
+/* Clase para el div */
+.altoVideo {
+    height: 330px; /* Altura por defecto para desktop */
+}
+
+/* Para laptops (suponiendo que la pantalla tiene menos de 1024px) */
+@media screen and (max-width: 1024px) {
+    .altoVideo {
+        height: 300px; 
+    }
+}
+
+/* Para tablets (suponiendo que la pantalla tiene menos de 768px) */
+@media screen and (max-width: 768px) {
+    .altoVideo {
+        height: 290px;
+    }
+}
+
+/* Para celulares (suponiendo que la pantalla tiene menos de 480px) */
+@media screen and (max-width: 480px) {
+    .altoVideo {
+        height: 160px;
     }
 }
