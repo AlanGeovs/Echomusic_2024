@@ -243,7 +243,9 @@ textarea.form-control {
 .bg-color {
   background: #f5faff;
 }
-
+.bg-color-azul {
+  background: #051242;
+}
 @-webkit-keyframes rotaed360 {
   0% {
     -webkit-transform: rotateZ(0deg);
@@ -6191,14 +6193,14 @@ Project Area Six Style
 
 .single-blog  ul {
   text-align: left;
-  max-width: 200px;
+  max-width: 400px;
   margin: 0 auto 25px;
 }
 
 .single-blog  ul li {
   margin-bottom: 10px;
   position: relative;
-  padding-left: 25px;
+  padding-left: 15px;
   font-weight: 600;
 }
 

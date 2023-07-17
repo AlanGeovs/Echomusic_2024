@@ -39,7 +39,7 @@ if(isset($_SESSION['user']) && $_SESSION['user']!=''){
       $idEvent = mysqli_real_escape_string($conn, $idEvent);
 
       // Get url breadcrumb
-      $breadCrumbUrl = "https://qa.echomusic.cl/event.php?streaming=".$idEvent;
+      $breadCrumbUrl = "https://echomusic.cl/event.php?streaming=".$idEvent;
     }else{
       header('HTTP/1.1 403 Forbidden');
       die();
@@ -180,7 +180,7 @@ if(isset($_SESSION['user']) && $_SESSION['user']!=''){
         Fecha y Hora: <strong> '.$dateTransaction.' a las '.$timeTransaction.' hrs. </strong> <br> </p>'.$suseventomail2;
 
         $textUser.='<p style="margin: 0.5rem 1rem;">Nombre del Evento: <strong>'.$arrayEventData['name_event'].'</strong> <br>
-        Link evento: <strong> https://qa.echomusic.cl/streaming.php?event='.$arrayEventData['id_event'].'</strong><br>
+        Link evento: <strong> https://echomusic.cl/streaming.php?event='.$arrayEventData['id_event'].'</strong><br>
         Fecha y Hora: <strong> '.$dateEventMail.' a las '.$timeEventMail.' hrs. </strong> </p>'.$suseventomail3;
 
         $headersUser = "MIME-Version: 1.0" . "\r\n";
@@ -196,7 +196,7 @@ if(isset($_SESSION['user']) && $_SESSION['user']!=''){
 
         $_SESSION['success'] = "Suscripción exitosa";
 
-        header( "Location: https://qa.echomusic.cl/event.php?streaming=".$idEvent, true, 303 );
+        header( "Location: https://echomusic.cl/event.php?streaming=".$idEvent, true, 303 );
 
         exit();
 
@@ -218,7 +218,7 @@ if(isset($_SESSION['user']) && $_SESSION['user']!=''){
                 $amount = $totalTransaction;
                 $buy_order = $id_transaction;
                 $session_id = random_str(12);
-                $return_url = 'https://qa.echomusic.cl/payment_verification.php?streaming='.$idEvent;
+                $return_url = 'https://echomusic.cl/payment_verification.php?streaming='.$idEvent;
 
               // create order
                 $response = $transaction->create($buy_order, $session_id, $amount, $return_url);
@@ -254,8 +254,8 @@ if(isset($_SESSION['user']) && $_SESSION['user']!=''){
                   try {
                       $opts = array(
                           "transaction_id" => "TE-".$id_transaction,
-                          "return_url" => "https://qa.echomusic.cl/payment_verification.php?streaming=$idEvent",
-                          "notify_url" => "https://qa.echomusic.cl/resources/notification_script.php",
+                          "return_url" => "https://echomusic.cl/payment_verification.php?streaming=$idEvent",
+                          "notify_url" => "https://echomusic.cl/resources/notification_script.php",
                           "notify_api_version" => "1.3",
                       );
 

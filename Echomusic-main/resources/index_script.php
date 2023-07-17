@@ -20,7 +20,7 @@ include 'functionDateTranslate.php';
 $artistPaneQuery = mysqli_query($conn, "SELECT * FROM users LEFT JOIN desc_user ON desc_user.id_user = users.id_user
                                                             LEFT JOIN regions ON users.id_region = regions.id_region
                                                             LEFT JOIN genre_user ON users.id_user = genre_user.id_user
-                                                            LEFT JOIN genres ON genres.id_genre = genre_user.id_genre WHERE users.id_type_user='1' AND users.first_login='no' AND users.id_user<>'5' ORDER BY users.id_user DESC LIMIT 6");
+                                                            LEFT JOIN genres ON genres.id_genre = genre_user.id_genre WHERE users.id_type_user='1' AND users.first_login='no' AND users.id_user IN ('13','343','3738','3487','3183','2957') LIMIT 6");
 
 $artistsArray = array();
 

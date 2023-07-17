@@ -257,7 +257,7 @@ include 'functionDateTranslate.php';
                           <input type="hidden" value="<?=$events['id_event']?>" name="id_event" />
                           <? if($events['date_event']>$timeNow): ?>
                             <button onClick="writeCancelValue(<?=$events['id_event']?>)" class="btn btn-outline-secondary m-2">Cancelar Evento</button>
-                            <a class="btn btn-outline-secondary m-2" href="https://qa.echomusic.cl/edit_event.php?eventid=<?=$events['id_event']?>">Editar</a>
+                            <a class="btn btn-outline-secondary m-2" href="https://echomusic.cl/edit_event.php?eventid=<?=$events['id_event']?>">Editar</a>
                           <? elseif($events['date_event']<$timeNow): ?>
                             <a class="btn btn-outline-secondary m-2 isDisabled">Cancelar Evento</a>
                             <a class="btn btn-outline-secondary m-2 isDisabled">Editar</a>
@@ -270,7 +270,7 @@ include 'functionDateTranslate.php';
                           <input type="hidden" value="<?=$events['id_event']?>" name="id_event" />
                           <? if($events['date_event']>$timeNow): ?>
                             <a href="ticket_buy.php?private=<?=$events['id_event']?>" class="btn btn-primary m-2" value="Proceder al pago" name="pay_event">Proceder al pago</a>
-                            <a class="btn btn-outline-secondary m-2" href="https://qa.echomusic.cl/edit_event.php?eventid=<?=$events['id_event']?>">Editar</a>
+                            <a class="btn btn-outline-secondary m-2" href="https://echomusic.cl/edit_event.php?eventid=<?=$events['id_event']?>">Editar</a>
                             <button onClick="writeCancelValue(<?=$events['id_event']?>)" class="btn btn-outline-secondary m-2">Cancelar Evento</button>
                           <? elseif($events['date_event']<$timeNow): ?>
                             <a class="btn btn-outline-secondary m-2 isDisabled">Proceder al pago</a>
@@ -358,11 +358,11 @@ include 'functionDateTranslate.php';
                 <td class="px-1 text-center detalleeventos-btn">
                   <input type="hidden" value="<?=$events['id_event']?>" id="statsPublicId">
                   <? if($events['date_event']>$timeNow): ?>
-                      <a href="https://qa.echomusic.cl/edit_event.php?publicid=<?=$events['id_event']?>" class="btn btn-outline-secondary m-2">Editar </a>
+                      <a href="https://echomusic.cl/edit_event.php?publicid=<?=$events['id_event']?>" class="btn btn-outline-secondary m-2">Editar </a>
                   <? elseif($events['date_event']<$timeNow): ?>
                     <a class="btn btn-outline-secondary m-2 isDisabled">Editar </a>
                   <? endif; ?>
-                  <a href="https://qa.echomusic.cl/event.php?public=<?=$events['id_event']?>" class="btn btn-outline-secondary m-2">Ver publicación</a>
+                  <a href="https://echomusic.cl/event.php?public=<?=$events['id_event']?>" class="btn btn-outline-secondary m-2">Ver publicación</a>
                   <? if($events['active_event']=='1'): ?>
                     <a href="#" class="btn btn-outline-secondary m-2" data-toggle="modal" data-target="#InvitacionesModalLabel">Invitaciones</a>
                   <? else: ?>
@@ -381,9 +381,9 @@ include 'functionDateTranslate.php';
                   <? switch($events['active_event']):case '1': ?>
                     <div class="row my-1 text-center text-white">
                       <ul class="list-inline mb-0">
-                        <li class="list-inline-item list-fb"><a href="https://www.facebook.com/sharer.php?u=https://qa.echomusic.cl/event.php?public=<?=$events['id_event']?>" target="_blank"><i class="fab fa-facebook-f share-fb"></i> </a></li>
-                        <li class="list-inline-item list-tw"><a href="https://twitter.com/share?url=https://qa.echomusic.cl/event.php?public=<?=$events['id_event']?>&amp;text=EchoMusic&amp;hashtags=echomusic" target="_blank"><i class="fab fa-twitter share-tw"></i> </a></li>
-                        <li class="list-inline-item list-wpp"><a href="https://api.whatsapp.com/send?text=https://qa.echomusic.cl/event.php?public=<?=$events['id_event']?>" data-action="share/whatsapp/share" target="_blank" rel="noopener noreferrer"><i class="fab fa-whatsapp share-wpp"></i> </a></li>
+                        <li class="list-inline-item list-fb"><a href="https://www.facebook.com/sharer.php?u=https://echomusic.cl/event.php?public=<?=$events['id_event']?>" target="_blank"><i class="fab fa-facebook-f share-fb"></i> </a></li>
+                        <li class="list-inline-item list-tw"><a href="https://twitter.com/share?url=https://echomusic.cl/event.php?public=<?=$events['id_event']?>&amp;text=EchoMusic&amp;hashtags=echomusic" target="_blank"><i class="fab fa-twitter share-tw"></i> </a></li>
+                        <li class="list-inline-item list-wpp"><a href="https://api.whatsapp.com/send?text=https://echomusic.cl/event.php?public=<?=$events['id_event']?>" data-action="share/whatsapp/share" target="_blank" rel="noopener noreferrer"><i class="fab fa-whatsapp share-wpp"></i> </a></li>
                       </ul>
                     </div>
                 <? break; ?>
@@ -464,7 +464,7 @@ include 'functionDateTranslate.php';
           <form method="POST" action="" style="clear:left;">
             <ul class="actions">
               <input type="hidden" value="'.$events['id_event'].'" name="id_event" />
-              <li><a class="button primary" href="https://qa.echomusic.cl/event.php?eventid='.$events['id_event'].'">Ir a la publicación</a></li>
+              <li><a class="button primary" href="https://echomusic.cl/event.php?eventid='.$events['id_event'].'">Ir a la publicación</a></li>
               <li><a onClick="writeCancelValue('.$events['id_event'].')" href="#cancel_event" class="button" name="cancel_event">Cancelar Evento</a> </li>
               <li><a onClick="showList()" class="button">volver</a></li>
             </ul>
@@ -512,7 +512,7 @@ include 'functionDateTranslate.php';
               <td class="px-1 text-center detalleeventos-btn">
                 <input type="hidden" value="<?=$events['id_event']?>" id="statsStreamingId">
                 <? if($events['date_event']>$timeNow): ?>
-                    <a href="https://qa.echomusic.cl/edit_event.php?streamingid=<?=$events['id_event']?>" class="btn btn-outline-secondary m-2">Editar </a>
+                    <a href="https://echomusic.cl/edit_event.php?streamingid=<?=$events['id_event']?>" class="btn btn-outline-secondary m-2">Editar </a>
                   <button type="submit" class="btn btn-outline-secondary m-2" data-toggle="modal" data-target="#configEventroStreamModalLabel">Configurar</button>
                 <? elseif($events['date_event']<$timeNow): ?>
                   <a class="btn btn-outline-secondary m-2 isDisabled">Editar </a>
@@ -531,9 +531,9 @@ include 'functionDateTranslate.php';
                     <? switch($events['active_event']):case '1': ?>
                     <div class="row my-1 text-center text-white">
                       <ul class="list-inline mb-0">
-                        <li class="list-inline-item list-fb"><a href="https://www.facebook.com/sharer.php?u=https://qa.echomusic.cl/event.php?streaming=<?=$events['id_event']?>" target="_blank"><i class="fab fa-facebook-f share-fb"></i> </a></li>
-                        <li class="list-inline-item list-tw"><a href="https://twitter.com/share?url=https://qa.echomusic.cl/event.php?streaming=<?=$events['id_event']?>&amp;text=Echomusic&amp;hashtags=echomusic" target="_blank"><i class="fab fa-twitter share-tw"></i> </a></li>
-                        <li class="list-inline-item list-wpp"><a href="https://api.whatsapp.com/send?text=https://qa.echomusic.cl/event.php?streaming=<?=$events['id_event']?>" data-action="share/whatsapp/share" target="_blank" rel="noopener noreferrer"><i class="fab fa-whatsapp share-wpp"></i> </a></li>
+                        <li class="list-inline-item list-fb"><a href="https://www.facebook.com/sharer.php?u=https://echomusic.cl/event.php?streaming=<?=$events['id_event']?>" target="_blank"><i class="fab fa-facebook-f share-fb"></i> </a></li>
+                        <li class="list-inline-item list-tw"><a href="https://twitter.com/share?url=https://echomusic.cl/event.php?streaming=<?=$events['id_event']?>&amp;text=Echomusic&amp;hashtags=echomusic" target="_blank"><i class="fab fa-twitter share-tw"></i> </a></li>
+                        <li class="list-inline-item list-wpp"><a href="https://api.whatsapp.com/send?text=https://echomusic.cl/event.php?streaming=<?=$events['id_event']?>" data-action="share/whatsapp/share" target="_blank" rel="noopener noreferrer"><i class="fab fa-whatsapp share-wpp"></i> </a></li>
                       </ul>
                     </div>
                   <? break; ?>

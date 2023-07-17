@@ -112,7 +112,7 @@ class Consultas{
         $stmt->close();
 	} 
         
-        //Artista de Büsqeuda por Cartelera
+        //Artista de Búsqueda  ID
         static public function artistaBusqueda($id){ 
                 $stmt=Conexion::conectar()->prepare("SELECT u.*, gu.*, g.* FROM users u INNER JOIN genre_user gu ON u.id_user=gu.id_user INNER JOIN genres g ON gu.id_genre = g.id_genre WHERE picture_ready=1 AND verified like 'yes'  AND u.`nick_user` LIKE ? ORDER BY RAND() LIMIT 12;");
 //                $stmt=Conexion::conectar()->prepare("SELECT e.* FROM events_public as e WHERE e.active_event=1 AND e.id_event =:id GROUP BY e.id_user ORDER BY RAND() LIMIT 3;");
@@ -133,6 +133,22 @@ class Consultas{
         //return $id;
         $stmt->close();
 	}        
+        
+        //////////****************************
+        // BUSQUEDA DE ARTISTAS GENÉRICA
+
+        static public function busquedaArtistas($sql){ 
+                $stmt=Conexion::conectar()->prepare("$sql");              
+                $stmt->execute();
+                return $stmt->fetchAll();
+                //return $id;
+        $stmt->close();
+	} 
+        
+        //
+        //////////****************************
+        //
+        //
         //Bio de Artistas
 	static public function bioArtistas($id){
                 $stmt=Conexion::conectar()->prepare("SELECT * FROM `bio_user`  WHERE id_user=:id  ;");		
@@ -145,6 +161,15 @@ class Consultas{
         //Desc de Artistas
 	static public function descArtistas($id){
                 $stmt=Conexion::conectar()->prepare("SELECT * FROM `desc_user`  WHERE id_user=:id  ;");		
+        $stmt->bindParam(":id",$id,PDO::PARAM_INT);
+        $stmt->execute();
+        return $stmt->fetchAll();
+        //return $id;
+        $stmt->close();
+	}        
+        
+	static public function tarifas($id){
+                $stmt=Conexion::conectar()->prepare("SELECT * FROM `plans` WHERE `id_user` = :id  ;");		
         $stmt->bindParam(":id",$id,PDO::PARAM_INT);
         $stmt->execute();
         return $stmt->fetchAll();
@@ -173,9 +198,15 @@ class Consultas{
 		return $stmt->fetchAll();
         $stmt->close();       
         }   
+	static public function crowdFinanciados(){
+		$stmt=Conexion::conectar()->prepare("SELECT pc.*, pd.* FROM `projects_crowdfunding` pc INNER JOIN project_desc pd ON pd.id_project = pc.id_project WHERE  pc.status_project=2 ORDER BY pc.project_date_end DESC;");
+		$stmt->execute();
+		return $stmt->fetchAll();
+        $stmt->close();       
+        }   
         
         static public function ultimosCrowdfundingBusqueda($id){ 
-                $stmt=Conexion::conectar()->prepare("SELECT pc.*, pd.* FROM `projects_crowdfunding` pc INNER JOIN project_desc pd ON pd.id_project = pc.id_project WHERE pc.project_title LIKE ? AND pc.status_project>0 AND pc.status_project<5 ORDER BY pc.project_date_end DESC;");
+                $stmt=Conexion::conectar()->prepare("SELECT pc.*, pd.* FROM `projects_crowdfunding` pc INNER JOIN project_desc pd ON pd.id_project = pc.id_project WHERE pc.project_title LIKE ? AND pc.status_project=1 ORDER BY pc.project_date_end DESC;");
 //                $stmt=Conexion::conectar()->prepare("SELECT e.* FROM events_public as e WHERE e.active_event=1 AND e.id_event =:id GROUP BY e.id_user ORDER BY RAND() LIMIT 3;");
 //        $stmt->bindParam(":id",$id,PDO::PARAM_INT);
         $stmt->bindValue(1, "%$id%", PDO::PARAM_STR); 
@@ -185,7 +216,7 @@ class Consultas{
         $stmt->close();
 	}        
         static public function ultimosCrowdfundingBusquedaRegion($id, $reg){ 
-                $stmt=Conexion::conectar()->prepare("SELECT u.*, pc.* FROM `users` u INNER JOIN `projects_crowdfunding` pc ON pc.id_user = u.id_user WHERE pc.project_title like ? AND u.id_region = ? AND pc.status_project>0 AND pc.status_project<5 ORDER BY pc.project_date_end DESC;");
+                $stmt=Conexion::conectar()->prepare("SELECT u.*, pc.* FROM `users` u INNER JOIN `projects_crowdfunding` pc ON pc.id_user = u.id_user WHERE pc.project_title like ? AND u.id_region = ? AND pc.status_project=1 ORDER BY pc.project_date_end DESC;");
 //                $stmt=Conexion::conectar()->prepare("SELECT e.* FROM events_public as e WHERE e.active_event=1 AND e.id_event =:id GROUP BY e.id_user ORDER BY RAND() LIMIT 3;");
 //        $stmt->bindParam(":id",$id,PDO::PARAM_INT); 
         $stmt->bindValue(1, "%$id%", PDO::PARAM_STR); 
@@ -196,7 +227,7 @@ class Consultas{
         $stmt->close();
 	}        
         static public function ultimosCrowdfundingRegion( $reg){ 
-                $stmt=Conexion::conectar()->prepare("SELECT u.*, pc.* FROM `users` u INNER JOIN `projects_crowdfunding` pc ON pc.id_user = u.id_user WHERE   u.id_region = ? AND pc.status_project>0 AND pc.status_project<5 ORDER BY pc.project_date_end DESC;");
+                $stmt=Conexion::conectar()->prepare("SELECT u.*, pc.* FROM `users` u INNER JOIN `projects_crowdfunding` pc ON pc.id_user = u.id_user WHERE   u.id_region = ? AND pc.status_project=1 ORDER BY pc.project_date_end DESC;");
 //                $stmt=Conexion::conectar()->prepare("SELECT e.* FROM events_public as e WHERE e.active_event=1 AND e.id_event =:id GROUP BY e.id_user ORDER BY RAND() LIMIT 3;");
 //        $stmt->bindParam(":id",$id,PDO::PARAM_INT);  
         $stmt->bindValue(1, $reg, PDO::PARAM_STR);  
@@ -296,7 +327,17 @@ class Consultas{
 //        falta definir qué hacer cada uno de los estados
         static public function crowdfunding($id){ 
 //                $stmt=Conexion::conectar()->prepare("SELECT * FROM `projects_crowdfunding` WHERE `id_user`=:id AND `status_project` != 0");
-                $stmt=Conexion::conectar()->prepare("SELECT pc.*, pd.* FROM `projects_crowdfunding` pc INNER JOIN project_desc pd ON pd.id_project = pc.id_project WHERE pc.status_project!=0 AND pc.id_user=:id;");
+                $stmt=Conexion::conectar()->prepare("SELECT pc.*, pd.* FROM `projects_crowdfunding` pc INNER JOIN project_desc pd ON pd.id_project = pc.id_project WHERE pc.status_project=1 AND pc.id_user=:id;");
+        $stmt->bindParam(":id",$id,PDO::PARAM_INT);
+        $stmt->execute();
+        return $stmt->fetchAll();
+        //return $id;
+        $stmt->close();
+	}
+        
+        static public function crowdfunding2($id){ 
+//                $stmt=Conexion::conectar()->prepare("SELECT * FROM `projects_crowdfunding` WHERE `id_user`=:id AND `status_project` != 0");
+                $stmt=Conexion::conectar()->prepare("SELECT pc.*, pd.* FROM `projects_crowdfunding` pc INNER JOIN project_desc pd ON pd.id_project = pc.id_project WHERE pc.id_user=:id;");
         $stmt->bindParam(":id",$id,PDO::PARAM_INT);
         $stmt->execute();
         return $stmt->fetchAll();
@@ -413,6 +454,11 @@ class Consultas{
         return $stmt->fetchAll();
         //return $id;
         $stmt->close();
-	}                 
+	}       
+        
+        static public function truncar($numero, $digitos) {
+            $truncar = 10 ** $digitos;
+            return intval($numero * $truncar) / $truncar;
+        }
 
 }

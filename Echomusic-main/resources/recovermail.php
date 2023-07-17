@@ -79,7 +79,7 @@ $recovermail = "<!DOCTYPE html><html><head>
                 <table border='0' cellpadding='0' cellspacing='0' width='100%' style='max-width: 600px;'>
                     <tr>
                         <td align='center' valign='top' style='padding: 40px 10px 40px 10px;'>
-                        <img src='https://qa.echomusic.cl/constru/LOGO-ECHO.png' alt='Echomusic' height='150' style='width:60%;'> </td>
+                        <img src='https://echomusic.cl/constru/LOGO-ECHO.png' alt='Echomusic' height='150' style='width:60%;'> </td>
                     </tr>
                 </table>
             </td>
@@ -131,7 +131,7 @@ $recovermail1= "' target='_blank' style='font-size: 20px; font-family: Helvetica
 
                             <p style='margin: 0.5rem 1rem;'><a href='http://echomusic.cl/recover.php?code='";
 
-$recovermail2 = "' target='_blank' style='color: #FFA73B;' >https://qa.echomusic.cl/recover.php?code='";
+$recovermail2 = "' target='_blank' style='color: #FFA73B;' >https://echomusic.cl/recover.php?code='";
 $recovermail3 = "</a></p>
                         </td>
                     </tr>

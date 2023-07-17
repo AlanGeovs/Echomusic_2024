@@ -1,0 +1,132 @@
+[05-Nov-2022 11:11:29 America/Santiago] PHP Fatal error:  Uncaught Error: Call to undefined function emtpy() in /home2/echomusi/public_html/resources/crowdfunding/functionEditProject.php:869
+Stack trace:
+#0 {main}
+  thrown in /home2/echomusi/public_html/resources/crowdfunding/functionEditProject.php on line 869
+[05-Nov-2022 11:14:35 America/Santiago] PHP Fatal error:  Uncaught Error: Call to undefined function emtpy() in /home2/echomusi/public_html/resources/crowdfunding/functionEditProject.php:869
+Stack trace:
+#0 {main}
+  thrown in /home2/echomusi/public_html/resources/crowdfunding/functionEditProject.php on line 869
+[05-Nov-2022 11:15:34 America/Santiago] PHP Fatal error:  Uncaught Error: Call to undefined function emtpy() in /home2/echomusi/public_html/resources/crowdfunding/functionEditProject.php:869
+Stack trace:
+#0 {main}
+  thrown in /home2/echomusi/public_html/resources/crowdfunding/functionEditProject.php on line 869
+[05-Nov-2022 15:19:05 America/Santiago] PHP Fatal error:  Uncaught Error: Call to undefined function emtpy() in /home2/echomusi/public_html/resources/crowdfunding/functionEditProject.php:869
+Stack trace:
+#0 {main}
+  thrown in /home2/echomusi/public_html/resources/crowdfunding/functionEditProject.php on line 869
+[05-Nov-2022 15:24:14 America/Santiago] PHP Fatal error:  Uncaught Error: Call to undefined function emtpy() in /home2/echomusi/public_html/resources/crowdfunding/functionEditProject.php:869
+Stack trace:
+#0 {main}
+  thrown in /home2/echomusi/public_html/resources/crowdfunding/functionEditProject.php on line 869
+[05-Nov-2022 15:29:28 America/Santiago] PHP Fatal error:  Uncaught Error: Call to undefined function emtpy() in /home2/echomusi/public_html/resources/crowdfunding/functionEditProject.php:869
+Stack trace:
+#0 {main}
+  thrown in /home2/echomusi/public_html/resources/crowdfunding/functionEditProject.php on line 869
+[05-Nov-2022 15:33:07 America/Santiago] PHP Fatal error:  Uncaught Error: Call to undefined function emtpy() in /home2/echomusi/public_html/resources/crowdfunding/functionEditProject.php:869
+Stack trace:
+#0 {main}
+  thrown in /home2/echomusi/public_html/resources/crowdfunding/functionEditProject.php on line 869
+[05-Nov-2022 15:39:52 America/Santiago] PHP Fatal error:  Uncaught Error: Call to undefined function emtpy() in /home2/echomusi/public_html/resources/crowdfunding/functionEditProject.php:869
+Stack trace:
+#0 {main}
+  thrown in /home2/echomusi/public_html/resources/crowdfunding/functionEditProject.php on line 869
+[05-Nov-2022 15:43:05 America/Santiago] PHP Fatal error:  Uncaught Error: Call to undefined function emtpy() in /home2/echomusi/public_html/resources/crowdfunding/functionEditProject.php:869
+Stack trace:
+#0 {main}
+  thrown in /home2/echomusi/public_html/resources/crowdfunding/functionEditProject.php on line 869
+[05-Nov-2022 15:59:26 America/Santiago] PHP Fatal error:  Uncaught Error: Call to undefined function emtpy() in /home2/echomusi/public_html/resources/crowdfunding/functionEditProject.php:869
+Stack trace:
+#0 {main}
+  thrown in /home2/echomusi/public_html/resources/crowdfunding/functionEditProject.php on line 869
+[05-Nov-2022 16:00:47 America/Santiago] PHP Fatal error:  Uncaught Error: Call to undefined function emtpy() in /home2/echomusi/public_html/resources/crowdfunding/functionEditProject.php:869
+Stack trace:
+#0 {main}
+  thrown in /home2/echomusi/public_html/resources/crowdfunding/functionEditProject.php on line 869
+[05-Nov-2022 16:02:00 America/Santiago] PHP Fatal error:  Uncaught Error: Call to undefined function emtpy() in /home2/echomusi/public_html/resources/crowdfunding/functionEditProject.php:869
+Stack trace:
+#0 {main}
+  thrown in /home2/echomusi/public_html/resources/crowdfunding/functionEditProject.php on line 869
+[05-Nov-2022 16:02:54 America/Santiago] PHP Fatal error:  Uncaught Error: Call to undefined function emtpy() in /home2/echomusi/public_html/resources/crowdfunding/functionEditProject.php:869
+Stack trace:
+#0 {main}
+  thrown in /home2/echomusi/public_html/resources/crowdfunding/functionEditProject.php on line 869
+[05-Nov-2022 18:10:39 America/Santiago] PHP Fatal error:  Uncaught Error: Call to undefined function emtpy() in /home2/echomusi/public_html/resources/crowdfunding/functionEditProject.php:869
+Stack trace:
+#0 {main}
+  thrown in /home2/echomusi/public_html/resources/crowdfunding/functionEditProject.php on line 869
+[05-Nov-2022 18:28:47 America/Santiago] PHP Fatal error:  Uncaught Error: Call to undefined function emtpy() in /home2/echomusi/public_html/resources/crowdfunding/functionEditProject.php:869
+Stack trace:
+#0 {main}
+  thrown in /home2/echomusi/public_html/resources/crowdfunding/functionEditProject.php on line 869
+[05-Nov-2022 18:30:13 America/Santiago] PHP Fatal error:  Uncaught Error: Call to undefined function emtpy() in /home2/echomusi/public_html/resources/crowdfunding/functionEditProject.php:869
+Stack trace:
+#0 {main}
+  thrown in /home2/echomusi/public_html/resources/crowdfunding/functionEditProject.php on line 869
+[05-Nov-2022 19:03:56 America/Santiago] PHP Fatal error:  Uncaught Error: Call to undefined function emtpy() in /home2/echomusi/public_html/resources/crowdfunding/functionEditProject.php:869
+Stack trace:
+#0 {main}
+  thrown in /home2/echomusi/public_html/resources/crowdfunding/functionEditProject.php on line 869
+[05-Nov-2022 19:04:46 America/Santiago] PHP Fatal error:  Uncaught Error: Call to undefined function emtpy() in /home2/echomusi/public_html/resources/crowdfunding/functionEditProject.php:869
+Stack trace:
+#0 {main}
+  thrown in /home2/echomusi/public_html/resources/crowdfunding/functionEditProject.php on line 869
+[05-Nov-2022 19:11:44 America/Santiago] PHP Fatal error:  Uncaught Error: Call to undefined function emtpy() in /home2/echomusi/public_html/resources/crowdfunding/functionEditProject.php:869
+Stack trace:
+#0 {main}
+  thrown in /home2/echomusi/public_html/resources/crowdfunding/functionEditProject.php on line 869
+[05-Nov-2022 19:21:30 America/Santiago] PHP Fatal error:  Uncaught Error: Call to undefined function emtpy() in /home2/echomusi/public_html/resources/crowdfunding/functionEditProject.php:869
+Stack trace:
+#0 {main}
+  thrown in /home2/echomusi/public_html/resources/crowdfunding/functionEditProject.php on line 869
+[16-Nov-2022 22:05:24 America/Santiago] PHP Fatal error:  Uncaught Error: Call to undefined function emtpy() in /home2/echomusi/public_html/resources/crowdfunding/functionEditProject.php:869
+Stack trace:
+#0 {main}
+  thrown in /home2/echomusi/public_html/resources/crowdfunding/functionEditProject.php on line 869
+[16-Nov-2022 22:25:41 America/Santiago] PHP Fatal error:  Uncaught Error: Call to undefined function emtpy() in /home2/echomusi/public_html/resources/crowdfunding/functionEditProject.php:869
+Stack trace:
+#0 {main}
+  thrown in /home2/echomusi/public_html/resources/crowdfunding/functionEditProject.php on line 869
+[17-Nov-2022 10:48:57 America/Santiago] PHP Fatal error:  Uncaught Error: Call to undefined function emtpy() in /home2/echomusi/public_html/resources/crowdfunding/functionEditProject.php:869
+Stack trace:
+#0 {main}
+  thrown in /home2/echomusi/public_html/resources/crowdfunding/functionEditProject.php on line 869
+[17-Nov-2022 11:06:44 America/Santiago] PHP Fatal error:  Uncaught Error: Call to undefined function emtpy() in /home2/echomusi/public_html/resources/crowdfunding/functionEditProject.php:869
+Stack trace:
+#0 {main}
+  thrown in /home2/echomusi/public_html/resources/crowdfunding/functionEditProject.php on line 869
+[17-Nov-2022 11:22:52 America/Santiago] PHP Fatal error:  Uncaught Error: Call to undefined function emtpy() in /home2/echomusi/public_html/resources/crowdfunding/functionEditProject.php:869
+Stack trace:
+#0 {main}
+  thrown in /home2/echomusi/public_html/resources/crowdfunding/functionEditProject.php on line 869
+[17-Nov-2022 12:19:46 America/Santiago] PHP Fatal error:  Uncaught Error: Call to undefined function emtpy() in /home2/echomusi/public_html/resources/crowdfunding/functionEditProject.php:869
+Stack trace:
+#0 {main}
+  thrown in /home2/echomusi/public_html/resources/crowdfunding/functionEditProject.php on line 869
+[14-Dec-2022 00:29:09 America/Santiago] PHP Fatal error:  Uncaught Error: Call to undefined function emtpy() in /home2/echomusi/public_html/resources/crowdfunding/functionEditProject.php:869
+Stack trace:
+#0 {main}
+  thrown in /home2/echomusi/public_html/resources/crowdfunding/functionEditProject.php on line 869
+[19-Feb-2023 00:56:03 America/Santiago] PHP Fatal error:  Uncaught Error: Call to undefined function emtpy() in /home2/echomusi/public_html/resources/crowdfunding/functionEditProject.php:869
+Stack trace:
+#0 {main}
+  thrown in /home2/echomusi/public_html/resources/crowdfunding/functionEditProject.php on line 869
+[19-Feb-2023 01:14:27 America/Santiago] PHP Fatal error:  Uncaught Error: Call to undefined function emtpy() in /home2/echomusi/public_html/resources/crowdfunding/functionEditProject.php:869
+Stack trace:
+#0 {main}
+  thrown in /home2/echomusi/public_html/resources/crowdfunding/functionEditProject.php on line 869
+[19-Feb-2023 01:16:05 America/Santiago] PHP Fatal error:  Uncaught Error: Call to undefined function emtpy() in /home2/echomusi/public_html/resources/crowdfunding/functionEditProject.php:869
+Stack trace:
+#0 {main}
+  thrown in /home2/echomusi/public_html/resources/crowdfunding/functionEditProject.php on line 869
+[19-Feb-2023 01:29:02 America/Santiago] PHP Fatal error:  Uncaught Error: Call to undefined function emtpy() in /home2/echomusi/public_html/resources/crowdfunding/functionEditProject.php:869
+Stack trace:
+#0 {main}
+  thrown in /home2/echomusi/public_html/resources/crowdfunding/functionEditProject.php on line 869
+[24-Mar-2023 11:17:51 America/Santiago] PHP Fatal error:  Uncaught Error: Call to undefined function emtpy() in /home2/echomusi/public_html/resources/crowdfunding/functionEditProject.php:869
+Stack trace:
+#0 {main}
+  thrown in /home2/echomusi/public_html/resources/crowdfunding/functionEditProject.php on line 869
+[14-Apr-2023 16:00:09 America/Santiago] PHP Fatal error:  Uncaught Error: Call to undefined function emtpy() in /home2/echomusi/public_html/resources/crowdfunding/functionEditProject.php:869
+Stack trace:
+#0 {main}
+  thrown in /home2/echomusi/public_html/resources/crowdfunding/functionEditProject.php on line 869

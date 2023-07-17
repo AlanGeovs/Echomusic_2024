@@ -79,7 +79,7 @@ $welcomemail = "<!DOCTYPE html><html><head>
                 <table border='0' cellpadding='0' cellspacing='0' width='100%' style='max-width: 600px;'>
                     <tr>
                         <td align='center' valign='top' style='padding: 40px 10px 40px 10px;'>
-                        <img src='https://qa.echomusic.cl/constru/LOGO-ECHO.png' alt='Echomusic' height='150' style='width:60%;'> </td>
+                        <img src='https://echomusic.cl/constru/LOGO-ECHO.png' alt='Echomusic' height='150' style='width:60%;'> </td>
                     </tr>
                 </table>
             </td>
@@ -111,7 +111,7 @@ $welcomemail = "<!DOCTYPE html><html><head>
                                     <td bgcolor='#ffffff' align='center' style='padding: 20px 30px 60px 30px;'>
                                         <table border='0' cellspacing='0' cellpadding='0'>
                                             <tr>
-                                                <td align='center' style='border-radius: 3px;' bgcolor='#FFA73B'><a href='https://qa.echomusic.cl/verify.php?code=";
+                                                <td align='center' style='border-radius: 3px;' bgcolor='#FFA73B'><a href='https://echomusic.cl/verify.php?code=";
 $welcomemail1= "' target='_blank' style='font-size: 20px; font-family: Helvetica, Arial, sans-serif; color: #ffffff; text-decoration: none; color: #ffffff; text-decoration: none; padding: 15px 25px; border-radius: 2px; border: 1px solid #FFA73B; display: inline-block;'>Confirmar Cuenta</a></td>
                                             </tr>
                                         </table>
@@ -128,9 +128,9 @@ $welcomemail1= "' target='_blank' style='font-size: 20px; font-family: Helvetica
                     <tr>
                         <td bgcolor='#ffffff' align='left' style='padding: 20px 30px 20px 30px; color: #666666; font-family: 'Lato', Helvetica, Arial, sans-serif; font-size: 18px; font-weight: 400; line-height: 25px;'>
 
-                            <p style='margin: 0.5rem 1rem;'><a href='https://qa.echomusic.cl/verify.php?code=";
+                            <p style='margin: 0.5rem 1rem;'><a href='https://echomusic.cl/verify.php?code=";
 
-$welcomemail2 = "' target='_blank' style='color: #FFA73B;' >https://qa.echomusic.cl/verify.php?code=";
+$welcomemail2 = "' target='_blank' style='color: #FFA73B;' >https://echomusic.cl/verify.php?code=";
 $welcomemail3 = "</a></p>
                         </td>
                     </tr>

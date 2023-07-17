@@ -182,7 +182,7 @@ if(isset($_SESSION['user'])){
         $errMSG = "Evento modificado con éxito.";
         $_SESSION['success'] = $errMSG;
 
-        $text = '<html><p>Se ha realizado un cambio en el evento:'.$arrayDataEvent['name_event'].' </br> Para ver más detalles accede a tu <a href="https://qa.echomusic.cl/dashboard.php">Panel de Control.</a></p><p>Equipo EchoMusic</p></html>';
+        $text = '<html><p>Se ha realizado un cambio en el evento:'.$arrayDataEvent['name_event'].' </br> Para ver más detalles accede a tu <a href="https://echomusic.cl/dashboard.php">Panel de Control.</a></p><p>Equipo EchoMusic</p></html>';
         $headers = "MIME-Version: 1.0" . "\r\n";
         $headers .= 'Content-type: text/html; charset=utf-8' . "\r\n";
         $headers .= "From: reservas@echomusic.cl" . "\r\n";

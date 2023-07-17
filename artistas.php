@@ -1,6 +1,6 @@
 <?php  
 include "model/models.php";
-include "header.php";
+include "header.php"; 
  
 //Búsquedas de Eventos
 if (isset($_GET["a"])) {
@@ -55,7 +55,7 @@ $resultadosEventosPasa = Consultas::eventosPasadosArtista($respuesta[0]["id_user
         <!-- Detalle de Perfil de Artista  -->
         <section class="feature-area bg-color ptb-35">
             <div class="container">
-                <div class="row  "> 
+                <div class="row align-items-center choose-c justify-content-md-center "> 
                     <!--Perfil-->
                     <?php
 //                    Determino si No hay EVENTOS, si nuevos ni pasados para ajustar diseño  
@@ -131,7 +131,7 @@ $resultadosEventosPasa = Consultas::eventosPasadosArtista($respuesta[0]["id_user
                              ?>
                             <div class="home-2-contact col-lg-12">                       
                                 <div class="content"> 
-                                    <div class="row">
+                                    <div class="row align-items-center choose-c justify-content-md-center">
                                         <!--img-->
                                         <div class="col-12 col-sm-4  choose-img text-center">  
                                             <img class="responsiveEveArtista" src="https://echomusic.cl/images/events/<?php echo $resultadosProxEventos[$e]["img"]; ?>.jpg" alt="<?php echo ''; ?>"  /> 
@@ -263,7 +263,7 @@ $resultadosEventosPasa = Consultas::eventosPasadosArtista($respuesta[0]["id_user
                             </div> 
                             <div class="home-2-contact col-lg-12">                       
                                 <div class="content"> 
-                                    <div class="row altoVideo">
+                                    <div class="row altoVideo align-items-center choose-c justify-content-md-center">
                                         <iframe src="https://echomusic.genesysapp.com/video/videos.php?a=<?php echo $id;?>" class="altoVideo" style="border: none;" width="100%"  ></iframe>
                                     </div>
                                     <!--fin del Row-->
@@ -315,7 +315,7 @@ $resultadosEventosPasa = Consultas::eventosPasadosArtista($respuesta[0]["id_user
     
 //    si No hay Crowdfunding, no muestra nada
     if( empty($respuestaCrowdfunding) ){
-//        echo '<h2>No hay Crowdfunding</h2>';
+        echo '<h2>No hay Crowdfunding'.$respuesta[0]["id_user"].'</h2>';
     }else{
         $totalARecaudar  = $respuestaCrowdfunding[0]["project_amount"];
     //  Extrae la suma de lo recaudado
@@ -379,6 +379,17 @@ $resultadosEventosPasa = Consultas::eventosPasadosArtista($respuesta[0]["id_user
         
         
         <!--  Tarifas Area -->
+<?php 
+
+$tarifasArtista = Consultas::tarifas($respuesta[0]["id_user"]);
+
+// condición para mostrar o no las tarifas 
+if( empty($tarifasArtista[0]["value_plan"] )){
+//    echo 'No hay tarifas';        
+}
+else {  
+    //Inician tarrifas
+?>       
         <section class="home-blog-area bg-color ptb-35">
             <div class="container">
                 <div class="section-title">
@@ -387,142 +398,66 @@ $resultadosEventosPasa = Consultas::eventosPasadosArtista($respuesta[0]["id_user
                     <!--<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ipsum suspendisse.</p>-->
                 </div>
                 
-                <!--Tarifas formato blog-->
-                
-                 
-                
-                <div class="row">
+                <!--Tarifas formato blog--> 
+                <div class="row justify-content-md-center"> 
+<?php 
+                for($t=0;$t<count($tarifasArtista); $t++){    
+                    if($tarifasArtista[$t]["active"] == 'active'){
+?>                    
                     <div class="col-lg-4 col-md-6">
                         <div class="single-blog">
                             <div class="blog-img">
                                 <a href="blog-details.html">
-                                    <img src="assets/images/bg/fondo-precios-1-morado-min.jpg" alt=""/> 
+                                    <img style="height: 200px; width: 200px; border-radius: 50%;" src="https://echomusic.cl/images/avatars/<?php echo $respuesta[0]["id_user"]; ?>.jpg" class="responsiveArtista" alt=""/> 
                                 </a>
                             </div>
 
-                            <!--<div class="content single-pricing">--> 
-                                        <div class="pricing-top-heading">
-                                            <h3>Tarifa S</h3>
-                                            <p>1 hora de show</p>
-                                        </div>
-                                        <h3>$5.000</h3>
-                                        <ul>
-                                            <li>
-                                                <i class="bx bx-badge-check"></i>
-                                                Duración 1 hr.
-                                            </li>
-                                            <li>
-                                                <i class="bx bx-badge-check"></i>
-                                               Backline  
-                                            </li>
-                                            <li>
-                                                <i class="bx bx-badge-check"></i>
-                                                Refuerzo Sonoro
-                                            </li>
-                                            <li>
-                                                <i class="bx bx-badge-check"></i>
-                                                Sonidista
-                                            </li>
-                                            <li>
-                                                <i class="bx bx-badge-check"></i>
-                                                Nº de Músicos
-                                            </li> 
-                                        </ul>
-                                        <a class="box-btn" href="shared-hosting.html">
-                                            Contratar
-                                        </a> 
-                                
-                            <!--</div>-->
+                            <div class="pricing-top-heading">
+                                <h3>Tarifa <?php echo $t+1;?></h3>
+                                <p><?php echo $tarifasArtista[$t]["desc_plan"];?></p>
+                            </div>
+                            <h3>$<?php echo number_format($tarifasArtista[$t]["value_plan"],0,",",".");?></h3>
+                            <ul>
+                                <li>
+                                    <i class="bx bx-badge-check"></i>
+                                    Duración <?php echo $tarifasArtista[$t]["duration_minutes"];?> minutos.
+                                </li>
+                                <li>
+                                    <i class="bx bx-badge-check"></i>
+                                    Backline  <?php echo $tarifasArtista[$t]["backline"];?>
+                                </li>
+                                <li>
+                                    <i class="bx bx-badge-check"></i>
+                                    Ingeniero de Sonido <?php echo $tarifasArtista[$t]["sound_engineer"];?>
+                                </li>
+                                <li>
+                                    <i class="bx bx-badge-check"></i>
+                                    Refuerzo Sonoro <?php echo $tarifasArtista[$t]["sound_reinforcement"];?>
+                                </li>
+                                <li>
+                                    <i class="bx bx-badge-check"></i>
+                                    Sonidista
+                                </li>
+                                <li>
+                                    <i class="bx bx-badge-check"></i>
+                                    Nº de Músicos <?php echo $tarifasArtista[$t]["artists_amount"];?>
+                                </li> 
+                            </ul>
+                            <a class="box-btn" href="#">
+                                Contratar
+                            </a> 
+
                         </div>
                     </div> 
                     
-                    <div class="col-lg-4 col-md-6">
-                        <div class="single-blog">
-                            <div class="blog-img">
-                                <a href="blog-details.html">
-                                    <img src="assets/images/bg/fondo-precios-2-azuljpg-min.jpg" alt=""/> 
-                                </a>
-                            </div>
-
-                            <!--<div class="content single-pricing">--> 
-                                        <div class="pricing-top-heading">
-                                            <h3>Tarifa S</h3>
-                                            <p>1 hora de show</p>
-                                        </div>
-                                        <h3>$5.000</h3>
-                                        <ul>
-                                            <li>
-                                                <i class="bx bx-badge-check"></i>
-                                                Duración 1 hr.
-                                            </li>
-                                            <li>
-                                                <i class="bx bx-badge-check"></i>
-                                               Backline  
-                                            </li>
-                                            <li>
-                                                <i class="bx bx-badge-check"></i>
-                                                Refuerzo Sonoro
-                                            </li>
-                                            <li>
-                                                <i class="bx bx-badge-check"></i>
-                                                Sonidista
-                                            </li>
-                                            <li>
-                                                <i class="bx bx-badge-check"></i>
-                                                Nº de Músicos
-                                            </li> 
-                                        </ul>
-                                        <a class="box-btn" href="shared-hosting.html">
-                                            Contratar
-                                        </a> 
-                                
-                            <!--</div>-->
-                        </div>
-                    </div> 
+<?php 
+                    } //FIN DEL ELSE
+                } //fin del FOR
+?>
                     
-                    <div class="col-lg-4 col-md-6">
-                        <div class="single-blog">
-                            <div class="blog-img">
-                                <a href="blog-details.html">
-                                    <img src="assets/images/bg/fondo-precios-3-naranja-min.jpg" alt=""/> 
-                                </a>
-                            </div>
+                    
 
-                            <!--<div class="content single-pricing">--> 
-                                        <div class="pricing-top-heading">
-                                            <h3>Tarifa S</h3>
-                                            <p>1 hora de show</p>
-                                        </div>
-                                        <h3>$5.000</h3>
-                                        <ul>
-                                            <li>
-                                                <i class="bx bx-badge-check"></i>
-                                                Duración 1 hr.
-                                            </li>
-                                            <li>
-                                                <i class="bx bx-badge-check"></i>
-                                               Backline  
-                                            </li>
-                                            <li>
-                                                <i class="bx bx-badge-check"></i>
-                                                Refuerzo Sonoro
-                                            </li>
-                                            <li>
-                                                <i class="bx bx-badge-check"></i>
-                                                Sonidista
-                                            </li>
-                                            <li>
-                                                <i class="bx bx-badge-check"></i>
-                                                Nº de Músicos
-                                            </li> 
-                                        </ul>
-                                        <a class="box-btn" href="shared-hosting.html">
-                                            Contratar
-                                        </a> 
-                                
-                            <!--</div>-->
-                        </div>
-                    </div> 
+                    
                 </div>
                 
                 <!--Tarifas formato redondeado-->
@@ -799,8 +734,37 @@ $resultadosEventosPasa = Consultas::eventosPasadosArtista($respuesta[0]["id_user
         </section>
         <!-- End Tarifas Area -->        
  
+<?php
+        } // fin del IF -ELSE para mostrar tarigas
+?>
         
-        
+        <!-- CTA 2 unete -->
+        <section class="home-cta-2-morado pt-100 pb-35">
+            <div class="container">
+                
+
+                 <div class="row">
+                    <div class="col-lg-2 col-sm-2"></div>
+                    
+                    <div class="col-lg-5 col-sm-5">
+                        <div class="section-title">                          
+                            <h2 style="color: white;">¿Eres artista?<br> Rentabiliza tu talento</h2> 
+                        </div>
+                    </div>
+                    
+                    <div class="col-lg-3 col-sm-3" style="vertical-align: middle; ">
+                        <div class="text-center">
+                            <div class="nav-btn">
+                                <br>
+                                <a href="#" class="box-btn text-center">Crea tu perfíl</a> 
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-2 col-sm-2"></div>
+                 </div>
+            </div>
+        </section>
+        <!-- End CTA 2 unete-->         
      
 
  

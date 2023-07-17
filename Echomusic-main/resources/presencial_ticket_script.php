@@ -104,7 +104,7 @@ if(isset($_SESSION['user']) && $_SESSION['user']!=''){
       $idEvent = mysqli_real_escape_string($conn, $idEvent);
 
       // Get url breadcrumb
-      $breadCrumbUrl = "https://qa.echomusic.cl/event.php?public=".$idEvent;
+      $breadCrumbUrl = "https://echomusic.cl/event.php?public=".$idEvent;
     }else{
       header('HTTP/1.1 403 Forbidden');
       die();
@@ -506,7 +506,7 @@ if(isset($_SESSION['user']) && $_SESSION['user']!=''){
 
           // $_SESSION['success'] = "Suscripción exitosa";
 
-          header( "Location: https://qa.echomusic.cl/payment_verification.php?check=".$session_id );
+          header( "Location: https://echomusic.cl/payment_verification.php?check=".$session_id );
 
           exit();
 
@@ -528,7 +528,7 @@ if(isset($_SESSION['user']) && $_SESSION['user']!=''){
           $amount = $totalTransaction;
           $buy_order = $id_transaction;
           $session_id = random_str(12);
-          $return_url = 'https://qa.echomusic.cl/payment_verification.php?public='.$idEvent;
+          $return_url = 'https://echomusic.cl/payment_verification.php?public='.$idEvent;
 
         // create order
           $response = $transaction->create($buy_order, $session_id, $amount, $return_url);
@@ -579,8 +579,8 @@ if(isset($_SESSION['user']) && $_SESSION['user']!=''){
             try {
                 $opts = array(
                     "transaction_id" => "TE-".$id_transaction,
-                    "return_url" => "https://qa.echomusic.cl/payment_verification.php?public=$idEvent",
-                    "notify_url" => "https://qa.echomusic.cl/resources/notification_script.php",
+                    "return_url" => "https://echomusic.cl/payment_verification.php?public=$idEvent",
+                    "notify_url" => "https://echomusic.cl/resources/notification_script.php",
                     "notify_api_version" => "1.3",
                 );
 

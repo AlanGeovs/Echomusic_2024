@@ -79,7 +79,7 @@ $nuevoPatrocinadorMail = "<!DOCTYPE html><html><head>
                 <table border='0' cellpadding='0' cellspacing='0' width='100%' style='max-width: 600px;'>
                     <tr>
                         <td align='center' valign='top' style='padding: 40px 10px 40px 10px;'>
-                        <img src='https://qa.echomusic.cl/constru/LOGO-ECHO.png' alt='EchoMusic' height='150' style='width:60%;'> </td>
+                        <img src='https://echomusic.cl/constru/LOGO-ECHO.png' alt='EchoMusic' height='150' style='width:60%;'> </td>
                     </tr>
                 </table>
             </td>

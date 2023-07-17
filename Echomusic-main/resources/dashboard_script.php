@@ -740,7 +740,7 @@ include 'functionDateTranslate.php';
 
     if(mysqli_query($conn,$queryAccept)){
 
-      /*$text = '<html><p>El Artista '.$userProfile_array['nick_user'].' ha aceptado tu reserva, por favor procede a realizar el pago desde tu <a href="http://echomusic.cl/dashboard.php?location=https://qa.echomusic.cl/dashboard.php">Panel de Control</a> para completar el proceso. </p></html>';
+      /*$text = '<html><p>El Artista '.$userProfile_array['nick_user'].' ha aceptado tu reserva, por favor procede a realizar el pago desde tu <a href="http://echomusic.cl/dashboard.php?location=https://echomusic.cl/dashboard.php">Panel de Control</a> para completar el proceso. </p></html>';
       */
       $text = $eventomail.$userProfile_array['nick_user'].$eventomail1;
 
@@ -828,7 +828,7 @@ include 'functionDateTranslate.php';
 
       if(mysqli_query($conn,$queryReject)){
 
-       /* $text = '<html><p>El Artista '.$userProfile_array['nick_user'].' ha rechazado el evento. </br>Puedes encontrar más artistas con nuestro <a href="https://qa.echomusic.cl/search.php">Buscador</a></p></html>';
+       /* $text = '<html><p>El Artista '.$userProfile_array['nick_user'].' ha rechazado el evento. </br>Puedes encontrar más artistas con nuestro <a href="https://echomusic.cl/search.php">Buscador</a></p></html>';
 */
        $text = $eventoremail.$userProfile_array['nick_user'].$eventoremail1;
 
@@ -1589,9 +1589,9 @@ include 'functionDateTranslate.php';
 
                         "transaction_id" => "TE-".$id_transaction,
 
-                        "return_url" => "https://qa.echomusic.cl/dashboard.php",
+                        "return_url" => "https://echomusic.cl/dashboard.php",
 
-                        "notify_url" => "https://qa.echomusic.cl/resources/notification_script.php",
+                        "notify_url" => "https://echomusic.cl/resources/notification_script.php",
 
                         "notify_api_version" => "1.3",
 

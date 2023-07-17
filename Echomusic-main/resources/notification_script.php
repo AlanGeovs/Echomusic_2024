@@ -327,7 +327,7 @@ if(!empty($_POST)){
 
                                     Nombre del Evento: <strong>'.$arrayEventData['name_event'].'</strong> </br>
 
-                                    Dirección del Evento: <strong> https://qa.echomusic.cl/streaming.php?event='.$id_event.'</strong> </br>
+                                    Dirección del Evento: <strong> https://echomusic.cl/streaming.php?event='.$id_event.'</strong> </br>
 
                                     <p>Equipo Echomusic</p></html>';*/
 
@@ -336,7 +336,7 @@ if(!empty($_POST)){
                 '.$pagoeventomail2;
 
                 $textUser.='<p style="margin: 0.5rem 1rem;">Nombre del Evento: <strong>'.$arrayEventData['name_event'].'</strong> <br>
-                Link evento: <strong> https://qa.echomusic.cl/streaming.php?event='.$arrayEventData['id_event'].'</strong><br>
+                Link evento: <strong> https://echomusic.cl/streaming.php?event='.$arrayEventData['id_event'].'</strong><br>
                 Fecha y Hora: <strong> '.$dateEventMail.' a las '.$timeEventMail.' hrs. </strong> </p>'.$pagoeventomail3;
 
 

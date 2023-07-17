@@ -21,7 +21,7 @@ if ($_SESSION["tipoUsuario"]=="capturista") {
     <meta name="description" content="">
     <meta name="author" content="">
     <?php    require  'includes/favicon.php'; ?> 
-    <title>Admin | AutoMayoreo</title>
+    <title>Admin | Echomusic</title>
     <!-- CSS -->
     <link rel="stylesheet" href="assets/css/app.css">
 
@@ -107,8 +107,12 @@ if ($_SESSION["tipoUsuario"]=="capturista") {
                                                 <select class="custom-select my-1 mr-sm-2 form-control r-0 light s-12" id="tipo" name="tipo">
                                                     <option selected disabled>Seleccionar...</option>  
                                                     <option value="admin">Administrador</option>
-                                                    <option value="capturista">Capturista</option>
-                                                    <option value="asociado">Asociado</option>
+                                                    <option value="capturista">Artista</option>
+                                                    <option value="cliente">Usuario (cliente)</option>
+                                                    <option value="booking">Booking</option>
+                                                    <option value="productora">Productora</option>
+                                                    <option value="sello">Sello</option>
+                                                    <option value="espacio">Espacio</option> 
                                                 </select>
                                             </div>
                                         </div>

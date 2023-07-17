@@ -112,10 +112,10 @@ class Consultas  extends Conexion{
 	}
 
 	public static function registrarUsuarios($datosModel,$tabla){
-		$stmt=Conexion::conectar()->prepare("INSERT INTO $tabla (usuario, correo, password, confirmPass, tipo) VALUES (:usuario, :correo, :password, :confirmPass, :tipo)");
+//		$stmt=Conexion::conectar()->prepare("INSERT INTO $tabla (usuario, correo, password, confirmPass, tipo) VALUES (:usuario, :correo, :password, :confirmPass, :tipo)");
+		$stmt=Conexion::conectar()->prepare("INSERT INTO $tabla (nick_user, mail_user, password_user,   id_type_user) VALUES (:usuario, :correo,  :confirmPass, :tipo)");
 		$stmt->bindParam(":usuario", $datosModel[0], PDO::PARAM_STR);
-		$stmt->bindParam(":correo", $datosModel[1], PDO::PARAM_STR);
-		$stmt->bindParam(":password", $datosModel[2], PDO::PARAM_STR);
+		$stmt->bindParam(":correo", $datosModel[1], PDO::PARAM_STR); 
 		$stmt->bindParam(":confirmPass", md5($datosModel[2]), PDO::PARAM_STR);
 		$stmt->bindParam(":tipo", $datosModel[3], PDO::PARAM_STR); 
 
@@ -127,6 +127,23 @@ class Consultas  extends Conexion{
 
 		$stmt->close();
 	}
+//        Registrar Usuarios Anterior
+//	public static function registrarUsuarios($datosModel,$tabla){
+//		$stmt=Conexion::conectar()->prepare("INSERT INTO $tabla (usuario, correo, password, confirmPass, tipo) VALUES (:usuario, :correo, :password, :confirmPass, :tipo)");
+//		$stmt->bindParam(":usuario", $datosModel[0], PDO::PARAM_STR);
+//		$stmt->bindParam(":correo", $datosModel[1], PDO::PARAM_STR);
+//		$stmt->bindParam(":password", $datosModel[2], PDO::PARAM_STR);
+//		$stmt->bindParam(":confirmPass", md5($datosModel[2]), PDO::PARAM_STR);
+//		$stmt->bindParam(":tipo", $datosModel[3], PDO::PARAM_STR); 
+//
+//		if ($stmt->execute()) {
+//			return "ok";
+//		}else{
+//			return "error";
+//		}
+//
+//		$stmt->close();
+//	}
 
 	public static function validarRegistroUsuario($datosModel,$tabla){
 		$stmt=Conexion::conectar()->prepare("SELECT usuario, correo FROM $tabla WHERE usuario = :usuario AND correo = :correo");

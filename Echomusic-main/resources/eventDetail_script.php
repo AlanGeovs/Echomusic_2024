@@ -11,11 +11,11 @@ switch(true){
   break;
 
   case preg_match("/index/i", $breadCrumbUrl):
-    $breadCrumbUrl = "https://qa.echomusic.cl/index.php";
+    $breadCrumbUrl = "https://echomusic.cl/index.php";
     $breadCrumbName = "Inicio";
   break;
   case true:
-    $breadCrumbUrl = "https://qa.echomusic.cl/index.php";
+    $breadCrumbUrl = "https://echomusic.cl/index.php";
     $breadCrumbName = "Inicio";
   break;
 }

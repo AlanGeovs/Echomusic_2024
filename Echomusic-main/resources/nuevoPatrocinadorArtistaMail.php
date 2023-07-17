@@ -79,7 +79,7 @@ $nuevoPatrocinadorMail = "<!DOCTYPE html><html><head>
                 <table border='0' cellpadding='0' cellspacing='0' width='100%' style='max-width: 600px;'>
                     <tr>
                         <td align='center' valign='top' style='padding: 40px 10px 40px 10px;'>
-                        <img src='https://qa.echomusic.cl/constru/LOGO-ECHO.png' alt='EchoMusic' height='150' style='width:60%;'> </td>
+                        <img src='https://echomusic.cl/constru/LOGO-ECHO.png' alt='EchoMusic' height='150' style='width:60%;'> </td>
                     </tr>
                 </table>
             </td>
@@ -109,7 +109,7 @@ $nuevoPatrocinadorMail1=         "!</h1>
                             <b>Nombre Patrocinador:</b> ";
 // nombre y cantidad del aporte en la notificacion, Link a panel de control
 $nuevoPatrocinadorMail2=         ".<br><br></p>
-                            <p style='margin: 0.5rem 1rem;'>Recuerda que puedes ir a tu <b><a href='http://echomusic.cl/dashboard.php?location=https://qa.echomusic.cl/dashboard.php'>Panel de Control</a></b> para ver el avance de tu proyecto.<br><br></p>
+                            <p style='margin: 0.5rem 1rem;'>Recuerda que puedes ir a tu <b><a href='http://echomusic.cl/dashboard.php?location=https://echomusic.cl/dashboard.php'>Panel de Control</a></b> para ver el avance de tu proyecto.<br><br></p>
                             <p style='margin: 1.5rem 1rem 0rem 1rem;'>Esperamos que podamos completar la meta prontamente.</p>
                         </td>
                     </tr>

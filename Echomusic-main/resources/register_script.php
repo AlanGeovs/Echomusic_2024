@@ -358,7 +358,7 @@ if(isset($_POST['register_form_submit'])){
 
   //Text email
 
-  //$text = '<html><p>2 Para verificar tu cuenta Echomusic haz click en el siguiente enlace:</p> <a href="https://qa.echomusic.cl/verify.php?code='.$verify_code.'">https://qa.echomusic.cl/verify.php?code='.$verify_code.'</a></html>';
+  //$text = '<html><p>2 Para verificar tu cuenta Echomusic haz click en el siguiente enlace:</p> <a href="https://echomusic.cl/verify.php?code='.$verify_code.'">https://echomusic.cl/verify.php?code='.$verify_code.'</a></html>';
    $text = $welcomemail.$verify_code.$welcomemail1.$verify_code.$welcomemail2.$verify_code.$welcomemail3;
 
   $headers = "From: verificacion@echomusic.cl" . "\r\n";
@@ -664,7 +664,7 @@ if(isset($_POST['register_form_submit'])){
 
   //Text email
 
-  //$text = '<html><p>3 Para verificar tu cuenta Echomusic haz click en el siguiente enlace:</p> <a href="https://qa.echomusic.cl/verify.php?code='.$verify_code.'">https://qa.echomusic.cl/verify.php?code='.$verify_code.'</a></html>';
+  //$text = '<html><p>3 Para verificar tu cuenta Echomusic haz click en el siguiente enlace:</p> <a href="https://echomusic.cl/verify.php?code='.$verify_code.'">https://echomusic.cl/verify.php?code='.$verify_code.'</a></html>';
    $text = $welcomemail.$verify_code.$welcomemail1.$verify_code.$welcomemail2.$verify_code.$welcomemail3;
 
 
@@ -823,7 +823,7 @@ if(isset($_POST['register_form_submit'])){
 
              $errTyp = "success";
              $errMSG = "Registro exitoso. Se ha enviado un correo para verificar tu cuenta.";
-             header("Location: https://qa.echomusic.cl");
+             header("Location: https://echomusic.cl");
              die();
 
            }

@@ -287,7 +287,7 @@
 
                 $NOMBRE_USUARIO = ucfirst($arrayBackersInfo['first_name_user']);
                 $emailUser = $arrayBackersInfo['mail_user'];
-                $LINK_PROYECTO = 'https://qa.echomusic.cl/proyecto.php?projectid='.$prId;
+                $LINK_PROYECTO = 'https://echomusic.cl/proyecto.php?projectid='.$prId;
 
                 // AQUI VA EL MAIL DE AVANCE DE PROYECTO
                   $textUser = $avancesProyectoMail.$NOMBRE_USUARIO.$avancesProyectoMail1.$LINK_PROYECTO.$avancesProyectoMail2;
@@ -354,7 +354,7 @@
 
                $NOMBRE_USUARIO = ucfirst($arrayBackersInfo['first_name_user']);
                $emailUser = $arrayBackersInfo['mail_user'];
-               $LINK_PROYECTO = 'https://qa.echomusic.cl/proyecto.php?projectid='.$prId;
+               $LINK_PROYECTO = 'https://echomusic.cl/proyecto.php?projectid='.$prId;
 
                // AQUI VA EL MAIL DE AVANCE DE PROYECTO
                  $textUser = $avancesProyectoMail.$NOMBRE_USUARIO.$avancesProyectoMail1.$LINK_PROYECTO.$avancesProyectoMail2;

@@ -622,9 +622,9 @@
 												<div id="compartirEventroStream" class="container">
 													<div class="row my-1 text-center text-white">
 														<ul class="list-inline mb-0">
-															<li class="list-inline-item list-fb"><a href="https://www.facebook.com/sharer.php?u=https://qa.echomusic.cl/proyecto.php?projectid=<?=$dataProjectArray['id_project']?>" target="_blank"><i class="fab fa-facebook-f share-fb"></i> </a></li>
-															<li class="list-inline-item list-tw"><a href="https://twitter.com/share?url=https://qa.echomusic.cl/proyecto.php?projectid=<?=$dataProjectArray['id_project']?>&amp;text=EchoMusic&amp;hashtags=echomusic" target="_blank"><i class="fab fa-twitter share-tw"></i> </a></li>
-															<li class="list-inline-item list-wpp"><a href="https://api.whatsapp.com/send?text=https://qa.echomusic.cl/proyecto.php?projectid=<?=$dataProjectArray['id_project']?>" data-action="share/whatsapp/share" target="_blank" rel="noopener noreferrer"><i class="fab fa-whatsapp share-wpp"></i> </a></li>
+															<li class="list-inline-item list-fb"><a href="https://www.facebook.com/sharer.php?u=https://echomusic.cl/proyecto.php?projectid=<?=$dataProjectArray['id_project']?>" target="_blank"><i class="fab fa-facebook-f share-fb"></i> </a></li>
+															<li class="list-inline-item list-tw"><a href="https://twitter.com/share?url=https://echomusic.cl/proyecto.php?projectid=<?=$dataProjectArray['id_project']?>&amp;text=EchoMusic&amp;hashtags=echomusic" target="_blank"><i class="fab fa-twitter share-tw"></i> </a></li>
+															<li class="list-inline-item list-wpp"><a href="https://api.whatsapp.com/send?text=https://echomusic.cl/proyecto.php?projectid=<?=$dataProjectArray['id_project']?>" data-action="share/whatsapp/share" target="_blank" rel="noopener noreferrer"><i class="fab fa-whatsapp share-wpp"></i> </a></li>
 														</ul>
 													</div>
 												</div>

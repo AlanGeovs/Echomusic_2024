@@ -94,8 +94,11 @@
                     <div class="col-lg-8 col-sm-8 text-right pr-0">
                         <div class="header-content-right">
                             <ul class="header-contact">
-                                <li><a href="#"><i class="bx bxs-log-in"></i> Ingresar</a></li>
-                                <li><a href="#"><i class="bx bxs-log-out"></i> Regístrate</a></li>
+                                <li><a href="ingresar.php"><i class="bx bxs-log-in"></i> Ingresar</a></li>
+                                <!--<li><a href="registro.php"><i class="bx bxs-log-out"></i> Regístrate</a></li>-->
+                                <li>
+                                    <a type="button" class=" text-center" data-bs-toggle="modal" data-bs-target="#ModalTipodeRegistro"> 
+                                      <i class="bx bxs-log-out"></i> Regístrate</a></li>
                             </ul>
                         </div>
                     </div>
@@ -103,16 +106,16 @@
                         <div class="header-content-right">
                             <ul class="header-social">
                                 <li>
-                                    <a href="#" target="_blank"><i class="bx bxl-facebook"></i></a>
+                                    <a href="https://www.facebook.com/EchoMusic-Chile-113583697083086/" target="_blank"><i class="bx bxl-facebook"></i></a>
                                 </li>
                                 <li>
-                                    <a href="#" target="_blank"><i class="bx bxl-twitter"></i></a>
+                                    <a href="https://instagram.com/echomusic_cl" target="_blank"><i class="bx bxl-instagram"></i></a>
                                 </li>
                                 <li>
-                                    <a href="#" target="_blank"> <i class="bx bxs-envelope"></i></a>
+                                    <a href="https://www.tiktok.com/@echomusic_cl" target="_blank"> <i class="bx bxl-tiktok"></i></a>
                                 </li>
                                 <li>
-                                    <a href="#" target="_blank"> <i class="bx bxl-youtube"></i></a>
+                                    <a href="https://www.linkedin.com/company/echomusic-cl" target="_blank"> <i class="bx bxl-linkedin"></i></a>
                                 </li>
                             </ul>
                         </div>
@@ -137,18 +140,8 @@
                         <div class="collapse navbar-collapse mean-menu" id="navbarSupportedContent">
                             <ul class="navbar-nav text-left">
                                 <li class="nav-item">
-                                    <a href="index.php" class="nav-link dropdown-toggle active">Inicio</a>
-                                    <ul class="dropdown-menu">
-                                        <li class="nav-item">
-                                            <a href="index.php" class="nav-link active">Inicio Ingreso</a>
-                                        </li>
-<!--                                        <li class="nav-item">
-                                            <a href="index-2.html" class="nav-link">Home Two</a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a href="index-3.html" class="nav-link">Home Three</a>
-                                        </li>-->
-                                    </ul>
+                                    <a href="index.php" class="nav-link dropdown-toggle">Inicio</a>
+                                     
                                 </li>
                                 <li class="nav-item">
 
@@ -178,7 +171,7 @@
                                     </ul>-->
                                 </li>
                                 <li class="nav-item">
-                                    <a href="#" class="nav-link dropdown-toggle">Blog</a>
+                                    <a href="blog.php" class="nav-link dropdown-toggle">Blog</a>
 <!--                                    <ul class="dropdown-menu">
                                         <li class="nav-item">
                                             <a href="blog.html" class="nav-link">Blog</a>
@@ -224,7 +217,7 @@
                                     </ul>
                                 </li>-->
                                 <li class="nav-item">
-                                    <a href="#" class="nav-link">Contacto </a>
+                                    <a href="contacto.php" class="nav-link">Contacto </a>
                                 </li>
                             </ul>
                         </div>
@@ -239,7 +232,8 @@
                             </form>
                         </div>
                         <div class="nav-btn">
-                            <a href="#" class="box-btn">Regístrate</a>
+                            <a type="button" class="box-btn text-center" data-bs-toggle="modal" data-bs-target="#ModalTipodeRegistro"> 
+                                      <i class="bx bxs-log-out"></i> Regístrate</a> 
                         </div>
                     </nav>
                 </div>

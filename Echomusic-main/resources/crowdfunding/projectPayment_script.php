@@ -200,7 +200,7 @@ if(isset($_GET['tier'])){
                 $amount = $totalTransaction;
                 $buy_order = $id_transaction;
                 $session_id = random_str(12);
-                $return_url = 'https://qa.echomusic.cl/payment_verification.php?crowdfunding='.$prId;
+                $return_url = 'https://echomusic.cl/payment_verification.php?crowdfunding='.$prId;
 
               // create order
                 $response = $transaction->create($buy_order, $session_id, $amount, $return_url);
@@ -236,8 +236,8 @@ if(isset($_GET['tier'])){
 
                       $opts = array(
                           "transaction_id" => "TE-".$id_transaction,
-                          "return_url" => "https://qa.echomusic.cl/payment_verification.php?crowdfunding=$prId",
-                          "notify_url" => "https://qa.echomusic.cl/resources/notification_script.php",
+                          "return_url" => "https://echomusic.cl/payment_verification.php?crowdfunding=$prId",
+                          "notify_url" => "https://echomusic.cl/resources/notification_script.php",
                           "notify_api_version" => "1.3",
                       );
 
@@ -261,7 +261,7 @@ if(isset($_GET['tier'])){
                   $amount = $totalTransaction;
                   $buy_order = $id_transaction;
                   $session_id = random_str(12);
-                  $return_url = 'https://qa.echomusic.cl/payment_verification.php?crowdfunding='.$prId;
+                  $return_url = 'https://echomusic.cl/payment_verification.php?crowdfunding='.$prId;
 
                   $_SESSION['method'] = '3';
                   $_SESSION['session_id'] = $session_id;

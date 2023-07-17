@@ -71,7 +71,7 @@ if(isset($_POST['id'])){
                       </tr>
                   </table>
               </div>
-              <a href="https://qa.echomusic.cl/resources/statsPublicDownload.php?event=<?=$eventId?>" class="btn btn-primary m-auto">Descargar asistentes</a>
+              <a href="https://echomusic.cl/resources/statsPublicDownload.php?event=<?=$eventId?>" class="btn btn-primary m-auto">Descargar asistentes</a>
             </div>
 
 <?php

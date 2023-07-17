@@ -293,8 +293,8 @@ if(isset($_SESSION['user'])){
                    try {
                        $opts = array(
                            "transaction_id" => "TE-".$id_transaction,
-                           "return_url" => "https://qa.echomusic.cl/dashboard.php",
-                           "notify_url" => "https://qa.echomusic.cl/resources/notification_script.php",
+                           "return_url" => "https://echomusic.cl/dashboard.php",
+                           "notify_url" => "https://echomusic.cl/resources/notification_script.php",
                            "notify_api_version" => "1.3",
                        );
                        $response = $payments->paymentsPost(

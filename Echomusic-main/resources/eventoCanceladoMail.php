@@ -79,7 +79,7 @@ $eventocamail = "<!DOCTYPE html><html><head>
                 <table border='0' cellpadding='0' cellspacing='0' width='100%' style='max-width: 600px;'>
                     <tr>
                         <td align='center' valign='top' style='padding: 40px 10px 40px 10px;'>
-                        <img src='https://qa.echomusic.cl/constru/LOGO-ECHO.png' alt='EchoMusic' height='150' style='width:60%;'> </td>
+                        <img src='https://echomusic.cl/constru/LOGO-ECHO.png' alt='EchoMusic' height='150' style='width:60%;'> </td>
                     </tr>
                 </table>
             </td>
@@ -120,7 +120,7 @@ $eventocamail4=  "          </p>
                                     <td bgcolor='#ffffff' align='center' style='padding: 20px 30px 60px 30px;'>
                                         <table border='0' cellspacing='0' cellpadding='0'>
                                             <tr>
-                                                <td align='center' style='border-radius: 3px;' bgcolor='#FFA73B'><a href='https://qa.echomusic.cl/dashboard.php' target='_blank' style='font-size: 20px; font-family: Helvetica, Arial, sans-serif; color: #ffffff; text-decoration: none; color: #ffffff; text-decoration: none; padding: 15px 25px; border-radius: 2px; border: 1px solid #FFA73B; display: inline-block;'>Panel de Control</a></td>
+                                                <td align='center' style='border-radius: 3px;' bgcolor='#FFA73B'><a href='https://echomusic.cl/dashboard.php' target='_blank' style='font-size: 20px; font-family: Helvetica, Arial, sans-serif; color: #ffffff; text-decoration: none; color: #ffffff; text-decoration: none; padding: 15px 25px; border-radius: 2px; border: 1px solid #FFA73B; display: inline-block;'>Panel de Control</a></td>
                                             </tr>
                                         </table>
                                     </td>
@@ -136,7 +136,7 @@ $eventocamail4=  "          </p>
                     <tr>
                         <td bgcolor='#ffffff' align='left' style='padding: 20px 30px 20px 30px; color: #666666; font-family: 'Lato', Helvetica, Arial, sans-serif; font-size: 18px; font-weight: 400; line-height: 25px;'>
 
-                            <p style='margin: 0.5rem 1rem;'><a href='https://qa.echomusic.cl/dashboard.php' target='_blank' style='color: #FFA73B;' >https://qa.echomusic.cl/dashboard.php</a></p>
+                            <p style='margin: 0.5rem 1rem;'><a href='https://echomusic.cl/dashboard.php' target='_blank' style='color: #FFA73B;' >https://echomusic.cl/dashboard.php</a></p>
                         </td>
                     </tr>
                     <tr>

@@ -92,23 +92,23 @@
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><?=$_SESSION['name_user']?> <span class="caret"></span></a>
               <ul id="navbar-dropmenu-ul" class="dropdown-menu" role="menu">
 
-                <li><a class="nav-link" href="https://qa.echomusic.cl/dashboard.php">Mi panel de control<span class="sr-only">(current)</span></a></li>
+                <li><a class="nav-link" href="https://echomusic.cl/dashboard.php">Mi panel de control<span class="sr-only">(current)</span></a></li>
 
                 <? if($_SESSION['type_user']=='1'): ?>
-                  <li><a class="nav-link" href="https://qa.echomusic.cl/profile.php?userid=<?=$_SESSION['user']?>">Mi perfil<span class="sr-only">(current)</span></a></li>
+                  <li><a class="nav-link" href="https://echomusic.cl/profile.php?userid=<?=$_SESSION['user']?>">Mi perfil<span class="sr-only">(current)</span></a></li>
                 <? else:?>
                 <? endif; ?>
-                <li><a class="nav-link" href="https://qa.echomusic.cl/search.php">Artistas<span class="sr-only">(current)</span></a></li>
+                <li><a class="nav-link" href="https://echomusic.cl/search.php">Artistas<span class="sr-only">(current)</span></a></li>
 
-                <li><a class="nav-link" href="https://qa.echomusic.cl/calendar_echomusic.php">Cartelera<span class="sr-only">(current)</span></a></li>
+                <li><a class="nav-link" href="https://echomusic.cl/calendar_echomusic.php">Cartelera<span class="sr-only">(current)</span></a></li>
 
-                <li><a class="nav-link" href="https://qa.echomusic.cl/search_crowdfunding.php">Crowdfunding<span class="sr-only">(current)</span></a></li>
+                <li><a class="nav-link" href="https://echomusic.cl/search_crowdfunding.php">Crowdfunding<span class="sr-only">(current)</span></a></li>
 
                 <li><a class="nav-link" href="/blog">Blog<span class="sr-only">(current)</span></a></li>
 
                 <li><a class="nav-link" href="startEvent.php">Crear Evento<span class="sr-only">(current)</span></a></li>
 
-                <li> <a class="nav-link" href="https://qa.echomusic.cl/logout.php" onclick="signOut();">Cerrar Sesión<span class="sr-only">(current)</span></a></li>
+                <li> <a class="nav-link" href="https://echomusic.cl/logout.php" onclick="signOut();">Cerrar Sesión<span class="sr-only">(current)</span></a></li>
 
               </ul>
             </li>
@@ -126,7 +126,7 @@
 
           <li class="nav-item bg-orange">
 
-            <a class="nav-link text-white" href="https://qa.echomusic.cl/register.php">Registrarme</a>
+            <a class="nav-link text-white" href="https://echomusic.cl/register.php">Registrarme</a>
 
           </li>
 
@@ -139,11 +139,11 @@
 
                     <li><a class="nav-link" href="index.php">Inicio<span class="sr-only">(current)</span></a></li>
 
-                    <li><a class="nav-link" href="https://qa.echomusic.cl/search.php">Artistas<span class="sr-only">(current)</span></a></li>
+                    <li><a class="nav-link" href="https://echomusic.cl/search.php">Artistas<span class="sr-only">(current)</span></a></li>
 
-                    <li><a class="nav-link" href="https://qa.echomusic.cl/calendar_echomusic.php">Cartelera<span class="sr-only">(current)</span></a></li>
+                    <li><a class="nav-link" href="https://echomusic.cl/calendar_echomusic.php">Cartelera<span class="sr-only">(current)</span></a></li>
 
-                    <li><a class="nav-link" href="https://qa.echomusic.cl/search_crowdfunding.php">Crowdfunding<span class="sr-only">(current)</span></a></li>
+                    <li><a class="nav-link" href="https://echomusic.cl/search_crowdfunding.php">Crowdfunding<span class="sr-only">(current)</span></a></li>
 
                     <li><a class="nav-link" href="/blog">Blog<span class="sr-only">(current)</span></a></li>
 

@@ -21,11 +21,11 @@
 
           <? foreach($userTracksArray as $userTracks): ?>
             <script type="text/javascript">console.log(<?=$userTracks['id_audio_user']?>)</script>
-            <!-- <img class="img slider__img" src="https://qa.echomusic.cl/images/track_default.jpg" alt="cover"> -->
+            <!-- <img class="img slider__img" src="https://echomusic.cl/images/track_default.jpg" alt="cover"> -->
             <? if(file_exists('images/avatars/'.$userTracks['id_user'].'.jpg')):?>
-              <img class="img slider__img" src="https://qa.echomusic.cl/images/avatars/<?=$userTracks['id_user']?>.jpg?=<?=filemtime('images/avatars/'.$userTracks['id_user'].'.jpg')?>" alt="cover">
+              <img class="img slider__img" src="https://echomusic.cl/images/avatars/<?=$userTracks['id_user']?>.jpg?=<?=filemtime('images/avatars/'.$userTracks['id_user'].'.jpg')?>" alt="cover">
             <? else: ?>
-              <img class="img slider__img" src="https://qa.echomusic.cl/images/logo_brand_4.png">
+              <img class="img slider__img" src="https://echomusic.cl/images/logo_brand_4.png">
             <? endif; ?>
           <? endforeach; ?>
 
@@ -68,10 +68,10 @@
 <? $nTrack = 1; ?>
 <? foreach ($userTracksArray as $userTracks): ?>
     <li id="play__song_<?=$nTrack?>" class="player__song">
-      <? if(file_exists('https://qa.echomusic.cl/images/avatars/'.$userTracks['id_user'].'.jpg')):?>
-        <img class="player__img img" src="https://qa.echomusic.cl/images/avatars/<?=$userTracks['id_user']?>.jpg?=<?=filemtime('images/avatars/'.$userTracks['id_user'].'.jpg')?>" alt="cover">
+      <? if(file_exists('https://echomusic.cl/images/avatars/'.$userTracks['id_user'].'.jpg')):?>
+        <img class="player__img img" src="https://echomusic.cl/images/avatars/<?=$userTracks['id_user']?>.jpg?=<?=filemtime('images/avatars/'.$userTracks['id_user'].'.jpg')?>" alt="cover">
       <? else: ?>
-        <img class="player__img img" src="https://qa.echomusic.cl/images/logo_brand_4.png">
+        <img class="player__img img" src="https://echomusic.cl/images/logo_brand_4.png">
       <? endif; ?>
 
       <p class="player__context">
@@ -86,7 +86,7 @@
 
       </p>
 
-      <audio class="audio" src="https://qa.echomusic.cl/audios/<?=$userid?>/<?=$userTracks['audio']?>.mp3"></audio>
+      <audio class="audio" src="https://echomusic.cl/audios/<?=$userid?>/<?=$userTracks['audio']?>.mp3"></audio>
 
     </li>
     <? $nTrack++; ?>

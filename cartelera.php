@@ -222,7 +222,7 @@ $respuestaEventoCiudadRegion = Consultas::buscaCiudadRegion($respuesta[0]["id_ci
                                 <div class="row">
                                     <div class="col-lg-3 col-sm-3">
                                         <div class="form-group">
-                                            <input type="text" class="form-control" id="r" name="r" required data-error="Buscar un evento o artista" placeholder="Buscar evento, artista o espacio"  <?php echo $valueEvento; ?>  />
+                                            <input type="text" class="form-control" id="r" name="r" data-error="Buscar un evento o artista" placeholder="Buscar evento, artista o espacio"  <?php echo $valueEvento; ?>  />
                                             <div class="help-block with-errors"></div>
                                         </div>
                                     </div>
@@ -257,20 +257,33 @@ $respuestaEventoCiudadRegion = Consultas::buscaCiudadRegion($respuesta[0]["id_ci
                                         <div class="help-block texto-fechas" style="">Fecha final</div>
                                     </div>
 
-                                    <div class="col-lg-3 col-md-3">
-                                        <div class="form12-group">
+                                    <div class="col-lg-2 col-md-2">
+                                        <div class="form12-group"> 
                                             <select  name="reg" id="reg" class="form-control"  data-error="Selecciona una región"   />
                                             <?php if ($_GET["reg"] != '') { 
-                                                $RegionesArregle = ['6'=>'Valparaíso','7'=>'Metropolitana','8'=>'Libertador Gral. Bernando Ohiggins','9'=>'Maule','10'=>'Ñuble' ]
+                                                $RegionesArregle = ['1'=>'Arica y Parinacota', '2'=>'Tarapacá', '3'=>'Antofagasta', '4'=>'Atacama', '5'=>'Coquimbo', 
+                                                                    '6'=>'Valparaíso','7'=>'Metropolitana','8'=>'Libertador Gral. Bernando Ohiggins','9'=>'Maule','10'=>'Ñuble',
+                                                                    '11'=>'Bío Bío', '12'=>'La Araucanía', '13'=>'Los Ríos', '14'=>'Los Lagos', '15'=>'Aysén', '16'=>'Magallanes' ]
                                                 ?>                                            
                                                 <option value="<?php echo $_GET["reg"]; ?>"><?php echo $RegionesArregle[$_GET["reg"]]; ?></option>
                                             <?php } ?> 
-                                                <option value="">Región</option>
+                                                <option value="">Todas las regiones</option>
+                                                <option value="1">Arica y Parinacota</option>
+                                                <option value="2">Tarapacá</option>
+                                                <option value="3">Antofagasta</option>
+                                                <option value="4">Atacama</option>
+                                                <option value="5">Coquimbo</option>
                                                 <option value="6">Valparaíso</option>
                                                 <option value="7">Metropolitana</option>
                                                 <option value="8">Libertador Gral. Bernando O'higgins</option>
                                                 <option value="9">Maule</option>
                                                 <option value="10">Ñuble</option>
+                                                <option value="11">Bío Bío</option>
+                                                <option value="12">La Araucanía</option>
+                                                <option value="13">Los Ríos</option>
+                                                <option value="14">Los Lagos</option>
+                                                <option value="15">Aysén</option>
+                                                <option value="16">Magallanes</option>
                                             </select>
                                         </div>
                                     </div>
@@ -278,10 +291,15 @@ $respuestaEventoCiudadRegion = Consultas::buscaCiudadRegion($respuesta[0]["id_ci
                                     <div class="col-lg-2 col-md-2">
                                         <button type="submit" class="default-btn page-btn box-btn">
                                            <i class="bx bx-search"></i>   Buscar 
-                                        </button>
+                                        </button>  
+                                         
                                         <div id="msgSubmit" class="h3 text-center hidden"></div>
                                         <div class="clearfix"></div>
-                                    </div>
+                                    </div> 
+                                    <div class="col-lg-1 col-md-1"> 
+                                        <button  type="reset"  class="default-btn page-btn box-btn">Borrar</button>
+                                         
+                                    </div> 
                                 </div>
                             </form>
                         </div>

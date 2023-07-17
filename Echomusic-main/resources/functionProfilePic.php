@@ -6,7 +6,7 @@ class avatarPicChange {
 	private $host  = 'localhost';
   private $user  = 'echomusi_admin_1';
   private $password   = "mL=D]OUo_]L0";
-  private $database  = "echomusi_db_2";
+  private $database  = "echomusi_db_1";
 
 	private $dbConnect = false;
     public function __construct(){

@@ -68,7 +68,7 @@ $queryInfoArtist = mysqli_query($conn, "SELECT nick_user AS nick_user FROM users
 $infoArtist = mysqli_fetch_assoc($queryInfoArtist);
 $nameArtist = $infoArtist['nick_user'];
 
- /* $text = '<p>Hola '.ucfirst($fname).' '.ucfirst($lname).'</p> <p>¿Cómo estuvo el artista de tu evento '.$nameEvent.'? </br> Para valorarlo presiona el siguiente enlace: <a href="https://qa.echomusic.cl/rate.php?event='.$id_event.'">https://qa.echomusic.cl/rate.php?event='.$id_event.'</a></p>
+ /* $text = '<p>Hola '.ucfirst($fname).' '.ucfirst($lname).'</p> <p>¿Cómo estuvo el artista de tu evento '.$nameEvent.'? </br> Para valorarlo presiona el siguiente enlace: <a href="https://echomusic.cl/rate.php?event='.$id_event.'">https://echomusic.cl/rate.php?event='.$id_event.'</a></p>
 
             <p>Si el artista no se presentó, por favor contáctanos de inmediato por cualquiera de nuestros medios habilitados para ello</p> <p>Equipo Echomusic</p>';*/
 

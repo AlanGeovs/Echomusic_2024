@@ -250,3 +250,16 @@ img.responsiveArtista {
         height: 160px;
     }
 }
+
+
+.tarifasBanner {
+    --opacidad-negro: 0.5;
+    background-image: linear-gradient(rgba(0, 0, 0, var(--opacidad-negro)), rgba(0, 0, 0, var(--opacidad-negro))) ;
+}
+
+
+.progress {
+    padding-left: 0;
+    padding-right: 0;
+
+}

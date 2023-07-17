@@ -1,6 +1,6 @@
 <?php
 session_set_cookie_params(3600,"/");
-ini_set('session.save_path',realpath(dirname($_SERVER['DOCUMENT_ROOT']) . '/sessions'));
+//ini_set('session.save_path',realpath(dirname($_SERVER['DOCUMENT_ROOT']) . '/sessions'));
 session_start();
 
 include 'resources/register_script.php';

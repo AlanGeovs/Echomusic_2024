@@ -40,8 +40,8 @@ $videos = Consultas::videoArtista($id);
 	             
 	            <!-- End title and description row -->
 	            <!-- Carousel row -->
-	            <div class="row">
-	                <div class="col col-md-10 offset-md-1 col-lg-8 offset-lg-2">
+	            <div class="row align-items-center choose-c justify-content-md-center">
+	                <div class="col col-md-12 offset-md-1 col-lg-12 offset-lg-2">
 	                	<!-- Carousel -->
 	                	<div id="carousel-example" class="carousel slide">
 	       					<ol class="carousel-indicators">
