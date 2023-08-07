@@ -6,10 +6,15 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to ed
     Created on : 25/06/2023, 06:00:39 PM
     Author     : AlanGeovs
 */
-
-body{ width:95%;
-	
-	}
+:root {
+    --global-color-naranja: #FF601B;
+}
+body{
+    width:95%;
+    background-color: #ffdbcf;
+    font-family: 'Raleway', sans-serif;
+}
+       
 #placeholder {
 	width: 100%;/*580px*/
 	border: 1px solid #CDCDCD;
@@ -44,4 +49,45 @@ body{ width:95%;
 	box-shadow: 0 1px 3px black;
 	border-collapse: separate;
 	display: none;
+}
+
+h2{
+    color: var(--global-color-naranja);
+}
+
+p {
+    font-family: 'Raleway', sans-serif;
+    font-size: 16px;
+    padding-bottom: 10px;
+}
+
+label {
+    padding: 10px 10px;
+}
+
+input {
+/*    background-color: #FFDBCF;
+    border-color: #f74b64;  Asegúrate de que esta variable CSS está definida */
+    border-radius: 10px 10px 10px 10px; /* o simplemente, border-radius: 10px; */
+    padding-bottom: 10px;
+}
+
+
+.btn-lodela {
+    font-family: "Raleway", Sans-serif;
+    font-weight: bold;
+    border-radius: 30px 30px 30px 30px; /* o simplemente, border-radius: 30px; */
+    background-color:    var(--global-color-naranja);
+    color: white;
+    margin-top: 20px;
+    padding: 10px 30px;
+}
+.btn-lodela:hover, .btn-lodela:active {
+    background-color: #FFFFFF; /* Cambia el color de fondo a blanco */
+    color: #000000; /* Cambia el color del texto a negro */
+}
+
+.py-md-5 {
+    padding-top: 1rem!important;
+    padding-bottom: 1rem!important;
 }

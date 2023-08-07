@@ -1,60 +1,4 @@
-    <!-- MODAL Tipo de Registro Usuarios  -->
-                        <div class="modal" id="ModalTipodeRegistro">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-
-                                    <!-- Modal Header -->
-                                    <div class="modal-header">
-                                        <h4 class="modal-title">Selecciona el tipo de usuario</h4>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                                    </div>
-
-                                    <!-- Modal body -->
-                                    <div class="modal-body"> 
-                                        <form id="formRegistroTipoUser"  name="formRegistroTipoUser" method="GET" action="seleccionaRegistroUsuario.php"> 
-                                            <div class="row justify-content-center"> 
-                                                <div class="col-lg-4 col-sm-4">
-                                                    <div class="form-group"> 
-                                                        <input type="radio" id="usuario" name="formRegistroTipoUser" value="usuario">
-                                                        <label for="usuario">Usuario</label><br> 
-                                                    </div>
-                                                </div>
-                                                <div class="col-lg-4 col-sm-4">
-                                                    <div class="form-group"> 
-                                                        <input type="radio" id="artista" name="formRegistroTipoUser" value="artista">
-                                                        <label for="artista">Artista</label><br>
-                                                        
-                                                    </div>
-                                                </div>
-                                                <div class="col-lg-4 col-sm-4">
-                                                    <div class="form-group"> 
-                                                        <input type="radio" id="espacio" name="formRegistroTipoUser" value="espacio">
-                                                        <label for="espacio">Espacio</label>
-                                                        
-                                                    </div>
-                                                </div>
-                                                <div class="col-lg-12 col-md-12">
-                                                    <br>
-                                                    <button type="submit" class="default-btn page-btn box-btn">
-                                                        <i class="bx bx-search"></i>   Registrarte 
-                                                    </button>
-                                                    <div id="msgSubmit" class="h3 text-center hidden"></div>
-                                                    <div class="clearfix"></div>
-                                                </div>
-                                            </div>
-                                        </form>
-                                    </div>
-
-                                    <!-- Modal footer -->
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cerrar</button>
-                                    </div>
-
-                                </div>
-                            </div>
-                        </div>                    
-    <!-- FINAL  MODAL Tipo de Registro Usuarios  --> 
-
+<?php include 'modalRagistro.php';?> 
 <!-- Footer Area -->
         <footer class="footer-area pt-100">
             <div class="container">
@@ -213,6 +157,7 @@
             var owl = $('.owl-carousel');
                 owl.owlCarousel({
                     loop:true,
+                    nav:true,
                     margin:10,
                     responsiveClass:true,
                     autoplay:true,
@@ -221,15 +166,15 @@
                     responsive:{
                         0:{
                             items:2,
-                            nav:false
+//                            nav:false
                         },
                         600:{
                             items:2,
-                            nav:false
+//                            nav:false
                         },
                         1000:{
                             items:3,
-                            nav:false 
+//                            nav:false 
                         }
                 }
             });
@@ -245,6 +190,7 @@
             var owl = $('.owl-carousel-artistas');
                 owl.owlCarousel({
                     loop:true,
+                    nav:true,
                     margin:10,
                     responsiveClass:true,
                     autoplay:true,

@@ -1,4 +1,5 @@
-        <!-- Footer Area -->
+<?php include 'modalRagistro.php';?>
+<!-- Footer Area -->
         <footer class="footer-area pt-100">
             <div class="container">
                 <div class="row">
@@ -156,6 +157,7 @@
             var owl = $('.owl-carousel');
                 owl.owlCarousel({
                     loop:true,
+                    nav:true,
                     margin:10,
                     responsiveClass:true,
                     autoplay:true,
@@ -164,15 +166,15 @@
                     responsive:{
                         0:{
                             items:1,
-                            nav:false
+//                            nav:false
                         },
                         600:{
                             items:1,
-                            nav:false
+//                            nav:false
                         },
                         1000:{
                             items:1,
-                            nav:false 
+//                            nav:false 
                         }
                 }
             });

@@ -257,7 +257,7 @@ $respuestaEventoCiudadRegion = Consultas::buscaCiudadRegion($respuesta[0]["id_ci
                                         <div class="help-block texto-fechas" style="">Fecha final</div>
                                     </div>
 
-                                    <div class="col-lg-2 col-md-2">
+                                    <div class="col-lg-3 col-md-3">
                                         <div class="form12-group"> 
                                             <select  name="reg" id="reg" class="form-control"  data-error="Selecciona una región"   />
                                             <?php if ($_GET["reg"] != '') { 
@@ -292,14 +292,12 @@ $respuestaEventoCiudadRegion = Consultas::buscaCiudadRegion($respuesta[0]["id_ci
                                         <button type="submit" class="default-btn page-btn box-btn">
                                            <i class="bx bx-search"></i>   Buscar 
                                         </button>  
-                                         
+                                        <div class="btn-clear">
+                                            <button type="reset" class="box-btn-clear" >Limpiar campos</button>
+                                        </div> 
                                         <div id="msgSubmit" class="h3 text-center hidden"></div>
                                         <div class="clearfix"></div>
-                                    </div> 
-                                    <div class="col-lg-1 col-md-1"> 
-                                        <button  type="reset"  class="default-btn page-btn box-btn">Borrar</button>
-                                         
-                                    </div> 
+                                    </div>  
                                 </div>
                             </form>
                         </div>
@@ -407,10 +405,10 @@ $respuestaEventoCiudadRegion = Consultas::buscaCiudadRegion($respuesta[0]["id_ci
                     ?>  
                 </div>
 
-                <div class="case-btn text-center">
-                    <!--<p>  <a href="#">Ver más eventos</a></p>-->
+<!--                <div class="case-btn text-center">
+                    <p>  <a href="#">Ver más eventos</a></p>
                     <p>    <a href="#" class="box-btn">Ver más eventos</a></p>
-                </div>
+                </div>-->
             </div>
         </section>
         <!-- End Case  Eventos Artistas Proyectos  Espacios  --> 
@@ -830,7 +828,8 @@ $respuestaEventoCiudadRegion = Consultas::buscaCiudadRegion($respuesta[0]["id_ci
                         <div class="text-center">
                             <div class="nav-btn">
                                 <br> 
-                                <a href="#" class="box-btn text-center">CREA TU EVENTO</a> 
+                                <a type="button" class="box-btn text-center" data-bs-toggle="modal" data-bs-target="#ModalTipodeRegistro"> 
+    <i class="bx bxs-log-out"></i> Crea tu perfil</a> 
                             </div>
                         </div>
                     </div>

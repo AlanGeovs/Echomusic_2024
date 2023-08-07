@@ -9,4 +9,7 @@
  if($_GET["formRegistroTipoUser"] == 'espacio'){
      header("Location: registro_espacio.php");
  }
+ if($_GET["formRegistroTipoUser"] == 'agente'){
+     header("Location: registro_agente.php");
+ }
  

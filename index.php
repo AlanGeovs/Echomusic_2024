@@ -290,7 +290,7 @@ include "header.php";
                                 <p>Encuentra lo más relevante en cuanto a eventos, proyectos, noticias y convocatorias.</p>
                             </div>
  
-                            <a href="#" class="box-btn">Ver más destacados</a>
+                            <a href="buscar_artista.php" class="box-btn">Ver más destacados</a>
                         </div>
                     </div>
  
@@ -561,7 +561,7 @@ include "header.php";
                         <div class="text-center">
                             <div class="nav-btn">
                                 <br> 
-                                <a href="#" class="box-btn text-center">CREA TU EVENTO</a> 
+                                <a href="cartelera.php" class="box-btn text-center">CREA TU EVENTO</a> 
                             </div>
                         </div>
                     </div>
@@ -588,7 +588,7 @@ include "header.php";
                                 <p>Descubre nuevos artistas y contrata sus servicios musicales de manera fácil, digital y segura.</p>
                             </div>
 
-                            <a href="#" class="box-btn">Ver todos los Artista</a>
+                            <a href="buscar_artista.php" class="box-btn">Ver todos los Artista</a>
                         </div>
                     </div>
 
@@ -672,7 +672,7 @@ include "header.php";
                         <div class="text-center">
                             <div class="nav-btn">
                                 <br>
-                                <a href="#" class="box-btn text-center">Crea tu perfíl</a> 
+                                <a href="buscar_artista.php" class="box-btn text-center">Crea tu perfíl</a> 
                             </div>
                         </div>
                     </div>
@@ -888,7 +888,7 @@ include "header.php";
                         <div class="text-center">
                             <div class="nav-btn">
                                 <br> 
-                                <a href="#" class="box-btn text-center">Crea tu proyecto</a> 
+                                <a href="buscar_crowdfunding.php" class="box-btn text-center">Crea tu proyecto</a> 
                             </div>
                         </div>
                     </div>

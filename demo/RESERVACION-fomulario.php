@@ -4,7 +4,8 @@
         <div class="row justify-content-md-center ">
             <div class="col-lg-8 col-md-8">
                 <div class="content">
-                    <form id="form2"  name="form2" method="GET" action="pago.php"> 
+                    <h2 class="text-center">3 - Reservación (API WooC)</h2>
+                    <form id="form2"  name="form2" method="GET" action="RESERVACION-pago.php"> 
                         <div class="row justify-content-md-center">
                             <div class="col-lg-4 col-sm-6">
                                 <div class="form-group">
@@ -19,7 +20,7 @@
                                     <input type="text" class="form-control" id="c" name="c" required data-error="Correo" placeholder="Correo"  required   />
                                     <div class="help-block with-errors"></div>
                                 </div>
-                            </div>
+                            </div> 
 
 
                             <div class="col-lg-4 col-sm-6">
@@ -53,8 +54,8 @@
 
 
                             <div class="col-lg-12 col-md-12 text-center "> 
-                                <button type="submit" class="btn btn-primary"> 
-                                    Cotizar ahora!
+                                <button type="submit" class="btn btn-lodela"> 
+                                    ¡Cotizar ahora!
                                 </button>
 
                             </div>

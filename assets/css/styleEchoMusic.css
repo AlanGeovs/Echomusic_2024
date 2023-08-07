@@ -111,8 +111,8 @@ and open the template in the editor.
     font-weight: 900;
 }
 
-/*Imágenes  recortadas para eventos*/
 
+/*Imágenes  recortadas para eventos*/
 .imgEvent{
   display: inline-block;
    /*margin:5px;
@@ -262,4 +262,87 @@ img.responsiveArtista {
     padding-left: 0;
     padding-right: 0;
 
+}
+
+/*Botón de borrar en formularios de búsqueda*/
+.btn-clear{
+    
+}
+
+.box-btn-clear {
+    background-color: transparent;
+    padding-top: 10px;  
+    font-size: 11px;
+    color: #FF6600;
+    /*padding: 15px 25px;*/
+    line-height: 1;
+    -webkit-transition: all 0.5s;
+    transition: all 0.5s;
+    text-transform: capitalize;
+    position: relative;
+    cursor: pointer;
+    border-radius: 25px;
+    text-align: center;
+    /*overflow: hidden;*/
+    /*z-index: 1;*/
+/*    background-color: blue;
+    border: 1px solid #FF6600;*/
+}
+
+.box-btn-clear:hover{
+    color: #051242; 
+}
+
+
+/*Carrusel OWL*/
+.owl-carousel .owl-nav {
+    position: absolute; /* Colocar los botones de navegación en una posición absoluta */
+    top: 50%; /* Centrarlos verticalmente */
+    width: 100%; /* Asegurarse de que abarquen todo el ancho del carrusel */
+    transform: translateY(-50%); /* Alineación vertical precisa */
+    pointer-events: none; /* Evitar que este div capture clics, permitiendo la interacción con los elementos debajo */
+}
+
+.owl-carousel .owl-nav button {
+    pointer-events: all; /* Habilitar la interacción con los botones de navegación */
+    background: #fff; /* Color de fondo (ajustable) */
+    opacity: 0.7; /* Transparencia (ajustable) */
+    transition: opacity 0.3s; /* Transición opcional */
+    font-size: 4rem;
+    font-weight: 300;
+}
+
+.owl-carousel .owl-nav button:hover {
+    opacity: 1; /* Cambiar la opacidad en el hover */
+}
+
+.owl-carousel .owl-nav .owl-prev {
+    left: 100px; /* Posición del botón de navegación previo (ajustable) */
+}
+
+.owl-carousel .owl-nav .owl-next {
+    right: 100px; /* Posición del botón de navegación siguiente (ajustable) */
+}
+
+
+/*CHeckBox del registro*/
+.list-group-checkable .list-group-item {
+    cursor: pointer;
+}
+
+.list-group-item-check:checked + .list-group-item {
+    color: #fff;
+    background-color: #FF6600;
+    border-color: #FF6600;
+}
+.list-group-item-check {
+    position: absolute;
+    clip: rect(0, 0, 0, 0);
+}
+.list-group-checkable .list-group-item {
+    cursor: pointer;
+}
+
+.registroUsuario{
+    margin: 1rem;
 }

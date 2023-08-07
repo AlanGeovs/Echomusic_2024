@@ -648,6 +648,9 @@ $diff = $date1->diff($date2);
         
         <section class="home-team-area  ">
             <div class="container"> 
+                <div class="row text-center pb-35">
+                    <br><br><br><h2>Recompensas</h2>
+                </div>
 
                 <div class="home-team-slider owl-carousel owl-theme">
 
@@ -707,17 +710,17 @@ $diff = $date1->diff($date2);
                     
                     
     <!-- MODAL Croudfunding Recompensas  -->
-                        <div class="modal" id="ModalRecompensa<?php echo $i; ?>">
+<!--                        <div class="modal" id="ModalRecompensa<?php echo $i; ?>">
                             <div class="modal-dialog">
                                 <div class="modal-content">
 
-                                    <!-- Modal Header -->
+                                     Modal Header 
                                     <div class="modal-header">
                                         <h4 class="modal-title"><?php echo $respuestaTierCrow[$i]['tier_title']; ?> </h4>
                                         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                                     </div>
 
-                                    <!-- Modal body -->
+                                     Modal body 
                                     <div class="modal-body"> 
                                         <p style="text-align: left;"><?php echo $respuestaTierCrow[$i]['tier_desc']; ?></p> 
                                         <ul>
@@ -737,14 +740,14 @@ $diff = $date1->diff($date2);
                                         </ul> 
                                     </div>
 
-                                    <!-- Modal footer -->
+                                     Modal footer 
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cerrar</button>
                                     </div>
 
                                 </div>
                             </div>
-                        </div>                    
+                        </div>                    -->
     <!-- FINAL MODAL Croudfunding Recompensas  -->                    
                     
                         <?php
@@ -813,17 +816,17 @@ $diff = $date1->diff($date2);
                     
                     
     <!-- MODAL Croudfunding Recompensas  -->
-                        <div class="modal" id="ModalRecompensa<?php echo $i; ?>">
+<!--                        <div class="modal" id="ModalRecompensa<?php echo $i; ?>">
                             <div class="modal-dialog">
                                 <div class="modal-content">
 
-                                    <!-- Modal Header -->
+                                     Modal Header 
                                     <div class="modal-header">
                                         <h4 class="modal-title"><?php echo $respuestaTierCrow[$i]['tier_title']; ?> </h4>
                                         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                                     </div>
 
-                                    <!-- Modal body -->
+                                     Modal body 
                                     <div class="modal-body"> 
                                         <p style="text-align: left;"><?php echo $respuestaTierCrow[$i]['tier_desc']; ?></p> 
                                         <ul>
@@ -843,14 +846,14 @@ $diff = $date1->diff($date2);
                                         </ul> 
                                     </div>
 
-                                    <!-- Modal footer -->
+                                     Modal footer 
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cerrar</button>
                                     </div>
 
                                 </div>
                             </div>
-                        </div>                    
+                        </div>                    -->
     <!-- FINAL MODAL Croudfunding Recompensas  -->                    
                     
                         <?php
@@ -1151,7 +1154,7 @@ $diff = $date1->diff($date2);
         <!-- End Tarifas Area -->      
         
         
-        <!-- Algunos proyectos similares--->
+<!--         Algunos proyectos similares-
         <section class="home-blog-area bg-color ptb-100">
             <div class="container">
                 <div class="section-title">
@@ -1266,8 +1269,8 @@ $diff = $date1->diff($date2);
                  
             </div>
         </section>
-        <!-- End Algunos proyectos similares-->           
- 
+         End Algunos proyectos similares           
+ -->
                 
         <!-- CTA -->
         <!--<section class="home-process-area pt-100 pb-70">-->
@@ -1288,7 +1291,8 @@ $diff = $date1->diff($date2);
                         <div class="text-center">
                             <div class="nav-btn">
                                 <br> 
-                                <a href="#" class="box-btn text-center">Crea tu proyecto</a> 
+                                <a type="button" class="box-btn text-center" data-bs-toggle="modal" data-bs-target="#ModalTipodeRegistro"> 
+    <i class="bx bxs-log-out"></i> Crea tu proyecto</a> 
                             </div>
                         </div>
                     </div>

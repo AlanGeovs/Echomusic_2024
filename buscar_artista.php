@@ -346,16 +346,15 @@ $respuestaEventoCiudadRegion = Consultas::buscaCiudadRegion($respuesta[0]["id_ci
                                         </div>
                                     </div>
 
-                                    <div class="col-lg-2 col-md-2">
+                                    <div class="col-lg-3 col-md-3">
                                         <button type="submit" class="default-btn page-btn box-btn">
                                            <i class="bx bx-search"></i>   Buscar Artista
                                         </button>
+                                        <div class="btn-clear">
+                                            <button type="reset" class="box-btn-clear" >Limpiar campos</button>
+                                        </div>
                                         <div id="msgSubmit" class="h3 text-center hidden"></div>
                                         <div class="clearfix"></div>
-                                    </div>
-                                    <div class="col-lg-1 col-md-1"> 
-                                        <button  type="reset"  class="default-btn page-btn box-btn">Borrar</button>
-                                         
                                     </div> 
                                 </div>
                             </form>
@@ -883,7 +882,8 @@ $respuestaEventoCiudadRegion = Consultas::buscaCiudadRegion($respuesta[0]["id_ci
                         <div class="text-center">
                             <div class="nav-btn">
                                 <br>
-                                <a href="#" class="box-btn text-center">Crea tu perfíl</a> 
+                                <a type="button" class="box-btn text-center" data-bs-toggle="modal" data-bs-target="#ModalTipodeRegistro"> 
+                                    <i class="bx bxs-log-out"></i> Crea tu perfil</a>  
                             </div>
                         </div>
                     </div>

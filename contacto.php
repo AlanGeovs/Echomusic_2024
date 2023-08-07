@@ -110,7 +110,8 @@ include "header.php";
                         <div class="text-center">
                             <div class="nav-btn">
                                 <br> 
-                                <a href="#" class="box-btn text-center">CREA TU EVENTO</a> 
+                                <a type="button" class="box-btn text-center" data-bs-toggle="modal" data-bs-target="#ModalTipodeRegistro"> 
+    <i class="bx bxs-log-out"></i> Crea tu perfil</a> 
                             </div>
                         </div>
                     </div>

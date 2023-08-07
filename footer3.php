@@ -1,4 +1,5 @@
-        <!-- Footer Area -->
+<?php include 'modalRagistro.php';?>
+<!-- Footer Area -->
         <footer class="footer-area pt-100">
             <div class="container">
                 <div class="row">

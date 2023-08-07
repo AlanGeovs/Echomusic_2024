@@ -26,6 +26,8 @@
         <link rel="stylesheet" href="assets/css/dark.css"/>
         <!-- Responsive CSS -->
         <link rel="stylesheet" href="assets/css/responsive.css"/>
+        <!--Iconos Boostrap-->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
         
 <!--Para Artistas-->
 

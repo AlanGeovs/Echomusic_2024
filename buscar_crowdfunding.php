@@ -205,7 +205,7 @@ $respuestaEventoCiudadRegion = Consultas::buscaCiudadRegion($respuesta[0]["id_ci
                         <div class="content">
                             <form id="form2"  name="form2" method="GET" action="buscar_crowdfunding.php"> 
                                 <div class="row">
-                                    <div class="col-lg-4 col-sm-4">
+                                    <div class="col-lg-5 col-sm-5">
                                         <div class="form-group"> 
                                             <input type="text" class="form-control" id="p" name="p"  data-error="Buscar un proyecto" placeholder="Buscar proyecto"  <?php echo $valueEvento; ?>  />
                                             <div class="help-block with-errors"></div>
@@ -215,7 +215,7 @@ $respuestaEventoCiudadRegion = Consultas::buscaCiudadRegion($respuesta[0]["id_ci
 
                                     
                                     <!--Region-->
-                                    <div class="col-lg-3 col-md-3">
+                                    <div class="col-lg-4 col-md-4">
                                         <div class="form12-group">
                                             <select  name="reg" id="reg" class="form-control"  data-error="Selecciona una región"   />
                                             <?php if ($_GET["reg"] != '') { 
@@ -250,12 +250,11 @@ $respuestaEventoCiudadRegion = Consultas::buscaCiudadRegion($respuesta[0]["id_ci
                                         <button type="submit" class="default-btn page-btn box-btn">
                                            <i class="bx bx-search"></i>   Buscar 
                                         </button>
+                                        <div class="btn-clear">
+                                            <button type="reset" class="box-btn-clear" >Limpiar campos</button>
+                                        </div>
                                         <div id="msgSubmit" class="h3 text-center hidden"></div>
                                         <div class="clearfix"></div>
-                                    </div>
-                                    <div class="col-lg-1 col-md-1"> 
-                                        <button  type="reset"  class="default-btn page-btn box-btn">Borrar</button>
-                                         
                                     </div> 
                                 </div>
                             </form>
