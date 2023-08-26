@@ -694,7 +694,7 @@ include "header.php";
                                 <p>Apoya artistas, ayudándoles a financiar sus proyectos musicales y llévate una recompensa.</p>
                             </div>
  
-                            <a href="#" class="box-btn">Ver más proyectos</a>
+                            <a href="buscar_crowdfunding.php" class="box-btn">Ver más proyectos</a>
                         </div>
                     </div>
 

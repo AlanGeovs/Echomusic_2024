@@ -1,8 +1,8 @@
 <?php
 $servername = "localhost";
-$username = "genesysa_echomisuc";
-$password = "Y8vJ2.0Iw_Le";
-$db = "genesysa_echomisuc";
+$username = "echomusicnet_db";
+$password = "W4dR9+L/Mi8";
+$db = "echomusicnet_db";
 // Set Timezone
 date_default_timezone_set('America/Santiago');
 setlocale(LC_TIME, 'es_ES', 'Spanish_Spain', 'Spanish');

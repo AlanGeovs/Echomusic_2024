@@ -4,8 +4,8 @@ include "../model/model.php";
 
 $correo=$_POST["correo"];
 $password=md5($_POST["password"]);
-
-$respuesta=Consultas::validarLogin($correo,$password);
+ 
+$respuesta=Consulta::validarLogin($correo,$password);
 //var_dump($respuesta);
 
 if ($respuesta=="") {
@@ -15,7 +15,7 @@ if ($respuesta=="") {
 	$_SESSION["idUser"]=$respuesta["id"];
 	$_SESSION["usuario"]=$respuesta["usuario"];
 	$_SESSION["tipoUsuario"]=$respuesta["tipo"];
-	$res=Consultas::registrarBitacora($respuesta["usuario"],"bitacora","Inició Sesión"); 
+//	$res=Consultas::registrarBitacora($respuesta["usuario"],"bitacora","Inició Sesión"); 
 	if ($res=="ok") {
 		header("Location: ../site.php");
 	}elseif ($res=="error") {

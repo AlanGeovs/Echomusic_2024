@@ -264,7 +264,7 @@ $resultadosEventosPasa = Consultas::eventosPasadosArtista($respuesta[0]["id_user
                             <div class="home-2-contact col-lg-12">                       
                                 <div class="content"> 
                                     <div class="row altoVideo align-items-center choose-c justify-content-md-center">
-                                        <iframe src="https://echomusic.genesysapp.com/video/videos.php?a=<?php echo $id;?>" class="altoVideo" style="border: none;" width="100%"  ></iframe>
+                                        <iframe src="https://echomusic.net/video/videos.php?a=<?php echo $id;?>" class="altoVideo" style="border: none;" width="100%"  ></iframe>
                                     </div>
                                     <!--fin del Row-->
                                 </div>
@@ -295,7 +295,7 @@ $resultadosEventosPasa = Consultas::eventosPasadosArtista($respuesta[0]["id_user
                     <div class="home-2-contact col-lg-8">                       
                         <div class="content"> 
                             <div class="row">
-                                <iframe src="https://echomusic.genesysapp.com/video/videos.php?a=<?php echo $id;?>" class="altoVideo" style="border: none;" width="100%" ></iframe>
+                                <iframe src="https://echomusic.net/video/videos.php?a=<?php echo $id;?>" class="altoVideo" style="border: none;" width="100%" ></iframe>
                             </div>
                             <!--fin del Row-->
                         </div>

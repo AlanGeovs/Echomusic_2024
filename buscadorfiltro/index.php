@@ -20,9 +20,9 @@
 <?php 
  
 $servidor= "localhost";
-$usuario= "genesysa_echomisuc";
-$password = "Y8vJ2.0Iw_Le";
-$nombreBD= "genesysa_echomisuc";
+$usuario= "echomusicnet_db";
+$password = "W4dR9+L/Mi8";
+$nombreBD= "echomusicnet_db";
 $conexion = new mysqli($servidor, $usuario, $password, $nombreBD);
 if ($conexion->connect_error) {
     die("la conexión ha fallado: " . $conexion->connect_error);

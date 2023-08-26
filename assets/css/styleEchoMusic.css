@@ -308,7 +308,7 @@ img.responsiveArtista {
     background: #fff; /* Color de fondo (ajustable) */
     opacity: 0.7; /* Transparencia (ajustable) */
     transition: opacity 0.3s; /* Transición opcional */
-    font-size: 4rem;
+    font-size: 40px;
     font-weight: 300;
 }
 
@@ -322,8 +322,12 @@ img.responsiveArtista {
 
 .owl-carousel .owl-nav .owl-next {
     right: 100px; /* Posición del botón de navegación siguiente (ajustable) */
+    /*font: 3rem;*/
 }
-
+.owl-next{
+    float: right;
+    /*font: 3rem;*/
+}
 
 /*CHeckBox del registro*/
 .list-group-checkable .list-group-item {

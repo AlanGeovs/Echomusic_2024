@@ -1,9 +1,9 @@
 <?php
 class Product {
 	private $host  = 'localhost';
-    private $user  = 'genesysa_echomisuc';
-    private $password   = "Y8vJ2.0Iw_Le";
-    private $database  = "genesysa_echomisuc";   
+    private $user  = 'echomusicnet_db';
+    private $password   = "W4dR9+L/Mi8";
+    private $database  = "echomusicnet_db";   
 	private $productTable = 'product_details';
 	private $dbConnect = false;
     public function __construct(){
