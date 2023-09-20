@@ -113,7 +113,7 @@ if(!isset($_SESSION["idUser"])){
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-body b-b">
-                        <h4>Registrar marca</h4>
+                        <h4>Registrar evento</h4>
                         <form method="post" action="includes/registrarMarca_db.php" class="form-material">
                             <div class="row">
                                 <input type="hidden" id="idUsuario" name="idUsuario" value="<?php echo $_SESSION['idUser']; ?>">

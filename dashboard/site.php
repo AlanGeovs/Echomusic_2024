@@ -6,216 +6,231 @@ require_once "model/model.php";
 if (!isset($_SESSION["idUser"])) {
     header("Location: index.php?error=2");
 } else {
-    ?>
+?>
 
     <!DOCTYPE html>
     <html lang="es">
-        <head>
-            <meta charset="utf-8">
-            <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-            <meta name="description" content="">
-            <meta name="author" content="">  
-     <?php    require  'includes/favicon.php'; ?>             
-            <title>Admin | Echomusic</title> 
-            <!-- CSS -->
-            <link rel="stylesheet" href="assets/css/app.css">
 
-        </head>
-        <body class="light sidebar-mini sidebar-collapse">
-            <!-- Pre loader -->
-            <div id="loader" class="loader">
-                <div class="plane-container">
-                    <div class="preloader-wrapper small active">
-                        <div class="spinner-layer spinner-blue">
-                            <div class="circle-clipper left">
-                                <div class="circle"></div>
-                            </div><div class="gap-patch">
-                                <div class="circle"></div>
-                            </div><div class="circle-clipper right">
-                                <div class="circle"></div>
-                            </div>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta name="description" content="">
+        <meta name="author" content="">
+        <?php require  'includes/favicon.php'; ?>
+        <title>Admin | EchoMusic </title>
+        <!-- CSS -->
+        <link rel="stylesheet" href="assets/css/app.css">
+
+    </head>
+
+    <body class="light sidebar-mini sidebar-collapse">
+        <!-- Pre loader -->
+        <div id="loader" class="loader">
+            <div class="plane-container">
+                <div class="preloader-wrapper small active">
+                    <div class="spinner-layer spinner-blue">
+                        <div class="circle-clipper left">
+                            <div class="circle"></div>
                         </div>
-
-                        <div class="spinner-layer spinner-red">
-                            <div class="circle-clipper left">
-                                <div class="circle"></div>
-                            </div><div class="gap-patch">
-                                <div class="circle"></div>
-                            </div><div class="circle-clipper right">
-                                <div class="circle"></div>
-                            </div>
+                        <div class="gap-patch">
+                            <div class="circle"></div>
                         </div>
-
-                        <div class="spinner-layer spinner-yellow">
-                            <div class="circle-clipper left">
-                                <div class="circle"></div>
-                            </div><div class="gap-patch">
-                                <div class="circle"></div>
-                            </div><div class="circle-clipper right">
-                                <div class="circle"></div>
-                            </div>
+                        <div class="circle-clipper right">
+                            <div class="circle"></div>
                         </div>
+                    </div>
 
-                        <div class="spinner-layer spinner-green">
-                            <div class="circle-clipper left">
-                                <div class="circle"></div>
-                            </div><div class="gap-patch">
-                                <div class="circle"></div>
-                            </div><div class="circle-clipper right">
-                                <div class="circle"></div>
-                            </div>
+                    <div class="spinner-layer spinner-red">
+                        <div class="circle-clipper left">
+                            <div class="circle"></div>
+                        </div>
+                        <div class="gap-patch">
+                            <div class="circle"></div>
+                        </div>
+                        <div class="circle-clipper right">
+                            <div class="circle"></div>
+                        </div>
+                    </div>
+
+                    <div class="spinner-layer spinner-yellow">
+                        <div class="circle-clipper left">
+                            <div class="circle"></div>
+                        </div>
+                        <div class="gap-patch">
+                            <div class="circle"></div>
+                        </div>
+                        <div class="circle-clipper right">
+                            <div class="circle"></div>
+                        </div>
+                    </div>
+
+                    <div class="spinner-layer spinner-green">
+                        <div class="circle-clipper left">
+                            <div class="circle"></div>
+                        </div>
+                        <div class="gap-patch">
+                            <div class="circle"></div>
+                        </div>
+                        <div class="circle-clipper right">
+                            <div class="circle"></div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div id="app">
-                <?php include "menu.php" ?>
-                <div class="container-fluid relative animatedParent animateOnce my-3">
-                    <div class="row row-eq-height my-3 mt-3">
-                        <div class="col-md-6">
-                            <div class="row">
+        </div>
+        <div id="app">
+            <?php include "menu.php" ?>
+            <div class="container-fluid relative animatedParent animateOnce my-3">
+                <div class="row row-eq-height my-3 mt-3">
+                    <div class="col-md-6">
+                        <div class="row">
+                            <!-- Botón -->
+                            <div class="col-md-12 col-sm-12" style="padding-bottom: 15px;">
+                                <button type="button" class="btn btn-primary btn-lg btn-block" onclick="window.location.href='registrar_encuesta.php'">
+                                    <i class="icon-plus mr-2"></i> Agregar encuestado</button>
+                            </div>
+
+                            <!-- descargar base de datos  -->
+                            <?php
+                            if ($_SESSION["tipoUsuario"] == "admin") {
+                            ?>
+                                <div class="col-md-12 col-sm-12" style="padding-bottom: 15px;">
+                                    <button type="button" class="btn btn-info btn-lg btn-block" onclick="window.location.href='includes/exporta.php'">
+                                        <i class="icon-download mr-2"></i> Descargar datos</button>
+                                </div>
+                            <?php
+                            }
+                            ?>
+                            <div class="col-md-6 col-sm-6">
+
+
+                                <div class="card no-b mb-3 bg-success text-white">
+                                    <div class="card-body">
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <?php
+                                            /*$respuesta = Consultas::listarEncuestasCapturista($_SESSION["idUser"]);*/
+                                            ?>
+                                            <!--<div><i class="icon-package s-18"></i></div>-->
+                                            <div class="text-success"><i class="icon-data_usage s-48"></i></div>
+
+                                        </div>
+                                        <div class="text-center">
+                                            <div><span class="s-48 my-3 font-weight-lighter"> </span><br></div>
+                                            Encuestas subidas <br>por este usuario (<?php echo $_SESSION["usuario"]; ?>)
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                            <?php
+                            if ($_SESSION["tipoUsuario"] == "admin") {
+                            ?>
+
                                 <div class="col-md-6 col-sm-6">
-                                    <div class="card no-b mb-3 bg-success text-white">
+                                    <div class="card no-b mb-3">
                                         <div class="card-body">
                                             <div class="d-flex justify-content-between align-items-center">
                                                 <?php
-                                                $respuesta = Consultas::listarInventarioCapturista($_SESSION["idUser"]);
-                                                ?>
-                                                <!--<div><i class="icon-package s-18"></i></div>-->
-                                                <div class="text-success"><i class="icon-investment-3 s-48"></i></div>
+                                                $totalEncuestas = Consultas::cuentaUsuarios();
 
+                                                //                                                $totalCategorias = Consultas::listarCategorias();
+
+                                                //                                                $datosGrafica = count($totalMarcas) . "," . count($totalUsuarios) . "," . count($totalCategorias);
+                                                $datosGrafica = "50" . "," . "60";
+
+                                                //                                                $totalREst[]= Consultas::listarCategorias();
+                                                //                                                echo "Datos ".$totalREst[0][1];
+                                                ?>
+                                                <div><i class="icon-user-plus s-48  "></i></div>
+                                                <!--<div><span class="text-danger">50</span></div>-->
                                             </div>
                                             <div class="text-center">
-                                                <div><span class="s-48 my-3 font-weight-lighter" ><?php echo count($respuesta); ?></span><br></div>
-                                                Projectos con <br><b>Crowdfunding</b>  (<?php echo $_SESSION["usuario"]; ?>)
+                                                <div class="s-48 my-3 font-weight-lighter"><?php echo count($totalEncuestas); ?></div>
+                                                Total de usuarios registrados
                                             </div>
 
                                         </div>
                                     </div>
                                 </div>
-                                 
+                            <?php
+                            }
+                            ?>
+                        </div>
 
-                                <div class="col-md-6 col-sm-6">
-                                    <div class="card no-b mb-3">
-                                        <div class="card-body">
-                                            <div class="d-flex justify-content-between align-items-center">
-                                                <?php
-                                                $totalInventario = Consultas::cuentaInventario();
-                                                
-//                                                $totalCategorias = Consultas::listarCategorias();
-                                                
-                                                $datosGrafica = count($totalMarcas) . "," . count($totalUsuarios) . "," . count($totalCategorias);
-                                                
-//                                                $totalREst[]= Consultas::listarCategorias();
-//                                                echo "Datos ".$totalREst[0][1];
-                                                ?>
-                                                <div><i class="icon-headset s-48  "></i></div>
-                                                <!--<div><span class="text-danger">50</span></div>-->
-                                            </div>
-                                            <div class="text-center">
-                                                <div class="s-48 my-3 font-weight-lighter"><?php echo count($totalInventario); ?></div>
-                                                Artistas
-                                            </div>
-
-                                        </div>
-                                    </div>
-                                </div>                                
-                            </div>
+                        <?php
+                        if ($_SESSION["tipoUsuario"] == "admin") {
+                        ?>
                             <div class="row">
                                 <div class="col-md-6 col-sm-6">
                                     <div class="card no-b mb-3">
                                         <div class="card-body">
                                             <div class="d-flex justify-content-between align-items-center">
-                                                
-                                                <div><i class="icon-ticket s-48"></i></div>
+
+                                                <div><i class="icon-vcard s-48"></i></div>
                                                 <!--<div><span class="badge badge-pill badge-danger">4:30</span></div>-->
                                             </div>
                                             <div class="text-center">
                                                 <?php
-                                                $totalAsociados = Consultas::listarInventarioAsociados();
+                                                $totalCapturistas = Consultas::listarCapturistas();
                                                 ?>
-                                                <div class="s-48 my-3 font-weight-lighter"><?php echo count($totalAsociados); ?></div>
-                                                Total de Eventos
-                                            </div>                                            
+                                                <div class="s-48 my-3 font-weight-lighter"><?php echo count($totalCapturistas); ?></div>
+                                                Total de capturitas
+                                            </div>
 
                                         </div>
                                     </div>
                                 </div>
-                                
-                                
+
+
                                 <div class="col-md-6 col-sm-6">
                                     <div class="card no-b mb-3">
                                         <div class="card-body">
                                             <div class="d-flex justify-content-between align-items-center">
-                                                <?php
-                                                $totalMarcas = Consultas::listarMarcas();
-                                                ?>
+
                                                 <div><i class="icon-group_add s-48"></i></div>
                                                 <!--<div><span class="badge badge-pill badge-primary">4:30</span></div>-->
                                             </div>
-                                            
+
                                             <div class="text-center">
                                                 <?php
-                                                $totalUsuarios = Consultas::listarUsuarios();
+                                                $totalUsuarios = Consultas::listarUsuariosVerificados();
                                                 ?>
-                                                <div class="s-48 my-3 font-weight-lighter"><?php echo count($totalUsuarios); ?></div>
-                                                Total de usuarios
+                                                <div class="s-48 my-3 font-weight-lighter"><?php echo $totalUsuarios[0]['usuarios']; ?></div>
+                                                Total de usuarios verificados
                                             </div>
 
                                         </div>
                                     </div>
                                 </div>
-                                
+
                             </div>
-                            <!--Contadores-->
-                            
-<!--                                    <div class="row text-white no-gutters no-m shadow">
-                                        <div class="col-lg-4">
-                                            <div class="green counter-box p-40">
-                                                <div class="float-right">
-                                                    <span class="icon icon-light-bulb s-48"></span>
-                                                </div>
-                                                <div class="sc-counter s-36 counter-animated">1200</div>
-                                                <h6 class="counter-title">Valor del Inventario</h6>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-4">
-                                            <div class="blue1 counter-box p-40">
-                                                <div class="float-right">
-                                                    <span class="icon icon-target-12 s-48"></span>
-                                                </div>
-                                                <div class="sc-counter s-36 counter-animated">$489,000</div>
-                                                <h6 class="counter-title">Promedio ventas mensuales</h6>
-                                            </div>
-                                        </div> 
-                                        <div class="col-lg-4">
-                                            <div class="strawberry counter-box p-40">
-                                                <div class="float-right">
-                                                    <span class="icon icon-startup s-48"></span>
-                                                </div>
-                                                <div class="sc-counter s-36 counter-animated">$1,450,000</div>
-                                                <h6 class="counter-title">Total de ventas</h6>
-                                            </div>
-                                        </div>
-                                    </div>                                
-                               -->
-                            
-                        </div>
-                        
+
+                        <?php
+                        }
+                        ?>
+                        <!--Contadores-->
+
+                    </div>
+
+                    <!-- Grafica de pastel -->
+                    <?php
+                    if ($_SESSION["tipoUsuario"] == "admin") {
+                        $porGenero = Consultas::encuestaTipoUser();
+                        $t1 = $porGenero[0]['TOTAL'];
+                        $t2 = $porGenero[1]['TOTAL'];
+                        $t3 = $porGenero[2]['TOTAL'];
+                        // print_r($porGenero);
+                    ?>
                         <div class="col-md-6">
                             <div class="card no-b p-2">
                                 <div class="card-body">
                                     <div class="card-body">
                                         <div class="height-300">
-                                            <canvas
-                                                data-chart="chartJs"
-                                                data-chart-type="doughnut"
-                                                data-dataset="[
-                                                [<?php echo count($totalMarcas) . "," . count($totalUsuarios) . "," . count($totalCategorias); ?>],
-
-                                                ]"
-                                                data-labels="[['Aristas'],['Espacios'],['Usuarios']]"
-                                                data-dataset-options="[
+                                            <canvas data-chart="chartJs" data-chart-type="doughnut" data-dataset="[
+                                                [<?php echo  $t1 . "," . $t2 . "," . $t3; ?>]
+                                                
+                                                ]" data-labels="[['Tipo 1'],['Tipo 2'],['Tipo 3'] ]" data-dataset-options="[
                                                 {
                                                 label: 'Totales',
                                                 backgroundColor: [
@@ -227,18 +242,19 @@ if (!isset($_SESSION["idUser"])) {
                                                 },
 
 
-                                                ]"
-                                                data-options="{legend: {display: !0,position: 'bottom',labels: {fontColor: '#7F8FA4',usePointStyle: !0}},
-                                                }"
-                                                >
+                                                ]" data-options="{legend: {display: !0,position: 'bottom',labels: {fontColor: '#7F8FA4',usePointStyle: !0}},
+                                                }">
                                             </canvas>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <!--<div class="card no-b my-3">
+                    <?php
+                    }
+                    ?>
+                </div>
+                <!--<div class="card no-b my-3">
                         <div class="card-body">
                             <div class="my-2 height-300">
                                 <canvas
@@ -370,7 +386,7 @@ if (!isset($_SESSION["idUser"])) {
                         </div>
                     </div>-->
 
-                    <!--<div class=" row my-3">
+                <!--<div class=" row my-3">
                         <div class="col-md-6">
                             <div class=" card b-0">
                                 <div class="card-body p-5">
@@ -455,13 +471,17 @@ if (!isset($_SESSION["idUser"])) {
                         </div>
                     </div>-->
 
-                </div>
             </div>
-            <!-- Right Sidebar -->
+        </div>
+        <!-- Right Sidebar -->
+
+        <?php
+        if ($_SESSION["tipoUsuario"] == "admin") {
+        ?>
             <aside class="control-sidebar fixed white ">
                 <div class="slimScroll">
                     <div class="sidebar-header">
-                        <h4>Bitácora</h4>
+                        <h4>Bitácora ---- </h4>
                         <a href="#" data-toggle="control-sidebar" class="paper-nav-toggle  active"><i></i></a>
                     </div>
                     <div class="p-3">
@@ -473,7 +493,7 @@ if (!isset($_SESSION["idUser"])) {
                             $hoyInicio = date("Y-m-d") . " 00:00:00";
 
                             $fechas = Consultas::bitacoraFechas("bitacora");
-                            $respuesta = Consultas::bitacora("bitacora");
+                            $respuesta = Consultas::bitacoraInicio("bitacora");
                             for ($j = 0; $j < 3; $j++) {
                                 if ($fechas[$j]["fechas"] == $hoyCorto) {
                                     //<!-- timeline time label -->
@@ -582,12 +602,17 @@ if (!isset($_SESSION["idUser"])) {
             <!-- Add the sidebar's background. This div must be placed
                      immediately after the control sidebar -->
             <div class="control-sidebar-bg shadow white fixed"></div>
+
+        <?php
+        }
+        ?>
         </div>
         <!--/#app -->
         <script src="assets/js/app.js"></script>
 
     </body>
+
     </html>
 
-    <?php
+<?php
 }//termina else

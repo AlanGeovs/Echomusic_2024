@@ -38,7 +38,7 @@ if(!isset($_SESSION["idUser"])){
     <meta name="description" content="">
     <meta name="author" content="">
     <?php    require  'includes/favicon.php'; ?> 
-    <title>Admin | AutoMayoreo</title>
+    <title>Admin | BlackBox Platforma</title>
     <!-- CSS -->
     <link rel="stylesheet" href="assets/css/app.css">
 
@@ -122,9 +122,15 @@ if(!isset($_SESSION["idUser"])){
                       <!--<li>
                           <a class="nav-link" id="v-pills-payments-tab" data-toggle="pill" href="#v-pills-payments" role="tab" aria-controls="v-pills-payments" aria-selected="false"><i class="icon icon-money-1"></i>Payments</a>
                       </li>-->
+                      <?php 
+                        if ($_SESSION["tipoUsuario"] == "admin") {
+                       ?>                      
                       <li>
                           <a class="nav-link" id="v-pills-timeline-tab" data-toggle="pill" href="#v-pills-timeline" role="tab" aria-controls="v-pills-timeline" aria-selected="false"><i class="icon icon-cog"></i>Bitácora</a>
                       </li>
+                      <?php
+                        }
+                      ?>
                       <li>
                           <a class="nav-link" id="v-pills-settings-tab" data-toggle="pill" href="#v-pills-settings" role="tab" aria-controls="v-pills-settings" aria-selected="false"><i class="icon icon-cog"></i>Editar perfil</a>
                       </li>
@@ -146,7 +152,7 @@ if(!isset($_SESSION["idUser"])){
                                    <li class="list-group-item"><i class="icon icon-mobile text-primary"></i><strong class="s-12">Telefono</strong> <span class="float-right s-12"><?php echo $respuesta["telefono"]; ?></span></li>
                                    <li class="list-group-item"><i class="icon icon-mail text-success"></i><strong class="s-12">Correo</strong> <span class="float-right s-12"><?php echo $respuesta["correo"]; ?></span></li>
                                    <li class="list-group-item"><i class="icon icon-address-card-o text-warning"></i><strong class="s-12">Dirección</strong> <span class="float-right s-12"><?php echo $respuesta["direccion"]; ?></span></li>
-                                   <li class="list-group-item"><i class="icon icon-web text-danger"></i> <strong class="s-12">Website</strong> <span class="float-right s-12">pappertemplate.com</span></li>
+                                   
                                </ul>
                            </div>
                            <div class="card mt-3 mb-3">
@@ -225,7 +231,7 @@ if(!isset($_SESSION["idUser"])){
                                            <div class="float-right">
                                                <span class="icon-award text-light-blue s-48"></span>
                                            </div>
-                                           <div class="counter-title">Marcas registradas</div>
+                                           <div class="counter-title">Capturas</div>
                                            <h5 class="sc-counter mt-3"><?php echo count($datosMarca); ?></h5>
                                        </div>
                                    </div>
@@ -258,13 +264,13 @@ if(!isset($_SESSION["idUser"])){
 
                            <div class="row my-3">
                                <!-- bar charts group -->
-                               <div class="col-md-12">
+                               <!-- <div class="col-md-12">
                                    <div class="card">
                                        <div class="card-header white">
                                            <h6>Marcas registradas por <small><?php echo $respuesta["usuario"]; ?></small></h6>
                                        </div>
                                        <div class="card-body">
-                                           <!--<div id="graphx" class="height-300"></div>-->
+                                           <div id="graphx" class="height-300"></div>
                                           <div class="table-responsive">
                                               <div id="grafica" style="height: 400px;"></div>
                                           </div>
@@ -272,7 +278,7 @@ if(!isset($_SESSION["idUser"])){
                                            
                                        </div>
                                    </div>
-                               </div>
+                               </div> -->
                                <!-- /bar charts group -->
                            </div>
                            
@@ -371,6 +377,10 @@ if(!isset($_SESSION["idUser"])){
                    </div>
 
                </div>
+
+               <?php 
+                    if ($_SESSION["tipoUsuario"] == "admin") {
+                ?>
                <div class="tab-pane fade" id="v-pills-timeline" role="tabpanel" aria-labelledby="v-pills-timeline-tab">
                    <div class="row">
                        <div class="col-md-12">
@@ -496,6 +506,11 @@ if(!isset($_SESSION["idUser"])){
                        <!-- /.col -->
                    </div>
                </div>
+               <?php 
+                    }
+               ?>
+
+
                <div class="tab-pane fade" id="v-pills-settings" role="tabpanel" aria-labelledby="v-pills-settings-tab">
                   <?php
                     $datos=Consultas::datosPerfil($id,"usuarios");

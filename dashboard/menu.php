@@ -23,10 +23,8 @@ for ($i = 0; $i < count($fotosArray); $i++) {
     <div class="sidebar">
         <div class="d-flex hv-100 align-items-stretch">
             <div class="amber darken-4 text-white">
-                <div class="nav mt-5 pt-5 flex-column nav-pills" id="v-pills-tab" role="tablist"
-                     aria-orientation="vertical">
-                    <a class="nav-link" id="v-pills-home-tab" data-toggle="pill" href="#v-pills-home" role="tab"
-                       aria-controls="v-pills-home" aria-selected="true"><i class="icon-inbox2"></i></a>
+                <div class="nav mt-5 pt-5 flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+                    <a class="nav-link" id="v-pills-home-tab" data-toggle="pill" href="#v-pills-home" role="tab" aria-controls="v-pills-home" aria-selected="true"><i class="icon-inbox2"></i></a>
                     <!--<a class="nav-link" id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-profile" role="tab"
                        aria-controls="v-pills-profile" aria-selected="false"><i class="icon-add"></i></a>
                     <a class="nav-link blink skin_handle"  href="#"><i class="icon-lightbulb_outline"></i></a>
@@ -48,8 +46,7 @@ for ($i = 0; $i < count($fotosArray); $i++) {
                 </div>
             </div>
             <div class="tab-content flex-grow-1" id="v-pills-tabContent">
-                <div class="tab-pane fade show active" id="v-pills-home" role="tabpanel"
-                     aria-labelledby="v-pills-home-tab">
+                <div class="tab-pane fade show active" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">
                     <div class="relative brand-wrapper sticky b-b">
                         <div class="d-flex justify-content-between align-items-center p-3">
                             <div class="text-xs-center">
@@ -63,18 +60,22 @@ for ($i = 0; $i < count($fotosArray); $i++) {
                                 <i class="icon icon-home s-24"></i> <span>Inicio</span>
                             </a>
                         </li>
-                         
+                        <li class="treeview">
+                            <a href="site-artista.php">
+                                <i class="icon icon-home s-24"></i> <span>Inicio (Artista)</span>
+                            </a>
+                        </li>
+
                         <!--Inventario-->
                         <li class="treeview"><a href="#">
                                 <i class="icon icon icon-directions_car s-24"></i>
-                                Artistas <i
-                                    class=" icon-angle-left  pull-right"></i>
+                                Artistas <i class=" icon-angle-left  pull-right"></i>
                                 <!--<span class="badge r-3 badge-primary pull-right">4</span>-->
-                            </a> 
+                            </a>
                             <ul class="treeview-menu">
                                 <!--<li><a href="listar_inventario.php"><i class="icon icon-search-plus"></i>Listar Inventario</a>-->
                                 <li><a href="#"><i class="icon icon-user"></i>Perfil</a>
-                                </li> 
+                                </li>
                                 <li><a href="#"><i class="icon icon-calendar"></i>Eventos</a>
                                 </li>
                                 <li><a href="#"><i class="icon icon-add"></i>Crowdfunding</a>
@@ -82,15 +83,14 @@ for ($i = 0; $i < count($fotosArray); $i++) {
                                 <li><a href="#"><i class="icon icon-support"></i>Soporte</a>
                                 </li>
                             </ul>
-                        </li> 
+                        </li>
                         <!--Marcas-->
                         <li class="treeview"><a href="#">
                                 <i class="icon icon icon-business_center s-24"></i>
-                                Adminsitración<i
-                                    class=" icon-angle-left  pull-right"></i>
+                                Adminsitración<i class=" icon-angle-left  pull-right"></i>
                                 <!--<span class="badge r-3 badge-primary pull-right">4</span>-->
                             </a>
-<!--                            <ul class="treeview-menu">
+                            <!--                            <ul class="treeview-menu">
                                 <li><a href="listar_marcas.php"><i class="icon icon-search-plus"></i>Todas las marcas</a>
                                 </li>
                                 <li><a href="registrar_marca.php"><i class="icon icon-add"></i>Registrar marca </a>
@@ -98,7 +98,7 @@ for ($i = 0; $i < count($fotosArray); $i++) {
                             </ul>-->
                         </li>
                         <!--Categorías-->
-<!--                        <li class="treeview"><a href="#">
+                        <!--                        <li class="treeview"><a href="#">
                                 <i class="icon icon icon-agenda s-24"></i>
                                 Categorías<i
                                     class=" icon-angle-left  pull-right"></i>
@@ -121,17 +121,16 @@ for ($i = 0; $i < count($fotosArray); $i++) {
                                 <i class="icon icon-timer s-24"></i> <span>Bitácora</span>
                             </a>
                         </li>
-                        <li class="treeview"><a href="#"><i class="icon icon-account_box s-24"></i>Usuarios<i
-                                    class=" icon-angle-left  pull-right"></i></a>
+                        <li class="treeview"><a href="#"><i class="icon icon-account_box s-24"></i>Usuarios<i class=" icon-angle-left  pull-right"></i></a>
                             <ul class="treeview-menu">
-<?php
-if ($_SESSION["tipoUsuario"] == "admin") {
-    echo '<li><a href="listar_usuarios.php"><i class="icon icon-circle-o"></i>Todos los usuarios</a>
+                                <?php
+                                if ($_SESSION["tipoUsuario"] == "admin") {
+                                    echo '<li><a href="listar_usuarios.php"><i class="icon icon-circle-o"></i>Todos los usuarios</a>
                                         </li>';
-    echo'<li><a href="registrar_usuario.php"><i class="icon icon-add"></i>Crear usuario</a>
+                                    echo '<li><a href="registrar_usuario.php"><i class="icon icon-add"></i>Crear usuario</a>
                                         </li>';
-}
-?>
+                                }
+                                ?>
 
                                 <li><a href="perfil.php?u=<?php echo $_SESSION["idUser"]; ?>"><i class="icon icon-user"></i>Perfil </a>
                                 </li>
@@ -627,11 +626,9 @@ if ($_SESSION["tipoUsuario"] == "admin") {
         <div class="collapse" id="navbarToggleExternalContent">
             <div class="bg-dark pt-2 pb-2 pl-4 pr-2">
                 <div class="search-bar">
-                    <input class="transparent s-24 text-white b-0 font-weight-lighter w-128 height-50" type="text"
-                           placeholder="start typing...">
+                    <input class="transparent s-24 text-white b-0 font-weight-lighter w-128 height-50" type="text" placeholder="start typing...">
                 </div>
-                <a href="#" data-toggle="collapse" data-target="#navbarToggleExternalContent" aria-expanded="false"
-                   aria-label="Toggle navigation" class="paper-nav-toggle paper-nav-white active "><i></i></a>
+                <a href="#" data-toggle="collapse" data-target="#navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation" class="paper-nav-toggle paper-nav-white active "><i></i></a>
             </div>
         </div>
     </div>
@@ -646,7 +643,7 @@ if ($_SESSION["tipoUsuario"] == "admin") {
             <div class="relative">
                 <div class="d-flex">
                     <div class="d-none d-md-block">
-                        <img src="../assets/images/logo/echomusic-LOGO-HOR-BIC.png" width="300px" alt=""/>  
+                        <img src="../assets/images/logo/echomusic-LOGO-HOR-BIC.png" width="300px" alt="" />
                         <!--<h1 class="nav-title">AutoMayoreo</h1>-->
                     </div>
                 </div>
@@ -776,13 +773,13 @@ if ($_SESSION["tipoUsuario"] == "admin") {
                     <!-- User Account-->
                     <li class="dropdown custom-dropdown user user-menu ">
                         <a href="perfil.php?u=<?php echo $_SESSION["idUser"] ?>" class="nav-link" data-toggle="dropdown">
-<?php
-if ($img2 != "") {
-    echo $img2;
-} else {
-    echo '<img src="assets/img/dummy/u8.png" class="user-image" alt="User Image">';
-}
-?>
+                            <?php
+                            if ($img2 != "") {
+                                echo $img2;
+                            } else {
+                                echo '<img src="assets/img/dummy/u8.png" class="user-image" alt="User Image">';
+                            }
+                            ?>
                             <!--<i class="icon-more_vert "></i>-->
                         </a>
                         <!--<div class="dropdown-menu p-4 dropdown-menu-right">
