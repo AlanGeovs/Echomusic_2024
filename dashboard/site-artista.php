@@ -82,147 +82,191 @@ if (!isset($_SESSION["idUser"])) {
             <?php include "menu.php" ?>
             <div class="container-fluid relative animatedParent animateOnce my-3">
                 <div class="row row-eq-height my-3 mt-3">
-                    <div class="col-md-6">
+                    <div class="col-md-12">
                         <div class="row">
                             <!-- Botón -->
-                            <div class="col-md-12 col-sm-12" style="padding-bottom: 15px;">
+                            <!-- <div class="col-md-12 col-sm-12" style="padding-bottom: 15px;">
                                 <button type="button" class="btn btn-primary btn-lg btn-block" onclick="window.location.href='registrar_encuesta.php'">
                                     <i class="icon-plus mr-2"></i> Agregar encuestado</button>
+                            </div> -->
+
+
+                            <div class="col-md-4 col-sm-4">
+                                <a href="perfil.php?u=<?php echo $_SESSION["idUser"]; ?>" style="text-decoration: none; color: inherit;">
+                                    <div class="card no-b mb-3 bg-warning text-white">
+                                        <div class="card-body">
+                                            <div class="d-flex justify-content-between align-items-center">
+                                                <div class="text-success"><i class="icon-user-circle-o s-48"></i> </div>
+                                            </div>
+                                            <div class="text-center">
+                                                <div><span class="s-48 my-3 font-weight-lighter">Fan Page </span><br></div>
+                                                Edita los datos relevantes de tu cuenta.
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </a>
                             </div>
 
-                            <!-- descargar base de datos  -->
-                            <?php
-                            if ($_SESSION["tipoUsuario"] == "admin") {
-                            ?>
-                                <div class="col-md-12 col-sm-12" style="padding-bottom: 15px;">
-                                    <button type="button" class="btn btn-info btn-lg btn-block" onclick="window.location.href='includes/exporta.php'">
-                                        <i class="icon-download mr-2"></i> Descargar datos</button>
-                                </div>
-                            <?php
-                            }
-                            ?>
-                            <div class="col-md-6 col-sm-6">
-
-
-                                <div class="card no-b mb-3 bg-success text-white">
+                            <div class="col-md-4 col-sm-4">
+                                <div class="card no-b mb-3">
                                     <div class="card-body">
                                         <div class="d-flex justify-content-between align-items-center">
-                                            <?php
-                                            /*$respuesta = Consultas::listarEncuestasCapturista($_SESSION["idUser"]);*/
-                                            ?>
-                                            <!--<div><i class="icon-package s-18"></i></div>-->
-                                            <div class="text-success"><i class="icon-data_usage s-48"></i></div>
-
+                                            <div class="text-warning"><i class="icon-ticket s-48"></i> </div>
                                         </div>
                                         <div class="text-center">
-                                            <div><span class="s-48 my-3 font-weight-lighter"> </span><br></div>
-                                            Datos subidos <br>por este usuario (<?php echo $_SESSION["usuario"]; ?>)
+                                            <div><span class="s-48 my-3 font-weight-lighter">Mis evento </span><br></div>
+                                            Listado de eventos nuevos y pasados.
+                                        </div>
+
+
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4 col-sm-4">
+                                <div class="card no-b mb-3 bg-warning text-white">
+                                    <div class="card-body">
+                                        <div class="d-flex justify-content-between align-items-center">
+
+                                            <div><i class="icon-piggy-bank s-48"></i></div>
+                                        </div>
+                                        <div class="text-center">
+                                            <?php
+                                            // $totalCapturistas = Consultas::listarCapturistas();
+                                            ?>
+                                            <div><span class="s-48 my-3 font-weight-lighter">Crowdfunding</span></div>
+                                            Proyectos con financiamiento.
                                         </div>
 
                                     </div>
                                 </div>
                             </div>
 
-                            <?php
-                            if ($_SESSION["tipoUsuario"] == "admin") {
-                            ?>
-
-                                <div class="col-md-6 col-sm-6">
-                                    <div class="card no-b mb-3">
-                                        <div class="card-body">
-                                            <div class="d-flex justify-content-between align-items-center">
-                                                <?php
-                                                $totalEncuestas = Consultas::cuentaUsuarios();
-
-                                                //                                                $totalCategorias = Consultas::listarCategorias();
-
-                                                //                                                $datosGrafica = count($totalMarcas) . "," . count($totalUsuarios) . "," . count($totalCategorias);
-                                                $datosGrafica = "50" . "," . "60";
-
-                                                //                                                $totalREst[]= Consultas::listarCategorias();
-                                                //                                                echo "Datos ".$totalREst[0][1];
-                                                ?>
-                                                <div><i class="icon-user-plus s-48  "></i></div>
-                                                <!--<div><span class="text-danger">50</span></div>-->
-                                            </div>
-                                            <div class="text-center">
-                                                <div class="s-48 my-3 font-weight-lighter"><?php echo count($totalEncuestas); ?></div>
-                                                Total de usuarios registrados
-                                            </div>
-
-                                        </div>
-                                    </div>
-                                </div>
-                            <?php
-                            }
-                            ?>
                         </div>
 
-                        <?php
-                        if ($_SESSION["tipoUsuario"] == "admin") {
-                        ?>
-                            <div class="row">
-                                <div class="col-md-6 col-sm-6">
-                                    <div class="card no-b mb-3">
-                                        <div class="card-body">
-                                            <div class="d-flex justify-content-between align-items-center">
+                        <!-- Renglon 2 -->
+                        <div class="row">
 
-                                                <div><i class="icon-vcard s-48"></i></div>
-                                                <!--<div><span class="badge badge-pill badge-danger">4:30</span></div>-->
-                                            </div>
-                                            <div class="text-center">
-                                                <?php
-                                                $totalCapturistas = Consultas::listarCapturistas();
-                                                ?>
-                                                <div class="s-48 my-3 font-weight-lighter"><?php echo count($totalCapturistas); ?></div>
-                                                Total de capturitas
-                                            </div>
+                            <div class="col-md-4 col-sm-4">
+                                <div class="card no-b mb-3 ">
+                                    <div class="card-body">
+                                        <div class="d-flex justify-content-between align-items-center">
 
+                                            <div><i class="icon-pencil-square-o s-48"></i></div>
+                                            <!--<div><span class="badge badge-pill badge-primary">4:30</span></div>-->
                                         </div>
+
+                                        <div class="text-center">
+                                            <?php
+                                            $totalUsuarios = Consultas::listarUsuariosVerificados();
+                                            ?>
+                                            <div><span class="s-48 my-3 font-weight-lighter">
+                                                    <!-- <?php //echo $totalUsuarios[0]['usuarios']; 
+                                                            ?> -->
+                                                    Mis datos</span>
+                                            </div>
+                                            Información básica.
+                                        </div>
+
                                     </div>
                                 </div>
+                            </div>
+                            <div class="col-md-4 col-sm-4">
 
-
-                                <div class="col-md-6 col-sm-6">
-                                    <div class="card no-b mb-3">
-                                        <div class="card-body">
-                                            <div class="d-flex justify-content-between align-items-center">
-
-                                                <div><i class="icon-group_add s-48"></i></div>
-                                                <!--<div><span class="badge badge-pill badge-primary">4:30</span></div>-->
-                                            </div>
-
-                                            <div class="text-center">
-                                                <?php
-                                                $totalUsuarios = Consultas::listarUsuariosVerificados();
-                                                ?>
-                                                <div class="s-48 my-3 font-weight-lighter"><?php echo $totalUsuarios[0]['usuarios']; ?></div>
-                                                Total de usuarios verificados
-                                            </div>
-
+                                <div class="card no-b mb-3 bg-warning text-white">
+                                    <div class="card-body">
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <div class="text-success"><i class="icon-line-chart s-48"></i> </div>
                                         </div>
+                                        <div class="text-center">
+                                            <div><span class="s-48 my-3 font-weight-lighter">Métricas </span><br></div>
+                                            Estadísticas generales.
+                                        </div>
+
                                     </div>
                                 </div>
-
                             </div>
 
-                        <?php
-                        }
-                        ?>
-                        <!--Contadores-->
+                            <div class="col-md-4 col-sm-4">
+                                <div class="card no-b mb-3">
+                                    <div class="card-body">
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <div class="text-warning"><i class="icon-question-circle-o s-48"></i> </div>
+                                        </div>
+                                        <div class="text-center">
+                                            <div><span class="s-48 my-3 font-weight-lighter">Soporte </span><br></div>
+                                            Conecta con el equipo de EchoMusic.
+                                        </div>
+
+
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <!-- Renglon 3 -->
+                        <div class="row">
+
+
+                        </div>
+
+                        <!-- Renglon 4 -->
+                        <div class="row">
+                            <div class="col-md-6 col-sm-6">
+                                <div class="card no-b mb-3 bg-warning text-white">
+                                    <div class="card-body">
+                                        <div class="d-flex justify-content-between align-items-center">
+
+                                            <div><i class="icon-piggy-bank s-48"></i></div>
+                                            <!--<div><span class="badge badge-pill badge-danger">4:30</span></div>-->
+                                        </div>
+                                        <div class="text-center">
+                                            <?php
+                                            // $totalCapturistas = Consultas::listarCapturistas();
+                                            ?>
+                                            <div class="s-48 my-3 font-weight-lighter">Mis tarifas</div>
+                                            Edita tus cuotas de cobro por evento.
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="col-md-6 col-sm-6">
+                                <div class="card no-b mb-3 ">
+                                    <div class="card-body">
+                                        <div class="d-flex justify-content-between align-items-center">
+
+                                            <div><i class="icon-pencil-square-o s-48"></i></div>
+                                            <!--<div><span class="badge badge-pill badge-primary">4:30</span></div>-->
+                                        </div>
+
+                                        <div class="text-center">
+                                            <?php
+                                            $totalUsuarios = Consultas::listarUsuariosVerificados();
+                                            ?>
+                                            <div class="s-48 my-3 font-weight-lighter">
+                                                <!-- <?php //echo $totalUsuarios[0]['usuarios']; 
+                                                        ?> -->
+                                                Reservas
+                                            </div>
+                                            Reservaciones ...
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
 
                     </div>
 
                     <!-- Grafica de pastel -->
-                    <?php
-                    if ($_SESSION["tipoUsuario"] == "admin") {
-                        $porGenero = Consultas::encuestaTipoUser();
-                        $t1 = $porGenero[0]['TOTAL'];
-                        $t2 = $porGenero[1]['TOTAL'];
-                        $t3 = $porGenero[2]['TOTAL'];
-                        // print_r($porGenero);
-                    ?>
-                        <div class="col-md-6">
+
+                    <!-- <div class="col-md-6">
                             <div class="card no-b p-2">
                                 <div class="card-body">
                                     <div class="card-body">
@@ -249,10 +293,8 @@ if (!isset($_SESSION["idUser"])) {
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    <?php
-                    }
-                    ?>
+                        </div> -->
+
                 </div>
                 <!--<div class="card no-b my-3">
                         <div class="card-body">

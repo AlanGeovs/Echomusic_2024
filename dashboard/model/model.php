@@ -541,14 +541,17 @@ class Consultas  extends Conexion
 		$stmt->close();
 	}
 
-	public function detalleUsuario($id, $tabla)
+	public static function detalleUsuario($id, $tabla)
 	{
 		$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE id = :id");
 		$stmt->bindParam(":id", $id, PDO::PARAM_INT);
 		$stmt->execute();
-		return $stmt->fetch();
-		$stmt->close();
+		$result = $stmt->fetch();
+		$stmt->closeCursor();
+
+		return $result;
 	}
+
 
 	public function datosUsuario($id)
 	{
