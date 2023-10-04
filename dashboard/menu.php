@@ -5,7 +5,7 @@ include "includes/funciones.php";
 
 $fotos = "images/usuarios/";
 $fotosArray = obtener_estructura_directorios($fotos);
-$foto = $_SESSION["usuario"] . '.jpg';
+$foto = $_SESSION["nick_user"] . '.jpg';
 $img = "";
 $img2 = "";
 
@@ -13,8 +13,8 @@ for ($i = 0; $i < count($fotosArray); $i++) {
 
     if ($fotosArray[$i] == $foto) {
         //echo $fotosArray[$i]."|".$foto."<br>";
-        $img = '<img src="images/usuarios/' . $_SESSION["usuario"] . '.jpg" alt="">';
-        $img2 = '<img src="images/usuarios/' . $_SESSION["usuario"] . '.jpg" class="user-image" alt="User Image">';
+        $img = '<img src="images/usuarios/' . $_SESSION["nick_user"] . '.jpg" alt="">';
+        $img2 = '<img src="images/usuarios/' . $_SESSION["nick_user"] . '.jpg" class="user-image" alt="User Image">';
     }
 }
 ?>
@@ -66,24 +66,65 @@ for ($i = 0; $i < count($fotosArray); $i++) {
                             </a>
                         </li>
 
-                        <!--Inventario-->
+                        <!--Mi Perfil-->
                         <li class="treeview"><a href="#">
-                                <i class="icon icon icon-directions_car s-24"></i>
-                                Artistas <i class=" icon-angle-left  pull-right"></i>
+                                <i class="icon icon-user-circle-o s-24"></i> Mi Perfil <i class=" icon-angle-left  pull-right"></i>
                                 <!--<span class="badge r-3 badge-primary pull-right">4</span>-->
                             </a>
                             <ul class="treeview-menu">
-                                <!--<li><a href="listar_inventario.php"><i class="icon icon-search-plus"></i>Listar Inventario</a>-->
-                                <li><a href="#"><i class="icon icon-user"></i>Perfil</a>
+                                <li><a href="perfil-editar.php"><i class="icon icon-edit"></i>Editar</a>
                                 </li>
-                                <li><a href="#"><i class="icon icon-calendar"></i>Eventos</a>
+                                <li><a href="perfil-tarifas.php"><i class="icon icon-money"></i>Mis tarifas</a>
                                 </li>
-                                <li><a href="#"><i class="icon icon-add"></i>Crowdfunding</a>
-                                </li>
-                                <li><a href="#"><i class="icon icon-support"></i>Soporte</a>
+                                <li><a href="perfil-reservas.php"><i class="icon icon-calendar-check-o"></i>Reservas</a>
                                 </li>
                             </ul>
                         </li>
+                        <!-- Mis Eventos -->
+                        <li class="treeview"><a href="#">
+                                <i class="icon icon-ticket s-24"></i> Mis Eventos <i class=" icon-angle-left  pull-right"></i>
+                                <!--<span class="badge r-3 badge-primary pull-right">4</span>-->
+                            </a>
+                            <ul class="treeview-menu">
+                                <li><a href="eventos.php"><i class="icon icon-event_available"></i>Eventos</a>
+                                </li>
+                                <li><a href="#"><i class="icon icon-gear"></i>Herramientas</a>
+                                </li>
+                                <li><a href="#"><i class="icon icon-pie-chart"></i>Estadísticas</a>
+                                </li>
+                                <li><a href="#"><i class="icon icon-add_to_queue"></i>Servicios adicionales</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <!-- Crowdfunding -->
+                        <li class="treeview"><a href="#">
+                                <i class="icon icon-monetization_on s-24"></i> Crowdfunding <i class=" icon-angle-left  pull-right"></i>
+                                <!--<span class="badge r-3 badge-primary pull-right">4</span>-->
+                            </a>
+                            <ul class="treeview-menu">
+                                <li><a href="crowdfunding.php"><i class="icon icon-clipboard-list2"></i>Proyectos</a>
+                                </li>
+                                <li><a href="#"><i class="icon icon-gear"></i>Herramientas</a>
+                                </li>
+                            </ul>
+                        </li>
+
+                        <!-- Mis Datos -->
+                        <li class="treeview"><a href="#">
+                                <i class="icon icon-information3 s-24"></i> Mis Datos <i class=" icon-angle-left  pull-right"></i>
+                                <!--<span class="badge r-3 badge-primary pull-right">4</span>-->
+                            </a>
+                            <ul class="treeview-menu">
+                                <li><a href="#"><i class="icon icon-user"></i>Datos de Cuenta</a>
+                                </li>
+                                <li><a href="#"><i class="icon icon-bank"></i>Datos Bancarios</a>
+                                </li>
+                            </ul>
+                        </li>
+
+
+
+
                         <!--Marcas-->
                         <li class="treeview"><a href="#">
                                 <i class="icon icon icon-business_center s-24"></i>
@@ -124,7 +165,7 @@ for ($i = 0; $i < count($fotosArray); $i++) {
                         <li class="treeview"><a href="#"><i class="icon icon-account_box s-24"></i>Usuarios<i class=" icon-angle-left  pull-right"></i></a>
                             <ul class="treeview-menu">
                                 <?php
-                                if ($_SESSION["tipoUsuario"] == "admin") {
+                                if ($_SESSION["tipo"] == "admin") {
                                     echo '<li><a href="listar_usuarios.php"><i class="icon icon-circle-o"></i>Todos los usuarios</a>
                                         </li>';
                                     echo '<li><a href="registrar_usuario.php"><i class="icon icon-add"></i>Crear usuario</a>
@@ -132,7 +173,7 @@ for ($i = 0; $i < count($fotosArray); $i++) {
                                 }
                                 ?>
 
-                                <li><a href="perfil.php?u=<?php echo $_SESSION["idUser"]; ?>"><i class="icon icon-user"></i>Perfil </a>
+                                <li><a href="perfil.php?u=<?php echo $_SESSION["id_user"]; ?>"><i class="icon icon-user"></i>Perfil </a>
                                 </li>
                             </ul>
                         </li>
@@ -772,7 +813,7 @@ for ($i = 0; $i < count($fotosArray); $i++) {
                     </li>
                     <!-- User Account-->
                     <li class="dropdown custom-dropdown user user-menu ">
-                        <a href="perfil.php?u=<?php echo $_SESSION["idUser"] ?>" class="nav-link" data-toggle="dropdown">
+                        <a href="perfil.php?u=<?php echo $_SESSION["id_user"] ?>" class="nav-link" data-toggle="dropdown">
                             <?php
                             if ($img2 != "") {
                                 echo $img2;

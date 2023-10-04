@@ -3,7 +3,7 @@ session_start();
 
 require_once "model/model.php";
 
-if (!isset($_SESSION["idUser"])) {
+if (!isset($_SESSION["id_user"])) {
     header("Location: index.php?error=2");
 } else {
     if ($_SESSION["tipoUsuario"] == "capturista") {
@@ -121,7 +121,7 @@ if (!isset($_SESSION["idUser"])) {
         ?>
         <header class="white pt-3 relative shadow">
             <div class="container-fluid">
-                <div class="row p-t-b-10 ">
+                <!-- <div class="row p-t-b-10 ">
                     <div class="col-md-6">
                         <div class="pb-3">
                             <div class="image mr-3  float-left">
@@ -139,12 +139,33 @@ if (!isset($_SESSION["idUser"])) {
                             <button type="button" class="btn btn-outline-primary btn-xs"> <i class="icon-plus"></i> Crowdfunding </button>
                         </div>
                     </div>
+                </div> -->
+
+                <div class="row">
+                    <ul class="nav nav-material responsive-tab">
+                        <li>
+                            <a class="nav-link active" data-toggle="pill" href="editar.php">
+                                <i class="icon icon-home2"></i>Editar
+                            </a>
+                        </li>
+                        <li>
+                            <a class="nav-link" data-toggle="pill" href="mis-tarifas.php">
+                                <i class="icon icon-edit"></i>Mis tarifas
+                            </a>
+                        </li>
+                        <li>
+                            <a class="nav-link" data-toggle="pill" href="reservas.php">
+                                <i class="icon icon-cog"></i>Reservas
+                            </a>
+                        </li>
+
+                    </ul>
                 </div>
 
                 <div class="row">
                     <ul class="nav nav-material responsive-tab" id="v-pills-tab" role="tablist">
                         <li>
-                            <a class="nav-link active" id="v-pills-tab1-tab" data-toggle="pill" href="#v-pills-tab1" role="tab" aria-controls="v-pills-tab1">
+                            <a class="nav-link active" id="perfil-tab" data-toggle="pill" href="#perfil" role="tab" aria-controls="perfil">
                                 <i class="icon icon-home2"></i>Perfil
                             </a>
                         </li>
@@ -170,7 +191,7 @@ if (!isset($_SESSION["idUser"])) {
             <div class="animated fadeInUpShort">
                 <!--Perfíl-->
                 <div class="tab-content" id="v-pills-tabContent">
-                    <div class="tab-pane fade show active" id="v-pills-tab1" role="tabpanel" aria-labelledby="v-pills-home-tab">
+                    <div class="tab-pane fade show active" id="perfil" role="tabpanel" aria-labelledby="v-pills-home-tab">
                         <div class="row">
                             <!--Perfil-->
                             <div class="col-md-4">
@@ -214,7 +235,7 @@ if (!isset($_SESSION["idUser"])) {
                                         </div>
                                     </div>
                                 </div>
-                                <div class="card mt-3 mb-3">
+                                <!-- <div class="card mt-3 mb-3">
                                     <div class="card-header bg-white">
                                         <strong class="card-title">
                                             <?php
@@ -247,44 +268,9 @@ if (!isset($_SESSION["idUser"])) {
                                         <li class="list-group-item"><i class="icon icon-bank"></i><strong class="s-12"><a href="">Agregar cuenta bancaria</a> </strong> <span class="float-right s-12"><?php echo $respuesta["telefono"]; ?></span></li>
 
                                     </ul>
+ 
 
-                                    <!--<div class="card-header bg-white">
-                                   <strong class="card-title">Siblings</strong>
-                               </div>
-                               <div>
-                                   <ul class="list-group list-group-flush">
-                                       <li class="list-group-item">
-                                           <div class="image mr-3  float-left">
-                                               <img class="user_avatar" src="assets/img/dummy/u1.png" alt="User Image">
-                                           </div>
-                                           <h6 class="p-t-10">Alexander Pierce</h6>
-                                           <span> 4th Grade</span>
-                                       </li>
-                                       <li class="list-group-item">
-                                           <div class="image mr-3  float-left">
-                                               <img class="user_avatar" src="assets/img/dummy/u2.png" alt="User Image">
-                                           </div>
-                                           <h6 class="p-t-10">Alexander Pierce</h6>
-                                           <span> 5th Grade</span>
-                                       </li>
-                                       <li class="list-group-item">
-                                           <div class="image mr-3  float-left">
-                                               <img class="user_avatar" src="assets/img/dummy/u5.png" alt="User Image">
-                                           </div>
-                                           <h6 class="p-t-10">Alexander Pierce</h6>
-                                           <span> 6th Grade</span>
-                                       </li>
-                                       <li class="list-group-item">
-                                           <div class="image mr-3  float-left">
-                                               <img class="user_avatar" src="assets/img/dummy/u4.png" alt="User Image">
-                                           </div>
-                                           <h6 class="p-t-10">Alexander Pierce</h6>
-                                           <span> 10th Grade</span>
-                                       </li>
-                                   </ul>
-                               </div>-->
-
-                                </div>
+                                </div> -->
 
                             </div>
 
@@ -392,41 +378,10 @@ if (!isset($_SESSION["idUser"])) {
 
                                 </div>
 
-                                <!--Tarifas-->
-                                <div class="row my-3">
-
-                                    <!-- Tarifa 1 -->
-                                    <div class="col-md-4">
-                                        <div class="card r-3">
-                                            <div class="card-header white">
-                                                <h6>Tarifa 1 <small> </small></h6>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!-- Tarifa 2 -->
-                                    <div class="col-md-4">
-                                        <div class="card r-3">
-                                            <div class="card-header white">
-                                                <h6>Tarifa 2 <small> </small></h6>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!-- Tarifa 3 -->
-                                    <div class="col-md-4">
-                                        <div class="card r-3">
-                                            <div class="card-header white">
-                                                <h6>Tarifa 3 <small> </small></h6>
-                                            </div>
-                                        </div>
-                                    </div>
-
-
-                                </div>
 
                                 <!--Reservas-->
-                                <div class="row my-3">
-
-                                    <!-- Reservas 1 -->
+                                <!-- <div class="row my-3">
+ 
                                     <div class="col-md-6">
                                         <div class="card r-3">
                                             <div class="card-header white">
@@ -434,7 +389,7 @@ if (!isset($_SESSION["idUser"])) {
                                             </div>
                                         </div>
                                     </div>
-                                    <!-- Reservas 1 -->
+                                    
                                     <div class="col-md-6">
                                         <div class="card r-3">
                                             <div class="card-header white">
@@ -444,7 +399,7 @@ if (!isset($_SESSION["idUser"])) {
                                     </div>
 
 
-                                </div>
+                                </div> -->
 
 
                             </div>

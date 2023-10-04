@@ -7,6 +7,7 @@ $correo = $_POST["correo"];
 // $usuario = $_POST["usuario"];
 $password = md5($_POST["password"]);
 echo $correo;
+echo "<br>" . $password;
 
 echo "<br>Prueba: ";
 
@@ -22,11 +23,12 @@ if ($respuesta == "") {
 	header("Location: ../index.php?error=100");
 } else {
 	session_start();
-	$_SESSION["idUser"] = $respuesta["id"];
-	$_SESSION["usuario"] = $respuesta["usuario"];
-	$_SESSION["tipoUsuario"] = $respuesta["tipo"];
+	$_SESSION["id_user"] = $respuesta["id_user"];
+	$_SESSION["nick_user"] = $respuesta["nick_user"];
+	$_SESSION["id_type_user"] = $respuesta["id_type_user"];
+	$_SESSION["tipo"] = $respuesta["tipo"];
 
-	$res = Usuarios::registrarBitacora($respuesta["usuario"], "bitacora", "Inició Sesión");
+	$res = Usuarios::registrarBitacora($respuesta["id_user"], "bitacora", "Inició Sesión");
 	// $res = Consultas::registrarBitacora($respuesta["usuario"], "bitacora", "Inició Sesión");
 	if ($res == "ok") {
 		header("Location: ../site.php");

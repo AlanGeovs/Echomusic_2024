@@ -3,7 +3,7 @@ session_start();
 
 require_once "model/model.php";
 
-if (!isset($_SESSION["idUser"])) {
+if (!isset($_SESSION["id_user"])) {
     header("Location: index.php?error=2");
 } else {
 ?>
@@ -92,7 +92,7 @@ if (!isset($_SESSION["idUser"])) {
 
                             <!-- descargar base de datos  -->
                             <?php
-                            if ($_SESSION["tipoUsuario"] == "admin") {
+                            if ($_SESSION["tipo"] == "admin") {
                             ?>
                                 <div class="col-md-12 col-sm-12" style="padding-bottom: 15px;">
                                     <button type="button" class="btn btn-info btn-lg btn-block" onclick="window.location.href='includes/exporta.php'">
@@ -116,7 +116,7 @@ if (!isset($_SESSION["idUser"])) {
                                         </div>
                                         <div class="text-center">
                                             <div><span class="s-48 my-3 font-weight-lighter"> </span><br></div>
-                                            Datos subidos <br>por este usuario (<?php echo $_SESSION["usuario"]; ?>)
+                                            Datos subidos <br>por este usuario (<?php echo $_SESSION["nick_user"]; ?>)
                                         </div>
 
                                     </div>
@@ -124,7 +124,7 @@ if (!isset($_SESSION["idUser"])) {
                             </div>
 
                             <?php
-                            if ($_SESSION["tipoUsuario"] == "admin") {
+                            if ($_SESSION["tipo"] == "admin") {
                             ?>
 
                                 <div class="col-md-6 col-sm-6">
@@ -159,7 +159,7 @@ if (!isset($_SESSION["idUser"])) {
                         </div>
 
                         <?php
-                        if ($_SESSION["tipoUsuario"] == "admin") {
+                        if ($_SESSION["tipo"] == "admin") {
                         ?>
                             <div class="row">
                                 <div class="col-md-6 col-sm-6">
@@ -215,7 +215,7 @@ if (!isset($_SESSION["idUser"])) {
 
                     <!-- Grafica de pastel -->
                     <?php
-                    if ($_SESSION["tipoUsuario"] == "admin") {
+                    if ($_SESSION["tipo"] == "admin") {
                         $porGenero = Consultas::encuestaTipoUser();
                         $t1 = $porGenero[0]['TOTAL'];
                         $t2 = $porGenero[1]['TOTAL'];
@@ -476,7 +476,7 @@ if (!isset($_SESSION["idUser"])) {
         <!-- Right Sidebar -->
 
         <?php
-        if ($_SESSION["tipoUsuario"] == "admin") {
+        if ($_SESSION["tipo"] == "admin") {
         ?>
             <aside class="control-sidebar fixed white ">
                 <div class="slimScroll">

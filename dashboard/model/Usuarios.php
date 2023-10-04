@@ -5,7 +5,7 @@ class Usuarios extends Conn
 {
     public static function validaLogin($correo, $password)
     {
-        $stmt = Conexion::conectar()->prepare("SELECT * FROM usuarios WHERE correo=:correo AND confirmPass=:password");
+        $stmt = Conexion::conectar()->prepare("SELECT * FROM users WHERE mail_user=:correo AND password_user=:password ");
         $stmt->bindParam(":correo", $correo, PDO::PARAM_STR);
         $stmt->bindParam(":password", $password, PDO::PARAM_STR);
 
@@ -18,6 +18,22 @@ class Usuarios extends Conn
             return false; // You can also return an error or false here to indicate failure
         }
     }
+
+    // public static function validaLogin($correo, $password)
+    // {
+    //     $stmt = Conexion::conectar()->prepare("SELECT * FROM usuarios WHERE correo=:correo AND confirmPass=:password");
+    //     $stmt->bindParam(":correo", $correo, PDO::PARAM_STR);
+    //     $stmt->bindParam(":password", $password, PDO::PARAM_STR);
+
+    //     if ($stmt->execute()) {
+    //         $result = $stmt->fetch();
+    //         $stmt->closeCursor();  // Corrected method name and placed it before the return statement
+    //         return $result;
+    //     } else {
+    //         $stmt->closeCursor();  // Corrected method name and placed it before the return statement
+    //         return false; // You can also return an error or false here to indicate failure
+    //     }
+    // }
 
     public static function registrarBitacora($usuario, $tabla, $accion)
     {
