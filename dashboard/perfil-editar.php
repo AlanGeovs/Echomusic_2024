@@ -1,4 +1,8 @@
 <?php
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
 session_start();
 
 require_once "model/model.php";
@@ -24,8 +28,6 @@ $id = $_SESSION["id_user"];
 
     <!-- Hoja de estilos de Croppie -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/croppie/2.6.5/croppie.min.css">
-
-    <!-- Script de Croppie -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/croppie/2.6.5/croppie.min.js"></script>
 
     <style>
@@ -191,8 +193,18 @@ $id = $_SESSION["id_user"];
                             <div class="card-header bg-white">
                                 <div class="image  ">
                                     <img class="user_avatar2 no-b no-p" src="images/usuarios/<?php echo $_SESSION["nick_user"]; ?>.jpg" alt="<?php echo  $_SESSION["nick_user"]; ?> ">
-                                    <!-- Button trigger modal -->
-                                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#uploadImageProfile"> Editar </button>
+
+
+                                    <!-- Button  modal Editar Foto -->
+                                    <button id="upload-trigger">Subir Foto de Perfil</button>
+
+                                    <div id="upload-modal" style="display: none;">
+                                        <input type="file" id="upload-image" accept="image/*">
+                                        <div id="preview-image"></div>
+                                        <button id="save">Guardar</button>
+                                    </div>
+
+
                                 </div>
                                 <div class="text-center mt-3 mb-3">
                                     <strong class="card-title">
@@ -200,7 +212,8 @@ $id = $_SESSION["id_user"];
                                     </strong>
 
                                     <!-- Nombre del Artista -->
-                                    <h2><?php echo $_SESSION['nick_user']; ?></h2>
+                                    <!-- <h2><?php echo $_SESSION['nick_user']; ?></h2> -->
+                                    <h2>Juan Perez</h2>
                                     <!-- Social Media -->
                                     <strong class="card-title">
                                         Facebook | Instagram | YouTube
@@ -214,10 +227,14 @@ $id = $_SESSION["id_user"];
                             </div>
 
                             <ul class="list-group list-group-flush">
+                                <li class="list-group-item"><i class="icon icon-user "></i><strong class="s-12">Nicknate: </strong> JuanPerez<span class="float-right s-12"><?php //echo $respuesta["telefono"]; 
+                                                                                                                                                                            ?></span></li>
+
                                 <li class="list-group-item"><i class="icon icon-map-marker "></i><strong class="s-12">Ciudad</strong> <span class="float-right s-12"><?php echo $respuesta["telefono"]; ?></span></li>
                                 <li class="list-group-item"><i class="icon icon-music_note  "></i><strong class="s-12">Género</strong> <span class="float-right s-12"><?php echo $respuesta["correo"]; ?></span></li>
+                                <li class="list-group-item"><i class="icon icon-music   "></i><strong class="s-12">SubGénero</strong> <span class="float-right s-12"><?php echo $respuesta["correo"]; ?></span></li>
                                 <li class="list-group-item"><i class="icon icon-document-music  "></i><strong class="s-12">Tipo de Artista</strong> <span class="float-right s-12"><?php echo $respuesta["direccion"]; ?></span></li>
-                                <li class="list-group-item"><i class="icon icon-web  "></i> <strong class="s-12">Website</strong> <span class="float-right s-12">pappertemplate.com</span></li>
+
                             </ul>
 
                             <div class="card-header bg-white text-right">
@@ -229,42 +246,32 @@ $id = $_SESSION["id_user"];
                                 </div>
                             </div>
                         </div>
-                        <!-- <div class="card mt-3 mb-3">
-                                    <div class="card-header bg-white">
-                                        <strong class="card-title">
-                                            <?php
-                                            $totalMarcas = Consultas::listarMarcas();
-                                            if ($respuesta["tipo"] == "admin") {
-                                                echo "Administrador";
-                                                $datosMarca = Consultas::listarMarcasCapturista($_SESSION["id_user"]);
-                                            } elseif ($respuesta["tipo"] == "capturista") {
-                                                echo "Capturista";
-                                                $datosMarca = Consultas::listarMarcasCapturista($id);
-                                                //$datosCategoria=Consultas::listarCategoriasCapturistas($id);
-                                            }
-                                            ?></strong>
-                                        <p>Datos bancarios</p>
+                        <div class="card mt-3 mb-3">
+                            <div class="card-header bg-white">
+                                <strong class="card-title">
+                                    Biografía
+                                </strong>
+                                <p>Desde el 2019, Safo999 utiliza la música como una vía para narrar sus vivencias personales. Sensibilizando a una realidad nocturna y melancólica, cargada de emociones personales, sensibilizando hacia una realidad nocturna, melancólica y cargada de emociones personales. De esta forma, el sonido de la artista experimenta tanto el dream pop como el indie rock para crear canciones con una marcada identidad.</p>
 
-                                    </div>
-                                    <ul class="no-b">
-                                        <li class="list-group-item">
-                                            <a href="">
-                                                <div class="image mr-3  float-left">
-                                                    <img class="user_avatar" src="images/usuarios/<?php echo  $respuesta["usuario"]; ?>.jpg" alt="<?php echo  $respuesta["usuario"]; ?>">
-                                                </div>
-                                                <h6 class="p-t-10"><?php echo $respuesta["usuario"]; ?></h6>
-                                                <span><i class="icon-mobile-phone"></i><?php echo $respuesta["telefono"]; ?></span>
-                                            </a>
-                                        </li>
-                                    </ul>
+                            </div>
+                            <!-- <ul class="no-b">
+                                <li class="list-group-item">
+                                    <a href="">
+                                        <div class="image mr-3  float-left">
+                                            <img class="user_avatar" src="images/usuarios/<?php echo  $respuesta["usuario"]; ?>.jpg" alt="<?php echo  $respuesta["usuario"]; ?>">
+                                        </div>
+                                        <h6 class="p-t-10"><?php echo $respuesta["usuario"]; ?></h6>
+                                        <span><i class="icon-mobile-phone"></i><?php echo $respuesta["telefono"]; ?></span>
+                                    </a>
+                                </li>
+                            </ul>
 
-                                    <ul class="list-group list-group-flush">
-                                        <li class="list-group-item"><i class="icon icon-bank"></i><strong class="s-12"><a href="">Agregar cuenta bancaria</a> </strong> <span class="float-right s-12"><?php echo $respuesta["telefono"]; ?></span></li>
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item"><i class="icon icon-bank"></i><strong class="s-12"><a href="">Agregar cuenta bancaria</a> </strong> <span class="float-right s-12"><?php echo $respuesta["telefono"]; ?></span></li>
 
-                                    </ul>
- 
+                            </ul> -->
 
-                                </div> -->
+                        </div>
 
                     </div>
 
@@ -276,10 +283,87 @@ $id = $_SESSION["id_user"];
                                 <div class="card r-3">
                                     <div class="p-4">
                                         <div class="float-right">
-                                            <span class="icon-youtube-play text-light-blue s-48"> </span>
+                                            <span class="icon-plus text-light-blue s-48"> </span>
                                         </div>
                                         <div class="counter-title">Videos</div>
-                                        <h6 class="sc-counter mt-3"><?php echo count($datosMarca); ?></h6>
+                                        <!-- <h6 class="sc-counter mt-3"><?php echo count($datosMarca); ?></h6> -->
+                                        <div class="box">
+                                            <div class="box-header">
+                                                <h3 class="box-title">Mi lista de videos</h3>
+                                                <div class="box-tools">
+                                                    <ul class="pagination pagination-sm no-margin float-right">
+                                                        <li class="page-item"><a href="#" class="page-link">«</a>
+                                                        </li>
+                                                        <li class="page-item"><a href="#" class="page-link">1</a>
+                                                        </li>
+                                                        <li class="page-item"><a href="#" class="page-link">2</a>
+                                                        </li>
+                                                        <li class="page-item"><a href="#" class="page-link">3</a>
+                                                        </li>
+                                                        <li class="page-item"><a href="#" class="page-link">»</a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                            <!-- /.box-header -->
+                                            <div class="box-body no-padding">
+                                                <table class="table">
+                                                    <tbody>
+                                                        <tr>
+                                                            <th>#</th>
+                                                            <th>Video</th>
+                                                            <th>Tiempo</th>
+                                                            <th>Editar</th>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>1.</td>
+                                                            <td>Update software</td>
+                                                            <td>
+                                                                <div class="progress progress-xs">
+                                                                    <div class="progress-bar progress-bar-danger" style="width: 55%"></div>
+                                                                </div>
+                                                            </td>
+                                                            <td><span class="badge text-white bg-red">55%</span>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>2.</td>
+                                                            <td>Clean database</td>
+                                                            <td>
+                                                                <div class="progress progress-xs">
+                                                                    <div class="progress-bar progress-bar-yellow" style="width: 70%"></div>
+                                                                </div>
+                                                            </td>
+                                                            <td><span class="badge text-white bg-yellow">70%</span>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>3.</td>
+                                                            <td>Cron job running</td>
+                                                            <td>
+                                                                <div class="progress progress-xs progress-striped active">
+                                                                    <div class="progress-bar progress-bar-primary" style="width: 30%"></div>
+                                                                </div>
+                                                            </td>
+                                                            <td><span class="badge text-white bg-light-blue">30%</span>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>4.</td>
+                                                            <td>Fix and squish bugs</td>
+                                                            <td>
+                                                                <div class="progress progress-xs progress-striped active">
+                                                                    <div class="progress-bar progress-bar-success" style="width: 90%"></div>
+                                                                </div>
+                                                            </td>
+                                                            <td><span class="badge text-white bg-green">90%</span>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            <!-- /.box-body -->
+                                        </div>
                                         <div class="float-right">
                                             <button type="button" class="btn btn-outline-danger btn-xs"> <i class="icon-delete"></i> Borrar </button>
                                             <button type="button" class="btn btn-outline-primary btn-xs"> <i class="icon-edit"></i> Editar </button>
@@ -293,158 +377,13 @@ $id = $_SESSION["id_user"];
                                 <div class="card r-3">
                                     <div class="p-4">
                                         <div class="float-right">
-                                            <span class="icon-spotify text-light-blue s-48"> </span>
+                                            <span class="icon-plus text-light-blue s-48"> </span>
                                         </div>
                                         <div class="counter-title">Spotify</div>
-                                        <h6 class="sc-counter mt-3"><?php echo count($datosMarca); ?></h6>
-                                        <div class="float-right">
-                                            <button type="button" class="btn btn-outline-danger btn-xs"> <i class="icon-delete"></i> Borrar </button>
-                                            <button type="button" class="btn btn-outline-primary btn-xs"> <i class="icon-edit"></i> Editar </button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!--Fotografias-->
-                        <div class="row my-3">
-                            <!-- Fotografias -->
-                            <div class="col-md-12">
-                                <div class="card r-3">
-                                    <div class="card-header white">
-                                        <h6>Fotografías <small> </small></h6>
-                                    </div>
+                                        <!-- <h6 class="sc-counter mt-3"><?php echo count($datosMarca); ?></h6> -->
 
-                                    <div class="container mt-5">
-                                        <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
-                                            <ol class="carousel-indicators">
-                                                <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
-                                                <?php for ($i = 1; $i < 10; $i++) : ?>
-                                                    <li data-target="#carouselExampleIndicators" data-slide-to="<?php echo $i; ?>"></li>
-                                                <?php endfor; ?>
-                                            </ol>
-                                            <div class="carousel-inner">
-                                                <div class="carousel-item active">
-                                                    <img src="https://picsum.photos/800/400?random=1" class="d-block w-100" alt="...">
-                                                </div>
-                                                <?php for ($i = 2; $i <= 10; $i++) : ?>
-                                                    <div class="carousel-item">
-                                                        <img src="https://picsum.photos/800/400?random=<?php echo $i; ?>" class="d-block w-100" alt="...">
-                                                    </div>
-                                                <?php endfor; ?>
-                                            </div>
-                                            <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
-                                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                                <span class="sr-only">Previous</span>
-                                            </a>
-                                            <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
-                                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                                <span class="sr-only">Next</span>
-                                            </a>
-                                        </div>
-                                    </div>
+                                        <iframe width="100%" height="300" scrolling="no" frameborder="no" allow="" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/playlists/1585941613&color=%23151f29&auto_play=true&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true"></iframe>
 
-                                    <div class="float-right mt-3 text-right">
-                                        <!-- Button trigger modal -->
-                                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#galleryModal">
-                                            Insertar Galería
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!--integrantes-->
-                        <div class="row my-3">
-                            <!-- integrantes -->
-                            <div class="col-md-12">
-                                <div class="card r-3">
-                                    <div class="card-header white">
-                                        <h6>Integrantes <small> </small></h6>
-
-
-                                        <div class="container mt-5">
-                                            <div id="teamCarousel" class="carousel slide" data-ride="carousel">
-                                                <div class="carousel-inner">
-                                                    <div class="carousel-item active">
-                                                        <div class="d-flex justify-content-around">
-                                                            <!-- Usuario 1 -->
-                                                            <div class="card user-card">
-                                                                <img src="https://picsum.photos/100/100?random=1" alt="User 1" class="card-img-top mx-auto mt-3">
-                                                                <div class="card-body">
-                                                                    <h5 class="card-title">Usuario 1</h5>
-                                                                    <p class="card-text">Cargo 1</p>
-                                                                </div>
-                                                            </div>
-                                                            <!-- Usuario 2 -->
-                                                            <div class="card user-card">
-                                                                <img src="https://picsum.photos/100/100?random=2" alt="User 2" class="card-img-top mx-auto mt-3">
-                                                                <div class="card-body">
-                                                                    <h5 class="card-title">Usuario 2</h5>
-                                                                    <p class="card-text">Cargo 2</p>
-                                                                </div>
-                                                            </div>
-                                                            <!-- Usuario 3 -->
-                                                            <div class="card user-card">
-                                                                <img src="https://picsum.photos/100/100?random=3" alt="User 3" class="card-img-top mx-auto mt-3">
-                                                                <div class="card-body">
-                                                                    <h5 class="card-title">Usuario 3</h5>
-                                                                    <p class="card-text">Cargo 3</p>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="carousel-item">
-                                                        <div class="d-flex justify-content-around">
-                                                            <!-- Usuario 4 -->
-                                                            <div class="card user-card">
-                                                                <img src="https://picsum.photos/100/100?random=4" alt="User 4" class="card-img-top mx-auto mt-3">
-                                                                <div class="card-body">
-                                                                    <h5 class="card-title">Usuario 4</h5>
-                                                                    <p class="card-text">Cargo 4</p>
-                                                                </div>
-                                                            </div>
-                                                            <!-- Usuario 5 -->
-                                                            <div class="card user-card">
-                                                                <img src="https://picsum.photos/100/100?random=5" alt="User 5" class="card-img-top mx-auto mt-3">
-                                                                <div class="card-body">
-                                                                    <h5 class="card-title">Usuario 5</h5>
-                                                                    <p class="card-text">Cargo 5</p>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <a class="carousel-control-prev" href="#teamCarousel" role="button" data-slide="prev">
-                                                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                                    <span class="sr-only">Previous</span>
-                                                </a>
-                                                <a class="carousel-control-next" href="#teamCarousel" role="button" data-slide="next">
-                                                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                                    <span class="sr-only">Next</span>
-                                                </a>
-                                            </div>
-                                        </div>
-
-
-
-                                    </div>
-
-                                    <div class="float-right mt-3 text-right">
-                                        <!-- Botón para abrir el modal -->
-                                        <button class="btn btn-primary mt-5" data-bs-toggle="modal" data-bs-target="#addMemberModal">Agregar Integrante</button>
-
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!--Presskit-->
-                        <div class="row my-3">
-
-                            <div class="col-md-12">
-                                <div class="card r-3">
-                                    <div class="card-header white">
-                                        <h6>Presskit <small> </small></h6>
                                     </div>
 
                                     <div class="float-right">
@@ -454,10 +393,160 @@ $id = $_SESSION["id_user"];
                                 </div>
                             </div>
                         </div>
+                    </div>
+                    <!--Fotografias-->
+                    <div class="row my-3">
+                        <!-- Fotografias -->
+                        <div class="col-md-12">
+                            <div class="card r-3">
+                                <div class="card-header white">
+                                    <h6>Fotografías <small> </small></h6>
+                                </div>
+
+                                <div class="container mt-5">
+                                    <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+                                        <ol class="carousel-indicators">
+                                            <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+                                            <?php for ($i = 1; $i < 10; $i++) : ?>
+                                                <li data-target="#carouselExampleIndicators" data-slide-to="<?php echo $i; ?>"></li>
+                                            <?php endfor; ?>
+                                        </ol>
+                                        <div class="carousel-inner">
+                                            <div class="carousel-item active">
+                                                <img src="https://picsum.photos/800/400?random=1" class="d-block w-100" alt="...">
+                                            </div>
+                                            <?php for ($i = 2; $i <= 10; $i++) : ?>
+                                                <div class="carousel-item">
+                                                    <img src="https://picsum.photos/800/400?random=<?php echo $i; ?>" class="d-block w-100" alt="...">
+                                                </div>
+                                            <?php endfor; ?>
+                                        </div>
+                                        <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+                                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                            <span class="sr-only">Previous</span>
+                                        </a>
+                                        <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+                                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                            <span class="sr-only">Next</span>
+                                        </a>
+                                    </div>
+                                </div>
+
+                                <div class="float-right mt-3 text-right">
+                                    <!-- Button trigger modal -->
+                                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#galleryModal">
+                                        Insertar Galería
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--integrantes-->
+                    <div class="row my-3">
+                        <!-- integrantes -->
+                        <div class="col-md-12">
+                            <div class="card r-3">
+                                <div class="card-header white">
+                                    <h6>Integrantes <small> </small></h6>
 
 
-                        <!--Reservas-->
-                        <!-- <div class="row my-3">
+                                    <div class="container mt-5">
+                                        <div id="teamCarousel" class="carousel slide" data-ride="carousel">
+                                            <div class="carousel-inner">
+                                                <div class="carousel-item active">
+                                                    <div class="d-flex justify-content-around">
+                                                        <!-- Usuario 1 -->
+                                                        <div class="card user-card">
+                                                            <img src="https://picsum.photos/100/100?random=1" alt="User 1" class="card-img-top mx-auto mt-3">
+                                                            <div class="card-body">
+                                                                <h5 class="card-title">Usuario 1</h5>
+                                                                <p class="card-text">Cargo 1</p>
+                                                            </div>
+                                                        </div>
+                                                        <!-- Usuario 2 -->
+                                                        <div class="card user-card">
+                                                            <img src="https://picsum.photos/100/100?random=2" alt="User 2" class="card-img-top mx-auto mt-3">
+                                                            <div class="card-body">
+                                                                <h5 class="card-title">Usuario 2</h5>
+                                                                <p class="card-text">Cargo 2</p>
+                                                            </div>
+                                                        </div>
+                                                        <!-- Usuario 3 -->
+                                                        <div class="card user-card">
+                                                            <img src="https://picsum.photos/100/100?random=3" alt="User 3" class="card-img-top mx-auto mt-3">
+                                                            <div class="card-body">
+                                                                <h5 class="card-title">Usuario 3</h5>
+                                                                <p class="card-text">Cargo 3</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="carousel-item">
+                                                    <div class="d-flex justify-content-around">
+                                                        <!-- Usuario 4 -->
+                                                        <div class="card user-card">
+                                                            <img src="https://picsum.photos/100/100?random=4" alt="User 4" class="card-img-top mx-auto mt-3">
+                                                            <div class="card-body">
+                                                                <h5 class="card-title">Usuario 4</h5>
+                                                                <p class="card-text">Cargo 4</p>
+                                                            </div>
+                                                        </div>
+                                                        <!-- Usuario 5 -->
+                                                        <div class="card user-card">
+                                                            <img src="https://picsum.photos/100/100?random=5" alt="User 5" class="card-img-top mx-auto mt-3">
+                                                            <div class="card-body">
+                                                                <h5 class="card-title">Usuario 5</h5>
+                                                                <p class="card-text">Cargo 5</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <a class="carousel-control-prev" href="#teamCarousel" role="button" data-slide="prev">
+                                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                                <span class="sr-only">Previous</span>
+                                            </a>
+                                            <a class="carousel-control-next" href="#teamCarousel" role="button" data-slide="next">
+                                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                                <span class="sr-only">Next</span>
+                                            </a>
+                                        </div>
+                                    </div>
+
+
+
+                                </div>
+
+                                <div class="float-right mt-3 text-right">
+                                    <!-- Botón para abrir el modal -->
+                                    <button class="btn btn-primary mt-5" data-bs-toggle="modal" data-bs-target="#addMemberModal">Agregar Integrante</button>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--Presskit-->
+                    <div class="row my-3">
+
+                        <div class="col-md-12">
+                            <div class="card r-3">
+                                <div class="card-header white">
+                                    <h6>Presskit <small> </small></h6>
+                                </div>
+
+                                <div class="float-right">
+                                    <button type="button" class="btn btn-outline-danger btn-xs"> <i class="icon-delete"></i> Borrar </button>
+                                    <button type="button" class="btn btn-outline-primary btn-xs"> <i class="icon-edit"></i> Editar </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <!--Reservas-->
+                    <!-- <div class="row my-3">
  
                                     <div class="col-md-6">
                                         <div class="card r-3">
@@ -479,16 +568,16 @@ $id = $_SESSION["id_user"];
                                 </div> -->
 
 
-                    </div>
-
-
-
-
-
-
                 </div>
+
+
+
+
+
+
             </div>
         </div>
+    </div>
 
     </div>
 
@@ -594,30 +683,6 @@ $id = $_SESSION["id_user"];
         </div>
     </div>
 
-
-    <!-- Modal Editar Foto Croopie -->
-    <div class="modal fade" id="uploadImageProfile" tabindex="-1" aria-labelledby="uploadImageProfileLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="uploadImageProfileLabel">Agregar Integrante</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <form action="includes/upload_image_profile.php" method="post" enctype="multipart/form-data">
-                        <input type="file" name="upload_image" id="upload_image" accept="image/*" />
-                        <div id="upload-demo"></div>
-                        <input type="hidden" id="imagebase64" name="imagebase64">
-                        <input type="submit" value="Guardar foto" name="submit">
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                    <button type="button" class="btn btn-primary">Guardar</button>
-                </div>
-            </div>
-        </div>
-    </div>
 
 
 
@@ -824,43 +889,57 @@ $id = $_SESSION["id_user"];
 
     <!-- Croppie uEditar foto de perfil -->
     <script>
-        var $uploadCrop;
+        let croppieInstance = null;
 
-        function readFile(input) {
-            if (input.files && input.files[0]) {
-                var reader = new FileReader();
+        document.getElementById('upload-trigger').addEventListener('click', function() {
+            document.getElementById('upload-modal').style.display = 'block';
+        });
 
-                reader.onload = function(e) {
-                    $uploadCrop.croppie('bind', {
-                        url: e.target.result
-                    });
+        document.getElementById('upload-image').addEventListener('change', function(event) {
+            let reader = new FileReader();
+
+            reader.onload = function(e) {
+                if (croppieInstance !== null) {
+                    croppieInstance.destroy();
                 }
 
-                reader.readAsDataURL(input.files[0]);
-            }
-        }
+                let el = document.getElementById('preview-image');
+                croppieInstance = new Croppie(el, {
+                    viewport: {
+                        width: 150,
+                        height: 150,
+                        type: 'circle'
+                    },
+                    boundary: {
+                        width: 300,
+                        height: 300
+                    }
+                });
 
-        $uploadCrop = $('#upload-demo').croppie({
-            viewport: {
-                width: 400,
-                height: 400
-            },
-            boundary: {
-                width: 500,
-                height: 500
+                croppieInstance.bind({
+                    url: e.target.result
+                });
             }
+
+            reader.readAsDataURL(this.files[0]);
         });
 
-        $('#upload_image').on('change', function() {
-            readFile(this);
-        });
+        document.getElementById('save').addEventListener('click', function() {
+            croppieInstance.result('base64').then(function(base64Image) {
+                let xhr = new XMLHttpRequest();
+                xhr.open('POST', 'includes/upload_image_profile.php', true);
+                xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+                xhr.onload = function() {
+                    if (xhr.status >= 200 && xhr.status < 400) {
+                        // La imagen fue guardada correctamente
+                        alert('Imagen guardada exitosamente! ');
+                    } else {
+                        // Error al guardar la imagen
+                        alert('Error al guardar la imagen.');
+                    }
+                };
 
-        $('form').on('submit', function(ev) {
-            $uploadCrop.croppie('result', {
-                type: 'canvas',
-                size: 'viewport'
-            }).then(function(resp) {
-                $('#imagebase64').val(resp);
+                xhr.send('image=' + base64Image);
             });
         });
     </script>

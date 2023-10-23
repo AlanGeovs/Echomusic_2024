@@ -16,8 +16,8 @@ class Consultas  extends Conexion
 
 	public static function validarLogin($correo, $password)
 	{
-		// $stmt = Conexion::conectar()->prepare("SELECT * FROM usuarios WHERE correo=:correo AND confirmPass=:password");
-		$stmt = Conexion::conectar()->prepare("SELECT * FROM users WHERE mail_user=:correo AND password_user=:password ");
+		$stmt = Conexion::conectar()->prepare("SELECT * FROM usuarios WHERE correo=:correo AND confirmPass=:password");
+		// $stmt = Conexion::conectar()->prepare("SELECT * FROM users WHERE mail_user=:correo AND password_user=:password ");
 		$stmt->bindParam(":correo", $correo, PDO::PARAM_STR);
 		$stmt->bindParam(":password", $password, PDO::PARAM_STR);
 		$stmt->execute();
@@ -27,8 +27,8 @@ class Consultas  extends Conexion
 	}
 	public static function validarLoginUsuario($usuario, $password)
 	{
-		// $stmt = Conexion::conectar()->prepare("SELECT * FROM usuarios WHERE usuario=:usuario AND confirmPass=:password");
-		$stmt = Conexion::conectar()->prepare("SELECT * FROM users WHERE mail_user=:correo AND password_user=:password ");
+		$stmt = Conexion::conectar()->prepare("SELECT * FROM usuarios WHERE usuario=:usuario AND confirmPass=:password");
+		// $stmt = Conexion::conectar()->prepare("SELECT * FROM users WHERE mail_user=:correo AND password_user=:password ");
 		$stmt->bindParam(":usuario", $usuario, PDO::PARAM_STR);
 		$stmt->bindParam(":password", $password, PDO::PARAM_STR);
 		$stmt->execute();

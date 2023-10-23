@@ -5,22 +5,27 @@ include "../model/Usuarios.php";
 
 $correo = $_POST["correo"];
 // $usuario = $_POST["usuario"];
-$password = md5($_POST["password"]);
-echo $correo;
-echo "<br>" . $password;
 
-echo "<br>Prueba: ";
+// Codificación de contraseña con SHA256
+$password = hash('sha256', $_POST["password"]);
+
+// echo $correo;
+// echo "<br>" . $password;
+// echo "<br>SHa: " . $password1;
+
+// echo "<br>Prueba: ";
 
 // $prueba = Usuarios::consultaPrueba();
-// print_r($prueba); 
+// print_r($prueba);
 
 // $respuesta=Consultas::validarLogin($correo,$password);
 // $respuesta = Consultas::validarLoginUsuario($usuario, $password);
 $respuesta = Usuarios::validaLogin($correo, $password);
+// print 'Respuesta: ' . $respuesta;
 // var_dump($respuesta);
 
 if ($respuesta == "") {
-	header("Location: ../index.php?error=100");
+	header("Location: ../index.php?error=300");
 } else {
 	session_start();
 	$_SESSION["id_user"] = $respuesta["id_user"];
