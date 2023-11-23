@@ -92,7 +92,8 @@ if (!isset($_SESSION["id_user"])) {
 
 
                             <div class="col-md-4 col-sm-4">
-                                <a href="perfil.php?u=<?php echo $_SESSION["id_user"]; ?>" style="text-decoration: none; color: inherit;">
+                                <!-- <a href="perfil.php?u=<?php echo $_SESSION["id_user"]; ?>" style="text-decoration: none; color: inherit;"> -->
+                                <a href="perfil-editar.php" style="text-decoration: none; color: inherit;">
                                     <div class="card no-b mb-3 bg-warning text-white">
                                         <div class="card-body">
                                             <div class="d-flex justify-content-between align-items-center">

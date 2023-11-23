@@ -221,6 +221,21 @@ class Consultas  extends Conexion
 
 		$stmt->close();
 	}
+	public static function registrarImagen($datosModel, $tabla)
+	{
+		$stmt = Conexion::conectar()->prepare("INSERT INTO $tabla (id_user, image) VALUES (:id_user, :image)");
+
+		$stmt->bindParam(":id_user", $datosModel[0], PDO::PARAM_INT);
+		$stmt->bindParam(":image",   $datosModel[1], PDO::PARAM_STR);
+
+		//$stmt->execute();
+
+		if ($stmt->execute()) {
+			return "ok";
+		} else {
+			return "error";
+		}
+	}
 
 	public function registrarMarcas($datosModel, $tabla)
 	{
@@ -523,6 +538,267 @@ class Consultas  extends Conexion
 		$stmt->close();
 	}
 
+	public static function modificarPerfilDatos($datosModel, $tabla)
+	{
+		$stmt = Conexion::conectar()->prepare("UPDATE $tabla SET nick_user=:nick_user, mail_user=:mail_user, first_name_user=:first_name_user, last_name_user=:last_name_user, descripcion=:descripcion, id_region=:id_region, id_city=:id_city, id_genero=:id_genero, id_subgenero=:id_subgenero, id_musician=:id_musician WHERE id_user=:id");
+
+		$stmt->bindParam(":id", $datosModel[0], PDO::PARAM_INT);
+		$stmt->bindParam(":nick_user", $datosModel[1], PDO::PARAM_STR);
+		$stmt->bindParam(":mail_user", $datosModel[2], PDO::PARAM_STR);
+		$stmt->bindParam(":first_name_user", $datosModel[3], PDO::PARAM_STR);
+		$stmt->bindParam(":last_name_user", $datosModel[4], PDO::PARAM_STR);
+		$stmt->bindParam(":descripcion", $datosModel[5], PDO::PARAM_STR);
+		$stmt->bindParam(":id_region", $datosModel[6], PDO::PARAM_INT);
+		$stmt->bindParam(":id_city", $datosModel[7], PDO::PARAM_INT);
+		$stmt->bindParam(":id_genero", $datosModel[8], PDO::PARAM_INT);
+		$stmt->bindParam(":id_subgenero", $datosModel[9], PDO::PARAM_INT);
+		$stmt->bindParam(":id_musician", $datosModel[10], PDO::PARAM_INT);
+
+		if ($stmt->execute()) {
+			return "ok";
+		} else {
+			return "error";
+		}
+
+		// No necesitas cerrar explícitamente la conexión aquí
+	}
+
+
+
+	public static function agregarOEditarPerfilBio($datosModel, $tabla, $accion)
+	{
+		if ($accion == "Editar") {
+			$stmt = Conexion::conectar()->prepare("UPDATE $tabla SET bio_user=:bio_user WHERE id_user=:id");
+		}
+		if ($accion == "Agregar") {
+			$stmt = Conexion::conectar()->prepare("INSERT INTO $tabla ( id_user, bio_user) VALUES (:id, :bio_user)");
+		}
+		$stmt->bindParam(":id", $datosModel[0], PDO::PARAM_INT);
+		$stmt->bindParam(":bio_user", $datosModel[1], PDO::PARAM_STR);
+
+		if ($stmt->execute()) {
+			return "ok";
+		} else {
+			return "error";
+		}
+		// No necesitas cerrar explícitamente la conexión aquí
+	}
+
+	public static function agregarOEditarPerfilVideo($datosModel, $tabla, $accion)
+	{
+		if ($accion == "Editar") {
+			$stmt = Conexion::conectar()->prepare("UPDATE $tabla SET embed_multi=:embed_multi WHERE id_user=:id");
+		}
+		if ($accion == "Agregar") {
+			$stmt = Conexion::conectar()->prepare("INSERT INTO $tabla (id_user, title_multi, service_multi, embed_multi, text_multi, date_multi ) VALUES (:id, :title_multi1, :service_multi, :embed_multi1,'', current_timestamp() )");
+		}
+		$stmt->bindParam(":id", $datosModel[0], PDO::PARAM_INT);
+		$stmt->bindParam(":title_multi1", $datosModel[1], PDO::PARAM_STR);
+		$stmt->bindParam(":service_multi", $datosModel[2], PDO::PARAM_STR);
+		$stmt->bindParam(":embed_multi1", $datosModel[3], PDO::PARAM_STR);
+
+		if ($stmt->execute()) {
+			return "ok";
+		} else {
+			return "error";
+		}
+		// No necesitas cerrar explícitamente la conexión aquí
+	}
+
+	public static function listarVideos($id)
+	{
+		// Preparar la consulta SQL
+		$sql = "SELECT id_multi, embed_multi, service_multi, title_multi FROM multimedia WHERE id_user = :id";
+		$stmt = self::conectar()->prepare($sql);
+
+		// Vincular el valor de $id al parámetro :id en la consulta SQL
+		$stmt->bindValue(':id', $id, PDO::PARAM_INT);
+
+		// Ejecutar la consulta
+		$stmt->execute();
+
+		// Recuperar y retornar los resultados
+		$videos = $stmt->fetchAll(PDO::FETCH_ASSOC);
+		return $videos;
+	}
+
+	public static function editarVideo($videoId, $videoTitle, $youtubeId)
+	{
+		// Preparar la consulta SQL
+		$sql = "UPDATE multimedia SET title_multi = :videoTitle, embed_multi = :youtubeId WHERE id_multi = :videoId";
+		$stmt = self::conectar()->prepare($sql);
+
+		// Vincular los valores a los parámetros de la consulta SQL
+		$stmt->bindValue(':videoTitle', $videoTitle, PDO::PARAM_STR);
+		$stmt->bindValue(':youtubeId', $youtubeId, PDO::PARAM_STR);
+		$stmt->bindValue(':videoId', $videoId, PDO::PARAM_INT);
+
+		// Ejecutar la consulta y retornar el resultado
+		$result = $stmt->execute();
+		return $result;  // Esto retornará true en caso de éxito, o false en caso de error
+	}
+
+	public static function borrarVideo($videoId)
+	{
+		// Preparar la consulta SQL
+		$sql = "DELETE FROM multimedia WHERE id_multi = :videoId";
+		$stmt = self::conectar()->prepare($sql);
+
+		// Vincular el valor de $videoId al parámetro :videoId en la consulta SQL
+		$stmt->bindValue(':videoId', $videoId, PDO::PARAM_INT);
+
+		// Ejecutar la consulta y retornar el resultado
+		$result = $stmt->execute();
+		return $result;  // Esto retornará true en caso de éxito, o false en caso de error
+	}
+
+
+	public static function extraerIdVideoYouTube($url)
+	{
+		parse_str(parse_url($url, PHP_URL_QUERY), $vars);
+		return $vars['v'] ?? null;
+	}
+
+
+	public static function agregarFoto($id_user, $nombreImagen)
+	{
+		$sql = "INSERT INTO photos (id_user, name_photo) VALUES (:id_user, :name_photo)";
+		$stmt = self::conectar()->prepare($sql);
+		$stmt->bindParam(':id_user', $id_user, PDO::PARAM_INT);
+		$stmt->bindParam(':name_photo', $nombreImagen, PDO::PARAM_STR);
+		$stmt->execute();
+	}
+
+	public static function obtenerFotosUsuario($id_user)
+	{
+		$sql = "SELECT name_photo FROM photos WHERE id_user = :id_user";
+		$stmt = self::conectar()->prepare($sql);
+		$stmt->bindValue(':id_user', $id_user, PDO::PARAM_INT);
+		$stmt->execute();
+		return $stmt->fetchAll(PDO::FETCH_ASSOC);
+	}
+
+	public static function borrarFotoUsuario($nombreFoto)
+	{
+		$sql = "DELETE FROM photos WHERE name_photo = :name_photo";
+		$stmt = self::conectar()->prepare($sql);
+		$stmt->bindParam(':name_photo', $nombreFoto, PDO::PARAM_STR);
+		if ($stmt->execute()) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+	// integrantes
+	public static function guardarIntegrante($id_user, $firstName, $lastName, $instrument, $imgPath)
+	{
+		$sql = "INSERT INTO band_members (id_user, first_name_member, last_name_member, instrument_member, img_member) VALUES (:id_user, :firstName, :lastName, :instrument, :imgPath)";
+		$stmt = self::conectar()->prepare($sql);
+		$stmt->bindValue(':id_user', $id_user, PDO::PARAM_INT);
+		$stmt->bindValue(':firstName', $firstName, PDO::PARAM_STR);
+		$stmt->bindValue(':lastName', $lastName, PDO::PARAM_STR);
+		$stmt->bindValue(':instrument', $instrument, PDO::PARAM_STR);
+		$stmt->bindValue(':imgPath', $imgPath, PDO::PARAM_STR);
+
+		return $stmt->execute();
+	}
+
+	// instrumentos
+	public static function obtenerInstrumentos()
+	{
+		$sql = "SELECT id_instrument, name_instrument FROM instruments";
+		$stmt = self::conectar()->prepare($sql);
+		$stmt->execute();
+		return $stmt->fetchAll(PDO::FETCH_ASSOC);
+	}
+
+	// obtener integrantes
+	public static function obtenerIntegrantesPorUsuario($id_user)
+	{
+		$sql = "SELECT bm.first_name_member, bm.last_name_member, bm.img_member, i.name_instrument FROM band_members as bm  JOIN instruments as i ON bm.instrument_member = i.id_instrument  WHERE bm.id_user = :id_user";
+		$stmt = self::conectar()->prepare($sql);
+		$stmt->bindValue(':id_user', $id_user, PDO::PARAM_INT);
+		$stmt->execute();
+		return $stmt->fetchAll(PDO::FETCH_ASSOC);
+	}
+
+
+	// presskit
+	public static function subirPresskit($id_user, $file, $note)
+	{
+		try {
+			// Conexión a la base de datos
+			$conexion = self::conectar();
+
+			// Manejo del archivo
+			$uploadDir = '../images/presskit/'; // Asegúrate de reemplazar esto con tu directorio de carga
+			$fileName = basename($file['name']);
+			$uploadFilePath =  $uploadDir . $fileName;
+			echo "<br>Upload file: " . $uploadFilePath;
+
+			if (move_uploaded_file($file['tmp_name'], $uploadFilePath)) {
+				// Preparar la consulta para insertar datos en la base de datos
+				$sql = "INSERT INTO presskit (id_user, file, note) VALUES (:id_user, :fileN, :note)";
+				$stmt = $conexion->prepare($sql);
+
+				$stmt->bindValue(':id_user', $id_user, PDO::PARAM_INT);
+				$stmt->bindValue(':fileN', $fileName, PDO::PARAM_STR);
+				$stmt->bindValue(':note', $note, PDO::PARAM_STR);
+
+				$stmt->execute();
+
+				// Verificar si la inserción fue exitosa
+				if ($stmt->rowCount() > 0) {
+					return ['success' => true, 'message' => 'Presskit subido con éxito'];
+				} else {
+					return ['success' => false, 'message' => 'Error al subir el presskit'];
+				}
+			} else {
+				// Error en la carga del archivo
+				return ['success' => false, 'message' => 'Error al cargar el archivo'];
+			}
+		} catch (PDOException $e) {
+			// Manejar el error
+			return ['success' => false, 'message' => 'Error en la base de datos: ' . $e->getMessage()];
+		}
+	}
+
+	// obtener presskit
+	public static function obtenerPresskitPorUsuario($id_user)
+	{
+		$sql = "SELECT note, date, file FROM presskit WHERE id_user = :id_user";
+		$stmt = self::conectar()->prepare($sql);
+		$stmt->bindValue(':id_user', $id_user, PDO::PARAM_INT);
+		$stmt->execute();
+		return $stmt->fetch(PDO::FETCH_ASSOC);
+	}
+
+	// Método para borrar el presskit por id_user
+	public static function borrarPresskitPorIdUser($id_user)
+	{
+		try {
+			$conexion = Conexion::conectar();
+			$sql = "DELETE FROM presskit WHERE id_user = :id_user";
+			$stmt = $conexion->prepare($sql);
+			$stmt->bindParam(':id_user', $id_user, PDO::PARAM_INT);
+
+			if ($stmt->execute()) {
+				return true; // Retorna true si la eliminación fue exitosa
+			} else {
+				return false; // Retorna false si hubo un error en la eliminación
+			}
+		} catch (PDOException $e) {
+			// Manejar el error
+			error_log("Error en borrarPresskitPorIdUser: " . $e->getMessage());
+			return false; // Retorna false si se captura una excepción
+		} finally {
+			$stmt = null;
+			$conexion = null;
+		}
+	}
+
+
+
 	public static function eliminarMarca($id, $tabla)
 	{
 		$stmt = Conexion::conectar()->prepare("DELETE FROM $tabla WHERE ID = :id");
@@ -545,13 +821,299 @@ class Consultas  extends Conexion
 
 	public static function detalleUsuario($id, $tabla)
 	{
-		$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE id = :id");
+		$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE id_user = :id");
+		// $stmt = Conexion::conectar()->prepare("SELECT users.nombre, user_login.fecha_ultimo_acceso FROM $tabla INNER JOIN user_login ON users.id_user = user_login.id_user ");
 		$stmt->bindParam(":id", $id, PDO::PARAM_INT);
 		$stmt->execute();
 		$result = $stmt->fetch();
 		$stmt->closeCursor();
 
 		return $result;
+	}
+	// public static function biografia($id)
+	// {
+	// 	$stmt = Conexion::conectar()->prepare("SELECT * FROM bio_user WHERE id_user = :id");
+	// 	$stmt->bindParam(":id", $id, PDO::PARAM_INT);
+	// 	$stmt->execute();
+	// 	$result = $stmt->fetch();
+	// 	$stmt->closeCursor();
+
+	// 	return $result;
+	// }
+
+	// Botón Editar
+	public static function botonEditar($modal)
+	{
+		$botonE = ' <div class="card-header bg-white text-right">
+				<div class="form-group">
+					<div class="col-sm-offset-12 col-sm-12">
+						<!-- Button trigger modal -->
+						<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#' . $modal . '"> Editar </button>
+					</div>
+				</div>
+			</div>';
+		return $botonE;
+	}
+	public static function botonAgregar($modal)
+	{
+		if ($modal == 'agregaVideo') {
+			$botonE = "<div class='text-center'> <a class='btn-fab btn-fab-md shadow btn-primary' data-bs-toggle='modal' data-bs-target='#" . $modal . "' data-target='.bd-example-modal-xl'><i class='icon-plus'></i></a> </div>";
+		} else {
+			$botonE = "<div class='text-center'> <a class='btn-fab btn-fab-md shadow btn-primary' data-bs-toggle='modal' data-bs-target='#" . $modal . "'><i class='icon-plus'></i></a> </div>";
+		}
+		return $botonE;
+	}
+
+	public static function biografia($id)
+	{
+		try {
+			$conexion = Conexion::conectar();
+			$stmt = $conexion->prepare("SELECT * FROM bio_user WHERE id_user = :id");
+			$stmt->bindParam(":id", $id, PDO::PARAM_INT);
+			$stmt->execute();
+
+			if ($stmt->rowCount() > 0) {
+				$result = $stmt->fetch();
+			} else {
+				$result = null; // O manejar de otra forma si no se encuentran resultados
+			}
+		} catch (PDOException $e) {
+			error_log("Error en la consulta: " . $e->getMessage());
+			$result = null;
+		} finally {
+			$stmt = null; // Cerrar cursor y conexión
+			$conexion = null;
+		}
+
+		return $result;
+	}
+
+	//Lista de Videos de YouTUbe
+	public static function videos($id)
+	{
+		try {
+			$conexion = Conexion::conectar();
+			$stmt = $conexion->prepare("SELECT * FROM multimedia WHERE id_user = :id");
+			$stmt->bindParam(":id", $id, PDO::PARAM_INT);
+			$stmt->execute();
+
+			if ($stmt->rowCount() > 0) {
+				$result = $stmt->fetchAll();
+			} else {
+				$result = null; // O manejar de otra forma si no se encuentran resultados
+			}
+		} catch (PDOException $e) {
+			error_log("Error en la consulta: " . $e->getMessage());
+			$result = null;
+		} finally {
+			$stmt = null; // Cerrar cursor y conexión
+			$conexion = null;
+		}
+
+		return $result;
+	}
+
+
+	//Lista de Playlist de Spotufy
+	public static function playlista($id)
+	{
+		try {
+			$conexion = Conexion::conectar();
+			$stmt = $conexion->prepare("SELECT * FROM multimedia_feature WHERE id_user = :id");
+			$stmt->bindParam(":id", $id, PDO::PARAM_INT);
+			$stmt->execute();
+
+			if ($stmt->rowCount() > 0) {
+				$result = $stmt->fetchAll();
+			} else {
+				$result = null; // O manejar de otra forma si no se encuentran resultados
+			}
+		} catch (PDOException $e) {
+			error_log("Error en la consulta: " . $e->getMessage());
+			$result = null;
+		} finally {
+			$stmt = null; // Cerrar cursor y conexión
+			$conexion = null;
+		}
+
+		return $result;
+	}
+
+
+	public static function agregarPlaylist($id_user, $service_multi, $embed_multi)
+	{
+		$sql = "INSERT INTO multimedia_feature (id_user, service_multi, embed_multi) VALUES (:id_user, :service_multi, :embed_multi)";
+		$stmt = self::conectar()->prepare($sql);
+
+		$stmt->bindValue(':id_user', $id_user, PDO::PARAM_INT);
+		$stmt->bindValue(':service_multi', $service_multi, PDO::PARAM_STR);
+		$stmt->bindValue(':embed_multi', $embed_multi, PDO::PARAM_STR);
+
+		$result = $stmt->execute();
+		return $result;  // Esto retornará true en caso de éxito, o false en caso de error
+	}
+
+	public static function editarPlaylist($playlist_id, $id_user, $service_multi, $embed_multi)
+	{
+		$sql = "UPDATE multimedia_feature SET service_multi = :service_multi, embed_multi = :embed_multi WHERE id_multimedia_featured = :id_multimedia_featured";
+		$stmt = self::conectar()->prepare($sql);
+
+		$stmt->bindValue(':id_multimedia_featured', $playlist_id, PDO::PARAM_INT);  // Modificar esta línea
+		$stmt->bindValue(':service_multi', $service_multi, PDO::PARAM_STR);
+		$stmt->bindValue(':embed_multi', $embed_multi, PDO::PARAM_STR);
+
+		$result = $stmt->execute();
+		return $result;  // Esto retornará true en caso de éxito, o false en caso de error
+	}
+
+	public static function obtenerNombreCiudadRegion($id_city)
+	{
+		// Prepara la consulta SQL
+		$sql = "
+            SELECT cities.name_city, regions.name_region
+            FROM cities
+            JOIN regions_cities ON cities.id_city = regions_cities.id_city
+            JOIN regions ON regions_cities.id_region = regions.id_region
+            WHERE cities.id_city = :id_city
+        ";
+		$stmt = self::conectar()->prepare($sql);
+
+		// Vincula el valor de $id_city al parámetro :id_city en la consulta SQL
+		$stmt->bindValue(':id_city', $id_city, PDO::PARAM_INT);
+
+		// Ejecuta la consulta y obtén los resultados
+		$stmt->execute();
+		$result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+		// Verifica si se obtuvieron resultados
+		if ($result) {
+			return $result;  // Retorna los nombres de la ciudad y la región
+		} else {
+			return null;  // O retorna null si no se encontró ninguna coincidencia
+		}
+	}
+	// Para el combo select dependiente
+	public static function obtenerCiudadesPorRegion($id_region)
+	{
+		$sql = "
+            SELECT cities.id_city, cities.name_city
+            FROM cities
+            JOIN regions_cities ON cities.id_city = regions_cities.id_city
+            WHERE regions_cities.id_region = :id_region
+        ";
+		$stmt = self::conectar()->prepare($sql);
+		$stmt->bindValue(':id_region', $id_region, PDO::PARAM_INT);
+		$stmt->execute();
+		return $stmt->fetchAll(PDO::FETCH_ASSOC);
+	}
+
+	public static function obtenerCiudadesPorRegionDos($id_region)
+	{
+		$sql = "SELECT c.id_city, c.name_city FROM cities c 
+				INNER JOIN regions_cities rc ON c.id_city = rc.id_city 
+				WHERE rc.id_region = :id_region";
+		$stmt = self::conectar()->prepare($sql);
+		$stmt->bindValue(':id_region', $id_region, PDO::PARAM_INT);
+		$stmt->execute();
+		return $stmt->fetchAll(PDO::FETCH_ASSOC);
+	}
+
+	public static function tipoMusico($id)
+	{
+		$tiposDeMusico = array(
+			1 => 'Cantante',
+			2 => 'Banda',
+			3 => 'Solista',
+			4 => 'Músico Instrumentista',
+			5 => 'Tributo',
+			6 => 'DJ',
+			7 => 'Músico Home Studio'
+		);
+
+		if (array_key_exists($id, $tiposDeMusico)) {
+			return $tiposDeMusico[$id];
+		} else {
+			return 'Tipo de músico no encontrado';
+		}
+	}
+
+	public static function buscaGenero($genero)
+	{
+		$resultado = null;
+		try {
+			$conexion = Conexion::conectar();
+			$stmt = $conexion->prepare("SELECT * FROM genres WHERE id_genre = :id");
+			$stmt->bindParam(":id", $genero, PDO::PARAM_INT);
+			$stmt->execute();
+
+			if ($stmt->rowCount() > 0) {
+				$resultado = $stmt->fetch();
+			}
+		} catch (PDOException $e) {
+			// Aquí puedes manejar el error, por ejemplo, registrarlo en un archivo de logs
+			error_log("Error en buscaGenero: " . $e->getMessage());
+		} finally {
+			$stmt = null;
+			$conexion = null;
+		}
+
+		return $resultado;
+	}
+	public static function buscaSubGenero($subgenero)
+	{
+		$resultado = null;
+		try {
+			$conexion = Conexion::conectar();
+			$stmt = $conexion->prepare("SELECT * FROM sub_genres WHERE id_subGenre = :id");
+			$stmt->bindParam(":id", $subgenero, PDO::PARAM_INT);
+			$stmt->execute();
+
+			if ($stmt->rowCount() > 0) {
+				$resultado = $stmt->fetch();
+			}
+		} catch (PDOException $e) {
+			// Aquí puedes manejar el error, por ejemplo, registrarlo en un archivo de logs
+			error_log("Error en buscaGenero: " . $e->getMessage());
+		} finally {
+			$stmt = null;
+			$conexion = null;
+		}
+
+		return $resultado;
+	}
+
+	public static function obtenerSubGenerosPorGenero($id_genero)
+	{
+		$sql = "
+            SELECT sub_genres.id_subGenre, sub_genres.name_subGenre
+            FROM sub_genres
+            JOIN genres_subs ON sub_genres.id_subGenre = genres_subs.id_subGenre
+            WHERE genres_subs.id_genre = :id_genero
+        ";
+		$stmt = self::conectar()->prepare($sql);
+		$stmt->bindValue(':id_genero', $id_genero, PDO::PARAM_INT);
+		$stmt->execute();
+		return $stmt->fetchAll(PDO::FETCH_ASSOC);
+	}
+
+
+	public static function listarVariable($variable)
+	{
+		try {
+			$conexion = Conexion::conectar();
+			$stmt = $conexion->prepare("SELECT * FROM $variable");
+			$stmt->execute();
+			$resultado = $stmt->fetchAll();
+		} catch (PDOException $e) {
+			// Manejar error
+			error_log("Error en listarVariable: " . $e->getMessage());
+			$resultado = null;
+		} finally {
+			$stmt = null;
+			$conexion = null;
+		}
+
+		return $resultado;
 	}
 
 

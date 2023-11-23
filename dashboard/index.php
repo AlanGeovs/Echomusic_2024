@@ -24,7 +24,7 @@
     <meta name="msapplication-TileImage" content="/assets/favico/ms-icon-144x144.png">
     <meta name="theme-color" content="#ffffff">
 
-    <title>Admin | BlackBox Platforma </title>
+    <title>Admin | EchoMusic </title>
     <!-- CSS -->
     <link rel="stylesheet" href="assets/css/app.css">
 

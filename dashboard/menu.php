@@ -1,5 +1,5 @@
 <?php
-session_start();
+// session_start();
 
 include "includes/funciones.php";
 
@@ -13,8 +13,8 @@ for ($i = 0; $i < count($fotosArray); $i++) {
 
     if ($fotosArray[$i] == $foto) {
         //echo $fotosArray[$i]."|".$foto."<br>";
-        $img = '<img src="images/usuarios/' . $_SESSION["nick_user"] . '.jpg" alt="">';
-        $img2 = '<img src="images/usuarios/' . $_SESSION["nick_user"] . '.jpg" class="user-image" alt="User Image">';
+        $img = '<img src="images/usuarios/' . $_SESSION["id_user"] . '.jpg" alt="">';
+        $img2 = '<img src="images/usuarios/' . $_SESSION["id_user"] . '.jpg" class="user-image" alt="User Image">';
     }
 }
 ?>
