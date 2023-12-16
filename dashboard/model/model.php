@@ -715,11 +715,29 @@ class Consultas  extends Conexion
 	// obtener integrantes
 	public static function obtenerIntegrantesPorUsuario($id_user)
 	{
-		$sql = "SELECT bm.first_name_member, bm.last_name_member, bm.img_member, i.name_instrument FROM band_members as bm  JOIN instruments as i ON bm.instrument_member = i.id_instrument  WHERE bm.id_user = :id_user";
+		$sql = "SELECT bm.id_band_member, bm.first_name_member, bm.last_name_member, bm.img_member, i.name_instrument FROM band_members as bm  JOIN instruments as i ON bm.instrument_member = i.id_instrument  WHERE bm.id_user = :id_user";
 		$stmt = self::conectar()->prepare($sql);
 		$stmt->bindValue(':id_user', $id_user, PDO::PARAM_INT);
 		$stmt->execute();
 		return $stmt->fetchAll(PDO::FETCH_ASSOC);
+	}
+	// Editar Integrantes
+	public static function obtenerIntegrantePorId($id)
+	{
+		// Conexión a la base de datos y consulta SQL para obtener los datos del integrante
+		$stmt = self::conectar()->prepare("SELECT * FROM band_members WHERE id_member = :id");
+		$stmt->bindValue(':id', $id, PDO::PARAM_INT);
+		$stmt->execute();
+		return $stmt->fetch(PDO::FETCH_ASSOC);
+	}
+	// Borrar Integrantes
+	public static function borrarIntegrante($id, $id_user)
+	{
+		// Conexión a la base de datos y consulta SQL para borrar un integrante
+		$stmt = self::conectar()->prepare("DELETE FROM band_members WHERE id_band_member  = :id and id_user = :id_user");
+		$stmt->bindValue(':id', $id, PDO::PARAM_INT);
+		$stmt->bindValue(':id_user', $id_user, PDO::PARAM_INT);
+		return $stmt->execute();
 	}
 
 
@@ -774,28 +792,108 @@ class Consultas  extends Conexion
 	}
 
 	// Método para borrar el presskit por id_user
-	public static function borrarPresskitPorIdUser($id_user)
+	// public static function borrarPresskitPorIdUser($id_user)
+	// {
+	// 	try {
+	// 		$conexion = Conexion::conectar();
+	// 		$sql = "DELETE FROM presskit WHERE id_user = :id_user";
+	// 		$stmt = $conexion->prepare($sql);
+	// 		$stmt->bindParam(':id_user', $id_user, PDO::PARAM_INT);
+
+	// 		if ($stmt->execute()) {
+	// 			return true; // Retorna true si la eliminación fue exitosa
+	// 		} else {
+	// 			return false; // Retorna false si hubo un error en la eliminación
+	// 		}
+	// 	} catch (PDOException $e) {
+	// 		// Manejar el error
+	// 		error_log("Error en borrarPresskitPorIdUser: " . $e->getMessage());
+	// 		return false; // Retorna false si se captura una excepción
+	// 	} finally {
+	// 		$stmt = null;
+	// 		$conexion = null;
+	// 	}
+	// }
+
+	//TARIFAS
+	// public static function guardarPlan($data)
+	// {
+	// 	$sql = "INSERT INTO plans (id_name_plan, value_plan, slot_plan, duration_hours, duration_minutes, backline, sound_reinforcement, sound_engineer, artists_amount, desc_plan) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+
+	// 	// Preparar y ejecutar la consulta
+	// 	$stmt = $this->db->prepare($sql);
+	// 	$stmt->bind_param(
+	// 		"ssssssssss",
+	// 		$data['plan_type1'],
+	// 		$data['value_plan1'],
+	// 		$data['plan_type1'],
+	// 		$data['hours_plan1'],
+	// 		$data['minutes_plan1'],
+	// 		$data['backline_plan1'],
+	// 		$data['soundReinforcement_plan1'],
+	// 		$data['soundEngineer_plan1'],
+	// 		$data['nArtists_plan1'],
+	// 		$data['plan_desc1']
+	// 	);
+
+	// 	$success = $stmt->execute();
+
+	// 	// Cerrar la consulta y la conexión
+	// 	$stmt->close();
+
+	// 	return ['success' => $success];
+	// }
+
+	// Método para insertar un plan
+	public function insertPlan($data)
+	{
+		$query = "INSERT INTO plans (id_name_plan, value_plan, slot_plan, duration_hours, duration_minutes, backline, sound_reinforcement, sound_engineer, artists_amount, desc_plan) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+
+		$stmt = $this->db->prepare($query);
+		$stmt->bind_param("ssiiiiiisi", $data['plan_type1'], $data['value_plan1'], $data['plan_type1'], $data['hours_plan1'], $data['minutes_plan1'], $data['backline_plan1'], $data['soundReinforcement_plan1'], $data['soundEngineer_plan1'], $data['nArtists_plan1'], $data['plan_desc1']);
+
+		if ($stmt->execute()) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+
+
+	public static function guardarPlan($data)
 	{
 		try {
 			$conexion = Conexion::conectar();
-			$sql = "DELETE FROM presskit WHERE id_user = :id_user";
-			$stmt = $conexion->prepare($sql);
-			$stmt->bindParam(':id_user', $id_user, PDO::PARAM_INT);
+			$sql = "INSERT INTO plans (id_user, id_name_plan, value_plan, slot_plan, duration_hours, duration_minutes, backline, sound_reinforcement, sound_engineer, artists_amount, desc_plan) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
-			if ($stmt->execute()) {
-				return true; // Retorna true si la eliminación fue exitosa
-			} else {
-				return false; // Retorna false si hubo un error en la eliminación
-			}
-		} catch (PDOException $e) {
+			$stmt = $conexion->prepare($sql);
+			$stmt->bind_param(
+				"sssssssssss",
+				$data['id_user'],
+				$data['plan_type1'],
+				$data['value_plan1'],
+				$data['plan_type1'], // Asumo que 'slot_plan' toma el mismo valor que 'plan_type1'
+				$data['hours_plan1'],
+				$data['minutes_plan1'],
+				$data['backline_plan1'],
+				$data['soundReinforcement_plan1'],
+				$data['soundEngineer_plan1'],
+				$data['nArtists_plan1'],
+				$data['plan_desc1']
+			);
+
+			$resultado = $stmt->execute();
+
+			$stmt->close();
+			return $resultado;
+		} catch (Exception $e) {
 			// Manejar el error
-			error_log("Error en borrarPresskitPorIdUser: " . $e->getMessage());
-			return false; // Retorna false si se captura una excepción
-		} finally {
-			$stmt = null;
-			$conexion = null;
+			error_log("Error en guardarPlan: " . $e->getMessage());
+			return false;
 		}
 	}
+
 
 
 

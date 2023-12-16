@@ -1,8 +1,4 @@
 <?php
-// ini_set('display_errors', 1);
-// ini_set('display_startup_errors', 1);
-// error_reporting(E_ALL);
-
 session_start();
 
 require_once "model/model.php";
@@ -474,14 +470,14 @@ if (!isset($_SESSION["id_user"])) {
                                                 <div class="carousel-inner">
                                                     <!-- Las tarjetas se cargarán aquí dentro de contenedores .row -->
                                                 </div>
-                                                <a class="carousel-control-prev" href="#carruselIntegrantes" role="button" data-slide="prev">
+                                                <!-- <a class="carousel-control-prev" href="#carruselIntegrantes" role="button" data-slide="prev">
                                                     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                                                     <span class="sr-only">Previous</span>
                                                 </a>
                                                 <a class="carousel-control-next" href="#carruselIntegrantes" role="button" data-slide="next">
                                                     <span class="carousel-control-next-icon" aria-hidden="true"></span>
                                                     <span class="sr-only">Next</span>
-                                                </a>
+                                                </a> -->
                                             </div>
 
 
@@ -1095,6 +1091,73 @@ if (!isset($_SESSION["id_user"])) {
                 </div>
             </div>
         </div>
+
+        <!-- Modal Editar Integrantes -->
+        <!-- Estructura similar a addMemberModal, pero para editar -->
+        <div class="modal fade" id="editMemberModal" tabindex="-1" aria-labelledby="editMemberModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="addMemberModalLabel">Agregar Integrante</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="formAddMember" enctype="multipart/form-data">
+                            <input type="hidden" name="id_user" value="<?php echo $id; ?>">
+                            <!-- Subir foto -->
+                            <div class="mb-3">
+                                <label for="memberPhoto" class="form-label">Foto del integrante</label>
+                                <input type="file" class="form-control" id="memberPhoto" name="memberPhoto" accept="image/*" required>
+                            </div>
+                            <!-- Nombre -->
+                            <div class="mb-3">
+                                <label for="memberName" class="form-label">Nombre</label>
+                                <input type="text" class="form-control" id="memberName" name="memberName" placeholder="Ej. Juan  " required>
+                            </div>
+                            <!-- Apellidos -->
+                            <div class="mb-3">
+                                <label for="memberLastName" class="form-label">Apellidos</label>
+                                <input type="text" class="form-control" id="memberLastName" name="memberLastName" placeholder="  Pérez" required>
+                            </div>
+                            <!-- Puesto/Rol con Select -->
+                            <div class="mb-3">
+                                <label for="memberRole" class="form-label">Rol</label>
+                                <select class="form-control" id="memberRole" name="memberRole" required>
+                                    <!-- Las opciones se cargarán aquí -->
+                                </select>
+                            </div>
+
+                        </form>
+                        <button type="button" class="btn btn-primary" id="btnGuardarIntegrante">Guardar</button>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal Integrantes Confirmación de Borrado -->
+        <div class="modal fade" id="deleteMemberModal" tabindex="-1" aria-labelledby="deleteMemberModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Confirmar Borrado</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        ¿Estás seguro de que deseas borrar este integrante?
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" id="confirmDelete">Borrar</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
 
         <!-- Modal Presskit-->
         <div class="modal fade" id="presskitModal" tabindex="-1" aria-labelledby="presskitModalLabel" aria-hidden="true">
@@ -1816,12 +1879,14 @@ if (!isset($_SESSION["id_user"])) {
                         processData: false,
                         success: function(response) {
                             // Mostrar mensaje de éxito
-                            cargarIntegrantes(); // Recargar los integrantes
+
                             swal("¡Éxito!", "Integrante guardado con éxito", "success");
                             // Cerrar el modal
                             $('#addMemberModal').modal('hide');
                             // Limpiar el formulario (opcional)
                             $('#formAddMember')[0].reset();
+                            cargarIntegrantes(); // Recargar los integrantes
+                            location.reload();
                         },
                         error: function() {
                             // Manejar error en la solicitud
@@ -1829,6 +1894,63 @@ if (!isset($_SESSION["id_user"])) {
                         }
                     });
                 });
+
+
+                // Manejar clic en botón de editar
+                $(document).on('click', '.btn-edit', function() {
+                    var idMember = $(this).data('id');
+                    // Aquí puedes cargar los datos del integrante y mostrar el modal de edición
+                    // Por ejemplo, haciendo una solicitud AJAX para obtener los datos del integrante
+                    $.ajax({
+                        url: 'includes/obtener_datos_integrante.php',
+                        type: 'POST',
+                        data: {
+                            id: idMember
+                        },
+                        dataType: 'json',
+                        success: function(response) {
+                            // Rellenar los campos del formulario de edición con los datos obtenidos
+                            $('#editMemberModal').find('#memberName').val(response.first_name);
+                            $('#editMemberModal').find('#memberLastName').val(response.last_name);
+                            // ... más campos ...
+                            $('#editMemberModal').modal('show');
+                        },
+                        error: function() {
+                            console.log('Error al obtener los datos del integrante');
+                        }
+                    });
+                });
+
+                // Manejar clic en botón de borrar
+                $(document).on('click', '.btn-delete', function() {
+                    var idMember = $(this).data('id');
+                    $('#deleteMemberModal').modal('show');
+                    $('#confirmDelete').data('id', idMember); // Pasar ID al botón de confirmar
+                });
+
+                // Confirmar borrado
+                $('#confirmDelete').click(function() {
+                    var idMember = $(this).data('id');
+                    // Realiza la solicitud AJAX para borrar el integrante
+                    $.ajax({
+                        url: 'includes/borrar_integrante.php',
+                        type: 'POST',
+                        data: {
+                            id: idMember
+                        },
+                        success: function(response) {
+                            $('#deleteMemberModal').modal('hide');
+                            // Recargar la lista de integrantes
+                            // Puedes llamar a la función que carga los integrantes de nuevo aquí
+                            cargarIntegrantes();
+                            location.reload();
+                        },
+                        error: function() {
+                            console.log('Error al borrar el integrante');
+                        }
+                    });
+                });
+
             });
         </script>
 
@@ -1844,15 +1966,19 @@ if (!isset($_SESSION["id_user"])) {
                         var contenidoCarrusel = '';
                         if (integrantes.length > 0) {
                             integrantes.forEach(function(integrante, index) {
-                                if (index % 5 === 0 || index === 0) { // Nueva fila para desktop y tablet
+                                if (index % 10 === 0 || index === 0) { // Nueva fila para desktop y tablet
                                     contenidoCarrusel += (index !== 0 ? '</div>' : '') + '<div class="carousel-item ' + (index === 0 ? 'active' : '') + '"><div class="row">';
                                 }
                                 contenidoCarrusel += '<div class="col-lg-3 col-md-3 col-sm-6 col-6">'; // 4 columnas en lg y md, 2 en sm y xs
                                 contenidoCarrusel += '<div class="card">';
                                 contenidoCarrusel += '<img src="images/integrantes/' + integrante.img_member + '" class="card-img-top">';
                                 contenidoCarrusel += '<div class="card-body">';
-                                contenidoCarrusel += '<h4>' + integrante.first_name_member + ' ' + integrante.last_name_member + '</h4>';
+                                contenidoCarrusel += '<h4>' + integrante.first_name_member + ' ' + integrante.last_name_member + ' </h4>';
                                 contenidoCarrusel += '<h5>' + integrante.name_instrument + '</h5>'; // Usando name_instrument directamente
+
+                                contenidoCarrusel += '<button class="btn btn-outline-primary btn-xs btn-edit" data-id="' + integrante.id_band_member + '">Editar</button>';
+                                contenidoCarrusel += '<button class="btn btn-outline-danger  btn-xs btn-delete" data-id="' + integrante.id_band_member + '">Borrar</button>';
+
                                 contenidoCarrusel += '</div></div></div>';
                                 if (index === integrantes.length - 1) { // Cerrar la última fila
                                     contenidoCarrusel += '</div></div>';

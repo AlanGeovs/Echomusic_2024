@@ -94,9 +94,13 @@ $id = $_SESSION["id_user"];
     <div id="app">
         <?php include "menu.php"; ?>
         <?php
-        $tabla = "usuarios";
-        $respuesta = Consultas::detalleUsuario($id, $tabla);
+        // $tabla = "usuarios";
+        // $respuesta = Consultas::detalleUsuario($id, $tabla);
         ?>
+
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#crearEventoModal">
+            Crear Evento
+        </button>
         <header class="white pt-3 relative shadow">
             <div class="container-fluid">
 
@@ -108,7 +112,7 @@ $id = $_SESSION["id_user"];
                             </a>
                         </li>
                         <li>
-                            <a class="nav-link" href=" >
+                            <a class="nav-link" href="">
                                 <i class=" icon icon-edit"></i>Herramientas
                             </a>
                         </li>
@@ -127,6 +131,7 @@ $id = $_SESSION["id_user"];
                 </div>
             </div>
         </header>
+
         <!--Eventos-->
         <div class="container-fluid animatedParent animateOnce my-3">
             <div class="animated fadeInUpShort">
@@ -141,7 +146,12 @@ $id = $_SESSION["id_user"];
                                 </div>
                             </div>
                             <div class="col-md-4 mb-3 mt-15">
-                                <a href="registrar_marca.php" class="btn btn-primary btn-xs r-20"><i class="icon-plus-circle mr-2"></i>Evento</a>
+                                <a class="btn btn-primary btn-xs r-20"><i class="icon-plus-circle mr-2" data-bs-toggle="modal" data-bs-target="#crearEventoModal"></i>Cerar Evento</a>
+                                <!-- Botón para Abrir el Modal de Crear Evento -->
+                                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#crearEventoModal">
+                                    Crear Evento
+                                </button>
+
                             </div>
 
                             <div class="collapse show" id="invoiceCard">
@@ -264,6 +274,84 @@ $id = $_SESSION["id_user"];
 
                                             </tbody>
                                         </table>
+
+
+
+
+                                        <br><br><br>
+                                        <form id="crearEventoForm">
+                                            <!-- Título del evento -->
+                                            <div class="mb-3">
+                                                <label for="tituloEvento" class="form-label">Título del Evento</label>
+                                                <input type="text" class="form-control" id="tituloEvento" name="tituloEvento" required>
+                                            </div>
+
+                                            <!-- Descripción -->
+                                            <div class="mb-3">
+                                                <label for="descripcionEvento" class="form-label">Descripción</label>
+                                                <textarea class="form-control" id="descripcionEvento" name="descripcionEvento" rows="3"></textarea>
+                                            </div>
+
+                                            <!-- Dirección -->
+                                            <div class="mb-3">
+                                                <label for="direccionEvento" class="form-label">Dirección</label>
+                                                <input type="text" class="form-control" id="direccionEvento" name="direccionEvento">
+                                            </div>
+
+                                            <!-- Ciudad, Región o Provincia, y Recinto -->
+                                            <!-- Asumiendo que estas listas son proporcionadas por el backend o son listas estáticas -->
+                                            <div class="mb-3">
+                                                <label for="ciudadEvento" class="form-label">Ciudad</label>
+                                                <input type="text" class="form-control" id="ciudadEvento" name="ciudadEvento">
+                                            </div>
+
+                                            <!-- Fecha y Hora -->
+                                            <div class="mb-3">
+                                                <label for="fechaEvento" class="form-label">Fecha</label>
+                                                <input type="date" class="form-control" id="fechaEvento" name="fechaEvento">
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="horaEvento" class="form-label">Hora</label>
+                                                <input type="time" class="form-control" id="horaEvento" name="horaEvento">
+                                            </div>
+
+                                            <!-- Aforo -->
+                                            <div class="mb-3">
+                                                <label for="aforoEvento" class="form-label">Aforo</label>
+                                                <input type="number" class="form-control" id="aforoEvento" name="aforoEvento">
+                                            </div>
+
+                                            <!-- Tipo de Asistentes -->
+                                            <div class="mb-3">
+                                                <label class="form-label">Tipo de Asistentes</label>
+                                                <div>
+                                                    <input type="checkbox" id="normativo" name="tipoAsistentes">
+                                                    <label for="normativo">Normativo</label>
+                                                </div>
+                                                <div>
+                                                    <input type="checkbox" id="alPortador" name="tipoAsistentes">
+                                                    <label for="alPortador">Al Portador</label>
+                                                </div>
+                                            </div>
+
+                                            <!-- Tipo de Entrada -->
+                                            <div class="mb-3">
+                                                <label class="form-label">Tipo de Entrada</label>
+                                                <div class="mb-2">
+                                                    <input type="text" class="form-control mb-1" placeholder="Agregar nombre">
+                                                    <input type="text" class="form-control mb-1" placeholder="Agregar precio">
+                                                    <input type="number" class="form-control" placeholder="Cantidad">
+                                                </div>
+                                            </div>
+
+                                            <!-- Video Promocional (opcional) -->
+                                            <div class="mb-3">
+                                                <label for="videoPromocional" class="form-label">Video Promocional (opcional)</label>
+                                                <input type="text" class="form-control" id="videoPromocional" name="videoPromocional">
+                                            </div>
+
+                                            <button type="submit" class="btn btn-primary">Crear Evento</button>
+                                        </form>
                                     </div>
                                 </div>
                             </div>
@@ -278,198 +366,112 @@ $id = $_SESSION["id_user"];
 
     </div>
 
-    <!-- Right Sidebar -->
-    <aside class="control-sidebar fixed white ">
-        <div class="slimScroll">
-            <div class="sidebar-header">
-                <h4>Bitácora</h4>
-                <a href="#" data-toggle="control-sidebar" class="paper-nav-toggle  active"><i></i></a>
-            </div>
-            <div class="p-3">
-                <!-- The time line -->
-                <ul class="timeline">
-                    <?php
-                    $hoyCorto = date("Y-m-d");
-                    $hoyFin = date("Y-m-d") . " 23:59:59";
-                    $hoyInicio = date("Y-m-d") . " 00:00:00";
 
-                    $fechas = Consultas::bitacoraFechas("bitacora");
-                    $respuesta = Consultas::bitacora("bitacora");
-                    for ($j = 0; $j < 3; $j++) {
-                        if ($fechas[$j]["fechas"] == $hoyCorto) {
-                            //<!-- timeline time label -->
-                            echo '<li class="time-label">
-                        <span class="badge badge-danger r-3">
-                            Hoy
-                        </span>
-                    </li>';
-                            //<!-- /.timeline-label -->
-                            for ($i = 0; $i < count($respuesta); $i++) {
-                                if ($respuesta[$i]["fecha"] <= $hoyFin && $respuesta[$i]["fecha"] >= $hoyInicio) {
-                                    if (preg_match("/Inici\b/", $respuesta[$i]["accion"])) {
-                                        //<!-- timeline item -->
-                                        echo '<li>
-                                    <i class="ion icon-sign-in bg-primary"></i>
-                                    <div class="timeline-item card">
-                                        <div class="card-header white"><h6>' . $respuesta[$i]["usuario"] . ' ' . $respuesta[$i]["accion"] . '    <span class="time float-right"><i class="ion icon-clock-o"></i> ' . substr($respuesta[$i]["fecha"], 11) . '</span></h6></div>
-                                    </div>
-                                </li>';
-                                        //<!-- END timeline item -->
-                                    } elseif (preg_match("/Registr\b/", $respuesta[$i]["accion"])) {
-                                        //<!-- timeline item -->
-                                        echo '<li>
-                                    <i class="ion icon-plus-circle bg-success"></i>
-                                    <div class="timeline-item card">
-                                        <div class="card-header white"><h6>' . $respuesta[$i]["usuario"] . ' ' . $respuesta[$i]["accion"] . '    <span class="time float-right"><i class="ion icon-clock-o"></i> ' . substr($respuesta[$i]["fecha"], 11) . '</span></h6></div>
-                                    </div>
-                                </li>';
-                                        //<!-- END timeline item -->
-                                    } elseif (preg_match("/Elimin\b/", $respuesta[$i]["accion"])) {
-                                        echo '<li>
-                                    <i class="ion icon-trash bg-danger"></i>
-                                    <div class="timeline-item card">
-                                        <div class="card-header white"><h6>' . $respuesta[$i]["usuario"] . ' ' . $respuesta[$i]["accion"] . '    <span class="time float-right"><i class="ion icon-clock-o"></i> ' . substr($respuesta[$i]["fecha"], 11) . '</span></h6></div>
-                                    </div>
-                                </li>';
-                                    } elseif (preg_match("/Modific\b/", $respuesta[$i]["accion"])) {
-                                        echo '<li>
-                                    <i class="ion icon-mode_edit bg-warning"></i>
-                                    <div class="timeline-item card">
-                                        <div class="card-header white"><h6>' . $respuesta[$i]["usuario"] . ' ' . $respuesta[$i]["accion"] . '    <span class="time float-right"><i class="ion icon-clock-o"></i> ' . substr($respuesta[$i]["fecha"], 11) . '</span></h6></div>
-                                    </div>
-                                </li>';
-                                    }
-                                }
-                            }
-                        } else {
-                            $date1 = new DateTime($fechas[$j]["fechas"]);
-                            //var_dump($date1);
-                            $date2 = new DateTime("now");
-                            $diff = $date1->diff($date2);
-                            //<!-- timeline time label -->
-                            echo '<li class="time-label">
-                        <span class="badge badge-danger r-3">
-                            Hace ' . $diff->days . ' día(s)
-                        </span>
-                    </li>';
-                            //<!-- /.timeline-label --> 
-
-                            for ($i = 0; $i < count($respuesta); $i++) {
-                                //echo substr($respuesta[$i]["fecha"],0,10);
-                                if ($diff->days != 0 && substr($respuesta[$i]["fecha"], 0, 10) == $fechas[$j]["fechas"]) {
-
-                                    if (preg_match("/Inici\b/", $respuesta[$i]["accion"])) {
-                                        //<!-- timeline item -->
-                                        echo '<li>
-                                    <i class="ion icon-sign-in bg-primary"></i>
-                                    <div class="timeline-item card">
-                                        <div class="card-header white"><h6>' . $respuesta[$i]["usuario"] . ' ' . $respuesta[$i]["accion"] . '    <span class="time float-right"><i class="ion icon-clock-o"></i> ' . fechaHora($respuesta[$i]["fecha"]) . '</span></h6></div>
-                                    </div>
-                                </li>';
-                                        //<!-- END timeline item -->
-                                    } elseif (preg_match("/Registr\b/", $respuesta[$i]["accion"])) {
-                                        //<!-- timeline item -->
-                                        echo '<li>
-                                    <i class="ion icon-plus-circle bg-success"></i>
-                                    <div class="timeline-item card">
-                                        <div class="card-header white"><h6>' . $respuesta[$i]["usuario"] . ' ' . $respuesta[$i]["accion"] . '    <span class="time float-right"><i class="ion icon-clock-o"></i> ' . fechaHora($respuesta[$i]["fecha"]) . '</span></h6></div>
-                                    </div>
-                                </li>';
-                                        //<!-- END timeline item -->
-                                    } elseif (preg_match("/Elimin\b/", $respuesta[$i]["accion"])) {
-                                        echo '<li>
-                                    <i class="ion icon-trash bg-danger"></i>
-                                    <div class="timeline-item card">
-                                        <div class="card-header white"><h6>' . $respuesta[$i]["usuario"] . ' ' . $respuesta[$i]["accion"] . '    <span class="time float-right"><i class="ion icon-clock-o"></i> ' . fechaHora($respuesta[$i]["fecha"]) . '</span></h6></div>
-                                    </div>
-                                </li>';
-                                    } elseif (preg_match("/Modific\b/", $respuesta[$i]["accion"])) {
-                                        echo '<li>
-                                    <i class="ion icon-mode_edit bg-warning"></i>
-                                    <div class="timeline-item card">
-                                        <div class="card-header white"><h6>' . $respuesta[$i]["usuario"] . ' ' . $respuesta[$i]["accion"] . '    <span class="time float-right"><i class="ion icon-clock-o"></i> ' . fechaHora($respuesta[$i]["fecha"]) . '</span></h6></div>
-                                    </div>
-                                </li>';
-                                    }
-                                }
-                            }
-                        }
-                    }
-                    ?>
-            </div>
-        </div>
-    </aside>
-    <!-- /.right-sidebar -->
     <!-- Add the sidebar's background. This div must be placed
          immediately after the control sidebar -->
     <div class="control-sidebar-bg shadow white fixed"></div>
     </div>
+
+
+
+    <!-- Modales -->
+
+
+
+    <!-- Modal para Crear Evento -->
+    <div class="modal fade" id="crearEventoModal" tabindex="-1" aria-labelledby="crearEventoModalLabel" aria-hidden="true">
+
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="crearEventoModalLabel">Crear Evento</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="crearEventoForm">
+                        <!-- Título del evento -->
+                        <div class="mb-3">
+                            <label for="tituloEvento" class="form-label">Título del Evento</label>
+                            <input type="text" class="form-control" id="tituloEvento" name="tituloEvento" required>
+                        </div>
+
+                        <!-- Descripción -->
+                        <div class="mb-3">
+                            <label for="descripcionEvento" class="form-label">Descripción</label>
+                            <textarea class="form-control" id="descripcionEvento" name="descripcionEvento" rows="3"></textarea>
+                        </div>
+
+                        <!-- Dirección -->
+                        <div class="mb-3">
+                            <label for="direccionEvento" class="form-label">Dirección</label>
+                            <input type="text" class="form-control" id="direccionEvento" name="direccionEvento">
+                        </div>
+
+                        <!-- Ciudad, Región o Provincia, y Recinto -->
+                        <!-- Asumiendo que estas listas son proporcionadas por el backend o son listas estáticas -->
+                        <div class="mb-3">
+                            <label for="ciudadEvento" class="form-label">Ciudad</label>
+                            <input type="text" class="form-control" id="ciudadEvento" name="ciudadEvento">
+                        </div>
+
+                        <!-- Fecha y Hora -->
+                        <div class="mb-3">
+                            <label for="fechaEvento" class="form-label">Fecha</label>
+                            <input type="date" class="form-control" id="fechaEvento" name="fechaEvento">
+                        </div>
+                        <div class="mb-3">
+                            <label for="horaEvento" class="form-label">Hora</label>
+                            <input type="time" class="form-control" id="horaEvento" name="horaEvento">
+                        </div>
+
+                        <!-- Aforo -->
+                        <div class="mb-3">
+                            <label for="aforoEvento" class="form-label">Aforo</label>
+                            <input type="number" class="form-control" id="aforoEvento" name="aforoEvento">
+                        </div>
+
+                        <!-- Tipo de Asistentes -->
+                        <div class="mb-3">
+                            <label class="form-label">Tipo de Asistentes</label>
+                            <div>
+                                <input type="checkbox" id="normativo" name="tipoAsistentes">
+                                <label for="normativo">Normativo</label>
+                            </div>
+                            <div>
+                                <input type="checkbox" id="alPortador" name="tipoAsistentes">
+                                <label for="alPortador">Al Portador</label>
+                            </div>
+                        </div>
+
+                        <!-- Tipo de Entrada -->
+                        <div class="mb-3">
+                            <label class="form-label">Tipo de Entrada</label>
+                            <div class="mb-2">
+                                <input type="text" class="form-control mb-1" placeholder="Agregar nombre">
+                                <input type="text" class="form-control mb-1" placeholder="Agregar precio">
+                                <input type="number" class="form-control" placeholder="Cantidad">
+                            </div>
+                        </div>
+
+                        <!-- Video Promocional (opcional) -->
+                        <div class="mb-3">
+                            <label for="videoPromocional" class="form-label">Video Promocional (opcional)</label>
+                            <input type="text" class="form-control" id="videoPromocional" name="videoPromocional">
+                        </div>
+
+                        <button type="submit" class="btn btn-primary">Crear Evento</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
     <!--/#app -->
     <script src="assets/js/app.js"></script>
 
-    <!-- google chart api -->
-    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 
-    <script>
-        // Load the Visualization API and the corechart package.
-        google.charts.load('current', {
-            'packages': ['corechart']
-        });
-
-        google.charts.setOnLoadCallback(pieChart);
-
-        function pieChart() {
-            var datos = document.getElementById('datosGrafica').value;
-            var dato = datos.split("|");
-            var dataTable = new google.visualization.DataTable();
-            dataTable.addColumn('string', 'Marcas registradas');
-            dataTable.addColumn('number', 'Total de marcas');
-            // A column for custom tooltip content
-            //dataTable.addColumn({type: 'string', role: 'tooltip', 'p': {'html': true}});
-            var filas = [];
-            //d.push(["Fecha","cm"]);
-
-            filas.push(["Mis marcas", parseInt(dato[0])]);
-            filas.push(["Total de marcas", parseInt(dato[1])]);
-
-
-            console.log("filas", filas);
-            //var data = google.visualization.arrayToDataTable(d);
-            dataTable.addRows(filas);
-
-            var options = {
-                title: "Marcas registrdas por el usuario / total de marcas"
-                /*tooltip: {isHtml: true},
-                legend: { position: 'left', maxLines: 3 },
-                isStacked: true,
-                titleTextStyle: {fontSize: 18},*/
-                //chartArea: {'width': '65%', 'height': '65%'}
-                //hAxis: { textPosition: 'none' },
-                //hAxis: {slantedText:true, slantedTextAngle:90,maxTextLines: 10,textStyle: {fontSize: 12}}*/
-            };
-
-
-            var chart = new google.visualization.PieChart(document.getElementById("grafica"));
-
-            /*google.visualization.events.addListener(chart, 'ready', function () {
-                  $.ajax({
-                    type: 'POST',
-                    url: 'includes/guardarPng.php',
-                    data: {
-                      // send image string as data
-                      imgStr: chart.getImageURI(),
-                      titulo: "$xcm vs año de venta",
-                      opcion: 3
-                    },
-                  }).success(function(response) {
-                    document.getElementById("columnasPng").value=response;
-                    console.log('image saved');
-                  });
-                });*/
-
-            chart.draw(dataTable, options);
-        }
-    </script>
 
 </body>
 

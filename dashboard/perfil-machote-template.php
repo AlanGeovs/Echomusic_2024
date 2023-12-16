@@ -138,12 +138,12 @@ if (!isset($_SESSION["id_user"])) {
                     <div class="row">
                         <ul class="nav nav-material responsive-tab">
                             <li>
-                                <a class="nav-link" href="perfil-editar.php">
+                                <a class="nav-link active" href="perfil-editar.php">
                                     <i class="icon icon-home2"></i>Editar
                                 </a>
                             </li>
                             <li>
-                                <a class="nav-link active" href="perfil-tarifas.php">
+                                <a class="nav-link" href="perfil-tarifas.php">
                                     <i class="icon icon-edit"></i>Mis tarifas
                                 </a>
                             </li>
@@ -169,11 +169,11 @@ if (!isset($_SESSION["id_user"])) {
                     <div class="row">
 
 
-                        <!--Ver Tarifas 8 -->
-                        <div class="col-md-8">
+                        <!--Izquierda 4-->
+                        <div class="col-md-4">
                             <div class="card mb-3 shadow no-b r-0">
                                 <div class="card-header bg-white">
-                                    <h6>Tarifas</h6>
+                                    <h6>Card 1</h6>
                                 </div>
                                 <div class="card-body">
 
@@ -182,149 +182,135 @@ if (!isset($_SESSION["id_user"])) {
 
                             </div>
 
-                            <!-- Card 2 -->
-                            <!-- <div class="card mb-3 shadow no-b r-0">
+
+                            <div class="card mb-3 shadow no-b r-0">
                                 <div class="card-header bg-white">
                                     <h6>Card 2</h6>
                                 </div>
-                                <div class="card-body"> 
+                                <div class="card-body">
+
+
                                 </div>
 
-                            </div> -->
+                            </div>
 
                         </div>
 
-                        <!--Crear Tarifa 4 -->
-                        <div class="col-md-4">
+                        <!--Derecha 8 Dashboard-->
+                        <div class="col-md-8">
                             <div class="row">
+
+
                                 <!--Izq 4-->
-                                <div class="col-lg-12">
+                                <div class="col-lg-6">
                                     <div class="card mb-3 shadow no-b r-0">
                                         <div class="">
                                             <div class="float-right">
                                                 <span class="icon-sound text-light-blue s-48"> </span>
                                             </div>
                                             <div class="card-header white">
-                                                <h6>Crear nueva tarifa</h6>
+                                                <h6>Card 3 </h6>
                                             </div>
 
                                             <div class="card-body">
-
-                                                <!-- Formulario crear tarifas -->
-                                                <form action="" method="post" autocomplete="off">
-                                                    <div class="card-body text-center">
-                                                        <div class="mb-3">
-                                                            <label for="musician" class="form-label">Tipo de Plan</label>
-                                                            <select class="form-control" name="plan_type1" id="musician">
-                                                                <option value="1">Básico</option>
-                                                                <option value="2">Estándar</option>
-                                                                <option value="3">Profesional</option>
-                                                            </select>
-                                                        </div>
-
-                                                        <div class="mb-3">
-                                                            <input type="text" class="form-control" name="value_plan1" placeholder="Valor del plan" id="inputValuePlan" maxlength="19">
-                                                        </div>
-
-                                                        <hr>
-
-                                                        <div class="row">
-                                                            <div class="col-4 text-left">
-                                                                <label>Duración</label>
-                                                            </div>
-                                                            <div class="col-4 pr-0">
-                                                                <select class="form-control" name="hours_plan1">
-                                                                    <option value="0" selected>0hr</option>
-                                                                    <option value="1" selected>1 hr</option>
-                                                                    <option value="2" selected>2 hr</option>
-                                                                    <option value="3" selected>3 hr</option>
-                                                                    <option value="4" selected>4 hr</option>
-                                                                    <option value="5" selected>5 hr</option>
-                                                                    <!-- Agrega más opciones según sea necesario -->
-                                                                </select>
-                                                            </div>
-                                                            <div class="col-4 pl-1">
-                                                                <select class="form-control" name="minutes_plan1">
-                                                                    <option value="0" selected>0 min</option>
-                                                                    <option value="15" selected>15 min</option>
-                                                                    <option value="30" selected>30 min</option>
-                                                                    <option value="45" selected>45 min</option>
-                                                                    <!-- Agrega más opciones según sea necesario -->
-                                                                </select>
-                                                            </div>
-                                                        </div>
-
-                                                        <div class="row">
-                                                            <div class="col-7 text-left">
-                                                                <label>Backline</label>
-                                                            </div>
-                                                            <div class="col-5">
-                                                                <select class="form-control" name="backline_plan1">
-                                                                    <option value="1">No</option>
-                                                                    <option value="2">Sí</option>
-                                                                    <option value="3">No aplica</option>
-                                                                </select>
-                                                            </div>
-                                                        </div>
-
-                                                        <div class="row">
-                                                            <div class="col-7 text-left">
-                                                                <label>Refuerzo Sonoro</label>
-                                                            </div>
-                                                            <div class="col-5">
-                                                                <select class="form-control" name="soundReinforcement_plan1">
-                                                                    <option value="1">No</option>
-                                                                    <option value="2">Sí</option>
-                                                                    <option value="3">No aplica</option>
-                                                                </select>
-                                                            </div>
-                                                        </div>
-
-                                                        <div class="row">
-                                                            <div class="col-7 text-left">
-                                                                <label>Sonidista</label>
-                                                            </div>
-                                                            <div class="col-5">
-                                                                <select class="form-control" name="soundEngineer_plan1">
-                                                                    <option value="1">No</option>
-                                                                    <option value="2">Sí</option>
-                                                                    <option value="3">No aplica</option>
-                                                                </select>
-                                                            </div>
-                                                        </div>
-
-                                                        <div class="row">
-                                                            <div class="col-7 text-left">
-                                                                <label>Nº de Músicos</label>
-                                                            </div>
-                                                            <div class="col-5">
-                                                                <input type="text" class="form-control" name="nArtists_plan1" id="inputnArtists_plan1">
-                                                            </div>
-                                                        </div>
-
-                                                        <div class="mb-3">
-                                                            <textarea class="form-control" name="plan_desc1" id="inputPlandesc1" rows="4" placeholder="Descripción del plan"></textarea>
-                                                            <div class="form-text">300 caracteres restantes</div>
-                                                        </div>
-
-                                                        <button type="submit" class="btn btn-primary btn-block mb-2" name="submit_plan_1">Guardar Plan</button>
-                                                        <button type="submit" class="btn btn-outline-primary btn-block" name="delete_plan_1">Eliminar Plan</button>
-                                                    </div>
-                                                </form>
-
 
                                             </div>
                                         </div>
                                     </div>
                                 </div>
 
+                                <!-- Der 4 -->
+                                <div class="col-lg-6">
+                                    <div class="card mb-3 shadow no-b r-0">
+                                        <div class="">
+                                            <div class="float-right">
+                                                <span class="icon-sound text-light-blue s-48"> </span>
+                                            </div>
+                                            <div class="card-header white">
+                                                <h6>Card 4 </h6>
+                                            </div>
+
+                                            <div class="card-body">
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
+
+                            <!-- Card 5 -->
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="card mb-3 shadow no-b r-0">
+                                        <div class="card-header white">
+                                            <h6>Card 5 </h6>
+                                        </div>
+                                        <div class="card-body">
+
+
+                                        </div>
+
+                                        <div class="float-right mt-3 text-right">
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Card 6 -->
+                            <div class="row">
+                                <!-- integrantes -->
+                                <div class="col-md-12">
+                                    <div class="card mb-3 shadow no-b r-0">
+                                        <div class="card-header white">
+                                            <h6>Card 6 <small> </small></h6>
+                                        </div>
+
+                                        <div class="card-body">
+
+
+                                        </div>
+
+                                        <div class="float-right mt-3 text-right">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Card 7 -->
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="card mb-3 shadow no-b r-0">
+                                        <div class="card-header white">
+                                            <h6>Card 7 </h6>
+                                        </div>
+
+                                        <div class="card-body ">
+                                        </div>
+
+                                        <div class="float-right">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
                         </div>
 
 
+
+
+
+
+
+
+
                     </div>
+
+
                 </div>
             </div>
+        </div>
 
         </div>
 
@@ -462,32 +448,6 @@ if (!isset($_SESSION["id_user"])) {
 
         <!-- google chart api -->
         <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-
-        <!-- Script enviar formulario de reservas -->
-        <script type="text/javascript">
-            document.addEventListener('DOMContentLoaded', function() {
-                document.getElementById('formTarifas').addEventListener('submit', function(e) {
-                    e.preventDefault();
-
-                    var formData = new FormData(this);
-
-                    fetch('includes/enviar_tarifas.php', {
-                            method: 'POST',
-                            body: formData
-                        })
-                        .then(response => response.json())
-                        .then(data => {
-                            if (data.success) {
-                                alert('Plan guardado con éxito');
-                                // Aquí puedes agregar acciones adicionales después del éxito.
-                            } else {
-                                alert('Error al guardar el plan');
-                            }
-                        })
-                        .catch(error => console.error('Error:', error));
-                });
-            });
-        </script>
 
 
     </body>
