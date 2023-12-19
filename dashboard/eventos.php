@@ -98,9 +98,6 @@ $id = $_SESSION["id_user"];
         // $respuesta = Consultas::detalleUsuario($id, $tabla);
         ?>
 
-        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#crearEventoModal">
-            Crear Evento
-        </button>
         <header class="white pt-3 relative shadow">
             <div class="container-fluid">
 
@@ -146,11 +143,8 @@ $id = $_SESSION["id_user"];
                                 </div>
                             </div>
                             <div class="col-md-4 mb-3 mt-15">
-                                <a class="btn btn-primary btn-xs r-20"><i class="icon-plus-circle mr-2" data-bs-toggle="modal" data-bs-target="#crearEventoModal"></i>Cerar Evento</a>
-                                <!-- Botón para Abrir el Modal de Crear Evento -->
-                                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#crearEventoModal">
-                                    Crear Evento
-                                </button>
+                                <a class="btn btn-primary btn-xs r-20" href="crear_evento.php"><i class="icon-plus-circle mr-2" data-bs-toggle="modal" data-bs-target="#crearEventoModal"></i>Cerar Evento</a>
+
 
                             </div>
 
@@ -278,80 +272,6 @@ $id = $_SESSION["id_user"];
 
 
 
-                                        <br><br><br>
-                                        <form id="crearEventoForm">
-                                            <!-- Título del evento -->
-                                            <div class="mb-3">
-                                                <label for="tituloEvento" class="form-label">Título del Evento</label>
-                                                <input type="text" class="form-control" id="tituloEvento" name="tituloEvento" required>
-                                            </div>
-
-                                            <!-- Descripción -->
-                                            <div class="mb-3">
-                                                <label for="descripcionEvento" class="form-label">Descripción</label>
-                                                <textarea class="form-control" id="descripcionEvento" name="descripcionEvento" rows="3"></textarea>
-                                            </div>
-
-                                            <!-- Dirección -->
-                                            <div class="mb-3">
-                                                <label for="direccionEvento" class="form-label">Dirección</label>
-                                                <input type="text" class="form-control" id="direccionEvento" name="direccionEvento">
-                                            </div>
-
-                                            <!-- Ciudad, Región o Provincia, y Recinto -->
-                                            <!-- Asumiendo que estas listas son proporcionadas por el backend o son listas estáticas -->
-                                            <div class="mb-3">
-                                                <label for="ciudadEvento" class="form-label">Ciudad</label>
-                                                <input type="text" class="form-control" id="ciudadEvento" name="ciudadEvento">
-                                            </div>
-
-                                            <!-- Fecha y Hora -->
-                                            <div class="mb-3">
-                                                <label for="fechaEvento" class="form-label">Fecha</label>
-                                                <input type="date" class="form-control" id="fechaEvento" name="fechaEvento">
-                                            </div>
-                                            <div class="mb-3">
-                                                <label for="horaEvento" class="form-label">Hora</label>
-                                                <input type="time" class="form-control" id="horaEvento" name="horaEvento">
-                                            </div>
-
-                                            <!-- Aforo -->
-                                            <div class="mb-3">
-                                                <label for="aforoEvento" class="form-label">Aforo</label>
-                                                <input type="number" class="form-control" id="aforoEvento" name="aforoEvento">
-                                            </div>
-
-                                            <!-- Tipo de Asistentes -->
-                                            <div class="mb-3">
-                                                <label class="form-label">Tipo de Asistentes</label>
-                                                <div>
-                                                    <input type="checkbox" id="normativo" name="tipoAsistentes">
-                                                    <label for="normativo">Normativo</label>
-                                                </div>
-                                                <div>
-                                                    <input type="checkbox" id="alPortador" name="tipoAsistentes">
-                                                    <label for="alPortador">Al Portador</label>
-                                                </div>
-                                            </div>
-
-                                            <!-- Tipo de Entrada -->
-                                            <div class="mb-3">
-                                                <label class="form-label">Tipo de Entrada</label>
-                                                <div class="mb-2">
-                                                    <input type="text" class="form-control mb-1" placeholder="Agregar nombre">
-                                                    <input type="text" class="form-control mb-1" placeholder="Agregar precio">
-                                                    <input type="number" class="form-control" placeholder="Cantidad">
-                                                </div>
-                                            </div>
-
-                                            <!-- Video Promocional (opcional) -->
-                                            <div class="mb-3">
-                                                <label for="videoPromocional" class="form-label">Video Promocional (opcional)</label>
-                                                <input type="text" class="form-control" id="videoPromocional" name="videoPromocional">
-                                            </div>
-
-                                            <button type="submit" class="btn btn-primary">Crear Evento</button>
-                                        </form>
                                     </div>
                                 </div>
                             </div>
