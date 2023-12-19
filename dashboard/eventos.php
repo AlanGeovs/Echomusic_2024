@@ -143,7 +143,7 @@ $id = $_SESSION["id_user"];
                                 </div>
                             </div>
                             <div class="col-md-4 mb-3 mt-15">
-                                <a class="btn btn-primary btn-xs r-20" href="crear_evento.php"><i class="icon-plus-circle mr-2" data-bs-toggle="modal" data-bs-target="#crearEventoModal"></i>Cerar Evento</a>
+                                <a class="btn btn-primary btn-xs r-20" href="crear_evento.php"><i class="icon-plus-circle mr-2" data-bs-toggle="modal" data-bs-target="#crearEventoModal"></i>Crear Evento</a>
 
 
                             </div>

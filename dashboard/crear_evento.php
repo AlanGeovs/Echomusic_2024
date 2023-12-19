@@ -113,6 +113,9 @@ if (!isset($_SESSION["id_user"])) {
             <div class="plane-container">
                 <div class="preloader-wrapper small active">
                     <div class="spinner-layer spinner-blue-only">
+                        +*
+
+
                         <div class="circle-clipper left">
                             <div class="circle"></div>
                         </div>
@@ -194,6 +197,9 @@ if (!isset($_SESSION["id_user"])) {
 
                             </div>
 
+                            +*
+
+
                         </div> -->
 
                         <!--Derecha 8 Dashboard-->
@@ -231,7 +237,7 @@ if (!isset($_SESSION["id_user"])) {
                                                                 </div>
                                                             </div>
                                                             <div class="col-md-4 mb-3">
-                                                                <label for="validationCustomUsername">Organizador</label>
+                                                                <label for="validationCustomUsername">Organizador -------</label>
                                                                 <div class="input-group">
                                                                     <input type="text" class="form-control" id="validationCustomUsername" placeholder="Nombre del organizador" aria-describedby="inputGroupPrepend" required="">
                                                                     <div class="invalid-feedback">
