@@ -223,7 +223,7 @@ if (!isset($_SESSION["id_user"])) {
                                                     <form class="needs-validation" novalidate="">
                                                         <div class="form-row">
                                                             <div class="col-md-4 mb-3">
-                                                                <label for="validationCustom01">Nombre del Evento</label>
+                                                                <label for="validationCustom01">Nombre del Evento ++++</label>
                                                                 <input type="text" class="form-control" id="validationCustom01" placeholder="Nombre del evento ..." required="">
                                                                 <div class="valid-feedback">
                                                                     Nombre de evento
