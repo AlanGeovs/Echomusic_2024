@@ -220,26 +220,31 @@ if (!isset($_SESSION["id_user"])) {
 
                                             <div class="card-body">
                                                 <div class="card-body">
-                                                    <form class="needs-validation" novalidate="">
+
+                                                    <!-- Formulario de evento -->
+                                                    <!-- <form action="includes/crear_evento.php" method="post"> -->
+                                                    <form id="formEvento" method="post">
+                                                        <input type="hidden" class="form-control" id="id_user" name="id_user" value="<?php echo $id; ?>">
+
                                                         <div class="form-row">
                                                             <div class="col-md-4 mb-3">
                                                                 <label for="validationCustom01">Nombre del Evento</label>
-                                                                <input type="text" class="form-control" id="validationCustom01" placeholder="Nombre del evento ..." required="">
+                                                                <input type="text" class="form-control" id="name_event" name="name_event" placeholder="Nombre del evento ..." required="">
                                                                 <div class="valid-feedback">
                                                                     Nombre de evento
                                                                 </div>
                                                             </div>
                                                             <div class="col-md-4 mb-3">
                                                                 <label for="validationCustom02">Nombre del Lugar</label>
-                                                                <input type="text" class="form-control" id="validationCustom02" placeholder="Lugar del evento" required="">
+                                                                <input type="text" class="form-control" id="name_location" name="name_location" placeholder="Lugar del evento" required="">
                                                                 <div class="valid-feedback">
                                                                     Lugar
                                                                 </div>
                                                             </div>
                                                             <div class="col-md-4 mb-3">
-                                                                <label for="validationCustomUsername">Organizador -------</label>
+                                                                <label for="validationCustomUsername">Organizador </label>
                                                                 <div class="input-group">
-                                                                    <input type="text" class="form-control" id="validationCustomUsername" placeholder="Nombre del organizador" aria-describedby="inputGroupPrepend" required="">
+                                                                    <input type="text" class="form-control" id="organizer" name="organizer" placeholder="Nombre del organizador" aria-describedby="inputGroupPrepend" required="">
                                                                     <div class="invalid-feedback">
                                                                         Lugar
                                                                     </div>
@@ -248,45 +253,48 @@ if (!isset($_SESSION["id_user"])) {
                                                         </div>
 
                                                         <div class="form-row">
-                                                            <div class="col-md-4 mb-3">
-                                                                <label for="validationCustom01">Región</label>
-                                                                <select id="inputRegion" name="publicRegionEvent" class="form-control form-custom-1" onchange="changeCities()">
 
-                                                                    <option value="1">Arica y Parinacota</option>
-                                                                    <option value="2">Tarapacá</option>
-                                                                    <option value="3">Antofagasta</option>
-                                                                    <option value="4">Atacama</option>
-                                                                    <option value="5">Coquimbo</option>
-                                                                    <option value="6">Valparaíso</option>
-                                                                    <option value="7">Metropolitana</option>
-                                                                    <option value="8">Libertador Gral. Bernando O'higgins</option>
-                                                                    <option value="9">Maule</option>
-                                                                    <option value="10">Ñuble</option>
-                                                                    <option value="11">Bío Bío</option>
-                                                                    <option value="12">La Araucanía</option>
-                                                                    <option value="13">Los Ríos</option>
-                                                                    <option value="14">Los Lagos</option>
-                                                                    <option value="15">Aysén</option>
-                                                                    <option value="16">Magallanes</option>
+                                                            <!-- Ubicación Región y Ciudad -->
+                                                            <div class="mb-3 col-md-4">
+                                                                <label for="id_region" class="form-label">Región</label>
+                                                                <select class="form-control" id="id_region" name="id_region">
+                                                                    <?php
+                                                                    $res = Consultas::listarVariable('regions');
+                                                                    //var_dump($respuesta);
+                                                                    for ($i = 0; $i < count($res); $i++) {
+                                                                        if ($res[$i]["name_region"] == $busca_Ciudad["name_region"]) {
+                                                                            echo "<option value='" . $res[$i]["id_region"] . "' id='" . $res[$i]["id_region"] . "' selected>" . $res[$i]["name_region"] . "</option>";
+                                                                        } else {
+                                                                            echo "<option value='" . $res[$i]["id_region"] . "' id='" . $res[$i]["id_region"] . "' >" . $res[$i]["name_region"] . "</option>";
+                                                                        }
+                                                                    }
+                                                                    ?>
 
                                                                 </select>
                                                             </div>
-                                                            <div class="col-md-4 mb-3">
-                                                                <label for="validationCustom02">Ciudad</label>
-                                                                <select name="publicCityEvent" class="form-control form-custom-1" id="inputCity">
-                                                                    <!-- Print DATA -->
 
-                                                                    <option value="1">Arica</option>
-                                                                    <option value="2">Camarones</option>
-                                                                    <option value="3">General Lagos</option>
-                                                                    <option value="4">Putre</option>
+                                                            <div class="mb-3 col-md-4">
+                                                                <label for="id_city" class="form-label">Ciudad</label>
+                                                                <select class="form-control" id="id_city" name="id_city">
+                                                                    <?php
+                                                                    $res = Consultas::listarVariable('cities');
+                                                                    //var_dump($respuesta);
+                                                                    for ($i = 0; $i < count($res); $i++) {
+                                                                        if ($res[$i]["name_city"] == $busca_Ciudad["name_city"]) {
+                                                                            echo "<option value='" . $res[$i]["id_city"] . "' id='" . $res[$i]["id_city"] . "'  selected>" . $res[$i]["name_city"] . "</option>";
+                                                                        } else {
+                                                                            echo "<option value='" . $res[$i]["id_city"] . "' id='" . $res[$i]["id_city"] . "' >" . $res[$i]["name_city"] . "</option>";
+                                                                        }
+                                                                    }
+                                                                    ?>
 
                                                                 </select>
                                                             </div>
+
                                                             <div class="col-md-4 mb-3">
                                                                 <label for="validationCustomUsername">Dirección</label>
                                                                 <div class="input-group">
-                                                                    <input type="text" class="form-control" id="validationCustomUsername" placeholder=" " aria-describedby="inputGroupPrepend" required="">
+                                                                    <input type="text" class="form-control" id="location" name="location" placeholder=" " aria-describedby="inputGroupPrepend" required="">
                                                                     <div class="invalid-feedback">
                                                                         Lugar
                                                                     </div>
@@ -296,29 +304,43 @@ if (!isset($_SESSION["id_user"])) {
 
 
                                                         <div class="form-row">
-                                                            <div class="col-md-4 mb-3">
-                                                                <label for="validationCustom01">Fecha y hora</label>
-                                                                <input type="text" class="date-time-picker form-control" data-options="{&quot;timepicker&quot;:false, &quot;format&quot;:&quot;d-m-Y&quot;}" value="2023/06/01">
-                                                                <!-- <span class="input-group-append">
-                                                                    <span class="input-group-text add-on white">
-                                                                        <i class="icon-calendar"></i>
-                                                                    </span>
-                                                                </span> -->
-                                                            </div>
-                                                            <div class="col-md-4 mb-3">
-                                                                <label for="validationCustom02">Tipo de evento</label>
-                                                                <select name="publicCityEvent" class="form-control form-custom-1" id="inputCity">
-                                                                    <!-- Print DATA -->
+                                                            <div class="col-md-3 mb-3">
+                                                                <label for="validationCustom01">Fecha</label>
 
+                                                                <div class="input-group">
+                                                                    <input type="text" class="date-time-picker form-control" id="date_event" name="date_event" data-options="{&quot;timepicker&quot;:false, &quot;format&quot;:&quot;d-m-Y&quot;}" value="2018/06/01">
+                                                                    <span class="input-group-append">
+                                                                        <span class="input-group-text add-on white">
+                                                                            <i class="icon-calendar"></i>
+                                                                        </span>
+                                                                    </span>
+                                                                </div>
+
+                                                            </div>
+
+                                                            <div class="col-md-3 mb-3">
+                                                                <label for="validationCustom01">Hora</label>
+                                                                <div class="input-group">
+                                                                    <input type="text" class="date-time-picker form-control" id="hour_event" name="hour_event" value="22:46" data-options="{&quot;datepicker&quot;:false, &quot;format&quot;:&quot;H:i&quot;}">
+                                                                    <span class="input-group-append">
+                                                                        <span class="input-group-text add-on white">
+                                                                            <i class="icon-timer"></i>
+                                                                        </span>
+                                                                    </span>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="col-md-3 mb-3">
+                                                                <label for="validationCustom02">Tipo de evento</label>
+                                                                <select name="id_type_event" class="form-control form-custom-1" id="id_type_event">
                                                                     <option value="1">Gratuito</option>
                                                                     <option value="2">De pago</option>
-
                                                                 </select>
                                                             </div>
-                                                            <div class="col-md-4 mb-3">
+                                                            <div class="col-md-3 mb-3">
                                                                 <label for="validationCustomUsername">Audiencia</label>
                                                                 <div class="input-group">
-                                                                    <input type="text" class="form-control" id="validationCustomUsername" placeholder="Cantidad total de entradas" aria-describedby="inputGroupPrepend" required="">
+                                                                    <input type="text" class="form-control" id="audience_event" name="audience_event" placeholder="Cantidad total de entradas" aria-describedby="inputGroupPrepend" required="">
                                                                     <div class="invalid-feedback">
                                                                         Lugar
                                                                     </div>
@@ -326,30 +348,26 @@ if (!isset($_SESSION["id_user"])) {
                                                             </div>
                                                         </div>
 
+                                                        <div class="form-row">
+                                                            <!-- Campo para cargar foto -->
+                                                            <div class="col-md-4 mb-3">
+                                                                <label for="eventPhoto">Foto del Evento</label>
+                                                                <input type="file" class="form-control-file" id="eventPhoto" name="eventPhoto">
+                                                            </div>
 
-                                                        <!-- <div class="form-row">
-                                                            <div class="col-md-6 mb-3">
-                                                                <label for="validationCustom03">City</label>
-                                                                <input type="text" class="form-control" id="validationCustom03" placeholder="City" required="">
-                                                                <div class="invalid-feedback">
-                                                                    Please provide a valid city.
-                                                                </div>
+                                                            <!-- Campo para Video Promocional del Evento (opcional) -->
+                                                            <div class="col-md-4 mb-3">
+                                                                <label for="eventVideo">Video Promocional del Evento (Opcional)</label>
+                                                                <input type="text" class="form-control" id="eventVideo" name="eventVideo" placeholder="URL del video...">
                                                             </div>
-                                                            <div class="col-md-3 mb-3">
-                                                                <label for="validationCustom04">State</label>
-                                                                <input type="text" class="form-control" id="validationCustom04" placeholder="State" required="">
-                                                                <div class="invalid-feedback">
-                                                                    Please provide a valid state.
-                                                                </div>
+
+
+                                                            <!-- Campo para descripción del evento -->
+                                                            <div class="col-md-4 mb-3">
+                                                                <label for="eventDescription">Descripción del Evento</label>
+                                                                <textarea class="form-control" id="desc_event" name="desc_event" rows="3" placeholder="Escribe aquí la descripción del evento..."></textarea>
                                                             </div>
-                                                            <div class="col-md-3 mb-3">
-                                                                <label for="validationCustom05">Zip</label>
-                                                                <input type="text" class="form-control" id="validationCustom05" placeholder="Zip" required="">
-                                                                <div class="invalid-feedback">
-                                                                    Please provide a valid zip.
-                                                                </div>
-                                                            </div>
-                                                        </div> -->
+                                                        </div>
 
                                                         <div class="form-group">
                                                             <div class="form-check">
@@ -566,9 +584,84 @@ if (!isset($_SESSION["id_user"])) {
         </div>
         <!--/#app -->
         <script src="assets/js/app.js"></script>
+        <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
 
         <!-- google chart api -->
         <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
+        <!-- Cambio de Región y Ciudad -->
+        <script type="text/javascript">
+            $(document).ready(function() {
+                $('#id_region').on('change', function() {
+                    var id_region = $(this).val();
+                    cargarCiudades(id_region);
+                });
+
+                // Cargar ciudades al abrir el modal
+                $('#editDatos').on('show.bs.modal', function() {
+                    var id_region = $('#id_region').val();
+                    if (id_region) {
+                        cargarCiudades(id_region);
+                    }
+                });
+            });
+
+            function cargarCiudades(id_region) {
+                $.ajax({
+                    url: 'includes/obtener_regiones_ciudades.php',
+                    type: 'POST',
+                    data: {
+                        id_region: id_region
+                    },
+                    dataType: 'json',
+                    success: function(ciudades) {
+                        var opciones = '<option value="">Seleccione una ciudad</option>';
+                        $.each(ciudades, function(index, ciudad) {
+                            var selected = (ciudad.name_city == "<?php echo $busca_Ciudad["name_city"]; ?>") ? ' selected' : '';
+                            opciones += '<option value="' + ciudad.id_city + '"' + selected + '>' + ciudad.name_city + '</option>';
+                        });
+                        $('#id_city').html(opciones);
+                    },
+                    error: function() {
+                        alert('Error al cargar las ciudades');
+                    }
+                });
+            }
+        </script>
+
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                document.getElementById('formEvento').addEventListener('submit', function(e) {
+                    e.preventDefault();
+
+                    var formData = new FormData(this);
+
+                    fetch('includes/crear_evento.php', {
+                            method: 'POST',
+                            body: formData
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.success) {
+                                swal("¡Éxito!", data.message, "success")
+                                    .then(() => {
+                                        setTimeout(function() {
+                                            window.location.href = 'eventos.php';
+                                        }, 2000); // 2000 milisegundos = 2 segundos
+                                    });
+                            } else {
+                                swal("Error", data.message, "error");
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Error:', error);
+                            swal("Error", "Error al procesar la solicitud.", "error");
+                        });
+                });
+            });
+        </script>
+
 
 
     </body>

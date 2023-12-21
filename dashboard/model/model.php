@@ -1215,6 +1215,35 @@ class Consultas  extends Conexion
 	}
 
 
+	// Crear EVentos
+	public static function crearEventos($data)
+	{
+		$sql = "INSERT INTO events_public (id_type_event, id_user, id_region, id_city, date_event, name_event, name_location, location, organizer, desc_event, audience_event, value_OLD, value_commission_OLD, value_plan_OLD, payment_event, img, id_multimedia_featured, verifier_event, active_event) 
+				VALUES (:id_type_event, :id_user, :id_region, :id_city, :date_event, :name_event, :name_location, :location, :organizer, :desc_event, :audience_event, '0', '0', '0', '0', '', NULL, '', NULL)";
+
+		$stmt = self::conectar()->prepare($sql);
+
+		$stmt->bindValue(':id_type_event', $data['id_type_event'], PDO::PARAM_INT);
+		$stmt->bindValue(':id_user', $data['id_user'], PDO::PARAM_INT);
+		$stmt->bindValue(':id_region', $data['id_region'], PDO::PARAM_INT);
+		$stmt->bindValue(':id_city', $data['id_city'], PDO::PARAM_INT);
+		$stmt->bindValue(':date_event', $data['date_event'], PDO::PARAM_STR);
+		$stmt->bindValue(':name_event', $data['name_event'], PDO::PARAM_STR);
+		$stmt->bindValue(':name_location', $data['name_location'], PDO::PARAM_STR);
+		$stmt->bindValue(':location', $data['location'], PDO::PARAM_STR);
+		$stmt->bindValue(':organizer', $data['organizer'], PDO::PARAM_STR);
+		$stmt->bindValue(':desc_event', $data['desc_event'], PDO::PARAM_STR);
+		$stmt->bindValue(':audience_event', $data['audience_event'], PDO::PARAM_INT);
+
+		try {
+			$result = $stmt->execute();
+			return ['success' => $result];
+		} catch (Exception $e) {
+			return ['success' => false, 'error' => $e->getMessage()];
+		}
+	}
+
+
 	public function datosUsuario($id)
 	{
 		$stmt = Conexion::conectar()->prepare("SELECT * FROM  usuarios WHERE id = :id");
