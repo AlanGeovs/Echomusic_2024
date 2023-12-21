@@ -1243,6 +1243,16 @@ class Consultas  extends Conexion
 		}
 	}
 
+	// Mostrar eventos 
+	public static function obtenerEventosPorUsuario($id_usuario)
+	{
+		$sql = "SELECT * FROM events_public WHERE id_user = :id_user ORDER BY date_event DESC";
+		$stmt = self::conectar()->prepare($sql);
+		$stmt->bindValue(':id_user', $id_usuario, PDO::PARAM_INT);
+		$stmt->execute();
+		return $stmt->fetchAll(PDO::FETCH_ASSOC);
+	}
+
 
 	public function datosUsuario($id)
 	{

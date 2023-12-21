@@ -229,7 +229,7 @@ if (!isset($_SESSION["id_user"])) {
                                                         <div class="form-row">
                                                             <div class="col-md-4 mb-3">
                                                                 <label for="validationCustom01">Nombre del Evento</label>
-                                                                <input type="text" class="form-control" id="validationCustom01" placeholder="Nombre del evento ..." required="">
+                                                                <input type="text" class="form-control" id="name_event" name="name_event" placeholder="Nombre del evento ..." required="">
                                                                 <div class="valid-feedback">
                                                                     Nombre de evento
                                                                 </div>
@@ -648,7 +648,7 @@ if (!isset($_SESSION["id_user"])) {
                                     .then(() => {
                                         setTimeout(function() {
                                             window.location.href = 'eventos.php';
-                                        }, 2000); // 2000 milisegundos = 2 segundos
+                                        }, 500); // 2000 milisegundos = 2 segundos
                                     });
                             } else {
                                 swal("Error", data.message, "error");

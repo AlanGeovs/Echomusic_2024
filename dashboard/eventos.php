@@ -216,55 +216,6 @@ $id = $_SESSION["id_user"];
                                                         <a class="btn-fab btn-fab-sm btn-primary shadow text-white" href=""><i class="icon-control_point_duplicate"></i></a>
                                                     </td>
                                                 </tr>
-                                                <tr>
-                                                    <td>
-                                                        <span class="icon-wifi_tethering"></span>
-                                                    </td>
-                                                    <td>10550</td>
-                                                    <td><a href="#">Concierto en vivo 3</a></td>
-                                                    <td>Metropolitana</td>
-                                                    <td>15/09/2023 20 hrs</td>
-                                                    <td><span class="badge badge-success">Publicado</span></td>
-                                                    <td>$ 5000 </td>
-                                                    <td>
-                                                        <a class="btn-fab btn-fab-sm btn-success shadow text-white" href=""><i class="icon-cog"></i></a>
-                                                        <a class="btn-fab btn-fab-sm btn-primary shadow text-white" href=""><i class="icon-pencil"></i></a>
-                                                        <a class="btn-fab btn-fab-sm btn-danger shadow text-white" onclick=""><i class="icon-trash"></i></a>
-                                                    </td>
-                                                    <td>
-                                                        <div class="material-switch">
-                                                            <input id="sw1" name="someSwitchOption001" type="checkbox" checked>
-                                                            <label for="sw1" class="bg-primary"></label>
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <a class="btn-fab btn-fab-sm btn-primary shadow text-white" href=""><i class="icon-control_point_duplicate"></i></a>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>
-                                                        <span class="icon-person_pin"></span>
-                                                    </td>
-                                                    <td>10555</td>
-                                                    <td><a href="#">Concierto en vivo 4</a></td>
-                                                    <td>Metropolitana</td>
-                                                    <td>15/09/2023 22 hrs</td>
-                                                    <td><span class="badge badge-success">Publicado</span></td>
-                                                    <td>$ 0</td>
-                                                    <td>
-                                                        <a class="btn-fab btn-fab-sm btn-primary shadow text-white" href=""><i class="icon-pencil"></i></a>
-                                                        <a class="btn-fab btn-fab-sm btn-danger shadow text-white" onclick=""><i class="icon-trash"></i></a>
-                                                    </td>
-                                                    <td>
-                                                        <div class="material-switch">
-                                                            <input id="sw4" name="someSwitchOption001" type="checkbox" checked>
-                                                            <label for="sw4" class="bg-primary"></label>
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <a class="btn-fab btn-fab-sm btn-primary shadow text-white" href=""><i class="icon-control_point_duplicate"></i></a>
-                                                    </td>
-                                                </tr>
 
                                             </tbody>
                                         </table>
@@ -298,99 +249,36 @@ $id = $_SESSION["id_user"];
 
 
 
-    <!-- Modal para Crear Evento -->
-    <div class="modal fade" id="crearEventoModal" tabindex="-1" aria-labelledby="crearEventoModalLabel" aria-hidden="true">
 
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="crearEventoModalLabel">Crear Evento</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <form id="crearEventoForm">
-                        <!-- Título del evento -->
-                        <div class="mb-3">
-                            <label for="tituloEvento" class="form-label">Título del Evento</label>
-                            <input type="text" class="form-control" id="tituloEvento" name="tituloEvento" required>
-                        </div>
-
-                        <!-- Descripción -->
-                        <div class="mb-3">
-                            <label for="descripcionEvento" class="form-label">Descripción</label>
-                            <textarea class="form-control" id="descripcionEvento" name="descripcionEvento" rows="3"></textarea>
-                        </div>
-
-                        <!-- Dirección -->
-                        <div class="mb-3">
-                            <label for="direccionEvento" class="form-label">Dirección</label>
-                            <input type="text" class="form-control" id="direccionEvento" name="direccionEvento">
-                        </div>
-
-                        <!-- Ciudad, Región o Provincia, y Recinto -->
-                        <!-- Asumiendo que estas listas son proporcionadas por el backend o son listas estáticas -->
-                        <div class="mb-3">
-                            <label for="ciudadEvento" class="form-label">Ciudad</label>
-                            <input type="text" class="form-control" id="ciudadEvento" name="ciudadEvento">
-                        </div>
-
-                        <!-- Fecha y Hora -->
-                        <div class="mb-3">
-                            <label for="fechaEvento" class="form-label">Fecha</label>
-                            <input type="date" class="form-control" id="fechaEvento" name="fechaEvento">
-                        </div>
-                        <div class="mb-3">
-                            <label for="horaEvento" class="form-label">Hora</label>
-                            <input type="time" class="form-control" id="horaEvento" name="horaEvento">
-                        </div>
-
-                        <!-- Aforo -->
-                        <div class="mb-3">
-                            <label for="aforoEvento" class="form-label">Aforo</label>
-                            <input type="number" class="form-control" id="aforoEvento" name="aforoEvento">
-                        </div>
-
-                        <!-- Tipo de Asistentes -->
-                        <div class="mb-3">
-                            <label class="form-label">Tipo de Asistentes</label>
-                            <div>
-                                <input type="checkbox" id="normativo" name="tipoAsistentes">
-                                <label for="normativo">Normativo</label>
-                            </div>
-                            <div>
-                                <input type="checkbox" id="alPortador" name="tipoAsistentes">
-                                <label for="alPortador">Al Portador</label>
-                            </div>
-                        </div>
-
-                        <!-- Tipo de Entrada -->
-                        <div class="mb-3">
-                            <label class="form-label">Tipo de Entrada</label>
-                            <div class="mb-2">
-                                <input type="text" class="form-control mb-1" placeholder="Agregar nombre">
-                                <input type="text" class="form-control mb-1" placeholder="Agregar precio">
-                                <input type="number" class="form-control" placeholder="Cantidad">
-                            </div>
-                        </div>
-
-                        <!-- Video Promocional (opcional) -->
-                        <div class="mb-3">
-                            <label for="videoPromocional" class="form-label">Video Promocional (opcional)</label>
-                            <input type="text" class="form-control" id="videoPromocional" name="videoPromocional">
-                        </div>
-
-                        <button type="submit" class="btn btn-primary">Crear Evento</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
 
 
 
     <!--/#app -->
     <script src="assets/js/app.js"></script>
 
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            fetch('includes/obtener_eventos.php') // Asegúrate de poner la ruta correcta
+                .then(response => response.json())
+                .then(eventos => {
+                    let tabla = document.getElementById('recent-orders').getElementsByTagName('tbody')[0];
+                    eventos.forEach(evento => {
+                        let fila = tabla.insertRow();
+                        fila.innerHTML = `
+                        <td><span class="icon-person_pin"></span></td>
+                        <td>${evento.id_event}</td> <!-- Asegúrate de que estas son las claves correctas -->
+                        <td><a href="#">${evento.name_event}</a></td>
+                        <td>${evento.name_location}</td>
+                        <td>${evento.date_event}</td>
+                        <td><span class="badge badge-light">Estado</span></td>
+                        <td>$ ${evento.ventas}</td> <!-- Cambia 'ventas' por la clave correcta -->
+                        <!-- Más celdas según sea necesario -->
+                    `;
+                    });
+                })
+                .catch(error => console.error('Error:', error));
+        });
+    </script>
 
 
 </body>
