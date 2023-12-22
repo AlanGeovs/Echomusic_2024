@@ -267,7 +267,7 @@ $id = $_SESSION["id_user"];
                         fila.innerHTML = `
                         <td><span class="icon-person_pin"></span></td>
                         <td>${evento.id_event}</td> <!-- Asegúrate de que estas son las claves correctas -->
-                        <td><a href="#">${evento.name_event}</a></td>
+                        <td><a href="https://echomusic.net/eventos.php?e=${evento.id_event}" target="_blank">${evento.name_event}</a></td>
                         <td>${evento.name_location}</td>
                         <td>${evento.date_event}</td>
                         <td><span class="badge badge-light">Estado</span></td>

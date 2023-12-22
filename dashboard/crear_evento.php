@@ -348,6 +348,38 @@ if (!isset($_SESSION["id_user"])) {
                                                             </div>
                                                         </div>
 
+                                                        <!-- Contenedor para los campos adicionales -->
+                                                        <div id="camposAdicionales" class="form-row" style="display: none;">
+                                                            <div class="col-md-2 mb-3">
+                                                                <label for="ticket_name">Nombre de Entrada</label>
+                                                                <input type="text" class="form-control" id="ticket_name" name="ticket_name" placeholder="Nombre de la entrada">
+                                                            </div>
+                                                            <div class="col-md-2 mb-3">
+                                                                <label for="ticket_value">Valor Entrada</label>
+                                                                <input type="number" class="form-control" id="ticket_value" name="ticket_value" placeholder="Valor de la entrada">
+                                                            </div>
+                                                            <div class="col-md-2 mb-3">
+                                                                <label for="ticket_audience">Cantidad</label>
+                                                                <input type="number" class="form-control" id="ticket_audience" name="ticket_audience" placeholder="Cantidad">
+                                                            </div>
+                                                            <div class="col-md-3 mb-3">
+                                                                <label for="ticket_dateStart">Inicio Venta (Fecha y Hora)</label>
+                                                                <input type="datetime-local" class="form-control" id="ticket_dateStart" name="ticket_dateStart">
+                                                            </div>
+                                                            <div class="col-md-3 mb-3">
+                                                                <label for="ticket_dateEnd">Término Venta (Fecha y Hora)</label>
+                                                                <input type="datetime-local" class="form-control" id="ticket_dateEnd" name="ticket_dateEnd">
+                                                            </div>
+
+
+
+                                                        </div>
+
+                                                        <button type="button" id="btnAgregarEntradas" class="btn btn-primary">
+                                                            <i class="icon-plus"></i> Agregar más entradas
+                                                        </button>
+
+
                                                         <div class="form-row">
                                                             <!-- Campo para cargar foto -->
                                                             <div class="col-md-4 mb-3">
@@ -435,13 +467,6 @@ if (!isset($_SESSION["id_user"])) {
 
 
                         </div>
-
-
-
-
-
-
-
 
 
                     </div>
@@ -630,6 +655,7 @@ if (!isset($_SESSION["id_user"])) {
             }
         </script>
 
+        <!-- Crear evento -->
         <script>
             document.addEventListener('DOMContentLoaded', function() {
                 document.getElementById('formEvento').addEventListener('submit', function(e) {
@@ -661,6 +687,60 @@ if (!isset($_SESSION["id_user"])) {
                 });
             });
         </script>
+
+        <!-- Manjeador de cambio de Tickets Gratuito a pago  -->
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                var tipoEventoSelector = document.getElementById('id_type_event');
+                var btnAgregarEntradas = document.getElementById('btnAgregarEntradas');
+
+                tipoEventoSelector.addEventListener('change', function() {
+                    // Mostrar campos adicionales si el tipo de evento es "De pago"
+                    if (this.value == '2') {
+                        btnAgregarEntradas.style.display = '';
+                    } else {
+                        btnAgregarEntradas.style.display = 'none';
+                    }
+                });
+
+                // Llama al evento change al cargar la página para establecer el estado inicial
+                tipoEventoSelector.dispatchEvent(new Event('change'));
+            });
+
+            document.addEventListener('DOMContentLoaded', function() {
+                var contadorEntradas = 1;
+
+                document.getElementById('btnAgregarEntradas').addEventListener('click', function() {
+                    contadorEntradas++;
+                    var camposAdicionales = document.getElementById('camposAdicionales');
+                    var nuevosCampos = camposAdicionales.cloneNode(true);
+
+                    // Actualizar los IDs y nombres de los campos clonados
+                    nuevosCampos.id = 'camposAdicionales' + contadorEntradas;
+                    nuevosCampos.querySelectorAll('input, select').forEach(function(input) {
+                        input.name = input.name + contadorEntradas;
+                        input.id = input.id + contadorEntradas;
+                        if (input.type === 'text' || input.type === 'number' || input.type === 'datetime-local') {
+                            input.value = ''; // Limpiar valores para los nuevos campos
+                        }
+                    });
+
+                    // Inserta los nuevos campos después del contenedor original
+                    var siguienteElemento = camposAdicionales.nextElementSibling;
+                    camposAdicionales.parentNode.insertBefore(nuevosCampos, siguienteElemento);
+                });
+
+                // Mostrar u ocultar campos adicionales según el tipo de evento
+                document.getElementById('id_type_event').addEventListener('change', function() {
+                    if (this.value == '2') { // '2' corresponde a eventos de pago
+                        document.getElementById('camposAdicionales').style.display = '';
+                    } else {
+                        document.getElementById('camposAdicionales').style.display = 'none';
+                    }
+                });
+            });
+        </script>
+
 
 
 

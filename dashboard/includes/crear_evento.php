@@ -34,6 +34,23 @@ $data = [
     // Asegúrate de manejar también la carga de la foto y el video si es necesario
 ];
 
+// Procesar la carga de la foto
+if (isset($_FILES['eventPhoto']) && $_FILES['eventPhoto']['error'] == 0) {
+    $foto = $_FILES['eventPhoto'];
+    $extension = pathinfo($foto['name'], PATHINFO_EXTENSION);
+    $nombreArchivo = $_POST['id_user'] . '.jpg'; // Por ejemplo, usando id_user para el nombre
+    $rutaDestino = '../images/eventos/' . $nombreArchivo;
+
+    if (move_uploaded_file($foto['tmp_name'], $rutaDestino)) {
+        $data['img'] = $nombreArchivo;
+    } else {
+        $response['message'] = 'Error al subir el archivo.';
+        echo json_encode($response);
+        exit;
+    }
+}
+
+// Lógica actual para guardar en la base de datos
 $resultado = Consultas::crearEventos($data);
 
 if ($resultado['success']) {
