@@ -169,17 +169,20 @@ img.responsiveEveArtista {
 /*Imágenes para Artistas Responsiva*/
 /* Estilo por defecto para desktop */
 img.responsiveArtista {
-    width: 466px;
+    width: 360px;
     max-width: 100%;
     height: auto;
+    border-radius: 50%; /* Esto hará que la imagen sea totalmente redonda */
+    
 }
 
 /* Estilo para tablets */
 @media screen and (max-width: 768px) {
     img.responsiveArtista {
-        width: 400px;
+        width: 340px;
         max-width: 100%;
         height: auto;
+        border-radius: 50%; /* Esto hará que la imagen sea totalmente redonda */
     }
 }
 
@@ -189,8 +192,10 @@ img.responsiveArtista {
         width: 306px;
         max-width: 100%;
         height: auto;
+        border-radius: 50%; /* Esto hará que la imagen sea totalmente redonda */
     }
 }
+
 
 
 .home-contact-area .form-group {

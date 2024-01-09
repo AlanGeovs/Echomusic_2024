@@ -175,6 +175,16 @@ class Consultas
                 //return $id;
                 $stmt->close();
         }
+        //PRESSKIT de Artistas
+        static public function bioPresskit($id)
+        {
+                $stmt = Conexion::conectar()->prepare("SELECT * FROM `presskit`  WHERE id_user=:id  ;");
+                $stmt->bindParam(":id", $id, PDO::PARAM_INT);
+                $stmt->execute();
+                return $stmt->fetchAll();
+                //return $id;
+                $stmt->close();
+        }
         //Desc de Artistas
         static public function descArtistas($id)
         {

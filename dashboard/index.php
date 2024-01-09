@@ -97,7 +97,7 @@
                         <div class="col-lg-6 p-t-100">
                             <div class="text">
                                 <h1>Inicio de Sesión</h1>
-                                <p class="s-18 p-t-b-20 font-weight">Ingresa con tu usuario y contraseña ---- +++</p>
+                                <p class="s-18 p-t-b-20 font-weight">Ingresa con tu usuario y contraseña</p>
                             </div>
                             <form action="includes/validarLogin.php" method="post">
                                 <div class="row">

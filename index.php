@@ -1,41 +1,38 @@
-<?php 
+<?php
 include "model/models.php";
 include "header.php";
 ?>
 
-        
-<!--video 2--> 
+
+<!--video 2-->
 <!-- Carousel wrapper -->
 <div id="carouselVideoExample" class="carousel slide carousel-fade" data-mdb-ride="carousel">
-  <!-- Indicators -->
-  <div class="carousel-indicators">
-    <button type="button" data-mdb-target="#carouselVideoExample" data-mdb-slide-to="0" class="active"
-      aria-current="true" aria-label="Slide 1"></button>
-    <button type="button" data-mdb-target="#carouselVideoExample" data-mdb-slide-to="1"
-      aria-label="Slide 2"></button>
-    <button type="button" data-mdb-target="#carouselVideoExample" data-mdb-slide-to="2"
-      aria-label="Slide 3"></button>
-  </div>
+    <!-- Indicators -->
+    <div class="carousel-indicators">
+        <button type="button" data-mdb-target="#carouselVideoExample" data-mdb-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+        <button type="button" data-mdb-target="#carouselVideoExample" data-mdb-slide-to="1" aria-label="Slide 2"></button>
+        <button type="button" data-mdb-target="#carouselVideoExample" data-mdb-slide-to="2" aria-label="Slide 3"></button>
+    </div>
 
-  <!-- Inner -->
-  <div class="carousel-inner">
-    <!-- Single item -->
-    <div class="carousel-item active">
-        <div class="carousel-caption d-none d-md-block"> 
-            <img src="assets/images/logo/logo-naranja-blanco.png" alt="" width="450px"/>
-            <h4>Marketplace de servicios musicales</h4>
-            <p>
-                Encuentra eventos presenciales o streaming, contrata servicios musicales de artistas o patrocina proyectos musicales (Crowdfunding).
-            </p>
+    <!-- Inner -->
+    <div class="carousel-inner">
+        <!-- Single item -->
+        <div class="carousel-item active">
+            <div class="carousel-caption d-none d-md-block">
+                <img src="assets/images/logo/logo-naranja-blanco.png" alt="" width="450px" />
+                <h4>Marketplace de servicios musicales</h4>
+                <p>
+                    Encuentra eventos presenciales o streaming, contrata servicios musicales de artistas o patrocina proyectos musicales (Crowdfunding).
+                </p>
+            </div>
+            <video class="img-fluid" autoplay loop muted>
+                <!--<source src="assets/videos/echomusic-home-2.mp4" type="video/mp4"  />-->
+                <source src="https://res.cloudinary.com/dsaz7y8t1/video/upload/v1685557254/Echomusic/BannerWeb2.0_Morado.mp4_vtjmui.mp4" type="video/mp4" />
+            </video>
         </div>
-        <video class="img-fluid" autoplay loop muted>
-            <!--<source src="assets/videos/echomusic-home-2.mp4" type="video/mp4"  />-->
-            <source src="https://res.cloudinary.com/dsaz7y8t1/video/upload/v1685557254/Echomusic/BannerWeb2.0_Morado.mp4_vtjmui.mp4" type="video/mp4"  />
-        </video>
-    </div> 
 
-    <!-- Single item -->
-<!--    <div class="carousel-item">
+        <!-- Single item -->
+        <!--    <div class="carousel-item">
       <video class="img-fluid" autoplay loop muted>
         <source src="https://mdbcdn.b-cdn.net/img/video/forest.mp4" type="video/mp4" />
       </video>
@@ -47,8 +44,8 @@ include "header.php";
       </div>
     </div>-->
 
-    <!-- Single item -->
-<!--    <div class="carousel-item">
+        <!-- Single item -->
+        <!--    <div class="carousel-item">
       <video class="img-fluid" autoplay loop muted>
         <source src="https://mdbcdn.b-cdn.net/img/video/Agua-natural.mp4" type="video/mp4" />
         <source src="https://player.vimeo.com/video/813569550?h=1dc8d8f438&autoplay=1&title=0&byline=0&portrait=0" type="video/mp4" />
@@ -68,24 +65,22 @@ include "header.php";
                                 </div> 
       </div>
     </div>-->
-  </div>
-  <!-- Inner -->
+    </div>
+    <!-- Inner -->
 
-  <!-- Controls -->
-  <button class="carousel-control-prev" type="button" data-mdb-target="#carouselVideoExample"
-    data-mdb-slide="prev">
-    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-    <span class="visually-hidden">Previous</span>
-  </button>
-  <button class="carousel-control-next" type="button" data-mdb-target="#carouselVideoExample"
-    data-mdb-slide="next">
-    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-    <span class="visually-hidden">Next</span>
-  </button>
+    <!-- Controls -->
+    <button class="carousel-control-prev" type="button" data-mdb-target="#carouselVideoExample" data-mdb-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-mdb-target="#carouselVideoExample" data-mdb-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+    </button>
 </div>
-<!-- Carousel wrapper --> 
-        
-        
+<!-- Carousel wrapper -->
+
+
 <!--        Header VIdeo
         <div class="video-container">
             <video autoplay loop class="fillWidth visible-lg">
@@ -93,8 +88,8 @@ include "header.php";
                 Your browser does not support the video tag.
             </video>
         </div>      -->
-        
-        <!-- Banner Area -->
+
+<!-- Banner Area -->
 <!--        <section class="banner-area">
             <div style="z-index: 0;padding:56.25% 0 0 0;position:relative;"><iframe src="https://player.vimeo.com/video/813569550?h=1dc8d8f438&autoplay=1&title=0&byline=0&portrait=0" style="position:absolute;top:0;left:0;width:100%;height:100%;" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe></div><script src="https://player.vimeo.com/api/player.js"></script>
             <div class="d-table">
@@ -147,11 +142,11 @@ include "header.php";
                 </div>
             </div>
         </section>-->
-        <!-- End Banner Area -->
+<!-- End Banner Area -->
 
-  <!--<div style="padding:56.25% 0 0 0;position:relative;"><iframe src="https://player.vimeo.com/video/813569550?h=1dc8d8f438&autoplay=1&title=0&byline=0&portrait=0" style="position:absolute;top:0;left:0;width:100%;height:100%;" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe></div><script src="https://player.vimeo.com/api/player.js"></script>-->
-        
-        <!-- Soluciones Digitales EchoMusic quitado temparalemnte, debe ir a sección de perfil de artista -->
+<!--<div style="padding:56.25% 0 0 0;position:relative;"><iframe src="https://player.vimeo.com/video/813569550?h=1dc8d8f438&autoplay=1&title=0&byline=0&portrait=0" style="position:absolute;top:0;left:0;width:100%;height:100%;" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe></div><script src="https://player.vimeo.com/api/player.js"></script>-->
+
+<!-- Soluciones Digitales EchoMusic quitado temparalemnte, debe ir a sección de perfil de artista -->
 <!--        <section class="home-service-area pt-100 pb-70">
             <div class="container">
                 <div class="section-title">
@@ -274,187 +269,187 @@ include "header.php";
                 </div>
             </div>
         </section>-->
-        <!-- End Soluciones Digitales EchoMusic -->
+<!-- End Soluciones Digitales EchoMusic -->
 
- 
 
-        <!-- Destacados - Características  -->
-        <section class="feature-area bg-color pt-70 pb-35">
-            <div class="container">
-                <div class="row align-items-center ">
-                    <div class=" col-lg-4">
-                        <div class="contnet">
-                            <div class="feature-tittle">
-                                <span style="font-size: 20px">Sección </span>
-                                <h2>Destacados   </h2>
-                                <p>Encuentra lo más relevante en cuanto a eventos, proyectos, noticias y convocatorias.</p>
-                            </div>
- 
-                            <a href="buscar_artista.php" class="box-btn">Ver más destacados</a>
-                        </div>
+
+<!-- Destacados - Características  -->
+<section class="feature-area bg-color pt-70 pb-35">
+    <div class="container">
+        <div class="row align-items-center ">
+            <div class=" col-lg-4">
+                <div class="contnet">
+                    <div class="feature-tittle">
+                        <span style="font-size: 20px">Sección </span>
+                        <h2>Destacados </h2>
+                        <p>Encuentra lo más relevante en cuanto a eventos, proyectos, noticias y convocatorias.</p>
                     </div>
- 
-                        
-                    <div class="col-lg-8 col-sm-12 item dev design">                            
 
-                        <!--Nuevo Código-->
-                        <!-- Destacados Carrusel Area -->
-                        <section class="home-team-area  ">
-                            <div class="container"> 
-
-                                <div class="home-team-slider owl-carousel owl-theme">
-
-                                    <div class="single-team">
-                                        <div class="team-img">
-                                            <img src="assets/images/avatars/echo-1.jpg" alt="descatado" />
-                                            <ul class="social">
-                                                <li>
-                                                    <a href="#" target="_blank"><i class='bx bx-search'></i></a>
-                                                </li> 
-                                            </ul>
-                                        </div>
-
-                                        <div class="content text-center">
-                                            <h3>Destacado 1</h3>
-                                            <p>Texto de destacado 1</p>
-                                        </div>
-                                    </div>
-
-                                    <div class="single-team">
-                                        <div class="team-img">
-                                            <img src="assets/images/avatars/echo-2.jpg" alt="descatado" />
-                                            <ul class="social">
-                                                <li>
-                                                    <a href="#" target="_blank"><i class='bx bx-search'></i></a>
-                                                </li> 
-                                            </ul>
-                                        </div>
-
-                                        <div class="content text-center">
-                                            <h3>Destacado 2</h3>
-                                            <p>Texto de destacado 2</p>
-                                        </div>
-                                    </div>
-
-                                    <div class="single-team">
-                                        <div class="team-img">
-                                            <img src="assets/images/avatars/echo-3.jpg" alt="descatado" />
-                                            <ul class="social">
-                                                <li>
-                                                    <a href="#" target="_blank"><i class='bx bx-search'></i></a>
-                                                </li> 
-                                            </ul>
-                                        </div>
-
-                                        <div class="content text-center">
-                                            <h3>Destacado 3</h3>
-                                            <p>Texto de destacado 3</p>
-                                        </div>
-                                    </div>
-
-                                    <div class="single-team">
-                                        <div class="team-img">
-                                            <img src="assets/images/avatars/echo-4.jpg" alt="descatado" />
-                                            <ul class="social">
-                                                <li>
-                                                    <a href="#" target="_blank"><i class='bx bx-search'></i></a>
-                                                </li> 
-                                            </ul>
-                                        </div>
-
-                                        <div class="content text-center">
-                                            <h3>Destacado 4</h3>
-                                            <p>Texto de destacado 4</p>
-                                        </div>
-                                    </div>
-                                     
-                                    <div class="single-team">
-                                        <div class="team-img">
-                                            <img src="assets/images/avatars/echo-2.jpg" alt="descatado" />
-                                            <ul class="social">
-                                                <li>
-                                                    <a href="#" target="_blank"><i class='bx bx-search'></i></a>
-                                                </li> 
-                                            </ul>
-                                        </div>
-
-                                        <div class="content text-center">
-                                            <h3>Destacado 5</h3>
-                                            <p>Texto de destacado 5</p>
-                                        </div>
-                                    </div>
-                                     
-                                </div>
-                            </div>
-                        </section>
-                        <!-- End Destacados Carrusel Area -->                                                        
-
-
-                    </div>
-                                                
-                    <!--</div>-->
+                    <a href="buscar_artista.php" class="box-btn">Ver más destacados</a>
                 </div>
             </div>
-        </section>
-        <!-- End Destacados - Características  -->        
-        
-        
-        
-        <!--  Case Eventos Artistas Proyectos  Espacios  -->
-        <section class="home-case ptb-35">
-            <div class="container">
-                <div class="section-title">
-                    <!--<span>Descubre</span>-->
-                    <!--<h2>Conoce todo lo que EchoMusic tiene para ti</h2>-->
-                    <h2>Cartelera</h2>
-                    <!--<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse.</p>-->
-                </div>
 
-                <div class="case">
-                    <ul class="all-case">
-                        <!--<li class="active" data-filter="*"><span>Todo</span></li>-->
-                        <li class="active" data-filter="*"><span>Presencial</span></li>
-                        <li data-filter=".dev"><span>Online</span></li> 
-                    </ul>
-                </div>
 
-                <div class="row case-list">   
-                    
-                        <?php
-                            $respuesta=Consultas::ultimosEventos2();
-                            //Busca CIudad y Región
-                            $respuestaCiudadRegion = Consultas::buscaCiudadRegion($respuesta[0]["id_city"], $respuesta[0]["id_region"]);                            
+            <div class="col-lg-8 col-sm-12 item dev design">
 
-                            #Notar que es lo mismo que hacer
-                            # date("Y-m-d H:i:s")                                
-                            for ($j=0; $j < count($respuesta); $j++) { 
-                                
-                                $fechaEntera = strtotime($respuesta[$j]["date_event"]);
-                                $anio = date("Y", $fechaEntera);
-                                $mes = date("m", $fechaEntera);
-                                $dia = date("d", $fechaEntera);
+                <!--Nuevo Código-->
+                <!-- Destacados Carrusel Area -->
+                <section class="home-team-area  ">
+                    <div class="container">
 
-                                $hora = date("H", $fechaEntera);
-                                $minutos = date("i", $fechaEntera); 
-                            
-                                if (preg_match("/|\b/", $respuesta[$j]["IMG"])) {
-                                        $fotos=explode("|",$respuesta[$j]["IMG"]);
-                                        //var_dump($fotos);
-                                        $total=count($fotos) - 1;
-                                        $indice=mt_rand(0,intval($total));
-                                        $img=substr($fotos[0],16);
-                                        //echo $img."<br>";
-                                        //echo "verdadero";
-                                    }else{
-                                        $img=substr($respuesta[$j]["IMG"], 16);
-                                        //echo "falso";
-                                    }
-                                echo     '                    
+                        <div class="home-team-slider owl-carousel owl-theme">
+
+                            <div class="single-team">
+                                <div class="team-img">
+                                    <img src="assets/images/avatars/echo-1.jpg" alt="descatado" />
+                                    <ul class="social">
+                                        <li>
+                                            <a href="#" target="_blank"><i class='bx bx-search'></i></a>
+                                        </li>
+                                    </ul>
+                                </div>
+
+                                <div class="content text-center">
+                                    <h3>Destacado 1</h3>
+                                    <p>Texto de destacado 1</p>
+                                </div>
+                            </div>
+
+                            <div class="single-team">
+                                <div class="team-img">
+                                    <img src="assets/images/avatars/echo-2.jpg" alt="descatado" />
+                                    <ul class="social">
+                                        <li>
+                                            <a href="#" target="_blank"><i class='bx bx-search'></i></a>
+                                        </li>
+                                    </ul>
+                                </div>
+
+                                <div class="content text-center">
+                                    <h3>Destacado 2</h3>
+                                    <p>Texto de destacado 2</p>
+                                </div>
+                            </div>
+
+                            <div class="single-team">
+                                <div class="team-img">
+                                    <img src="assets/images/avatars/echo-3.jpg" alt="descatado" />
+                                    <ul class="social">
+                                        <li>
+                                            <a href="#" target="_blank"><i class='bx bx-search'></i></a>
+                                        </li>
+                                    </ul>
+                                </div>
+
+                                <div class="content text-center">
+                                    <h3>Destacado 3</h3>
+                                    <p>Texto de destacado 3</p>
+                                </div>
+                            </div>
+
+                            <div class="single-team">
+                                <div class="team-img">
+                                    <img src="assets/images/avatars/echo-4.jpg" alt="descatado" />
+                                    <ul class="social">
+                                        <li>
+                                            <a href="#" target="_blank"><i class='bx bx-search'></i></a>
+                                        </li>
+                                    </ul>
+                                </div>
+
+                                <div class="content text-center">
+                                    <h3>Destacado 4</h3>
+                                    <p>Texto de destacado 4</p>
+                                </div>
+                            </div>
+
+                            <div class="single-team">
+                                <div class="team-img">
+                                    <img src="assets/images/avatars/echo-2.jpg" alt="descatado" />
+                                    <ul class="social">
+                                        <li>
+                                            <a href="#" target="_blank"><i class='bx bx-search'></i></a>
+                                        </li>
+                                    </ul>
+                                </div>
+
+                                <div class="content text-center">
+                                    <h3>Destacado 5</h3>
+                                    <p>Texto de destacado 5</p>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </section>
+                <!-- End Destacados Carrusel Area -->
+
+
+            </div>
+
+            <!--</div>-->
+        </div>
+    </div>
+</section>
+<!-- End Destacados - Características  -->
+
+
+
+<!--  Case Eventos Artistas Proyectos  Espacios  -->
+<section class="home-case ptb-35">
+    <div class="container">
+        <div class="section-title">
+            <!--<span>Descubre</span>-->
+            <!--<h2>Conoce todo lo que EchoMusic tiene para ti</h2>-->
+            <h2>Cartelera</h2>
+            <!--<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse.</p>-->
+        </div>
+
+        <div class="case">
+            <ul class="all-case">
+                <!--<li class="active" data-filter="*"><span>Todo</span></li>-->
+                <li class="active" data-filter="*"><span>Presencial</span></li>
+                <li data-filter=".dev"><span>Online</span></li>
+            </ul>
+        </div>
+
+        <div class="row case-list">
+
+            <?php
+            $respuesta = Consultas::ultimosEventos2();
+            //Busca CIudad y Región
+            $respuestaCiudadRegion = Consultas::buscaCiudadRegion($respuesta[0]["id_city"], $respuesta[0]["id_region"]);
+
+            #Notar que es lo mismo que hacer
+            # date("Y-m-d H:i:s")                                
+            for ($j = 0; $j < count($respuesta); $j++) {
+
+                $fechaEntera = strtotime($respuesta[$j]["date_event"]);
+                $anio = date("Y", $fechaEntera);
+                $mes = date("m", $fechaEntera);
+                $dia = date("d", $fechaEntera);
+
+                $hora = date("H", $fechaEntera);
+                $minutos = date("i", $fechaEntera);
+
+                if (preg_match("/|\b/", $respuesta[$j]["IMG"])) {
+                    $fotos = explode("|", $respuesta[$j]["IMG"]);
+                    //var_dump($fotos);
+                    $total = count($fotos) - 1;
+                    $indice = mt_rand(0, intval($total));
+                    $img = substr($fotos[0], 16);
+                    //echo $img."<br>";
+                    //echo "verdadero";
+                } else {
+                    $img = substr($respuesta[$j]["IMG"], 16);
+                    //echo "falso";
+                }
+                echo     '                    
                     <div class="col-lg-4 col-sm-6 item cyber">
                         <div class="single-case">
                             <div class="case-img ">
-                                <a href="eventos.php?e='.$respuesta[$j]["id_event"].'">
-                                    <img class="imgEvent tamano-1" src="https://echomusic.cl/images/events/'.$respuesta[$j]["img"].'.jpg" height="100%"  alt="case"/> 
+                                <a href="eventos.php?e=' . $respuesta[$j]["id_event"] . '">
+                                    <img class="imgEvent tamano-1" src="https://echomusic.cl/images/events/' . $respuesta[$j]["img"] . '.jpg" height="100%"  alt="case"/> 
                                 </a>
                             </div>
 
@@ -462,39 +457,39 @@ include "header.php";
                                 <!--Titulo-->
                                 <div class="row text-center">
                                     <div class="col-12"> 
-                                        <a href="eventos.php?e='.$respuesta[$j]["id_event"].'"> <h3>'.$respuesta[$j]["name_event"].'</h3></a>
+                                        <a href="eventos.php?e=' . $respuesta[$j]["id_event"] . '"> <h3>' . $respuesta[$j]["name_event"] . '</h3></a>
                                     </div> 
                                 </div>
                                 
                                 <!--Entrada Fecha hora Costo Compra-->
                                 <div class="row text-center ">
                                     <div class="col-lg-6 col-sm-6">
-                                        <p>'.$dia.'-'.$mes.'-'.$anio.' | '.$hora.':'.$minutos.' hrs.</p>
+                                        <p>' . $dia . '-' . $mes . '-' . $anio . ' | ' . $hora . ':' . $minutos . ' hrs.</p>
 
                                         <a href="#" class="line-bnt">
-                                            Ciudad '.$respuestaCiudadRegion[$j]["name_region"].', '.$respuesta[$j]["name_location"].'
+                                            Ciudad ' . $respuestaCiudadRegion[$j]["name_region"] . ', ' . $respuesta[$j]["name_location"] . '
                                         </a>
                                     </div>
                                     
                                      <div class="col-lg-6 col-sm-6">';
-                                        if($respuesta[$j]["ticket_value"]==0 ){
-                                            echo  '<h3>Gratuito</h3>
+                if ($respuesta[$j]["ticket_value"] == 0) {
+                    echo  '<h3>Gratuito</h3>
                                                     <a href="eventos.php?e=' . $respuesta[$j]["id_event"] . '" class="box-btn">Reservar</a>';
-                                        }else{
-                                            echo  '<h4>$ ' . number_format( ($respuesta[$j]["ticket_value"]+$respuesta[$j]["ticket_commission"]), 0, ',', '.') . '</h4>
+                } else {
+                    echo  '<h4>$ ' . number_format(($respuesta[$j]["ticket_value"] + $respuesta[$j]["ticket_commission"]), 0, ',', '.') . '</h4>
                                                     <a href="eventos.php?e=' . $respuesta[$j]["id_event"] . '" class="box-btn">Comprar</a>';
-                                        }   
+                }
 
-                                        echo '
+                echo '
                                     </div> 
                                 </div>                                                                                               
                             </div>
                             
                         </div>
-                    </div>'  ;
-                            }
-                        ?>                    
-<!--                    
+                    </div>';
+            }
+            ?>
+            <!--                    
                     <div class="col-lg-4 col-sm-6 item cyber">
                         <div class="single-case">
                             <div class="case-img">
@@ -532,86 +527,86 @@ include "header.php";
                     </div>
 
                     -->
-                </div>
+        </div>
 
-                <div class="case-btn text-center">
-                    <!--<p>  <a href="#">Ver más eventos</a></p>-->
-                    <p>    <a href="cartelera.php" class="box-btn">Ver más eventos</a></p>
+        <div class="case-btn text-center">
+            <!--<p>  <a href="#">Ver más eventos</a></p>-->
+            <p> <a href="cartelera.php" class="box-btn">Ver más eventos</a></p>
+        </div>
+    </div>
+</section>
+<!-- End Case  Eventos Artistas Proyectos  Espacios  -->
+
+
+<!-- CTA Artista Productira-->
+<section class="home-cta-1-azul pt-100 pb-70">
+    <div class="container">
+
+
+        <div class="row">
+            <div class="col-lg-2 col-sm-2"></div>
+
+            <div class="col-lg-5 col-sm-5">
+                <div class="section-title">
+                    <h2>¿Eres artista, productora o espacio de difusión?</h2>
                 </div>
             </div>
-        </section>
-        <!-- End Case  Eventos Artistas Proyectos  Espacios  --> 
 
-        
-        <!-- CTA Artista Productira-->
-        <section class="home-cta-1-azul pt-100 pb-70">
-            <div class="container">
-                
-
-                 <div class="row">
-                    <div class="col-lg-2 col-sm-2"></div>
-                    
-                    <div class="col-lg-5 col-sm-5">
-                        <div class="section-title">                          
-                            <h2>¿Eres artista, productora o espacio de difusión?</h2> 
-                        </div>
+            <div class="col-lg-3 col-sm-3" style="vertical-align: middle; ">
+                <div class="text-center">
+                    <div class="nav-btn">
+                        <br>
+                        <a href="cartelera.php" class="box-btn text-center">CREA TU EVENTO</a>
                     </div>
-                    
-                    <div class="col-lg-3 col-sm-3" style="vertical-align: middle; ">
-                        <div class="text-center">
-                            <div class="nav-btn">
-                                <br> 
-                                <a href="cartelera.php" class="box-btn text-center">CREA TU EVENTO</a> 
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-2 col-sm-2"></div>
-                 </div>
+                </div>
             </div>
-        </section>
-        <!-- End CTA -->
-         
+            <div class="col-lg-2 col-sm-2"></div>
+        </div>
+    </div>
+</section>
+<!-- End CTA -->
 
-        <!-- Artistas - Características  -->
+
+<!-- Artistas - Características  -->
 <?php
-        $respuestaArtistas = Consultas::ultimosArtistas();        
-?>                            
-        
-        <section class="feature-area bg-color ptb-70">
-            <div class="container">
-                <div class="row align-items-center ">
-                    <div class=" col-lg-3">
-                        <div class="contnet">
-                            <div class="feature-tittle">
-                                <span style="font-size: 20px">Conoce</span>
-                                <h2>Artistas EchoMusic</h2>
-                                <p>Descubre nuevos artistas y contrata sus servicios musicales de manera fácil, digital y segura.</p>
-                            </div>
+$respuestaArtistas = Consultas::ultimosArtistas();
+?>
 
-                            <a href="buscar_artista.php" class="box-btn">Ver todos los Artista</a>
-                        </div>
+<section class="feature-area bg-color ptb-70">
+    <div class="container">
+        <div class="row align-items-center ">
+            <div class=" col-lg-3">
+                <div class="contnet">
+                    <div class="feature-tittle">
+                        <span style="font-size: 20px">Conoce</span>
+                        <h2>Artistas EchoMusic</h2>
+                        <p>Descubre nuevos artistas y contrata sus servicios musicales de manera fácil, digital y segura.</p>
                     </div>
 
+                    <a href="buscar_artista.php" class="box-btn">Ver todos los Artista</a>
+                </div>
+            </div>
 
-                    <div class="col-lg-9 col-sm-12 item dev design">   
-                        <!-- Artistas Carrusel Area -->
-                        <section class="home-team-area  ">
-                            <div class="container"> 
-                                <div class="home-team-slider owl-carousel owl-theme">
 
-                        <?php   
-                            for ($i=0; $i < count($respuesta); $i++) { 
-//                                BUscar nombre Ciudad Region
-                                $respuestaArtistasCiudadRegion = Consultas::buscaCiudadRegion($respuestaArtistas[$i]["id_city"], $respuestaArtistas[$i]["id_region"] ) ; 
-                            echo '          
+            <div class="col-lg-9 col-sm-12 item dev design">
+                <!-- Artistas Carrusel Area -->
+                <section class="home-team-area  ">
+                    <div class="container">
+                        <div class="home-team-slider owl-carousel owl-theme">
+
+                            <?php
+                            for ($i = 0; $i < count($respuesta); $i++) {
+                                //                                BUscar nombre Ciudad Region
+                                $respuestaArtistasCiudadRegion = Consultas::buscaCiudadRegion($respuestaArtistas[$i]["id_city"], $respuestaArtistas[$i]["id_region"]);
+                                echo '          
                                     <div class="single-team">
                                         <div class="team-img">
-                                            <a href="artistas.php?a='.$respuestaArtistas[$i]["id_user"].'"  >
-                                                <img src="https://echomusic.cl/images/avatars/'.$respuestaArtistas[$i]["id_user"].'.jpg" alt="descatado" />
+                                            <a href="artistas.php?a=' . $respuestaArtistas[$i]["id_user"] . '"  >
+                                                <img src="https://echomusic.cl/images/avatars/' . $respuestaArtistas[$i]["id_user"] . '.jpg" alt="descatado" />
                                             </a>
                                             <ul class="social">
                                                 <li> 
-                                                    <a href="artistas.php?a='.$respuestaArtistas[$i]["id_user"].'" target="_blank"><i class="bx bx-search"></i></a>
+                                                    <a href="artistas.php?a=' . $respuestaArtistas[$i]["id_user"] . '" target="_blank"><i class="bx bx-search"></i></a>
                                                 </li> 
                                             </ul>
                                         </div> 
@@ -620,351 +615,361 @@ include "header.php";
                                             <!--Titulo-->
                                             <div class="row text-center">
                                                 <div class="col-12">
-                                                    <a href="artistas.php?a='.$respuestaArtistas[$i]["id_user"].'"> <h3>'.$respuestaArtistas[$i]["nick_user"].'</h3></a>
+                                                    <a href="artistas.php?a=' . $respuestaArtistas[$i]["id_user"] . '"> <h3>' . $respuestaArtistas[$i]["nick_user"] . '</h3></a>
                                                 </div> 
                                             </div>
                                             <!--Entrada Fecha hora Costo Compra-->
                                             <div class="row ">
                                                 <div class="col-lg-6 col-sm-6">
-                                                    <p>'.$respuestaArtistas[$i]["name_genre"].' <br>'.$respuestaArtistasCiudadRegion[0]["name_city"].' / '.$respuestaArtistasCiudadRegion[0]["name_region"].'</p>
+                                                    <p>' . $respuestaArtistas[$i]["name_genre"] . ' <br>' . $respuestaArtistasCiudadRegion[0]["name_city"] . ' / ' . $respuestaArtistasCiudadRegion[0]["name_region"] . '</p>
                                                 </div>
                                                 <div class="col-lg-6 col-sm-6 text-center ">
-                                                    <a href="artistas.php?a='.$respuestaArtistas[$i]["id_user"].'" class="box-btn">Ver perfil</a>
+                                                    <a href="artistas.php?a=' . $respuestaArtistas[$i]["id_user"] . '" class="box-btn">Ver perfil</a>
                                                 </div> 
                                             </div>                                                                                               
                                         </div>                                        
                                     </div> ';
                             } //fin del for
-                        
-                        ?>
- 
-                                     
-                                </div>
-                            </div>
-                        </section>
-                        <!-- End Artistas Carrusel Area -->                         
-                        
-                                                  
-                    </div>  
+
+                            ?>
 
 
-                </div>
+                        </div>
+                    </div>
+                </section>
+                <!-- End Artistas Carrusel Area -->
+
+
             </div>
-        </section>
-        <!-- End Artistas - Características  -->
-        
-        
-        <!-- CTA 2 unete -->
-        <section class="home-cta-2-morado pt-100 pb-35">
-            <div class="container">
-                
-
-                 <div class="row">
-                    <div class="col-lg-2 col-sm-2"></div>
-                    
-                    <div class="col-lg-5 col-sm-5">
-                        <div class="section-title">                          
-                            <h2 style="color: white;">¿Eres artista?<br> Rentabiliza tu talento</h2> 
-                        </div>
-                    </div>
-                    
-                    <div class="col-lg-3 col-sm-3" style="vertical-align: middle; ">
-                        <div class="text-center">
-                            <div class="nav-btn">
-                                <br>
-                                <a href="buscar_artista.php" class="box-btn text-center">Crea tu perfíl</a> 
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-2 col-sm-2"></div>
-                 </div>
-            </div>
-        </section>
-        <!-- End CTA 2 unete-->        
-       
-        <!-- Crowdfunding - Características  -->
-        <section class="feature-area bg-color ptb-70">
-            <div class="container">
-                <div class="row align-items-center ">
-                    <div class=" col-lg-3">
-                        <div class="contnet">
-                            <div class="feature-tittle">
-                                <span style="font-size: 20px">Crowdfunding</span>
-                                <h2>Conoce los proyectos</h2>
-                                <p>Apoya artistas, ayudándoles a financiar sus proyectos musicales y llévate una recompensa.</p>
-                            </div>
- 
-                            <a href="buscar_crowdfunding.php" class="box-btn">Ver más proyectos</a>
-                        </div>
-                    </div>
 
 
-                    <div class="col-lg-9 col-sm-12 item dev design">                            
-                        <!-- Crowdfunding Carrusel Area -->
-                        <section class="home-team-area  ">
-                            <div class="container"> 
-
-                                <div class="home-team-slider owl-carousel owl-theme">
+        </div>
+    </div>
+</section>
+<!-- End Artistas - Características  -->
 
 
-                                    <div class="single-team">
-                                        <div class="team-img">
-                                            <img src="assets/images/avatars/echo-1.jpg" alt="descatado" />
-                                            <ul class="social">
-                                                <li>
-                                                    <a href="#" target="_blank"><i class='bx bx-search'></i></a>
-                                                </li> 
-                                            </ul>
-                                        </div> 
-                                                                                
-                                        <div class="content">
-                                            <!--Titulo-->
-                                            <div class="row text-center">
-                                                <div class="col-12">
-                                                    <a href="#"> <h3>Frank White Canvas</h3></a>
-                                                </div> 
-                                            </div>
-                                            <!--Entrada Fecha hora Costo Compra-->
-                                            <div class="row ">
-                                                <div class="col-lg-6 col-sm-6">
-                                                    <p class="descripcion">Rock Región Metropolitana</p>
-                                                </div>
-                                                <div class="col-lg-6 col-sm-6 text-center " style="vertical-align: middle;">
-                                                    <br>
-                                                    <a href class="box-btn">Ver perfil</a>
-                                                </div> 
-                                            </div>                                                                                               
-                                        </div>                                        
-                                    </div>
+<!-- CTA 2 unete -->
+<section class="home-cta-2-morado pt-100 pb-35">
+    <div class="container">
 
-                                    <div class="single-team">
-                                        <div class="team-img">
-                                            <img src="assets/images/avatars/echo-2.jpg" alt="descatado" />
-                                            <ul class="social">
-                                                <li>
-                                                    <a href="#" target="_blank"><i class='bx bx-search'></i></a>
-                                                </li> 
-                                            </ul>
-                                        </div>
 
-                                        <div class="content">
-                                            <!--Titulo-->
-                                            <div class="row text-center">
-                                                <div class="col-12">
-                                                    <a href="#"> <h3>Frank White Canvas</h3></a>
-                                                </div> 
-                                            </div>
-                                            <!--Entrada Fecha hora Costo Compra-->
-                                            <div class="row ">
-                                                <div class="col-lg-6 col-sm-6">
-                                                    <p class="descripcion">Rock Región Metropolitana</p>
-                                                </div>
-                                                <div class="col-lg-6 col-sm-6 text-center " style="vertical-align: middle;">
-                                                    <br>
-                                                    <a href class="box-btn">Ver perfil</a>
-                                                </div> 
-                                            </div>                                                                                             
-                                        </div>
-                                    </div>
+        <div class="row">
+            <div class="col-lg-2 col-sm-2"></div>
 
-                                    <div class="single-team">
-                                        <div class="team-img">
-                                            <img src="assets/images/avatars/echo-3.jpg" alt="descatado" />
-                                            <ul class="social">
-                                                <li>
-                                                    <a href="#" target="_blank"><i class='bx bx-search'></i></a>
-                                                </li> 
-                                            </ul>
-                                        </div>
-
-                                        <div class="content">
-                                            <!--Titulo-->
-                                            <div class="row text-center">
-                                                <div class="col-12">
-                                                    <a href="#"> <h3>Frank White Canvas</h3></a>
-                                                </div> 
-                                            </div>
-                                            <!--Entrada Fecha hora Costo Compra-->
-                                            <div class="row ">
-                                                <div class="col-lg-6 col-sm-6">
-                                                    <p class="descripcion">Rock Región Metropolitana</p>
-                                                </div>
-                                                <div class="col-lg-6 col-sm-6 text-center " style="vertical-align: middle;">
-                                                    <br>
-                                                    <a href class="box-btn">Ver perfil</a>
-                                                </div> 
-                                            </div>                                                                                              
-                                        </div>
-                                    </div>
-
-                                    <div class="single-team">
-                                        <div class="team-img">
-                                            <img src="assets/images/avatars/echo-4.jpg" alt="descatado" />
-                                            <ul class="social">
-                                                <li>
-                                                    <a href="#" target="_blank"><i class='bx bx-search'></i></a>
-                                                </li> 
-                                            </ul>
-                                        </div>
-
-                                        <div class="content">
-                                            <!--Titulo-->
-                                            <div class="row text-center">
-                                                <div class="col-12">
-                                                    <a href="#"> <h3>Frank White Canvas</h3></a>
-                                                </div> 
-                                            </div>
-                                            <!--Entrada Fecha hora Costo Compra-->
-                                            <div class="row ">
-                                                <div class="col-lg-6 col-sm-6">
-                                                    <p class="descripcion">Rock Región Metropolitana</p>
-                                                </div>
-                                                <div class="col-lg-6 col-sm-6 text-center " style="vertical-align: middle;">
-                                                    <br>
-                                                    <a href class="box-btn">Ver perfil</a>
-                                                </div> 
-                                            </div>                                                                                               
-                                        </div>
-                                    </div>
-                                     
-                                    <div class="single-team">
-                                        <div class="team-img">
-                                            <img src="assets/images/avatars/echo-2.jpg" alt="descatado" />
-                                            <ul class="social">
-                                                <li>
-                                                    <a href="#" target="_blank"><i class='bx bx-search'></i></a>
-                                                </li> 
-                                            </ul>
-                                        </div>
-
-                                        <div class="content">
-                                            <!--Titulo-->
-                                            <div class="row text-center">
-                                                <div class="col-12">
-                                                    <a href="#"> <h3>Frank White Canvas</h3></a>
-                                                </div> 
-                                            </div>
-                                            <!--Entrada Fecha hora Costo Compra-->
-                                            <div class="row ">
-                                                <div class="col-lg-6 col-sm-6">
-                                                    <p class="descripcion">Rock Región Metropolitana</p>
-                                                </div>
-                                                <div class="col-lg-6 col-sm-6 text-center " style="vertical-align: middle;">
-                                                    <br>
-                                                    <a href class="box-btn">Ver perfil</a>
-                                                </div> 
-                                            </div>                                                                                             
-                                        </div>
-                                    </div>
-                                     
-                                </div>
-                            </div>
-                        </section>
-                        <!-- End Artistas Carrusel Area -->                            
-                    </div>  
-
-                </div>
-            </div>
-        </section>
-        <!-- End Crowdfunding - Características  -->        
-        
-            
-        <!-- CTA -->
-        <!--<section class="home-process-area pt-100 pb-70">-->
-        <section class="home-cta-3-naranja pt-100 pb-35">
-            <div class="container">
-                
-
-                 <div class="row">
-                    <div class="col-lg-2 col-sm-2"></div>
-                    
-                    <div class="col-lg-5 col-sm-5">
-                        <div class="section-title">                          
-                            <h2>Financia tu próximo proyecto musical</h2> 
-                        </div>
-                    </div>
-                    
-                    <div class="col-lg-3 col-sm-3" style="vertical-align: middle; ">
-                        <div class="text-center">
-                            <div class="nav-btn">
-                                <br> 
-                                <a href="buscar_crowdfunding.php" class="box-btn text-center">Crea tu proyecto</a> 
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-2 col-sm-2"></div>
-                 </div>
-            </div>
-        </section>
-        <!-- End CTA --> 
-        
-        <!-- Blog Area -->
-        <section class="home-blog-area ptb-70">
-            <div class="container">
+            <div class="col-lg-5 col-sm-5">
                 <div class="section-title">
-                    <span>Aprende</span>
-                    <h2>Echotips</h2>                    
+                    <h2 style="color: white;">¿Eres artista?<br> Rentabiliza tu talento</h2>
+                </div>
+            </div>
+
+            <div class="col-lg-3 col-sm-3" style="vertical-align: middle; ">
+                <div class="text-center">
+                    <div class="nav-btn">
+                        <br>
+                        <a href="buscar_artista.php" class="box-btn text-center">Crea tu perfíl</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-2 col-sm-2"></div>
+        </div>
+    </div>
+</section>
+<!-- End CTA 2 unete-->
+
+<!-- Crowdfunding - Características  -->
+<section class="feature-area bg-color ptb-70">
+    <div class="container">
+        <div class="row align-items-center ">
+            <div class=" col-lg-3">
+                <div class="contnet">
+                    <div class="feature-tittle">
+                        <span style="font-size: 20px">Crowdfunding</span>
+                        <h2>Conoce los proyectos</h2>
+                        <p>Apoya artistas, ayudándoles a financiar sus proyectos musicales y llévate una recompensa.</p>
+                    </div>
+
+                    <a href="buscar_crowdfunding.php" class="box-btn">Ver más proyectos</a>
+                </div>
+            </div>
+
+
+            <div class="col-lg-9 col-sm-12 item dev design">
+                <!-- Crowdfunding Carrusel Area -->
+                <section class="home-team-area  ">
+                    <div class="container">
+
+                        <div class="home-team-slider owl-carousel owl-theme">
+
+
+                            <div class="single-team">
+                                <div class="team-img">
+                                    <img src="assets/images/avatars/echo-1.jpg" alt="descatado" />
+                                    <ul class="social">
+                                        <li>
+                                            <a href="#" target="_blank"><i class='bx bx-search'></i></a>
+                                        </li>
+                                    </ul>
+                                </div>
+
+                                <div class="content">
+                                    <!--Titulo-->
+                                    <div class="row text-center">
+                                        <div class="col-12">
+                                            <a href="#">
+                                                <h3>Frank White Canvas</h3>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <!--Entrada Fecha hora Costo Compra-->
+                                    <div class="row ">
+                                        <div class="col-lg-6 col-sm-6">
+                                            <p class="descripcion">Rock Región Metropolitana</p>
+                                        </div>
+                                        <div class="col-lg-6 col-sm-6 text-center " style="vertical-align: middle;">
+                                            <br>
+                                            <a href class="box-btn">Ver perfil</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="single-team">
+                                <div class="team-img">
+                                    <img src="assets/images/avatars/echo-2.jpg" alt="descatado" />
+                                    <ul class="social">
+                                        <li>
+                                            <a href="#" target="_blank"><i class='bx bx-search'></i></a>
+                                        </li>
+                                    </ul>
+                                </div>
+
+                                <div class="content">
+                                    <!--Titulo-->
+                                    <div class="row text-center">
+                                        <div class="col-12">
+                                            <a href="#">
+                                                <h3>Frank White Canvas</h3>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <!--Entrada Fecha hora Costo Compra-->
+                                    <div class="row ">
+                                        <div class="col-lg-6 col-sm-6">
+                                            <p class="descripcion">Rock Región Metropolitana</p>
+                                        </div>
+                                        <div class="col-lg-6 col-sm-6 text-center " style="vertical-align: middle;">
+                                            <br>
+                                            <a href class="box-btn">Ver perfil</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="single-team">
+                                <div class="team-img">
+                                    <img src="assets/images/avatars/echo-3.jpg" alt="descatado" />
+                                    <ul class="social">
+                                        <li>
+                                            <a href="#" target="_blank"><i class='bx bx-search'></i></a>
+                                        </li>
+                                    </ul>
+                                </div>
+
+                                <div class="content">
+                                    <!--Titulo-->
+                                    <div class="row text-center">
+                                        <div class="col-12">
+                                            <a href="#">
+                                                <h3>Frank White Canvas</h3>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <!--Entrada Fecha hora Costo Compra-->
+                                    <div class="row ">
+                                        <div class="col-lg-6 col-sm-6">
+                                            <p class="descripcion">Rock Región Metropolitana</p>
+                                        </div>
+                                        <div class="col-lg-6 col-sm-6 text-center " style="vertical-align: middle;">
+                                            <br>
+                                            <a href class="box-btn">Ver perfil</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="single-team">
+                                <div class="team-img">
+                                    <img src="assets/images/avatars/echo-4.jpg" alt="descatado" />
+                                    <ul class="social">
+                                        <li>
+                                            <a href="#" target="_blank"><i class='bx bx-search'></i></a>
+                                        </li>
+                                    </ul>
+                                </div>
+
+                                <div class="content">
+                                    <!--Titulo-->
+                                    <div class="row text-center">
+                                        <div class="col-12">
+                                            <a href="#">
+                                                <h3>Frank White Canvas</h3>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <!--Entrada Fecha hora Costo Compra-->
+                                    <div class="row ">
+                                        <div class="col-lg-6 col-sm-6">
+                                            <p class="descripcion">Rock Región Metropolitana</p>
+                                        </div>
+                                        <div class="col-lg-6 col-sm-6 text-center " style="vertical-align: middle;">
+                                            <br>
+                                            <a href class="box-btn">Ver perfil</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="single-team">
+                                <div class="team-img">
+                                    <img src="assets/images/avatars/echo-2.jpg" alt="descatado" />
+                                    <ul class="social">
+                                        <li>
+                                            <a href="#" target="_blank"><i class='bx bx-search'></i></a>
+                                        </li>
+                                    </ul>
+                                </div>
+
+                                <div class="content">
+                                    <!--Titulo-->
+                                    <div class="row text-center">
+                                        <div class="col-12">
+                                            <a href="#">
+                                                <h3>Frank White Canvas</h3>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <!--Entrada Fecha hora Costo Compra-->
+                                    <div class="row ">
+                                        <div class="col-lg-6 col-sm-6">
+                                            <p class="descripcion">Rock Región Metropolitana</p>
+                                        </div>
+                                        <div class="col-lg-6 col-sm-6 text-center " style="vertical-align: middle;">
+                                            <br>
+                                            <a href class="box-btn">Ver perfil</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </section>
+                <!-- End Artistas Carrusel Area -->
+            </div>
+
+        </div>
+    </div>
+</section>
+<!-- End Crowdfunding - Características  -->
+
+
+<!-- CTA -->
+<!--<section class="home-process-area pt-100 pb-70">-->
+<section class="home-cta-3-naranja pt-100 pb-35">
+    <div class="container">
+
+
+        <div class="row">
+            <div class="col-lg-2 col-sm-2"></div>
+
+            <div class="col-lg-5 col-sm-5">
+                <div class="section-title">
+                    <h2>Financia tu próximo proyecto musical</h2>
+                </div>
+            </div>
+
+            <div class="col-lg-3 col-sm-3" style="vertical-align: middle; ">
+                <div class="text-center">
+                    <div class="nav-btn">
+                        <br>
+                        <a href="buscar_crowdfunding.php" class="box-btn text-center">Crea tu proyecto</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-2 col-sm-2"></div>
+        </div>
+    </div>
+</section>
+<!-- End CTA -->
+
+<!-- Blog Area -->
+<section class="home-blog-area ptb-70">
+    <div class="container">
+        <div class="section-title">
+            <span>Aprende</span>
+            <h2>Echotips</h2>
+        </div>
+
+        <div class="row">
+
+            <?php
+
+            $img = array(
+                'https://echomusic.cl/blog/wp-content/uploads/2023/06/como-planificar-tu-proximo-lanzamiento-1024x1024.jpg',
+                'https://echomusic.cl/blog/wp-content/uploads/2023/06/LINE-UP-1024x1024.jpg',
+                'https://echomusic.cl/blog/wp-content/uploads/2023/04/Como-crean-un-plan-de-marketing-musical-1024x683.jpg',
+            );
+
+            $xml = new DomDocument();
+            $xml->load('https://echomusic.cl/blog/feed/');
+            $raiz = $xml->documentElement;
+            $entradas = $raiz->getElementsByTagName('item');
+            for ($i = 0; $i < 3; $i++) {
+                $titulo = $entradas->item($i)->getElementsByTagName('title')->item(0)->nodeValue;
+                $vinculo = $entradas->item($i)->getElementsByTagName('link')->item(0)->nodeValue;
+                $desc = $entradas->item($i)->getElementsByTagName('description')->item(0)->nodeValue;
+                $category = $entradas->item($i)->getElementsByTagName('category')->item(0)->nodeValue;
+                $fecha = $entradas->item($i)->getElementsByTagName('pubDate')->item(0)->nodeValue;
+                $fecha_unix = strtotime($fecha);
+                $fecha = strftime("%d/%m/%Y", $fecha_unix);
+            ?>
+                <div class="col-lg-4 col-md-6">
+                    <div class="single-blog">
+                        <div class="blog-img">
+                            <a href="<?php echo $vinculo; ?>" target="_blank">
+                                <img src="<?php echo $img[$i]; ?>" class="imgEvent tamano-1" alt="blog" />
+                            </a>
+                        </div>
+
+                        <div class="content">
+                            <ul>
+                                <li>
+                                    <?php echo $fecha; ?>
+
+                                    <a href="<?php echo $vinculo; ?>" target="_blank"><?php echo $category; ?></a>
+                                </li>
+                            </ul>
+
+                            <a href="<?php echo $vinculo; ?>" taget="_blank">
+                                <h3><?php echo substr($titulo, 0, 55); ?></h3>
+                            </a>
+                            <p><?php echo substr($desc, 0, 110); ?> ...</p>
+                            <div class="text-center">
+                                <a href="<?php echo $vinculo; ?>" target="_blank" class="box-btn text-center">Leer más</a>
+                            </div>
+
+                        </div>
+                    </div>
                 </div>
 
-                <div class="row">
-                    
-<?php
+            <?php
+                //    echo '<li><a href="'.$vinculo.'">'.$titulo.'</a> '.$fecha.'</li>';   
+            }
+            ?>
 
-$img = array(
-        'https://echomusic.cl/blog/wp-content/uploads/2023/06/como-planificar-tu-proximo-lanzamiento-1024x1024.jpg',
-        'https://echomusic.cl/blog/wp-content/uploads/2023/06/LINE-UP-1024x1024.jpg',
-        'https://echomusic.cl/blog/wp-content/uploads/2023/04/Como-crean-un-plan-de-marketing-musical-1024x683.jpg',
-        );
 
-$xml = new DomDocument();
-$xml->load('https://echomusic.cl/blog/feed/');
-$raiz = $xml->documentElement;
-$entradas = $raiz->getElementsByTagName('item');                    
-for($i=0;$i<3;$i++){
-    $titulo = $entradas->item($i)->getElementsByTagName('title')->item(0)->nodeValue;
-    $vinculo = $entradas->item($i)->getElementsByTagName('link')->item(0)->nodeValue; 
-    $desc= $entradas->item($i)->getElementsByTagName('description')->item(0)->nodeValue; 
-    $category= $entradas->item($i)->getElementsByTagName('category')->item(0)->nodeValue; 
-    $fecha = $entradas->item($i)->getElementsByTagName('pubDate')->item(0)->nodeValue;
-    $fecha_unix = strtotime($fecha);
-    $fecha = strftime("%d/%m/%Y",$fecha_unix);
-?>                        
-                    <div class="col-lg-4 col-md-6">
-                        <div class="single-blog">
-                            <div class="blog-img">
-                                <a href="<?php echo $vinculo;?>" target="_blank">
-                                    <img src="<?php echo $img[$i];?>" class="imgEvent tamano-1" alt="blog"/> 
-                                </a>
-                            </div>
-
-                            <div class="content">
-                                <ul>
-                                    <li>
-                                        <?php echo $fecha;?>
-                                    
-                                        <a href="<?php echo $vinculo;?>" target="_blank"><?php echo $category;?></a>
-                                    </li>
-                                </ul>
-                                
-                                <a href="<?php echo $vinculo;?>" taget="_blank">
-                                    <h3><?php echo substr($titulo, 0,55);?></h3>
-                                </a>
-                                <p><?php echo substr($desc,0,110);?> ...</p>
-                                <div class="text-center">
-                                    <a href="<?php echo $vinculo;?>" target="_blank" class="box-btn text-center">Leer más</a>
-                                </div>
-                                
-                            </div>
-                        </div>
-                    </div> 
-
-<?php                     
-//    echo '<li><a href="'.$vinculo.'">'.$titulo.'</a> '.$fecha.'</li>';   
-}
-?>                    
-                    
-                    
-<!--                    <div class="col-lg-4 col-md-6">
+            <!--                    <div class="col-lg-4 col-md-6">
                         <div class="single-blog">
                             <div class="blog-img">
                                 <a href="blog-details.html">
@@ -1022,87 +1027,87 @@ for($i=0;$i<3;$i++){
                             </div>
                         </div>
                     </div> -->
-                </div>
-                <div class="blog-btn text-center">
-                    <a class="box-btn text-center" href="https://echomusic.cl/blog/" target="_blank">Ver más artículos</a> 
+        </div>
+        <div class="blog-btn text-center">
+            <a class="box-btn text-center" href="https://echomusic.cl/blog/" target="_blank">Ver más artículos</a>
+        </div>
+    </div>
+</section>
+<!-- End Blog Area -->
+
+
+<!--  Contacto Area -->
+<section class="home-contact-area   ptb-35">
+    <div class="container">
+        <div class="section-title">
+            <span>Escríbenos</span>
+            <h2>Déjanos tu mensaje, queremos ayudarte</h2>
+
+        </div>
+        <div class="row align-items-center">
+            <div class="col-lg-6 col-md-6">
+                <div class="contact-img">
+                    <img src="assets/images/bg/echomusic-isostipo-rock-acustica-1.png" alt="contacto" />
                 </div>
             </div>
-        </section>
-        <!-- End Blog Area -->       
-        
-        
-        <!--  Contacto Area -->
-        <section class="home-contact-area   ptb-35">
-            <div class="container">
-                <div class="section-title">
-                    <span>Escríbenos</span>
-                    <h2>Déjanos tu mensaje, queremos ayudarte</h2>
-                    
-                </div>
-                <div class="row align-items-center">
-                    <div class="col-lg-6 col-md-6">
-                        <div class="contact-img">
-                            <img src="assets/images/bg/echomusic-isostipo-rock-acustica-1.png"  alt="contacto"/> 
-                        </div>
-                    </div>
 
-                    <div class="col-lg-6 col-md-6">
-                        <div class="content">
-                            <form id="contactForm">
-                                <div class="row">
-                                    <div class="col-lg-12 col-sm-12">
-                                        <div class="form-group">
-                                            <input type="text" name="name" id="name" class="form-control" required data-error="Ingresa tu nombre" placeholder="Nombre" />
-                                            <div class="help-block with-errors"></div>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-lg-12 col-sm-12">
-                                        <div class="form-group">
-                                            <input type="email" name="email" id="email" class="form-control" required data-error="Escribe tu email" placeholder="Email" />
-                                            <div class="help-block with-errors"></div>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-lg-12 col-sm-12">
-                                        <div class="form-group">
-                                            <input type="text" name="phone_number" id="phone_number" required data-error="Ingresa tu número celular" class="form-control" placeholder="Número celular" />
-                                            <div class="help-block with-errors"></div>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-lg-12 col-sm-12">
-                                        <div class="form-group">
-                                            <input type="text" name="msg_subject" id="msg_subject" class="form-control" required data-error="Escribe el ausnto" placeholder="Asunto" />
-                                            <div class="help-block with-errors"></div>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-lg-12 col-md-12">
-                                        <div class="form-group">
-                                            <textarea name="message" class="form-control" id="message" cols="30" rows="5" required data-error="Deja tu mensaje" placeholder="Tu mensaje"></textarea>
-                                            <div class="help-block with-errors"></div>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-lg-12 col-md-12">
-                                        <button type="submit" class="default-btn page-btn box-btn">
-                                                        Enviar
-                                            </button>
-                                        <div id="msgSubmit" class="h3 text-center hidden"></div>
-                                        <div class="clearfix"></div>
-                                    </div>
+            <div class="col-lg-6 col-md-6">
+                <div class="content">
+                    <form id="contactForm">
+                        <div class="row">
+                            <div class="col-lg-12 col-sm-12">
+                                <div class="form-group">
+                                    <input type="text" name="name" id="name" class="form-control" required data-error="Ingresa tu nombre" placeholder="Nombre" />
+                                    <div class="help-block with-errors"></div>
                                 </div>
-                            </form>
+                            </div>
+
+                            <div class="col-lg-12 col-sm-12">
+                                <div class="form-group">
+                                    <input type="email" name="email" id="email" class="form-control" required data-error="Escribe tu email" placeholder="Email" />
+                                    <div class="help-block with-errors"></div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-12 col-sm-12">
+                                <div class="form-group">
+                                    <input type="text" name="phone_number" id="phone_number" required data-error="Ingresa tu número celular" class="form-control" placeholder="Número celular" />
+                                    <div class="help-block with-errors"></div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-12 col-sm-12">
+                                <div class="form-group">
+                                    <input type="text" name="msg_subject" id="msg_subject" class="form-control" required data-error="Escribe el ausnto" placeholder="Asunto" />
+                                    <div class="help-block with-errors"></div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-12 col-md-12">
+                                <div class="form-group">
+                                    <textarea name="message" class="form-control" id="message" cols="30" rows="5" required data-error="Deja tu mensaje" placeholder="Tu mensaje"></textarea>
+                                    <div class="help-block with-errors"></div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-12 col-md-12">
+                                <button type="submit" class="default-btn page-btn box-btn">
+                                    Enviar
+                                </button>
+                                <div id="msgSubmit" class="h3 text-center hidden"></div>
+                                <div class="clearfix"></div>
+                            </div>
                         </div>
-                    </div>
+                    </form>
                 </div>
             </div>
-        </section>
-        <!-- End Contact Area -->
+        </div>
+    </div>
+</section>
+<!-- End Contact Area -->
 
-        
-    <!--Footer-->
-    <?php 
-        include 'footer.php';
-    ?>
+
+<!--Footer-->
+<?php
+include 'footer.php';
+?>
