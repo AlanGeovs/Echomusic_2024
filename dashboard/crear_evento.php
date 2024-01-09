@@ -351,7 +351,7 @@ if (!isset($_SESSION["id_user"])) {
                                                         <!-- Contenedor para los campos adicionales -->
                                                         <div id="camposAdicionales" class="form-row" style="display: none;">
                                                             <div class="col-md-2 mb-3">
-                                                                <label for="ticket_name">Nombre de Entrada</label>
+                                                                <label for="ticket_name">Nombre de Entrada </label>
                                                                 <input type="text" class="form-control" id="ticket_name" name="ticket_name" placeholder="Nombre de la entrada">
                                                             </div>
                                                             <div class="col-md-2 mb-3">
@@ -376,7 +376,7 @@ if (!isset($_SESSION["id_user"])) {
                                                         </div>
 
                                                         <button type="button" id="btnAgregarEntradas" class="btn btn-primary">
-                                                            <i class="icon-plus"></i> Agregar más entradas
+                                                            <i class="icon-plus"></i> Agregar más entradas --
                                                         </button>
 
 

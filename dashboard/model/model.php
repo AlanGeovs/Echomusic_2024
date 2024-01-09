@@ -669,6 +669,16 @@ class Consultas  extends Conexion
 		$stmt->execute();
 	}
 
+
+	public static function agregarFotoPortada($id_user, $nombreImagen)
+	{
+		$sql = "INSERT INTO photos_port (id_user, name_photo) VALUES (:id_user, :name_photo)";
+		$stmt = self::conectar()->prepare($sql);
+		$stmt->bindParam(':id_user', $id_user, PDO::PARAM_INT);
+		$stmt->bindParam(':name_photo', $nombreImagen, PDO::PARAM_STR);
+		$stmt->execute();
+	}
+
 	public static function obtenerFotosUsuario($id_user)
 	{
 		$sql = "SELECT name_photo FROM photos WHERE id_user = :id_user";
@@ -789,6 +799,30 @@ class Consultas  extends Conexion
 		$stmt->bindValue(':id_user', $id_user, PDO::PARAM_INT);
 		$stmt->execute();
 		return $stmt->fetch(PDO::FETCH_ASSOC);
+	}
+
+	// Método para borrarla POrtada por id_user
+	public static function borrarPortadaPorIdUser($id_user)
+	{
+		try {
+			$conexion = Conexion::conectar();
+			$sql = "DELETE FROM photos_port WHERE id_user = :id_user";
+			$stmt = $conexion->prepare($sql);
+			$stmt->bindParam(':id_user', $id_user, PDO::PARAM_INT);
+
+			if ($stmt->execute()) {
+				return true; // Retorna true si la eliminación fue exitosa
+			} else {
+				return false; // Retorna false si hubo un error en la eliminación
+			}
+		} catch (PDOException $e) {
+			// Manejar el error
+			error_log("Error en borrarPortadaPorIdUser: " . $e->getMessage());
+			return false; // Retorna false si se captura una excepción
+		} finally {
+			$stmt = null;
+			$conexion = null;
+		}
 	}
 
 	// Método para borrar el presskit por id_user
@@ -992,6 +1026,32 @@ class Consultas  extends Conexion
 		try {
 			$conexion = Conexion::conectar();
 			$stmt = $conexion->prepare("SELECT * FROM multimedia WHERE id_user = :id");
+			$stmt->bindParam(":id", $id, PDO::PARAM_INT);
+			$stmt->execute();
+
+			if ($stmt->rowCount() > 0) {
+				$result = $stmt->fetchAll();
+			} else {
+				$result = null; // O manejar de otra forma si no se encuentran resultados
+			}
+		} catch (PDOException $e) {
+			error_log("Error en la consulta: " . $e->getMessage());
+			$result = null;
+		} finally {
+			$stmt = null; // Cerrar cursor y conexión
+			$conexion = null;
+		}
+
+		return $result;
+	}
+
+
+	//Lista de Foto Portada
+	public static function fotoPortada($id)
+	{
+		try {
+			$conexion = Conexion::conectar();
+			$stmt = $conexion->prepare("SELECT * FROM photos_port WHERE id_user = :id");
 			$stmt->bindParam(":id", $id, PDO::PARAM_INT);
 			$stmt->execute();
 
@@ -1235,6 +1295,27 @@ class Consultas  extends Conexion
 		$stmt->bindValue(':desc_event', $data['desc_event'], PDO::PARAM_STR);
 		$stmt->bindValue(':audience_event', $data['audience_event'], PDO::PARAM_INT);
 
+		try {
+			$result = $stmt->execute();
+			return ['success' => $result];
+		} catch (Exception $e) {
+			return ['success' => false, 'error' => $e->getMessage()];
+		}
+	}
+
+	// Crear tICKETS
+	public static function crearTickets($ticket)
+	{
+		$sql = "INSERT INTO tickets_public (ticket_name, ticket_value, ticket_audience, ticket_dateStart, ticket_dateEnd) 
+				VALUES (:ticket_name, :ticket_value, :ticket_audience, :ticket_dateStart, :ticket_dateEnd)";
+
+		$stmt = self::conectar()->prepare($sql);
+
+		$stmt->bindValue(':ticket_name', $ticket['ticket_name'], PDO::PARAM_INT);
+		$stmt->bindValue(':ticket_value', $ticket['ticket_value'], PDO::PARAM_INT);
+		$stmt->bindValue(':ticket_audience', $ticket['ticket_audience'], PDO::PARAM_INT);
+		$stmt->bindValue(':ticket_dateStart', $ticket['ticket_dateStart'], PDO::PARAM_STR);
+		$stmt->bindValue(':ticket_dateEnd', $ticket['ticket_dateEnd'], PDO::PARAM_STR);
 		try {
 			$result = $stmt->execute();
 			return ['success' => $result];

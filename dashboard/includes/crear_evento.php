@@ -34,6 +34,14 @@ $data = [
     // Asegúrate de manejar también la carga de la foto y el video si es necesario
 ];
 
+$ticket = [
+    'ticket_name' => $_POST['ticket_name'],
+    'ticket_value' => $_POST['ticket_value'],
+    'ticket_audience' => $_POST['ticket_audience'],
+    'ticket_dateStart' => $_POST['ticket_dateStart'],
+    'ticket_dateEnd' => $_POST['ticket_dateEnd']
+];
+
 // Procesar la carga de la foto
 if (isset($_FILES['eventPhoto']) && $_FILES['eventPhoto']['error'] == 0) {
     $foto = $_FILES['eventPhoto'];
@@ -50,8 +58,11 @@ if (isset($_FILES['eventPhoto']) && $_FILES['eventPhoto']['error'] == 0) {
     }
 }
 
-// Lógica actual para guardar en la base de datos
+// Lógica actual para crear Evento
 $resultado = Consultas::crearEventos($data);
+
+//Lógica para guardar Tickets
+$crearTickets = Consultas::crearTickets($ticket);
 
 if ($resultado['success']) {
     $response['success'] = true;

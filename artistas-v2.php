@@ -50,6 +50,13 @@ $resultadosEventosPasa = Consultas::eventosPasadosArtista($respuesta[0]["id_user
                         </a>
 
                         <h2 class="text-center"> <?php echo $respuesta[0]["nick_user"]; ?></h2>
+                        <span>
+                            <i class="bi bi-star-fill"></i>
+                            <i class="bi bi-star-fill"></i>
+                            <i class="bi bi-star-fill"></i>
+                            <i class="bi bi-star-fill"></i>
+                            <i class="bi bi-star-fill"></i>
+                        </span>
                     </div>
 
                     <div class="feature-tittle">
@@ -58,16 +65,6 @@ $resultadosEventosPasa = Consultas::eventosPasadosArtista($respuesta[0]["id_user
 
 
                     </div>
-                </div>
-
-                <!--Playlist-->
-                <?php
-                $playlist = Consultas::playListArtista($respuesta[0]["id_user"]);
-                ?>
-                <div>
-                    <?php
-                    echo $playlist[0]["embed_multi"];
-                    ?>
                 </div>
             </div>
 
@@ -110,19 +107,6 @@ $resultadosEventosPasa = Consultas::eventosPasadosArtista($respuesta[0]["id_user
                 <span class="flaticon-award"></span> Tipo de artista
 
 
-                <div class="row align-items-center choose-c justify-content-md-center pt-35">
-                    <div class="section-title ">
-                        <h3>Videos</h3>
-                    </div>
-                    <div class="home-2-contact col-lg-12">
-                        <div class="content">
-                            <div class="row altoVideo align-items-center choose-c justify-content-md-center">
-                                <iframe src="https://echomusic.net/video/videos.php?a=<?php echo $id; ?>" class="altoVideo" style="border: none;" width="100%"></iframe>
-                            </div>
-                            <!--fin del Row-->
-                        </div>
-                    </div>
-                </div>
             </div>
         </div>
     </div>
@@ -139,160 +123,36 @@ $resultadosEventosPasa = Consultas::eventosPasadosArtista($respuesta[0]["id_user
 <!-- Videos -->
 <section class="pricing-area ptb-35">
     <div class="container">
-        <div class="row align-items-center choose-c justify-content-md-center">
-            <div class="section-title ">
-                <h2>Videos</h2>
+        <div class="row align-items-center choose-c justify-content-md-center ">
+            <!--Video-->
+            <div class="col-lg-5 col-sm-5">
+                <div class="row altoVideo align-items-center choose-c justify-content-md-center">
+                    <iframe src="https://echomusic.net/video/videos.php?a=<?php echo $id; ?>" class="altoVideo" style="border: none;" width="100%"></iframe>
+                </div>
             </div>
-            <div class="home-2-contact col-lg-8">
-                <div class="content">
-                    <div class="row">
-                        <iframe src="https://echomusic.net/video/videos.php?a=<?php echo $id; ?>" class="altoVideo" style="border: none;" width="100%"></iframe>
-                    </div>
-                    <!--fin del Row-->
+
+            <!-- Playlist -->
+            <div class="col-lg-5 col-sm-5">
+                <!--Playlist-->
+                <?php
+                $playlist = Consultas::playListArtista($respuesta[0]["id_user"]);
+                ?>
+                <div>
+                    <?php
+                    echo $playlist[0]["embed_multi"];
+                    ?>
                 </div>
             </div>
         </div>
+
     </div>
 </section>
 <!-- End Videos -->
 
 
 
-<!-- Crowdfunding 2 -->
-<?php
-$respuestaCrowdfunding = Consultas::crowdfunding($respuesta[0]["id_user"]);
-
-//    si No hay Crowdfunding, no muestra nada
-if (empty($respuestaCrowdfunding)) {
-    // echo '<h2>No hay Crowdfunding'.$respuesta[0]["id_user"].'</h2>';
-} else {
-    $totalARecaudar  = $respuestaCrowdfunding[0]["project_amount"];
-    //  Extrae la suma de lo recaudado
-    //        $sumaRecaudado = array_sum ( Consultas::recaudadoCrowdfunding( $respuestaCrowdfunding[0]["id_project"]) );
-    $sumaRecaudado =  Consultas::recaudadoCrowdfunding($respuestaCrowdfunding[0]["id_project"]);
-    $recaudadoPorcentaje = Consultas::obtenerPorcentaje($sumaRecaudado[0], $totalARecaudar);
-?>
-
-    <section class="pricing-area ptb-35">
-        <div class="container">
-            <div class="row align-items-center choose-c justify-content-md-center">
-
-                <div class="section-title ">
-
-                    <h2>Crowdfunding</h2>
-                </div>
-
-                <div class="home-2-contact col-lg-8">
-                    <div class="content">
-                        <div class="row">
-                            <!--img-->
-                            <div class="col-12 col-sm-6  choose-img">
-                                <a href="crowdfunding.php?c=<?php echo $respuestaCrowdfunding[0]["id_project"]; ?>">
-                                    <img src="https://echomusic.cl/images/avatars/<?php echo $respuesta[0]["id_user"]; ?>.jpg" alt="<?php echo $respuesta[0]["nick_user"]; ?>" width="350px" />
-                                </a>
-                            </div>
-                            <!--Descripción-->
-                            <div class="col-12 col-sm-6" style="vertical-align: middle;">
-                                <ul>
-                                    <li>
-                                        <?php echo $respuesta[0]["nick_user"]; ?>
-                                    </li>
-                                </ul>
-
-                                <a href="crowdfunding.php?c=<?php echo $respuestaCrowdfunding[0]["id_project"]; ?>">
-                                    <h3><?php echo $respuestaCrowdfunding[0]["project_title"]; ?> </h3>
-                                </a>
-                                <h6>Avance del <?php echo $recaudadoPorcentaje; ?>% recaudado</h6>
-                                <div class="progress">
-
-                                    <div class="progress-bar progress-bar-striped bg-warning progress-bar-animated" role="progressbar" style="width: <?php echo $recaudadoPorcentaje; ?>%" aria-valuenow="" aria-valuemin="<?php echo $sumaRecaudado[0]; ?>" aria-valuemax="<?php echo $totalARecaudar; ?>"></div>
-                                </div>
-                                <p><?php echo $respuestaCrowdfunding[0]["project_desc"]; ?> </p>
-
-                                <a href="crowdfunding.php?c=<?php echo $respuestaCrowdfunding[0]["id_project"]; ?>" class="box-btn">Patrocinar</a>
-                            </div>
-                        </div>
-                        <!--fin del Row-->
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <!-- End Crwdfunding -->
-<?php
-} //fin del else 
-?>
 
 
-<!--  Integrantes Area -->
-<?php
-
-$muestraIntegrantes = Consultas::integrantes($respuesta[0]["id_user"]);
-
-// condición para mostrar o no las tarifas 
-if (empty($muestraIntegrantes[0]["id_user"])) {
-    echo 'No hay tarifas';
-} else {
-    //Inician tarrifas
-?>
-    <section class="home-blog-area   ptb-35">
-        <div class="container">
-            <div class="section-title">
-                <!--<span>What We Offer</span>-->
-                <h2>Integrantes</h2>
-                <!--<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ipsum suspendisse.</p>-->
-            </div>
-
-            <!--Tarifas formato blog-->
-            <div class="row justify-content-md-center">
-                <?php
-                for ($t = 0; $t < count($muestraIntegrantes); $t++) {
-                ?>
-                    <div class="col-lg-4 col-md-6">
-                        <div class="single-blog">
-                            <div class="blog-img">
-                                <a href="blog-details.html">
-                                    <img style="height: 200px; width: 200px; border-radius: 50%;" src="dashboard/images/integrantes/<?php echo $muestraIntegrantes[$t]["img_member"]; ?>" class="responsiveArtista" alt="" />
-                                </a>
-                            </div>
-
-                            <div class="pricing-top-heading">
-                                <h3><?php echo $muestraIntegrantes[$t]["first_name_member"] . " " . $muestraIntegrantes[$t]["last_name_member"]; ?></h3>
-                            </div>
-                            <p><?php
-                                $muestraInstrumento = Consultas::obtenerInstrumento($muestraIntegrantes[$t]["instrument_member"]);
-                                echo $muestraInstrumento[0]["name_instrument"];
-
-                                ?>
-
-                            </p>
-                            <!-- <a class="box-btn" href="#">
-                                Contratar
-                            </a> -->
-
-                        </div>
-                    </div>
-
-                <?php
-
-                } //fin del FOR
-                ?>
-
-
-
-
-            </div>
-
-
-
-
-        </div>
-    </section>
-    <!-- End Tarifas Area -->
-
-<?php
-} // fin del IF -ELSE para mostrar tarigas
-?>
 
 
 <!--  Tarifas Area -->
@@ -653,6 +513,153 @@ if (empty($tarifasArtista[0]["value_plan"])) {
 <?php
 } // fin del IF -ELSE para mostrar tarigas
 ?>
+
+
+
+
+
+<!-- Crowdfunding 2 -->
+<?php
+$respuestaCrowdfunding = Consultas::crowdfunding($respuesta[0]["id_user"]);
+
+//    si No hay Crowdfunding, no muestra nada
+if (empty($respuestaCrowdfunding)) {
+    // echo '<h2>No hay Crowdfunding'.$respuesta[0]["id_user"].'</h2>';
+} else {
+    $totalARecaudar  = $respuestaCrowdfunding[0]["project_amount"];
+    //  Extrae la suma de lo recaudado
+    //        $sumaRecaudado = array_sum ( Consultas::recaudadoCrowdfunding( $respuestaCrowdfunding[0]["id_project"]) );
+    $sumaRecaudado =  Consultas::recaudadoCrowdfunding($respuestaCrowdfunding[0]["id_project"]);
+    $recaudadoPorcentaje = Consultas::obtenerPorcentaje($sumaRecaudado[0], $totalARecaudar);
+?>
+
+    <section class="pricing-area ptb-35">
+        <div class="container">
+            <div class="row align-items-center choose-c justify-content-md-center">
+
+                <div class="section-title ">
+
+                    <h2>Crowdfunding</h2>
+                </div>
+
+                <div class="home-2-contact col-lg-8">
+                    <div class="content">
+                        <div class="row">
+                            <!--img-->
+                            <div class="col-12 col-sm-6  choose-img">
+                                <a href="crowdfunding.php?c=<?php echo $respuestaCrowdfunding[0]["id_project"]; ?>">
+                                    <img src="https://echomusic.cl/images/avatars/<?php echo $respuesta[0]["id_user"]; ?>.jpg" alt="<?php echo $respuesta[0]["nick_user"]; ?>" width="350px" />
+                                </a>
+                            </div>
+                            <!--Descripción-->
+                            <div class="col-12 col-sm-6" style="vertical-align: middle;">
+                                <ul>
+                                    <li>
+                                        <?php echo $respuesta[0]["nick_user"]; ?>
+                                    </li>
+                                </ul>
+
+                                <a href="crowdfunding.php?c=<?php echo $respuestaCrowdfunding[0]["id_project"]; ?>">
+                                    <h3><?php echo $respuestaCrowdfunding[0]["project_title"]; ?> </h3>
+                                </a>
+                                <h6>Avance del <?php echo $recaudadoPorcentaje; ?>% recaudado</h6>
+                                <div class="progress">
+
+                                    <div class="progress-bar progress-bar-striped bg-warning progress-bar-animated" role="progressbar" style="width: <?php echo $recaudadoPorcentaje; ?>%" aria-valuenow="" aria-valuemin="<?php echo $sumaRecaudado[0]; ?>" aria-valuemax="<?php echo $totalARecaudar; ?>"></div>
+                                </div>
+                                <p><?php echo $respuestaCrowdfunding[0]["project_desc"]; ?> </p>
+
+                                <a href="crowdfunding.php?c=<?php echo $respuestaCrowdfunding[0]["id_project"]; ?>" class="box-btn">Patrocinar</a>
+                            </div>
+                        </div>
+                        <!--fin del Row-->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- End Crwdfunding -->
+<?php
+} //fin del else 
+?>
+
+
+
+
+
+
+<!--  Integrantes Area -->
+<?php
+
+$muestraIntegrantes = Consultas::integrantes($respuesta[0]["id_user"]);
+
+// condición para mostrar o no las tarifas 
+if (empty($muestraIntegrantes[0]["id_user"])) {
+    echo 'No hay tarifas';
+} else {
+    //Inician Integrantes
+?>
+    <section class="home-blog-area   ptb-35">
+        <div class="container">
+            <div class="section-title">
+                <!--<span>What We Offer</span>-->
+                <h2>Integrantes</h2>
+                <!--<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ipsum suspendisse.</p>-->
+            </div>
+
+            <!--Integrantes formato blog-->
+            <div class="row justify-content-md-center">
+                <?php
+                for ($t = 0; $t < count($muestraIntegrantes); $t++) {
+                ?>
+                    <div class="col-lg-4 col-md-6">
+                        <div class="single-blog">
+                            <div class="blog-img">
+                                <a href="blog-details.html">
+                                    <img style="height: 200px; width: 200px; border-radius: 50%;" src="dashboard/images/integrantes/<?php echo $muestraIntegrantes[$t]["img_member"]; ?>" class="responsiveArtista" alt="" />
+                                </a>
+                            </div>
+
+                            <div class="pricing-top-heading">
+                                <h3><?php echo $muestraIntegrantes[$t]["first_name_member"] . " " . $muestraIntegrantes[$t]["last_name_member"]; ?></h3>
+                            </div>
+                            <p><?php
+                                $muestraInstrumento = Consultas::obtenerInstrumento($muestraIntegrantes[$t]["instrument_member"]);
+                                echo $muestraInstrumento[0]["name_instrument"];
+
+                                ?>
+
+                            </p>
+                            <!-- <a class="box-btn" href="#">
+                                Contratar
+                            </a> -->
+
+                        </div>
+                    </div>
+
+                <?php
+
+                } //fin del FOR
+                ?>
+
+
+
+
+            </div>
+
+
+
+
+        </div>
+    </section>
+    <!-- End Tarifas Area -->
+
+<?php
+} // fin del IF -ELSE para mostrar tarigas
+?>
+
+
+
 
 
 

@@ -136,6 +136,7 @@ if (!isset($_SESSION["id_user"])) {
             $respuesta = Consultas::detalleUsuario($id, $tabla);
             $biografia = Consultas::biografia($id);
             $videos = Consultas::videos($id);
+            $portada = Consultas::fotoPortada($id);
             $playlist = Consultas::playlista($id);
 
             // $respuesta1 = Consultas::listarAsociados();
@@ -255,6 +256,7 @@ if (!isset($_SESSION["id_user"])) {
                                 <?php echo Consultas::botonEditar('editDatos'); ?>
 
                             </div>
+
                             <div class="card mb-3 shadow no-b r-0">
                                 <div class="card-header bg-white">
                                     <h6>Biografía</h6>
@@ -270,6 +272,32 @@ if (!isset($_SESSION["id_user"])) {
                                             echo Consultas::botonEditar('editBio');
                                         }
                                         ?>
+
+                                </div>
+
+                            </div>
+
+                            <!-- Foto portada -->
+                            <div class="card mb-3 shadow no-b r-0">
+                                <div class="card-header bg-white">
+                                    <h6>Foto de portada</h6>
+                                </div>
+                                <div class="card-body">
+
+                                    <!-- Button trigger modal -->
+
+
+                                    <?php
+                                    if ($portada == null) {
+                                        echo "<div class='text-center '>Agregar foto de portada</div>";
+                                        echo Consultas::botonAgregar('galleryModal');
+                                    } else {
+                                        echo "<div class='text-center '>  <img src=\"" . $portada[0]['name_photo'] . "\"  ></div>";
+                                        // echo Consultas::botonEditar('editarPortada');
+                                        echo '<div class ="text-right"><button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deletePortadaModal"><span class="icon-delete"></span>  Borrar portada</button></div>';
+                                    }
+                                    ?>
+
 
                                 </div>
 
@@ -450,6 +478,7 @@ if (!isset($_SESSION["id_user"])) {
                                             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#galleryModal">
                                                 Insertar Galería
                                             </button>
+
                                         </div>
                                     </div>
                                 </div>
@@ -1159,6 +1188,51 @@ if (!isset($_SESSION["id_user"])) {
         </div>
 
 
+        <!-- Modal Foto Portada -->
+        <div class="modal fade" id="portadaModal" tabindex="-1" aria-labelledby="portadaModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="portadaModalLabel">Subir Imagen</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">X</button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="uploadForm" enctype="multipart/form-data">
+                            <input type="file" name="images[]" id="galleryImages" multiple accept="image/*">
+                            <input type="hidden" name="id_user" value="<?php echo $id; ?>">
+                            <p>Seleccione una imagen (JPG, PNG).</p>
+                            <div id="preview"></div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                        <button type="button" class="btn btn-primary" onclick="uploadImages()">Subir foto</button>
+                    </div>
+                </div>
+            </div>
+        </div> >
+        </div>
+
+        <!-- Modal de Confirmación de Borrar  Foto Portada -->
+        <div class="modal fade" id="deletePortadaModal" tabindex="-1" aria-labelledby="deletePortadaModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="deletePortadaModalLabel">Confirmar Borrado</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                    </div>
+                    <div class="modal-body">
+                        ¿Estás seguro de que deseas borrar tu presskit?
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="button" class="btn btn-danger" id="confirmDeletePortada">Borrar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
         <!-- Modal Presskit-->
         <div class="modal fade" id="presskitModal" tabindex="-1" aria-labelledby="presskitModalLabel" aria-hidden="true">
             <div class="modal-dialog">
@@ -1687,6 +1761,70 @@ if (!isset($_SESSION["id_user"])) {
             }
         </script>
 
+        <!-- Subida de Foto Portada -->
+        <script type="text/javascript">
+            function uploadImages() {
+                var formData = new FormData(document.getElementById('uploadForm'));
+                $.ajax({
+                    url: 'includes/upload_images_portada.php', // Endpoint para la subida de imágenes
+                    type: 'POST',
+                    data: formData,
+                    contentType: false,
+                    processData: false,
+                    beforeSend: function() {
+                        swal("Subiendo...", "Por favor espera mientras las imágenes se cargan.", "info", {
+                            buttons: false,
+                            timer: 3000,
+                        });
+                    },
+                    success: function(response) {
+                        console.log(response); // Manejar la respuesta del servidor
+                        swal("¡Éxito!", "Foto de portada subidas correctamente.", "success");
+                        $('#portadaModal').modal('hide');
+                        // Recargar la página o actualizar la vista para mostrar las nuevas imágenes
+
+                        location.reload();
+                    },
+                    error: function(xhr, status, error) {
+                        console.error("Error en la subida: ", xhr, status, error);
+                        swal("Error", "Ha ocurrido un error al subir las imágenes.", "error");
+                    }
+                });
+            }
+        </script>
+
+
+
+        <!-- Borrado de Foto Portada -->
+        <script type="text/javascript">
+            $(document).ready(function() {
+                $('#confirmDeletePortada').click(function() {
+                    $.ajax({
+                        url: 'includes/borrar_portada.php', //  
+                        type: 'POST',
+                        data: {
+                            id_user: "<?php echo $_SESSION['id_user']; ?>"
+                        },
+                        dataType: 'json',
+                        success: function(response) {
+                            if (response.success) {
+                                // Actualiza el contenido del div presskitSection
+                                $('#presskitSection').html('<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#presskitModal">Subir Presskit</button>');
+                            } else {
+                                alert('Error al borrar la portada');
+                            }
+                            $('#deletePresskitModal').modal('hide');
+                            swal("¡Éxito!", "Portada borrada con éxito", "success");
+
+                            location.reload();
+                        },
+                        error: function() {
+                            alert('Error en la solicitud de borrado');
+                        }
+                    });
+                });
+            });
+        </script>
 
         <!-- Función para cargar y mostrar las imágenes: -->
         <script type="text/javascript">
@@ -2123,7 +2261,7 @@ if (!isset($_SESSION["id_user"])) {
             $(document).ready(function() {
                 $('#confirmDeletePresskit').click(function() {
                     $.ajax({
-                        url: 'includes/borrar_presskit.php', // Asegúrate de reemplazar esto con la ruta correcta
+                        url: 'includes/borrar_presskit.php', //  
                         type: 'POST',
                         data: {
                             id_user: "<?php echo $_SESSION['id_user']; ?>"
@@ -2146,10 +2284,6 @@ if (!isset($_SESSION["id_user"])) {
                 });
             });
         </script>
-
-
-
-
 
 
 

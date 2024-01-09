@@ -206,6 +206,33 @@ class Consultas
                 $stmt->close();
         }
 
+        public static function obtenerNombreCiudadRegion($id_city)
+        {
+                // Prepara la consulta SQL
+                $sql = "
+            SELECT cities.name_city, regions.name_region
+            FROM cities
+            JOIN regions_cities ON cities.id_city = regions_cities.id_city
+            JOIN regions ON regions_cities.id_region = regions.id_region
+            WHERE cities.id_city = :id_city
+        ";
+                $stmt = self::conectar()->prepare($sql);
+
+                // Vincula el valor de $id_city al parámetro :id_city en la consulta SQL
+                $stmt->bindValue(':id_city', $id_city, PDO::PARAM_INT);
+
+                // Ejecuta la consulta y obtén los resultados
+                $stmt->execute();
+                $result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+                // Verifica si se obtuvieron resultados
+                if ($result) {
+                        return $result;  // Retorna los nombres de la ciudad y la región
+                } else {
+                        return null;  // O retorna null si no se encontró ninguna coincidencia
+                }
+        }
+
 
         static public function integrantes($id)
         {

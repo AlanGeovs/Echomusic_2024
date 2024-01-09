@@ -1,56 +1,56 @@
-<?php  
+<?php
 include "model/models.php";
 include "header.php";
- 
+
 //Búsquedas de Eventos
 if (isset($_GET["e"])) {
-    $id=$_GET["e"];
+    $id = $_GET["e"];
     if (!preg_match('/[0-9]/', $id)) {
         exit();
     }
-    $respuesta=Consultas::detallesBusqueda2($id);
+    $respuesta = Consultas::detallesBusqueda2($id);
 }
 
- 
+
 //Fecha
- $fechaEntera = strtotime($respuesta[0]["date_event"]);
+$fechaEntera = strtotime($respuesta[0]["date_event"]);
 $anio = date("Y", $fechaEntera);
 $mes = date("M", $fechaEntera);
 $dia = date("d", $fechaEntera);
 $diaSemana = date("D", $fechaEntera);
 
 $hora = date("H", $fechaEntera);
-$minutos = date("i", $fechaEntera); 
+$minutos = date("i", $fechaEntera);
 
 //var_dump($respuesta);
 
-$idEvento=  $respuesta[0]["id_event"];
-$idUsuario= $respuesta[0]["id_user"];
+$idEvento =  $respuesta[0]["id_event"];
+$idUsuario = $respuesta[0]["id_user"];
 
 //Buscar Género
-$resuestaBuscaGenero =Consultas::buscarGenero($idUsuario); 
-$idGenero= $resuestaBuscaGenero["id_genre"];
+$resuestaBuscaGenero = Consultas::buscarGenero($idUsuario);
+$idGenero = $resuestaBuscaGenero["id_genre"];
 
 //    BUscar nombre Ciudad Region
-$respuestaEventoCiudadRegion = Consultas::buscaCiudadRegion($respuesta[0]["id_city"], $respuesta[0]["id_region"] ) ; 
+$respuestaEventoCiudadRegion = Consultas::buscaCiudadRegion($respuesta[0]["id_city"], $respuesta[0]["id_region"]);
 
 ?>
 
-    
-        <!-- Start Page Title Area -->
-        <div class="page-title-area">
-            <div class="container">
-                <div class="page-title-content">
-                    <h2> <?php echo $respuesta[0]["name_event"]; ?></h2>
-                    <ul>
-                        <li><a href="index.php"> Inicio </a> </li>
-                        <li><a href="eventos.php"> Eventos </a></li>
-                        <li><a href="eventos.php"> <?php echo $resuestaBuscaGenero["name_genre"]; ?></a></li> 
-                        <li class="active"><?php echo $respuesta[0]["name_event"]; ?></li> 
-                    </ul>
-                </div>
-            </div>
-<!--            <div class="page-shape">
+
+<!-- Start Page Title Area -->
+<div class="page-title-area">
+    <div class="container">
+        <div class="page-title-content">
+            <h2> <?php echo $respuesta[0]["name_event"]; ?></h2>
+            <ul>
+                <li><a href="index.php"> Inicio </a> </li>
+                <li><a href="eventos.php"> Eventos </a></li>
+                <li><a href="eventos.php"> <?php echo $resuestaBuscaGenero["name_genre"]; ?></a></li>
+                <li class="active"><?php echo $respuesta[0]["name_event"]; ?></li>
+            </ul>
+        </div>
+    </div>
+    <!--            <div class="page-shape">
                 <div class="shape1">
                     <img src="assets/images/shape/1.png" alt="shape" />
                 </div>
@@ -67,130 +67,131 @@ $respuestaEventoCiudadRegion = Consultas::buscaCiudadRegion($respuesta[0]["id_ci
                     <img src="assets/images/shape/6.png" alt="shape" />
                 </div>
             </div>-->
-        </div>
-        <!-- End Page Title Area --> 
+</div>
+<!-- End Page Title Area -->
 
 
-        <!-- Detalle de Evento SetUp  -->
-        <section class="feature-area bg-color pb-100 pt-35">
-            <div class="container">
-                <div class="row align-items-center "> 
-                    <div class="col-lg-6 col-sm-6 item dev design">
-                        <div class="single-case">
-                            <!-- Carousel Start -->
-                            <div id="carouselsliderdemo" class="carousel slide" data-bs-ride="carousel">
-                                <div class="carousel-inner simple-evento-artista">
-                                    <div class="carousel-item active">
-                                        <img src="https://echomusic.cl/images/events/<?php echo $respuesta[0]["img"]; ?>.jpg" class="d-block w-100">
-                                    </div>
-<!--                                    <div class="carousel-item">
+<!-- Detalle de Evento SetUp  -->
+<section class="feature-area bg-color pb-100 pt-35">
+    <div class="container">
+        <div class="row align-items-center ">
+            <div class="col-lg-6 col-sm-6 item dev design">
+                <div class="single-case">
+                    <!-- Carousel Start -->
+                    <div id="carouselsliderdemo" class="carousel slide" data-bs-ride="carousel">
+                        <div class="carousel-inner simple-evento-artista">
+                            <div class="carousel-item active">
+                                <img src="https://echomusic.cl/images/events/<?php echo $respuesta[0]["img"]; ?>.jpg" class="d-block w-100">
+                                <img src="https://echomusic.net/dashboard/images/eventos/<?php echo $idUsuario; ?>.jpg" class="d-block w-100">
+                            </div>
+                            <!--                                    <div class="carousel-item">
                                         <img src="assets/images/avatars/echo-2.jpg" class="d-block w-100">
                                     </div>
                                     <div class="carousel-item">
                                         <img src="assets/images/avatars/echo-3.jpg" class="d-block w-100">
                                     </div>-->
-                                </div>
-                                <!-- Indicator start -->
-                                <div class="carousel-indicators">
-                                    <button type="button" data-bs-target="#carouselsliderdemo" class="active img-thumbnail"
-                                            data-bs-slide-to="0">
-                                        <img src="https://echomusic.cl/images/events/<?php echo $respuesta[0]["img"]; ?>.jpg" alt="" class="d-block w-50">
-                                    </button>
-<!--                                    <button type="button" data-bs-target="#carouselsliderdemo" class="img-thumbnail" data-bs-slide-to="1">
+                        </div>
+                        <!-- Indicator start -->
+                        <div class="carousel-indicators">
+                            <button type="button" data-bs-target="#carouselsliderdemo" class="active img-thumbnail" data-bs-slide-to="0">
+                                <img src="https://echomusic.cl/images/events/<?php echo $respuesta[0]["img"]; ?>.jpg" alt="" class="d-block w-50">
+                            </button>
+                            <!--                                    <button type="button" data-bs-target="#carouselsliderdemo" class="img-thumbnail" data-bs-slide-to="1">
                                         <img src="assets/images/avatars/echo-2.jpg" alt="" class="d-block w-100">
                                     </button>
                                     <button type="button" data-bs-target="#carouselsliderdemo" class="img-thumbnail" data-bs-slide-to="2">
                                         <img src="assets/images/avatars/echo-3.jpg" alt="" class="d-block w-100">
                                     </button>-->
-                                </div>
-                                <!-- Indicator Close -->
-                            </div>
-                            <!-- Carousel Close -->  
-                        </div>         
-                    </div>                    
-                    
-                    <div class=" col-lg-6">
-                        
-                        <div class="row">
-                            <div class="col-12 col-sm-12">
-                                <div class="feature-tittle"> 
-                                <h2> <?php echo $respuesta[0]["name_event"]; ?> </h2>
-                                <span style="font-size: 20px"><?php echo $diaSemana.' '.$dia.' de '.$mes.', '.$anio.' | '.$hora.':'.$minutos.' hrs'; ?>  </span>
-                                <span style="font-size: 15px">Evento presencial </span> 
-                                 <br>
-                                <span style="font-size: 12px">  	<?php echo $respuestaEventoCiudadRegion[0]["name_city"]; ?> / Región <?php echo $respuestaEventoCiudadRegion[0]["name_region"]; ?></span><br>
+                        </div>
+                        <!-- Indicator Close -->
+                    </div>
+                    <!-- Carousel Close -->
+                </div>
+            </div>
 
-                                <span style="font-size: 12px">Lugar	<?php echo $respuesta[0]["name_location"]; ?>,	<?php echo $respuesta[0]["location"]; ?></span>
-                                
-                                <h3>Descripción del evento</h3>
-                                <p><?php echo $respuesta[0]["desc_event"]; ?></p>
-                                </div> 
-                            </div>
-                            
-                             <?php
+            <div class=" col-lg-6">
 
-                                for ($j=0; $j < count($respuesta); $j++) { 
-                                    
-                                    echo '<!--<div class="col-12 col-sm-1 text-center"></div>-->
+                <div class="row">
+                    <div class="col-12 col-sm-12">
+                        <div class="feature-tittle">
+                            <h2> <?php echo $respuesta[0]["name_event"]; ?> </h2>
+                            <span style="font-size: 20px"><?php echo $diaSemana . ' ' . $dia . ' de ' . $mes . ', ' . $anio . ' | ' . $hora . ':' . $minutos . ' hrs'; ?> </span>
+                            <span style="font-size: 15px">Evento presencial </span>
+                            <br>
+                            <span style="font-size: 12px"> <?php echo $respuestaEventoCiudadRegion[0]["name_city"]; ?> / Región <?php echo $respuestaEventoCiudadRegion[0]["name_region"]; ?></span><br>
+
+                            <span style="font-size: 12px">Lugar <?php echo $respuesta[0]["name_location"]; ?>, <?php echo $respuesta[0]["location"]; ?></span>
+
+                            <h3>Descripción del evento</h3>
+                            <p><?php echo $respuesta[0]["desc_event"]; ?></p>
+                        </div>
+                    </div>
+
+                    <?php
+
+                    for ($j = 0; $j < count($respuesta); $j++) {
+
+                        echo '<!--<div class="col-12 col-sm-1 text-center"></div>-->
                                             <div class="col-6 col-sm-4 text-left">
-                                               <h6><i class="bx bxs-coupon"></i> '.$respuesta[$j]["ticket_name"].' ('.$respuesta[$j]["ticket_audience"].')</h6>
-                                            </div>'; 
-                                    echo '<div class="col-6 col-sm-3 text-center">';
-                                    
-                                    if( $respuesta[$j]["ticket_value"]== 0 ){
-                                        echo ' <h3> Gratis </h3> 
+                                               <h6><i class="bx bxs-coupon"></i> ' . $respuesta[$j]["ticket_name"] . ' (' . $respuesta[$j]["ticket_audience"] . ')</h6>
+                                            </div>';
+                        echo '<div class="col-6 col-sm-3 text-center">';
+
+                        if ($respuesta[$j]["ticket_value"] == 0) {
+                            echo ' <h3> Gratis </h3> 
                                                 </div>
                                                 <div class="col-12 col-sm-4 text-center">
                                                     <a href="#" class="box-btn">Reservar</a>
                                                 </div>';
-                                    } else {
-                                        echo ' <h3> $'. number_format( ($respuesta[$j]["ticket_value"]+$respuesta[$j]["ticket_commission"]), 0, ',', '.').' </h3> 
+                        } else {
+                            echo ' <h3> $' . number_format(($respuesta[$j]["ticket_value"] + $respuesta[$j]["ticket_commission"]), 0, ',', '.') . ' </h3> 
                                             </div>
                                             <div class="col-12 col-sm-4 text-center">
                                                 <a href="#" class="box-btn">Comprar</a>
                                             </div>';
-                                    }
-                                            
-                                    echo '  <div class="col-12 col-sm-1 text-right"></div>';  
-                                    
-                                    } 
-                                ?>
-                            
-                            
-                            
-                            <div class="col-12 col-sm-6 text-center">Métodos de pago / <a href="terminos-y-condiciones.php" target="_blank"> Términos y Condiciones</a></div>
-                            <div class="col-12 col-sm-6 text-center"> 
-                                
-                                    <span   style="text-align: right;"> 
-                                        <ul class="social">
-                                            <li> <p>Comparte</p></li>
-                                            <li> <a href="#" target="_blank"><i class='bx bxl-whatsapp' ></i></a></li>
-                                            <li> <a href="#" target="_blank"><i class='bx bxl-facebook' ></i></a></li>                                            
-                                            <li> <a href="#" target="_blank"><i class='bx bxl-instagram' ></i></a> </li>
-                                        </ul> 
-                                    </span>
-                                                               
-                            </div>
-                        </div> 
-                        
-                        
-                        
- 
+                        }
+
+                        echo '  <div class="col-12 col-sm-1 text-right"></div>';
+                    }
+                    ?>
+
+
+
+                    <div class="col-12 col-sm-6 text-center">Métodos de pago / <a href="terminos-y-condiciones.php" target="_blank"> Términos y Condiciones</a></div>
+                    <div class="col-12 col-sm-6 text-center">
+
+                        <span style="text-align: right;">
+                            <ul class="social">
+                                <li>
+                                    <p>Comparte</p>
+                                </li>
+                                <li> <a href="#" target="_blank"><i class='bx bxl-whatsapp'></i></a></li>
+                                <li> <a href="#" target="_blank"><i class='bx bxl-facebook'></i></a></li>
+                                <li> <a href="#" target="_blank"><i class='bx bxl-instagram'></i></a> </li>
+                            </ul>
+                        </span>
+
                     </div>
-
-                    <!--<div class="">-->
-
-                        
-                       
-                                                
-                    <!--</div>-->
                 </div>
-            </div>  <!--Container--> 
-            
-            
-            
-            <!--Divisione smúltiples-->
-<!--            <div class="container">
+
+
+
+
+            </div>
+
+            <!--<div class="">-->
+
+
+
+
+            <!--</div>-->
+        </div>
+    </div> <!--Container-->
+
+
+
+    <!--Divisione smúltiples-->
+    <!--            <div class="container">
                 <div class="row">
                     <div class="col-sm-3">
                         Level 1: .col-sm-3
@@ -208,20 +209,20 @@ $respuestaEventoCiudadRegion = Consultas::buscaCiudadRegion($respuesta[0]["id_ci
                 </div>
             </div>-->
 
- 
-            
-            
-        </section>
-        <!-- End Destacados - Características  -->        
-        
-        
-        <!-- Video Area -->
-<?php         
+
+
+
+</section>
+<!-- End Destacados - Características  -->
+
+
+<!-- Video Area -->
+<?php
 //Extrae VIdeo del evento si es qeu existe
-$respuestaVideoEvento=Consultas::videoEvento($idEvento);   
-if (empty($respuestaVideoEvento["embed_multi"])){
-//    echo  'No Hay Video';
-}else{ 
+$respuestaVideoEvento = Consultas::videoEvento($idEvento);
+if (empty($respuestaVideoEvento["embed_multi"])) {
+    //    echo  'No Hay Video';
+} else {
     echo '
         <section class="home-contact-area home-2-contact ptb-35">
             <div class="container"> 
@@ -230,7 +231,7 @@ if (empty($respuestaVideoEvento["embed_multi"])){
                     <div class="col-lg-2 col-md-2"></div>
                     <div class="col-lg-8 col-md-8">
                         <div class="content">
-                            <iframe width="100%" height="430px" src="https://www.youtube.com/embed/'.$respuestaVideoEvento["embed_multi"].'" title="'.$respuesta[0]["name_event"].'" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                            <iframe width="100%" height="430px" src="https://www.youtube.com/embed/' . $respuestaVideoEvento["embed_multi"] . '" title="' . $respuesta[0]["name_event"] . '" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
                         </div>
                     </div>
 
@@ -238,76 +239,75 @@ if (empty($respuestaVideoEvento["embed_multi"])){
                 </div>
             </div>
         </section>';
- 
-}//fin del else de VIDEO
-?>        
-        <!-- End Video Area -->        
-        
-        
-        <!--  Eventos  Recoemndados Artistas Proyectos  Espacios  -->
-<?php        
-
-        echo "ID User: ".$respuesta[0]["id_user"];
-        echo "<br>Género: ".$resuestaBuscaGenero["name_genre"];
-        echo "<br>ID Género: ".$resuestaBuscaGenero["id_genre"];
-?>        
-        <section class="home-case ptb-35">
-            <div class="container">
-                <div class="section-title">
-                    <!--<span>Descubre</span>-->
-                    <!--<h2>Conoce todo lo que EchoMusic tiene para ti</h2>-->
-                    <h2>Eventos recomendados</h2>
-                    <!--<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse.</p>-->
-                </div>
-
-                <div class="case">
-                    <ul class="all-case">
-                        <!--<li class="active" data-filter="*"><span>Todo</span></li>-->
-                        <li class="active" data-filter="*"><span>Presencial</span></li>
-                        <li data-filter=".dev"><span>Online</span></li> 
-                    </ul>
-                </div>
+} //fin del else de VIDEO
+?>
+<!-- End Video Area -->
 
 
-                <div class="row case-list">   
+<!--  Eventos  Recoemndados Artistas Proyectos  Espacios  -->
+<?php
 
-                    <?php
-//                    Si el artista no tiene género, buscamos en una tabla de generos aleatoria
-//                    mostrar recomendaciones cuando artistas no tenga definido estilo musical buscar solo por región.
-                    if(empty($idGenero)){
-                        $eventosRelacionados = Consultas::eventosRelacionadosRegion($respuesta[0]["id_region"]);
-                    }else{
-//                        Si no tiene género envoio el ID región para recomendar´por region 
-                        $eventosRelacionados = Consultas::eventosRelacionadosGenero($idGenero);
-                    }
-                    
-                    #Notar que es lo mismo que hacer
-                    # date("Y-m-d H:i:s")                                
-                    for ($k = 0; $k < count($eventosRelacionados); $k++) {                        
-                        //Busca CIudad y Región
-                        $respuestaCiudadRegion = Consultas::buscaCiudadRegion($eventosRelacionados[$k]["id_city"], $eventosRelacionados[$k]["id_region"]);
-                    
-                        $fechaEntera1 = strtotime($eventosRelacionados[$k]["date_event"]);
-                        $anio = date("Y", $fechaEntera1);
-                        $mes = date("m", $fechaEntera1);
-                        $dia = date("d", $fechaEntera1);
+echo "ID User: " . $respuesta[0]["id_user"];
+echo "<br>Género: " . $resuestaBuscaGenero["name_genre"];
+echo "<br>ID Género: " . $resuestaBuscaGenero["id_genre"];
+?>
+<section class="home-case ptb-35">
+    <div class="container">
+        <div class="section-title">
+            <!--<span>Descubre</span>-->
+            <!--<h2>Conoce todo lo que EchoMusic tiene para ti</h2>-->
+            <h2>Eventos recomendados</h2>
+            <!--<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse.</p>-->
+        </div>
 
-                        $hora = date("H", $fechaEntera1);
-                        $minutos = date("i", $fechaEntera1);
+        <div class="case">
+            <ul class="all-case">
+                <!--<li class="active" data-filter="*"><span>Todo</span></li>-->
+                <li class="active" data-filter="*"><span>Presencial</span></li>
+                <li data-filter=".dev"><span>Online</span></li>
+            </ul>
+        </div>
 
-                        if (preg_match("/|\b/", $eventosRelacionados[$k]["IMG"])) {
-                            $fotos = explode("|", $eventosRelacionados[$k]["IMG"]);
-                            //var_dump($fotos);
-                            $total = count($fotos) - 1;
-                            $indice = mt_rand(0, intval($total));
-                            $img = substr($fotos[0], 16);
-                            //echo $img."<br>";
-                            //echo "verdadero";
-                        } else {
-                            $img = substr($eventosRelacionados[$k]["IMG"], 16);
-                            //echo "falso";
-                        }
-                        echo '                    
+
+        <div class="row case-list">
+
+            <?php
+            //                    Si el artista no tiene género, buscamos en una tabla de generos aleatoria
+            //                    mostrar recomendaciones cuando artistas no tenga definido estilo musical buscar solo por región.
+            if (empty($idGenero)) {
+                $eventosRelacionados = Consultas::eventosRelacionadosRegion($respuesta[0]["id_region"]);
+            } else {
+                //                        Si no tiene género envoio el ID región para recomendar´por region 
+                $eventosRelacionados = Consultas::eventosRelacionadosGenero($idGenero);
+            }
+
+            #Notar que es lo mismo que hacer
+            # date("Y-m-d H:i:s")                                
+            for ($k = 0; $k < count($eventosRelacionados); $k++) {
+                //Busca CIudad y Región
+                $respuestaCiudadRegion = Consultas::buscaCiudadRegion($eventosRelacionados[$k]["id_city"], $eventosRelacionados[$k]["id_region"]);
+
+                $fechaEntera1 = strtotime($eventosRelacionados[$k]["date_event"]);
+                $anio = date("Y", $fechaEntera1);
+                $mes = date("m", $fechaEntera1);
+                $dia = date("d", $fechaEntera1);
+
+                $hora = date("H", $fechaEntera1);
+                $minutos = date("i", $fechaEntera1);
+
+                if (preg_match("/|\b/", $eventosRelacionados[$k]["IMG"])) {
+                    $fotos = explode("|", $eventosRelacionados[$k]["IMG"]);
+                    //var_dump($fotos);
+                    $total = count($fotos) - 1;
+                    $indice = mt_rand(0, intval($total));
+                    $img = substr($fotos[0], 16);
+                    //echo $img."<br>";
+                    //echo "verdadero";
+                } else {
+                    $img = substr($eventosRelacionados[$k]["IMG"], 16);
+                    //echo "falso";
+                }
+                echo '                    
                     <div class="col-lg-4 col-sm-6 item cyber">
                         <div class="single-case">
                             <div class="case-img ">
@@ -330,42 +330,42 @@ if (empty($respuestaVideoEvento["embed_multi"])){
                                         <p>' . $dia . '-' . $mes . '-' . $anio . ' | ' . $hora . ':' . $minutos . ' hrs.</p>
 
                                         <a href="#" class="line-bnt"> 
-                                        '.$respuestaCiudadRegion[0]["name_region"].', '.$respuestaCiudadRegion[0]["name_city"].'
+                                        ' . $respuestaCiudadRegion[0]["name_region"] . ', ' . $respuestaCiudadRegion[0]["name_city"] . '
                                         </a>
                                     </div>
                                     
                                     <div class="col-lg-6 col-sm-6">';
-                                    if($eventosRelacionados[$k]["ticket_value"]==0 ){
-                                        echo  '<h3>Gratuito</h3>
+                if ($eventosRelacionados[$k]["ticket_value"] == 0) {
+                    echo  '<h3>Gratuito</h3>
                                                 <a href="eventos.php?e=' . $eventosRelacionados[$k]["id_event"] . '" class="box-btn">Reservar</a>';
-                                    }else{
-                                        echo  '<h4>$ ' .number_format( ($eventosRelacionados[$k]["ticket_value"]+$eventosRelacionados[$k]["ticket_commission"]), 0, ',', '.'). '</h4>
+                } else {
+                    echo  '<h4>$ ' . number_format(($eventosRelacionados[$k]["ticket_value"] + $eventosRelacionados[$k]["ticket_commission"]), 0, ',', '.') . '</h4>
                                                 <a href="eventos.php?e=' . $eventosRelacionados[$k]["id_event"] . '" class="box-btn">Comprar</a>';
-                                    }
-                                    
-                                    echo '
+                }
+
+                echo '
                                     </div> 
                                 </div>                                                                                               
                             </div>
                             
                         </div>
                     </div>';
-                    }
-                    ?>  
-                </div>
+            }
+            ?>
+        </div>
 
-                <div class="case-btn text-center">
-                    <!--<p>  <a href="#">Ver más eventos</a></p>-->
-                    <p>    <a href="#" class="box-btn">Ver más eventos</a></p>
-                </div>
-            </div>
-        </section>
-        <!-- End Case  Eventos Artistas Proyectos  Espacios  --> 
+        <div class="case-btn text-center">
+            <!--<p>  <a href="#">Ver más eventos</a></p>-->
+            <p> <a href="#" class="box-btn">Ver más eventos</a></p>
+        </div>
+    </div>
+</section>
+<!-- End Case  Eventos Artistas Proyectos  Espacios  -->
 
-       
-        
-       
-        <!-- Artistas - Características  -->
+
+
+
+<!-- Artistas - Características  -->
 <!--        <section class="feature-area bg-color ptb-100">
             <div class="container">
                 <div class="row align-items-center">
@@ -411,9 +411,9 @@ if (empty($respuestaVideoEvento["embed_multi"])){
                 </div>
             </div>
         </section>-->
-        <!-- End Artistas - Características  -->
+<!-- End Artistas - Características  -->
 
-        <!-- Team Area -->
+<!-- Team Area -->
 <!--        <section class="home-team-area ptb-100">
             <div class="container">
                 <div class="section-title">
@@ -625,9 +625,9 @@ if (empty($respuestaVideoEvento["embed_multi"])){
                 </div>
             </div>
         </section>-->
-        <!-- End Team Area -->
+<!-- End Team Area -->
 
-        <!-- Start Client Area -->
+<!-- Start Client Area -->
 <!--        <section class="client-area ptb-100 bg-color">
             <div class="container">
                 <div class="section-title">
@@ -656,9 +656,9 @@ if (empty($respuestaVideoEvento["embed_multi"])){
                 </div>
             </div>
         </section>-->
-        <!-- End Client Area -->
+<!-- End Client Area -->
 
-        <!-- Blog Area -->
+<!-- Blog Area -->
 <!--        <section class="home-blog-area ptb-100">
             <div class="container">
                 <div class="section-title">
@@ -756,39 +756,39 @@ if (empty($respuestaVideoEvento["embed_multi"])){
                 </div>
             </div>
         </section>-->
-        <!-- End Blog Area -->
+<!-- End Blog Area -->
 
-        
-            <!-- CTA -->
-        <section class="home-cta-2-morado pt-100 pb-35">
-            <div class="container">
-                
 
-                 <div class="row">
-                    <div class="col-lg-2 col-sm-2"></div>
-                    
-                    <div class="col-lg-5 col-sm-5">
-                        <div class="section-title">                          
-                            <h2>¿Eres artista, productora o espacio de difusión?</h2> 
-                        </div>
-                    </div>
-                    
-                    <div class="col-lg-3 col-sm-3" style="vertical-align: middle; ">
-                        <div class="text-center">
-                            <div class="nav-btn">
-                                <br> 
-                                <a href="#" class="box-btn text-center">CREA TU EVENTO</a> 
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-2 col-sm-2"></div>
-                 </div>
+<!-- CTA -->
+<section class="home-cta-2-morado pt-100 pb-35">
+    <div class="container">
+
+
+        <div class="row">
+            <div class="col-lg-2 col-sm-2"></div>
+
+            <div class="col-lg-5 col-sm-5">
+                <div class="section-title">
+                    <h2>¿Eres artista, productora o espacio de difusión?</h2>
+                </div>
             </div>
-        </section>
-        <!-- End CTA -->    
- 
-             
-    <!--Footer-->
-    <?php 
-        include 'footer.php';
-    ?>
+
+            <div class="col-lg-3 col-sm-3" style="vertical-align: middle; ">
+                <div class="text-center">
+                    <div class="nav-btn">
+                        <br>
+                        <a href="#" class="box-btn text-center">CREA TU EVENTO</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-2 col-sm-2"></div>
+        </div>
+    </div>
+</section>
+<!-- End CTA -->
+
+
+<!--Footer-->
+<?php
+include 'footer.php';
+?>
