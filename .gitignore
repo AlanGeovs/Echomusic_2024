@@ -1,5 +1,3 @@
-sftp.json
-.vscode
 buscador
 buscadoravanzado
 buscadorfiltro
@@ -9,3 +7,8 @@ Echomusic-main
 nbproject
 dashboard/registrar_inventario.php
 dashboard/registrar_marca.php
+dashboard/BD
+dashboard/api
+dashboard/apirest
+dashboard/export
+dashboard/soloautos
