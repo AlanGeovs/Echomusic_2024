@@ -8,350 +8,409 @@ and open the template in the editor.
     Author     : AlanGeovs
 */
 
-
-.home-cta-2{
-
-    background: url("../images/avatars/13.jpg") rgba(0, 0, 0, .5) no-repeat fixed;
-    /*background-color:  #6500CC;*/
+.home-cta-2 {
+  background: url("../images/avatars/13.jpg") rgba(0, 0, 0, 0.5) no-repeat fixed;
+  /*background-color:  #6500CC;*/
 }
-.home-cta-1-azul{     background: url("../images/bg/bg-echomusic-Eventos-artistas-Azul-min.jpg") rgba(0, 0, 0, .5) no-repeat ; background-size: 100% 100%;   }
-.home-cta-1-azul h2{    color:white; }
-.home-cta-2-azul{     background: url("../images/bg/bg-echomusic-2-azul-min.jpg") rgba(0, 0, 0, .5) no-repeat ; background-size: 100% 100%;    }
-.home-cta-2-azul h2{    color:white; }
-.home-cta-3-azul{     background: url("../images/bg/bg-echomusic-3-azul-min.jpg") rgba(0, 0, 0, .5) no-repeat ; background-size: 100% 100%;    }
-.home-cta-3-azul h2{    color:white; }
-.home-cta-1-naranja { background: url("../images/bg/bg-echomusic-1-naranja-min.jpg") rgba(0, 0, 0, .5) no-repeat ; background-size: 100% 100%;   }
-.home-cta-1-naranja h2{    color:white; }
-.home-cta-2-naranja { background: url("../images/bg/bg-echomusic-2-naranja-min.jpg") rgba(0, 0, 0, .5) no-repeat ; background-size: 100% 100%;    }
-.home-cta-2-naranja h2{    color:white; } 
-.home-cta-3-naranja { background: url("../images/bg/bg-echomusic-Crowfounding-ok-min.jpg") rgba(0, 0, 0, .5) no-repeat ; background-size: 100% 100%;   }
-.home-cta-3-naranja  h2{    color:white; }
-.home-cta-1-morado {  background: url("../images/bg/bg-echomusic-1-morado-min.jpg") rgba(0, 0, 0, .5) no-repeat ; background-size: 100% 100%;    }
-.home-cta-1-morado  h2{    color:white; }
-.home-cta-2-morado {  background: url("../images/bg/bg-echomusic-artistaproductor-min.jpg") rgba(0, 0, 0, .5) no-repeat ; background-size: 100% 100%;    }
-.home-cta-2-morado  h2{    color:white; }
-.home-cta-3-morado {  background: url("../images/bg/bg-echomusic-3-morado-min.jpg") rgba(0, 0, 0, .5) no-repeat ; background-size: 100% 100%;    }
-.home-cta-3-morado  h2{    color:white; }
-.home-cta-gris { background-color: #EDEDED;     }
-.home-cta-gris .section-title  h2{    color:#FF6600; }
-  .perfil{      
-      height: 50px;
-      left: -65px;
-      position: absolute;
-      width: 50px;
-      border-radius: 50%;
-} 
-
+.home-cta-1-azul {
+  background: url("../images/bg/bg-echomusic-Eventos-artistas-Azul-min.jpg")
+    rgba(0, 0, 0, 0.5) no-repeat;
+  background-size: 100% 100%;
+}
+.home-cta-1-azul h2 {
+  color: white;
+}
+.home-cta-2-azul {
+  background: url("../images/bg/bg-echomusic-2-azul-min.jpg") rgba(0, 0, 0, 0.5)
+    no-repeat;
+  background-size: 100% 100%;
+}
+.home-cta-2-azul h2 {
+  color: white;
+}
+.home-cta-3-azul {
+  background: url("../images/bg/bg-echomusic-3-azul-min.jpg") rgba(0, 0, 0, 0.5)
+    no-repeat;
+  background-size: 100% 100%;
+}
+.home-cta-3-azul h2 {
+  color: white;
+}
+.home-cta-1-naranja {
+  background: url("../images/bg/bg-echomusic-1-naranja-min.jpg")
+    rgba(0, 0, 0, 0.5) no-repeat;
+  background-size: 100% 100%;
+}
+.home-cta-1-naranja h2 {
+  color: white;
+}
+.home-cta-2-naranja {
+  background: url("../images/bg/bg-echomusic-2-naranja-min.jpg")
+    rgba(0, 0, 0, 0.5) no-repeat;
+  background-size: 100% 100%;
+}
+.home-cta-2-naranja h2 {
+  color: white;
+}
+.home-cta-3-naranja {
+  background: url("../images/bg/bg-echomusic-Crowfounding-ok-min.jpg")
+    rgba(0, 0, 0, 0.5) no-repeat;
+  background-size: 100% 100%;
+}
+.home-cta-3-naranja h2 {
+  color: white;
+}
+.home-cta-1-morado {
+  background: url("../images/bg/bg-echomusic-1-morado-min.jpg")
+    rgba(0, 0, 0, 0.5) no-repeat;
+  background-size: 100% 100%;
+}
+.home-cta-1-morado h2 {
+  color: white;
+}
+.home-cta-2-morado {
+  background: url("../images/bg/bg-echomusic-artistaproductor-min.jpg")
+    rgba(0, 0, 0, 0.5) no-repeat;
+  background-size: 100% 100%;
+}
+.home-cta-2-morado h2 {
+  color: white;
+}
+.home-cta-3-morado {
+  background: url("../images/bg/bg-echomusic-3-morado-min.jpg")
+    rgba(0, 0, 0, 0.5) no-repeat;
+  background-size: 100% 100%;
+}
+.home-cta-3-morado h2 {
+  color: white;
+}
+.home-cta-gris {
+  background-color: #ededed;
+}
+.home-cta-gris .section-title h2 {
+  color: #ff6600;
+}
+.perfil {
+  height: 50px;
+  left: -65px;
+  position: absolute;
+  width: 50px;
+  border-radius: 50%;
+}
 
 /*Estilos para Tarjetas con slide*/
 #myCarousel {
-    margin-top: 50px;
+  margin-top: 50px;
 }
 
 @media (max-width: 768px) {
-    .carousel-inner .carousel-item>div {
-        display: none;
-    }
+  .carousel-inner .carousel-item > div {
+    display: none;
+  }
 
-    .carousel-inner .carousel-item>div:first-child {
-        display: block;
-    }
+  .carousel-inner .carousel-item > div:first-child {
+    display: block;
+  }
 }
 
 .carousel-inner .carousel-item.active,
 .carousel-inner .carousel-item-start,
 .carousel-inner .carousel-item-next,
 .carousel-inner .carousel-item-prev {
-    display: flex;
+  display: flex;
 }
 
 @media (min-width: 768px) {
+  .carousel-inner .carousel-item-right.active,
+  .carousel-inner .carousel-item-next,
+  .carousel-item-next:not(.carousel-item-start) {
+    transform: translateX(25%) !important;
+  }
 
-    .carousel-inner .carousel-item-right.active,
-    .carousel-inner .carousel-item-next,
-    .carousel-item-next:not(.carousel-item-start) {
-        transform: translateX(25%) !important;
-    }
+  .carousel-inner .carousel-item-left.active,
+  .carousel-item-prev:not(.carousel-item-end),
+  .active.carousel-item-start,
+  .carousel-item-prev:not(.carousel-item-end) {
+    transform: translateX(-25%) !important;
+  }
 
-    .carousel-inner .carousel-item-left.active,
-    .carousel-item-prev:not(.carousel-item-end),
-    .active.carousel-item-start,
-    .carousel-item-prev:not(.carousel-item-end) {
-        transform: translateX(-25%) !important;
-    }
+  .carousel-item-next.carousel-item-start,
+  .active.carousel-item-end {
+    transform: translateX(0) !important;
+  }
 
-    .carousel-item-next.carousel-item-start,
-    .active.carousel-item-end {
-        transform: translateX(0) !important;
-    }
-
-    .carousel-inner .carousel-item-prev,
-    .carousel-item-prev:not(.carousel-item-end) {
-        transform: translateX(-25%) !important;
-    }
-}  
-
+  .carousel-inner .carousel-item-prev,
+  .carousel-item-prev:not(.carousel-item-end) {
+    transform: translateX(-25%) !important;
+  }
+}
 
 .carousel-indicators {
-    margin-bottom: -20px;
+  margin-bottom: -20px;
 }
 
 .carousel-indicators button[data-bs-target] {
-    width: 200px;
-
+  width: 200px;
 }
 /*Cambar eso*/
- .carousel-caption {
-     bottom: 3.25rem;
- }
- .carousel-caption h4{
-    font-size: 2.5em;
-    color: #fff;
-    font-family: 'Noto Sans',"Catamaran", sans-serif;
-    font-weight: 900;
+.carousel-caption {
+  bottom: 3.25rem;
 }
-
+.carousel-caption h4 {
+  font-size: 2.5em;
+  color: #fff;
+  font-family: "Noto Sans", "Catamaran", sans-serif;
+  font-weight: 900;
+}
 
 /*Imágenes  recortadas para eventos*/
-.imgEvent{
+.imgEvent {
   display: inline-block;
-   /*margin:5px;
+  /*margin:5px;
   float:left;
  background-image: url('https://images.pexels.com/photos/4681107/pexels-photo-4681107.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1');*/
-  background-size:cover;
-  background-position:center;
-  background-repeat:no-repeat;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
 }
-.tamano-1{
-  width:420px;
-  height:420px;
+.tamano-1 {
+  width: 420px;
+  height: 420px;
 }
- 
-.tamano-2{
-  width:140px;
-  height:190px;
+
+.tamano-2 {
+  width: 140px;
+  height: 190px;
 }
-.tamano-3{
-  width:140px;
-  height:230px;
+.tamano-3 {
+  width: 140px;
+  height: 230px;
 }
-.tamano-4{
-  width:150px;
-  height:210px;
+.tamano-4 {
+  width: 150px;
+  height: 210px;
 }
 
 /*Imágenes para Eventos de Artistas Responsiva*/
 /* Estilo por defecto para desktop */
 img.responsiveEveArtista {
-    width: 200px;
-    height: 200px;
-    max-width: 100%; 
+  width: 200px;
+  height: 200px;
+  max-width: 100%;
 }
 
 /* Estilo para tablets */
 @media screen and (max-width: 768px) {
-    img.responsiveEveArtista {
-        width: 150px;
-        height: 150px;
-        max-width: 100%; 
-    }
+  img.responsiveEveArtista {
+    width: 150px;
+    height: 150px;
+    max-width: 100%;
+  }
 }
 
 /* Estilo para móviles */
 @media screen and (max-width: 480px) {
-    img.responsiveEveArtista {
-        width: 180px;
-        height: 180px;
-        max-width: 100%; 
-    }
+  img.responsiveEveArtista {
+    width: 180px;
+    height: 180px;
+    max-width: 100%;
+  }
 }
 
 /*Imágenes para Artistas Responsiva*/
 /* Estilo por defecto para desktop */
 img.responsiveArtista {
-    width: 360px;
-    max-width: 100%;
-    height: auto;
-    border-radius: 50%; /* Esto hará que la imagen sea totalmente redonda */
-    
+  width: 360px;
+  max-width: 100%;
+  height: auto;
+  border-radius: 50%; /* Esto hará que la imagen sea totalmente redonda */
 }
 
 /* Estilo para tablets */
 @media screen and (max-width: 768px) {
-    img.responsiveArtista {
-        width: 340px;
-        max-width: 100%;
-        height: auto;
-        border-radius: 50%; /* Esto hará que la imagen sea totalmente redonda */
-    }
+  img.responsiveArtista {
+    width: 340px;
+    max-width: 100%;
+    height: auto;
+    border-radius: 50%; /* Esto hará que la imagen sea totalmente redonda */
+  }
 }
 
 /* Estilo para móviles */
 @media screen and (max-width: 480px) {
-    img.responsiveArtista {
-        width: 306px;
-        max-width: 100%;
-        height: auto;
-        border-radius: 50%; /* Esto hará que la imagen sea totalmente redonda */
-    }
+  img.responsiveArtista {
+    width: 306px;
+    max-width: 100%;
+    height: auto;
+    border-radius: 50%; /* Esto hará que la imagen sea totalmente redonda */
+  }
 }
-
-
 
 .home-contact-area .form-group {
-    margin-bottom: 1px;
+  margin-bottom: 1px;
 }
 
-.home-contact-area  .texto-fechas {
-    text-align: center; 
-    color: grey;
-    margin-bottom: 10px;
+.home-contact-area .texto-fechas {
+  text-align: center;
+  color: grey;
+  margin-bottom: 10px;
 }
 
-.home-contact-area .content input.form-control { 
-    margin-bottom: 2px;  
+.home-contact-area .content input.form-control {
+  margin-bottom: 2px;
 }
 
-.home-contact-area .section-title{
-    margin: -8px auto 20px;
+.home-contact-area .section-title {
+  margin: -8px auto 20px;
 }
 
-
- .textoCorto {
-    width: 400px;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    overflow: hidden;
+.textoCorto {
+  width: 400px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
 }
 
-.section-title{
-    margin: -8px auto 10px;
+.section-title {
+  margin: -8px auto 10px;
 }
-
 
 /*Alto para VIdeo de Artistas*/
 /* Clase para el div */
 .altoVideo {
-    height: 330px; /* Altura por defecto para desktop */
+  height: 330px; /* Altura por defecto para desktop */
 }
 
 /* Para laptops (suponiendo que la pantalla tiene menos de 1024px) */
 @media screen and (max-width: 1024px) {
-    .altoVideo {
-        height: 300px; 
-    }
+  .altoVideo {
+    height: 300px;
+  }
 }
 
 /* Para tablets (suponiendo que la pantalla tiene menos de 768px) */
 @media screen and (max-width: 768px) {
-    .altoVideo {
-        height: 290px;
-    }
+  .altoVideo {
+    height: 290px;
+  }
 }
 
 /* Para celulares (suponiendo que la pantalla tiene menos de 480px) */
 @media screen and (max-width: 480px) {
-    .altoVideo {
-        height: 160px;
-    }
+  .altoVideo {
+    height: 160px;
+  }
 }
-
 
 .tarifasBanner {
-    --opacidad-negro: 0.5;
-    background-image: linear-gradient(rgba(0, 0, 0, var(--opacidad-negro)), rgba(0, 0, 0, var(--opacidad-negro))) ;
+  --opacidad-negro: 0.5;
+  background-image: linear-gradient(
+    rgba(0, 0, 0, var(--opacidad-negro)),
+    rgba(0, 0, 0, var(--opacidad-negro))
+  );
 }
 
-
 .progress {
-    padding-left: 0;
-    padding-right: 0;
-
+  padding-left: 0;
+  padding-right: 0;
 }
 
 /*Botón de borrar en formularios de búsqueda*/
-.btn-clear{
-    
+.btn-clear {
 }
 
 .box-btn-clear {
-    background-color: transparent;
-    padding-top: 10px;  
-    font-size: 11px;
-    color: #FF6600;
-    /*padding: 15px 25px;*/
-    line-height: 1;
-    -webkit-transition: all 0.5s;
-    transition: all 0.5s;
-    text-transform: capitalize;
-    position: relative;
-    cursor: pointer;
-    border-radius: 25px;
-    text-align: center;
-    /*overflow: hidden;*/
-    /*z-index: 1;*/
-/*    background-color: blue;
+  background-color: transparent;
+  padding-top: 10px;
+  font-size: 11px;
+  color: #ff6600;
+  /*padding: 15px 25px;*/
+  line-height: 1;
+  -webkit-transition: all 0.5s;
+  transition: all 0.5s;
+  text-transform: capitalize;
+  position: relative;
+  cursor: pointer;
+  border-radius: 25px;
+  text-align: center;
+  /*overflow: hidden;*/
+  /*z-index: 1;*/
+  /*    background-color: blue;
     border: 1px solid #FF6600;*/
 }
 
-.box-btn-clear:hover{
-    color: #051242; 
+.box-btn-clear:hover {
+  color: #051242;
 }
-
 
 /*Carrusel OWL*/
 .owl-carousel .owl-nav {
-    position: absolute; /* Colocar los botones de navegación en una posición absoluta */
-    top: 50%; /* Centrarlos verticalmente */
-    width: 100%; /* Asegurarse de que abarquen todo el ancho del carrusel */
-    transform: translateY(-50%); /* Alineación vertical precisa */
-    pointer-events: none; /* Evitar que este div capture clics, permitiendo la interacción con los elementos debajo */
+  position: absolute; /* Colocar los botones de navegación en una posición absoluta */
+  top: 50%; /* Centrarlos verticalmente */
+  width: 100%; /* Asegurarse de que abarquen todo el ancho del carrusel */
+  transform: translateY(-50%); /* Alineación vertical precisa */
+  pointer-events: none; /* Evitar que este div capture clics, permitiendo la interacción con los elementos debajo */
 }
 
 .owl-carousel .owl-nav button {
-    pointer-events: all; /* Habilitar la interacción con los botones de navegación */
-    background: #fff; /* Color de fondo (ajustable) */
-    opacity: 0.7; /* Transparencia (ajustable) */
-    transition: opacity 0.3s; /* Transición opcional */
-    font-size: 40px;
-    font-weight: 300;
+  pointer-events: all; /* Habilitar la interacción con los botones de navegación */
+  background: #fff; /* Color de fondo (ajustable) */
+  opacity: 0.7; /* Transparencia (ajustable) */
+  transition: opacity 0.3s; /* Transición opcional */
+  font-size: 40px;
+  font-weight: 300;
 }
 
 .owl-carousel .owl-nav button:hover {
-    opacity: 1; /* Cambiar la opacidad en el hover */
+  opacity: 1; /* Cambiar la opacidad en el hover */
 }
 
 .owl-carousel .owl-nav .owl-prev {
-    left: 100px; /* Posición del botón de navegación previo (ajustable) */
+  left: 100px; /* Posición del botón de navegación previo (ajustable) */
 }
 
 .owl-carousel .owl-nav .owl-next {
-    right: 100px; /* Posición del botón de navegación siguiente (ajustable) */
-    /*font: 3rem;*/
+  right: 100px; /* Posición del botón de navegación siguiente (ajustable) */
+  /*font: 3rem;*/
 }
-.owl-next{
-    float: right;
-    /*font: 3rem;*/
+.owl-next {
+  float: right;
+  /*font: 3rem;*/
 }
 
 /*CHeckBox del registro*/
 .list-group-checkable .list-group-item {
-    cursor: pointer;
+  cursor: pointer;
 }
 
 .list-group-item-check:checked + .list-group-item {
-    color: #fff;
-    background-color: #FF6600;
-    border-color: #FF6600;
+  color: #fff;
+  background-color: #ff6600;
+  border-color: #ff6600;
 }
 .list-group-item-check {
-    position: absolute;
-    clip: rect(0, 0, 0, 0);
+  position: absolute;
+  clip: rect(0, 0, 0, 0);
 }
 .list-group-checkable .list-group-item {
-    cursor: pointer;
+  cursor: pointer;
 }
 
-.registroUsuario{
-    margin: 1rem;
+.registroUsuario {
+  margin: 1rem;
+}
+
+/* Mostrar icono de Ver contraseña */
+.form-group.position-relative {
+  position: relative;
+}
+
+.form-group.position-relative .icon-eye,
+.form-group.position-relative .icon-eye-off {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  /* Estilos adicionales si son necesarios */
 }

@@ -288,6 +288,28 @@ class Consultas  extends Conexion
 		$stmt->close();
 	}
 
+	// CLase nueva 2024
+	public static function registrarUsuario($data)
+	{
+		// Conexión a la base de datos
+		$db = self::conectar();
+
+		// Preparar consulta SQL
+		$stmt = $db->prepare("INSERT INTO users (id_type_user, first_name_user, last_name_user, nick_user, mail_user, password_user, first_login, user_destacado, tipo, id_genero, id_subgenero, descripcion) VALUES (:id_type_user, :first_name_user, :last_name_user, :nick_user, :mail_user, :password_user, 'no', 0, '',0,0,'')");
+
+		// Vincular parámetros
+		$stmt->bindValue(':id_type_user', $data['id_type_user']);
+		$stmt->bindValue(':first_name_user', $data['first_name_user']);
+		$stmt->bindValue(':last_name_user', $data['last_name_user']);
+		$stmt->bindValue(':nick_user', $data['nick_user']);
+		$stmt->bindValue(':mail_user', $data['mail_user']);
+		$stmt->bindValue(':password_user', password_hash($data['password_user'], PASSWORD_DEFAULT));
+
+		// Ejecutar y retornar resultado
+		return $stmt->execute();
+	}
+
+
 	public static function validarRegistroUsuario($datosModel, $tabla)
 	{
 		$stmt = Conexion::conectar()->prepare("SELECT usuario, correo FROM $tabla WHERE usuario = :usuario AND correo = :correo");

@@ -97,12 +97,12 @@
                         <div class="col-lg-6 p-t-100">
                             <div class="text">
                                 <h1>Inicio de Sesión</h1>
-                                <p class="s-18 p-t-b-20 font-weight">Ingresa con tu usuario y contraseña</p>
+                                <p class="s-18 p-t-b-20 font-weight">Ingresa con tu usuario y contraseña </p>
                             </div>
                             <form action="includes/validarLogin.php" method="post">
                                 <div class="row">
                                     <div class="col-lg-6">
-                                        <div class="form-group has-icon"><i class="icon-envelope-o"></i>
+                                        <div class="form-group has-icon"><i class="icon-envelope"></i>
                                             <input type="email" name="correo" id="correo" class="form-control form-control-lg no-b" placeholder="Correo" required>
                                         </div>
                                     </div>
@@ -112,13 +112,16 @@
                                         </div>
                                     </div> -->
                                     <div class="col-lg-6">
-                                        <div class="form-group has-icon"><i class="icon-user-secret"></i>
+                                        <div class="form-group has-icon"><i class="icon-security2"></i>
                                             <input type="password" name="password" id="password" class="form-control form-control-lg no-b" placeholder="Password" required>
                                         </div>
                                     </div>
                                     <div class="col-lg-12">
                                         <input type="submit" class="btn btn-success btn-lg btn-block" value="Acceder">
-                                        <p class="forget-pass text">Problemas con tu usuario o contraseña?</p>
+                                        <p class="forget-pass text">
+                                            ¿Aún no estas registrado?
+                                            <a href="../registro.php" data-bs-toggle="modal" data-bs-target="#ModalTipodeRegistro"> Regístrate</a>
+                                        </p>
                                     </div>
                                 </div>
                             </form>
