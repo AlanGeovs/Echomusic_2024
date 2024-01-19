@@ -98,6 +98,9 @@
             </div>
         </div>
     </div>
+
+
+
 </footer>
 <!-- End Footer Area -->
 
@@ -206,6 +209,8 @@
     });
 </script>
 
+
+
 <!-- Registro de Usuarios -->
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
@@ -237,6 +242,9 @@
         });
     });
 </script>
+
+
+
 
 <!--        
         <script>             

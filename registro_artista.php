@@ -32,13 +32,14 @@ include "header.php";
                     <div class="section-tittle text-center">
                         <h2>Regístrate como artista</h2>
                         <p>Crear una cuenta EchoMusic</p>
+
                     </div>
                     <!-- <form action="dashboard/includes/registrarUsuario_db.php" method="post" enctype="multipart/form-data"> -->
                     <form id="formRegistroUsuario" method="post" enctype="multipart/form-data">
                         <div class="row justify-content-center">
                             <div class="col-md-6 col-sm-6">
                                 <div class="form-group">
-                                    <input id="id_type_user" name="id_type_user" class="form-control" type="hidden" value="3">
+                                    <input id="id_type_user" name="id_type_user" class="form-control" type="hidden" value="1">
                                     <input id="first_name_user" name="first_name_user" class="form-control" type="text" placeholder="Nombre" required>
                                 </div>
                             </div>

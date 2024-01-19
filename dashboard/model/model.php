@@ -303,7 +303,7 @@ class Consultas  extends Conexion
 		$stmt->bindValue(':last_name_user', $data['last_name_user']);
 		$stmt->bindValue(':nick_user', $data['nick_user']);
 		$stmt->bindValue(':mail_user', $data['mail_user']);
-		$stmt->bindValue(':password_user', password_hash($data['password_user'], PASSWORD_DEFAULT));
+		$stmt->bindValue(':password_user',  hash('sha256', $data['password_user']));
 
 		// Ejecutar y retornar resultado
 		return $stmt->execute();
