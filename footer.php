@@ -111,6 +111,16 @@
 </div>
 <!-- End Go Top Area -->
 
+<!-- reCaptcha -->
+<button class="g-recaptcha" data-sitekey="6LdRjVQpAAAAALErmJXGFDCcXgyHUq9V22XxaeHH" data-callback='onSubmit' data-action='submit'>Enviar</button>
+
+<!-- reCaptcha -->
+<script>
+    function onSubmit(token) {
+        document.getElementById("demo-form").submit();
+    }
+</script>
+
 <!--Script Tarjetas carrusel-->
 
 
@@ -208,6 +218,18 @@
         this.classList.toggle('icon-eye-off');
     });
 </script>
+<!-- <script>
+    document.getElementById("togglePassword").addEventListener("click", function() {
+        const password = document.getElementById("password");
+        if (password.type === "password") {
+            password.type = "text";
+            this.classList.replace('bxs-show', 'bxs-hide'); // Cambia el ícono a "ocultar"
+        } else {
+            password.type = "password";
+            this.classList.replace('bxs-hide', 'bxs-show'); // Cambia el ícono a "mostrar"
+        }
+    });
+</script> -->
 
 
 

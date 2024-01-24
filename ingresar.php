@@ -46,14 +46,15 @@ include "header.php";
                                     <input type="email" name="correo" id="correo" class="form-control form-control-lg no-b" placeholder="Correo" required>
                                 </div>
                             </div>
+
                             <div class="col-md-12 col-sm-12">
-                                <div class="form-group">
+                                <div class="form-group position-relative">
                                     <input type="password" name="password" id="password" class="form-control form-control-lg no-b" placeholder="Password" required>
-
-                                    <i class='bx bxs-show icon-eye' id="togglePassword" style=" right: 10px; top: 10px;"></i>
-
+                                    <i class='bx bxs-show icon-eye' id="togglePassword" style="position: absolute; cursor: pointer; right: 10px; top: 25px;"></i>
                                 </div>
                             </div>
+
+
                             <div class="col-md-12 col-sm-12 col-xs-12">
                                 <div class="privecy-txt">
                                     <input type="checkbox" id="chb1">

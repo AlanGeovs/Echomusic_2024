@@ -58,16 +58,18 @@ include "header.php";
                                     <input id="mail_user" name="mail_user" class="form-control" placeholder="Email" required>
                                 </div>
                             </div>
-                            <div class="col-md-12 col-sm-12">
+                            <!-- <div class="col-md-12 col-sm-12">
                                 <div class="form-group">
                                     <input id="mail_user_2" name="mail_user_2" class="form-control" placeholder="Verificar Email" required>
                                 </div>
-                            </div>
+                            </div> -->
                             <div class="col-md-12 col-sm-12">
-                                <div class="form-group">
-                                    <input id="password_user" name="password_user" class="form-control" type="text" placeholder="Contraseña" required>
+                                <div class="form-group position-relative">
+                                    <input type="password" name="password" id="password" class="form-control form-control-lg no-b" placeholder="Contraseña" required>
+                                    <i class='bx bxs-show icon-eye' id="togglePassword" style="position: absolute; cursor: pointer; right: 10px; top: 25px;"></i>
                                 </div>
                             </div>
+
                             <div class="col-md-12 col-sm-12 col-xs-12">
                                 <div class="privecy-txt">
                                     <input type="checkbox" id="chb1" required>

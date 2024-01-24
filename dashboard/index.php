@@ -86,24 +86,23 @@
         </div>
     </div>
     <div id="app">
+
+        <!-- Nuevo Mains -->
         <main>
-            <div id="primary" class="gray p-t-b-100 height-full responsive-phone">
+            <div id="primary" class="p-t-b-100 height-full">
                 <div class="container">
                     <div class="row">
-                        <div class="col-lg-6">
-                            <img src="../assets/images/logo/echomusic-LOGO-HOR-BIC.png" width="400px" alt="logo" />
-
-                        </div>
-                        <div class="col-lg-6 p-t-100">
-                            <div class="text">
-                                <h1>Inicio de Sesión</h1>
-                                <p class="s-18 p-t-b-20 font-weight">Ingresa con tu usuario y contraseña </p>
+                        <div class="col-lg-4 mx-md-auto paper-card">
+                            <div class="text-center">
+                                <img src="../assets/images/logo/echomusic-LOGO-HOR-BIC.png" width="300px" alt="logo" />
+                                <h3 class="mt-2">Bienvenido</h3>
+                                <p class="p-t-b-20">Ingresa con tu usuario y contraseña</p>
                             </div>
                             <form action="includes/validarLogin.php" method="post">
                                 <div class="row">
-                                    <div class="col-lg-6">
+                                    <div class="col-lg-12">
                                         <div class="form-group has-icon"><i class="icon-envelope"></i>
-                                            <input type="email" name="correo" id="correo" class="form-control form-control-lg no-b" placeholder="Correo" required>
+                                            <input type="email" name="correo" id="correo" class="form-control form-control-lg" placeholder="Correo" required>
                                         </div>
                                     </div>
                                     <!-- <div class="col-lg-6">
@@ -111,9 +110,9 @@
                                             <input type="text" name="usuario" id="usuario" class="form-control form-control-lg no-b" placeholder="Nombre de usuario">
                                         </div>
                                     </div> -->
-                                    <div class="col-lg-6">
+                                    <div class="col-lg-12">
                                         <div class="form-group has-icon"><i class="icon-security2"></i>
-                                            <input type="password" name="password" id="password" class="form-control form-control-lg no-b" placeholder="Password" required>
+                                            <input type="password" name="password" id="password" class="form-control form-control-lg" placeholder="Password" required>
                                         </div>
                                     </div>
                                     <div class="col-lg-12">
@@ -122,6 +121,16 @@
                                             ¿Aún no estas registrado?
                                             <a href="../registro.php" data-bs-toggle="modal" data-bs-target="#ModalTipodeRegistro"> Regístrate</a>
                                         </p>
+                                        <p class="text-center">---- o ----</p>
+                                        <a href="#" class="btn btn-lg btn-block btn-social gplus">
+                                            <i class="icon-google"></i> Ingresar con Google
+                                        </a>
+                                        <a href="#" class="btn btn-lg btn-block btn-social facebook">
+                                            <i class="icon-facebook"></i> Ingresar con Facebook
+                                        </a>
+                                        <a href="#" class="btn btn-lg btn-block btn-social twitter">
+                                            <i class="icon-twitter"></i> Ingresar con Twitter
+                                        </a>
                                     </div>
                                 </div>
                             </form>
@@ -138,6 +147,10 @@
             </div>
             <!-- #primary -->
         </main>
+
+
+
+
         <!-- Right Sidebar -->
         <aside class="control-sidebar fixed white ">
             <div class="slimScroll">

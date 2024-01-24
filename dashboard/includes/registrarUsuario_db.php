@@ -6,13 +6,14 @@ $response = ['success' => false, 'message' => ''];
 
 // Recibir datos
 $data = [
-	'id_type_user' => $_POST['id_type_user'],
-	'first_name_user' => $_POST['first_name_user'],
-	'last_name_user' => $_POST['last_name_user'],
-	'nick_user' => $_POST['nick_user'],
-	'mail_user' => $_POST['mail_user'],
-	'password_user' => $_POST['password_user'],
-	// Otros campos si son necesarios
+	'id_type_user' => isset($_POST['id_type_user']) ? $_POST['id_type_user'] : '',
+	'first_name_user' => isset($_POST['first_name_user']) ? $_POST['first_name_user'] : '',
+	'last_name_user' => isset($_POST['last_name_user']) ? $_POST['last_name_user'] : '',
+	'nick_user' => isset($_POST['nick_user']) ? $_POST['nick_user'] : NULL,
+	'mail_user' => isset($_POST['mail_user']) ? $_POST['mail_user'] : '',
+	'password_user' => isset($_POST['password']) ? $_POST['password'] : '',
+	'space' => isset($_POST['space']) ? $_POST['space'] : NULL,
+	'type_agent' => isset($_POST['type_agent']) ? $_POST['type_agent'] : '0'
 ];
 
 // Validar y sanear datos aquí...

@@ -59,9 +59,9 @@ include "header.php";
                                 <div class="form-group">
                                     <select name="type_agent" id="type_agent" class="form-control" data-error="Selecciona un tipo de agente" required />
                                     <option value="">Selecciona un tipo </option>
-                                    <option value="sello">Sello </option>
-                                    <option value="booking">Booking</option>
-                                    <option value="agente">Agente cultural</option>
+                                    <option value="1">Sello </option>
+                                    <option value="2">Booking</option>
+                                    <option value="3">Agente cultural</option>
                                     </select>
                                 </div>
                             </div>
@@ -77,8 +77,9 @@ include "header.php";
                                 </div>
                             </div> -->
                             <div class="col-md-12 col-sm-12">
-                                <div class="form-group">
-                                    <input id="password_user" name="password_user" class="form-control" type="password" placeholder="Contraseña" required>
+                                <div class="form-group position-relative">
+                                    <input type="password" name="password" id="password" class="form-control form-control-lg no-b" placeholder="Contraseña" required>
+                                    <i class='bx bxs-show icon-eye' id="togglePassword" style="position: absolute; cursor: pointer; right: 10px; top: 25px;"></i>
                                 </div>
                             </div>
                             <div class="col-md-12 col-sm-12 col-xs-12">

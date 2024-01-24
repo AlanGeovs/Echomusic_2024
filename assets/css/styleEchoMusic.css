@@ -406,7 +406,9 @@ img.responsiveArtista {
 }
 
 .form-group.position-relative .icon-eye,
-.form-group.position-relative .icon-eye-off {
+.form-group.position-relative .icon-eye-off,
+.form-group.position-relative .bx-low-vision,
+.form-group.position-relative .bx-low-vision-off {
   position: absolute;
   right: 10px;
   top: 50%;
@@ -414,3 +416,16 @@ img.responsiveArtista {
   cursor: pointer;
   /* Estilos adicionales si son necesarios */
 }
+
+
+/* .form-group.position-relative {
+  position: relative;
+}
+
+.icon-eye {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+} */

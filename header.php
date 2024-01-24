@@ -41,6 +41,9 @@
     <script src="assets/js/bootstrap.bundle.min.js"></script>
     <!--fin artistas-->
 
+    <!-- reCaptcha -->
+    <script src="https://www.google.com/recaptcha/api.js"></script>
+
     <!-- Favicon -->
     <link rel="apple-touch-icon" sizes="57x57" href="assets/images/apple-icon-57x57.png">
     <link rel="apple-touch-icon" sizes="60x60" href="assets/images/apple-icon-60x60.png">
