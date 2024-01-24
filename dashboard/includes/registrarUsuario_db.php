@@ -4,6 +4,19 @@ require_once "../model/model.php";
 
 $response = ['success' => false, 'message' => ''];
 
+// Validación de contraseña en el lado del servidor
+$password = isset($_POST['password']) ? $_POST['password'] : '';
+$confirmPassword = isset($_POST['confirm_password']) ? $_POST['confirm_password'] : '';
+
+// Validar si las contraseñas coinciden
+if ($password !== $confirmPassword) {
+	$response['message'] = 'Las contraseñas no coinciden.';
+	echo json_encode($response);
+	exit; // Detener la ejecución del script
+}
+
+
+
 // Recibir datos
 $data = [
 	'id_type_user' => isset($_POST['id_type_user']) ? $_POST['id_type_user'] : '',

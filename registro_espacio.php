@@ -69,6 +69,13 @@ include "header.php";
                                     <i class='bx bxs-show icon-eye' id="togglePassword" style="position: absolute; cursor: pointer; right: 10px; top: 25px;"></i>
                                 </div>
                             </div>
+                            <!-- Campo de confirmación de contraseña -->
+                            <div class="col-md-12 col-sm-12">
+                                <div class="form-group position-relative">
+                                    <input type="password" name="confirm_password" id="confirm_password" class="form-control form-control-lg no-b" placeholder="Confirmar contraseña" required>
+                                    <i class='bx bxs-show icon-eye' id="toggleConfirmPassword" style="position: absolute; cursor: pointer; right: 10px; top: 25px;"></i>
+                                </div>
+                            </div>
                             <div class="col-md-12 col-sm-12 col-xs-12">
                                 <div class="privecy-txt">
                                     <input type="checkbox" id="chb1" required>

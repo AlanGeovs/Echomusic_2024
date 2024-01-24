@@ -208,28 +208,39 @@
 
 <!-- Script para ver contraseña escrita Agrega este script para alternar entre mostrar y ocultar la contraseña: -->
 <script>
-    document.getElementById('togglePassword').addEventListener('click', function(e) {
-        const password = document.getElementById('password');
-        const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
-        password.setAttribute('type', type);
+    // valida solo un campo de contraseña 'password'
+    // document.getElementById('togglePassword').addEventListener('click', function(e) {
+    //     const password = document.getElementById('password');
+    //     const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
+    //     password.setAttribute('type', type);
 
-        // Cambiar el ícono si estás utilizando uno
-        this.classList.toggle('icon-eye');
-        this.classList.toggle('icon-eye-off');
-    });
-</script>
-<!-- <script>
-    document.getElementById("togglePassword").addEventListener("click", function() {
-        const password = document.getElementById("password");
-        if (password.type === "password") {
-            password.type = "text";
-            this.classList.replace('bxs-show', 'bxs-hide'); // Cambia el ícono a "ocultar"
-        } else {
-            password.type = "password";
-            this.classList.replace('bxs-hide', 'bxs-show'); // Cambia el ícono a "mostrar"
+    //     // Cambiar el ícono si estás utilizando uno
+    //     this.classList.toggle('icon-eye');
+    //     this.classList.toggle('icon-eye-off');
+    // });
+    document.addEventListener('DOMContentLoaded', function() {
+        // Manejar clic en el ícono de mostrar/ocultar para la contraseña
+        document.getElementById('togglePassword').addEventListener('click', function() {
+            togglePasswordVisibility('password', this);
+        });
+
+        // Manejar clic en el ícono de mostrar/ocultar para la confirmación de contraseña
+        document.getElementById('toggleConfirmPassword').addEventListener('click', function() {
+            togglePasswordVisibility('confirm_password', this);
+        });
+
+        function togglePasswordVisibility(passwordFieldId, iconElement) {
+            const passwordInput = document.getElementById(passwordFieldId);
+            const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+            passwordInput.setAttribute('type', type);
+
+            // Cambiar el ícono
+            iconElement.classList.toggle('icon-eye');
+            iconElement.classList.toggle('icon-eye-off');
         }
     });
-</script> -->
+</script>
+
 
 
 
@@ -239,28 +250,39 @@
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         document.getElementById('formRegistroUsuario').addEventListener('submit', function(e) {
-            e.preventDefault();
+            var password = document.getElementById('password').value;
+            var confirmPassword = document.getElementById('confirm_password').value;
 
-            var formData = new FormData(this);
+            // Validación para que las contraseñas sean las mismas 
+            if (password !== confirmPassword) {
+                e.preventDefault(); // Evita que se envíe el formulario
+                swal("Error", "Las contraseñas no coinciden. Por favor, inténtalo de nuevo.", "error");
+            } else {
+                e.preventDefault();
 
-            fetch('dashboard/includes/registrarUsuario_db.php', {
-                    method: 'POST',
-                    body: formData
-                })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.success) {
-                        swal("Registro exitoso", data.message, "success")
-                            .then((value) => {
-                                window.location.href = 'ingresar.php'; // Redirigir al usuario
-                            });
-                    } else {
-                        swal("Error", data.message, "error");
-                    }
-                })
-                .catch(error => {
-                    swal("Error", "Error al procesar la solicitud: " + error, "error");
-                });
+                var formData = new FormData(this);
+
+                fetch('dashboard/includes/registrarUsuario_db.php', {
+                        method: 'POST',
+                        body: formData
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            swal("Registro exitoso", data.message, "success")
+                                .then((value) => {
+                                    window.location.href = 'ingresar.php'; // Redirigir al usuario
+                                });
+                        } else {
+                            swal("Error", data.message, "error");
+                        }
+                    })
+                    .catch(error => {
+                        swal("Error", "Error al procesar la solicitud: " + error, "error");
+                    });
+            }
+
+
         });
     });
 </script>
