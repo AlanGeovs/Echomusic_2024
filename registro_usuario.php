@@ -53,11 +53,6 @@ include "header.php";
                                     <input id="mail_user" name="mail_user" class="form-control" placeholder="Email" required>
                                 </div>
                             </div>
-                            <!-- <div class="col-md-12 col-sm-12">
-                                <div class="form-group">
-                                    <input id="mail_user_2" name="mail_user_2" class="form-control" placeholder="Verificar Email" required>
-                                </div>
-                            </div> -->
                             <div class="col-md-12 col-sm-12">
                                 <div class="form-group position-relative">
                                     <input type="password" name="password" id="password" class="form-control form-control-lg no-b" placeholder="Contraseña" required>

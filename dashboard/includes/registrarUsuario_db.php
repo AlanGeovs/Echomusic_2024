@@ -19,6 +19,27 @@ $data = [
 // Validar y sanear datos aquí...
 // echo "Nick: " . $_POST['nick_user'];
 
+// Validar si el email ya está registrado
+if (Consultas::verificarEmailExistente($data['mail_user'])) {
+	$response['message'] = 'El email ya está registrado. Por favor, utiliza otro email.';
+	echo json_encode($response);
+	exit; // Detener la ejecución del script
+}
+
+// Validar si el nick user ya está registrado
+if (Consultas::verificarNickUserExistente($data['nick_user'])) {
+	$response['message'] = 'El nombre de banda o artista ya está registrado. Por favor, utiliza otro nombre.';
+	echo json_encode($response);
+	exit; // Detener la ejecución del script
+}
+
+// Validar si el space ya está registrado
+if (Consultas::verificarSpaceExistente($data['space'])) {
+	$response['message'] = 'El nombre de lugar o espacio ya está registrado. Por favor, utiliza otro nombre.';
+	echo json_encode($response);
+	exit; // Detener la ejecución del script
+}
+
 // Guardar datos
 if (Consultas::registrarUsuario($data)) {
 	$response['success'] = true;

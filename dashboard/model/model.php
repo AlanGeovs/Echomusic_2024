@@ -311,6 +311,40 @@ class Consultas  extends Conexion
 		return $stmt->execute();
 	}
 
+	// Verificación de Email
+	public static function verificarEmailExistente($email)
+	{
+		$db = self::conectar();
+		$stmt = $db->prepare("SELECT COUNT(*) FROM users WHERE mail_user = :mail_user");
+		$stmt->bindValue(':mail_user', $email);
+		$stmt->execute();
+
+		return $stmt->fetchColumn() > 0; // Retorna true si encuentra el email, false si no lo encuentra
+	}
+
+	// Verificación de Nick_User
+	public static function verificarNickUserExistente($nick)
+	{
+		$db = self::conectar();
+		$stmt = $db->prepare("SELECT COUNT(*) FROM users WHERE nick_user = :nick_user");
+		$stmt->bindValue(':nick_user', $nick);
+		$stmt->execute();
+
+		return $stmt->fetchColumn() > 0; // Retorna true si encuentra el email, false si no lo encuentra
+	}
+	// Verificación de space
+	public static function verificarSpaceExistente($space)
+	{
+		$db = self::conectar();
+		$stmt = $db->prepare("SELECT COUNT(*) FROM users WHERE space = :space");
+		$stmt->bindValue(':space', $space);
+		$stmt->execute();
+
+		return $stmt->fetchColumn() > 0; // Retorna true si encuentra el email, false si no lo encuentra
+	}
+
+
+
 
 	public static function validarRegistroUsuario($datosModel, $tabla)
 	{
