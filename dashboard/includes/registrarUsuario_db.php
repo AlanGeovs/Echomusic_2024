@@ -29,8 +29,33 @@ $data = [
 	'type_agent' => isset($_POST['type_agent']) ? $_POST['type_agent'] : '0'
 ];
 
-// Validar y sanear datos aquí...
+// Seción para Validar y sanear datos  
 // echo "Nick: " . $_POST['nick_user'];
+
+// Validar nombre y apellidos
+$first_name = $_POST['first_name_user'] ?? '';
+$last_name = $_POST['last_name_user'] ?? '';
+
+if (!preg_match("/^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/", $first_name)) {
+	$response['message'] = 'El nombre contiene caracteres inválidos.';
+	echo json_encode($response);
+	exit;
+}
+
+if (!preg_match("/^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/", $last_name)) {
+	$response['message'] = 'Los apellidos contienen caracteres inválidos.';
+	echo json_encode($response);
+	exit;
+}
+
+// Recibir y validar el correo electrónico
+$mail_user = isset($_POST['mail_user']) ? $_POST['mail_user'] : '';
+
+if (!filter_var($mail_user, FILTER_VALIDATE_EMAIL)) {
+	$response['message'] = 'La dirección de correo electrónico no es válida.';
+	echo json_encode($response);
+	exit;
+}
 
 // Validar si el email ya está registrado
 if (Consultas::verificarEmailExistente($data['mail_user'])) {

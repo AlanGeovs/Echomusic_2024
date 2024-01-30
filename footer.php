@@ -287,6 +287,59 @@
     });
 </script>
 
+<!-- Pginación artistas -->
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Función para generar los enlaces de paginación
+        function generarPaginador(totalPaginas, paginaActual) {
+            const ulPaginador = document.getElementById('pagination');
+            ulPaginador.innerHTML = ''; // Limpiar contenido anterior
+
+            // Botón de página anterior
+            const liPrev = document.createElement('li');
+            liPrev.className = 'page-item ' + (paginaActual === 1 ? 'disabled' : '');
+            liPrev.innerHTML = `<a class="page-link" href="#" data-page="${paginaActual - 1}">Previous</a>`;
+            ulPaginador.appendChild(liPrev);
+
+            // Enlaces de páginas
+            for (let i = 1; i <= totalPaginas; i++) {
+                const liPage = document.createElement('li');
+                liPage.className = 'page-item ' + (i === paginaActual ? 'active' : '');
+                liPage.innerHTML = `<a class="page-link" href="#" data-page="${i}">${i}</a>`;
+                ulPaginador.appendChild(liPage);
+            }
+
+            // Botón de página siguiente
+            const liNext = document.createElement('li');
+            liNext.className = 'page-item ' + (paginaActual === totalPaginas ? 'disabled' : '');
+            liNext.innerHTML = `<a class="page-link" href="#" data-page="${paginaActual + 1}">Next</a>`;
+            ulPaginador.appendChild(liNext);
+        }
+
+        // Función para cargar artistas
+        function cargarArtistas(pagina) {
+            // Aquí debes implementar la lógica para cargar los artistas
+            // Por ejemplo, haciendo una solicitud AJAX a tu servidor
+            console.log('Cargando artistas para la página:', pagina);
+            // Ejemplo para generar el paginador
+            generarPaginador(10, pagina); // 10 es el total de páginas (debes calcularlo)
+        }
+
+        // Manejar clic en los enlaces del paginador
+        document.getElementById('pagination').addEventListener('click', function(e) {
+            e.preventDefault();
+            if (e.target.tagName === 'A' && !e.target.parentNode.classList.contains('disabled')) {
+                const paginaSeleccionada = parseInt(e.target.getAttribute('data-page'));
+                cargarArtistas(paginaSeleccionada);
+            }
+        });
+
+        // Cargar artistas para la página inicial
+        cargarArtistas(1); // Cargar la primera página al inicio
+    });
+</script>
+
+
 
 
 

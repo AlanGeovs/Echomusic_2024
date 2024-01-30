@@ -40,7 +40,7 @@ class Consultas
         }
 
         //        Buscar Género
-        public function buscarGenero($id)
+        public static function buscarGenero($id)
         {
                 $stmt = Conexion::conectar()->prepare("SELECT gu.*, g.* FROM genre_user gu INNER JOIN genres g ON gu.id_genre = g.id_genre WHERE gu.id_user=:id;");
                 $stmt->bindParam(":id", $id, PDO::PARAM_INT);
@@ -160,6 +160,24 @@ class Consultas
                 //return $id;
                 $stmt->close();
         }
+
+        // Contar artistas con base en el query generado del filtro/búsqeuda
+        public static function contarArtistas($condiciones)
+        {
+                // Conectar a la base de datos usando Conexion::conectar
+                $stmt = Conexion::conectar()->prepare("SELECT COUNT(*) as total FROM users u INNER JOIN genre_user gu ON u.id_user=gu.id_user INNER JOIN genres g ON gu.id_genre = g.id_genre WHERE picture_ready=1 AND verified like 'yes'" . $condiciones);
+
+                // Ejecutar la consulta
+                $stmt->execute();
+
+                // Obtener el resultado
+                $resultado = $stmt->fetch(PDO::FETCH_ASSOC);
+
+                // Retornar el conteo total de artistas
+                return $resultado['total'];
+        }
+
+
 
         //
         //////////****************************
@@ -367,6 +385,16 @@ class Consultas
                 $stmt = Conexion::conectar()->prepare("SELECT rc.*,c.*,r.* FROM regions_cities rc INNER JOIN regions r ON rc.id_region =r.id_region INNER JOIN cities c ON c.id_city = rc.id_city WHERE rc.id_region =:idReg AND rc.id_city=:idCity;");
                 $stmt->bindParam(":idCity", $idCity, PDO::PARAM_INT);
                 $stmt->bindParam(":idReg", $idReg, PDO::PARAM_INT);
+                $stmt->execute();
+                return $stmt->fetchAll();
+                //return $id;
+                $stmt->close();
+        }
+        //Busca Tipo de Artista
+        static public function buscaTipoArtista($id_musician)
+        {
+                $stmt = Conexion::conectar()->prepare("SELECT * FROM `type_musician` WHERE `id_musician` = :id_musician;");
+                $stmt->bindParam(":id_musician", $id_musician, PDO::PARAM_INT);
                 $stmt->execute();
                 return $stmt->fetchAll();
                 //return $id;

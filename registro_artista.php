@@ -55,7 +55,7 @@ include "header.php";
                             </div>
                             <div class="col-md-12 col-sm-12">
                                 <div class="form-group">
-                                    <input id="mail_user" name="mail_user" class="form-control" placeholder="Email" required>
+                                    <input id="mail_user" name="mail_user" type="email" class="form-control" aria-describedby="emailHelp" placeholder="Email" required>
                                 </div>
                             </div>
                             <!-- <div class="col-md-12 col-sm-12">
@@ -82,14 +82,14 @@ include "header.php";
                                     <input type="checkbox" id="chb1" required>
                                     <label>
                                         Acepto los
-                                        <a href="terminos-y-condiciones.php">Términos y condiciones.</a>
+                                        <a href="terminos-y-condiciones.php" target="_blank">Términos y condiciones.</a>
                                     </label>
                                 </div>
                             </div>
                             <div class="col-md-12 col-sm-12 col-xs-12">
                                 <div class="privecy-txt">
                                     <p><small>Para obtener más información acerca de cómo EchoMusic recopila, utiliza, comparte y protege tus datos personales, consulta la
-                                            <a href="politica-de-privacidad.php">Política de Privacidad</a> de EchoMusic.</small> </p>
+                                            <a href="politica-de-privacidad.php" target="_blank">Política de Privacidad</a> de EchoMusic.</small> </p>
                                 </div>
                             </div>
                             <div class="col-12 text-center">

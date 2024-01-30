@@ -12,7 +12,6 @@ if (isset($_GET["a"])) {
 }
 
 $biografia = Consultas::bioArtistas($id);
-$presskit  = Consultas::bioPresskit($id);
 $descripcion = Consultas::descArtistas($id);
 
 //Eventos                    
@@ -33,6 +32,23 @@ $resultadosEventosPasa = Consultas::eventosPasadosArtista($respuesta[0]["id_user
             </ul>
         </div>
     </div>
+    <!--            <div class="page-shape">
+                <div class="shape1">
+                    <img src="assets/images/shape/1.png" alt="shape" />
+                </div>
+                <div class="shape3">
+                    <img src="assets/images/shape/3.png" alt="shape" />
+                </div>
+                <div class="shape4">
+                    <img src="assets/images/shape/4.png" alt="shape" />
+                </div>
+                <div class="shape5">
+                    <img src="assets/images/shape/5.png" alt="shape" />
+                </div>
+                <div class="shape6">
+                    <img src="assets/images/shape/6.png" alt="shape" />
+                </div>
+            </div>-->
 </div>
 <!-- End Page Title Area -->
 
@@ -41,98 +57,52 @@ $resultadosEventosPasa = Consultas::eventosPasadosArtista($respuesta[0]["id_user
     <div class="container">
         <div class="row align-items-center choose-c justify-content-md-center ">
             <!--Perfil-->
-            <div class="col-lg-5 col-sm-5">
-
-                <div class="  text-center">
-                    <div class=" ">
+            <?php
+            //                    Determino si No hay EVENTOS, si nuevos ni pasados para ajustar diseño  
+            if (count($resultadosProxEventos) || count($resultadosEventosPasa)) {
+                $AnchoColumna = 'col-lg-5 col-sm-5';
+            } else {
+                $AnchoColumna = 'col-lg-12 col-sm-12';
+            }
+            ?>
+            <div class="<?php echo $AnchoColumna; ?> item dev design">
+                <h2 class="text-center"> <?php echo $respuesta[0]["nick_user"]; ?></h2>
+                <div class="single-case text-center">
+                    <div class="simple-evento-artista">
                         <a href="#">
                             <img class="responsiveArtista" src="https://echomusic.cl/images/avatars/<?php echo $respuesta[0]["id_user"]; ?>.jpg" alt="descatado" />
                         </a>
-
-                        <h2 class="text-center"> <?php echo $respuesta[0]["nick_user"]; ?></h2>
-                        <span>
-                            <i class="bi bi-star-fill"></i>
-                            <i class="bi bi-star-fill"></i>
-                            <i class="bi bi-star-fill"></i>
-                            <i class="bi bi-star-fill"></i>
-                            <i class="bi bi-star-fill"></i>
-                        </span>
                     </div>
 
                     <div class="feature-tittle">
 
+                        <span style="font-size: 20px">Seguidores 1 Seguidos 0 Publicaciones 2</span>
 
+                        <!--Descripción-->
+                        <?php
+                        if (!empty($descripcion[0]["desc_user"])) {
+                        ?>
+                            <h3>Descripción</h3>
+                            <p style="text-align: center;"><?php echo $descripcion[0]["desc_user"]; ?></p>
+                        <?php
+                        } else {
+                            echo '<br>';
+                        }
+                        ?>
 
-
+                        <!-- Biogración - Button to Open the Modal -->
+                        <?php
+                        if (!empty($biografia[0]["bio_user"])) {
+                        ?>
+                            <a type="button" class="box-btn" data-bs-toggle="modal" data-bs-target="#ModalBio">Ver Biografía</a>
+                        <?php
+                        } else {
+                            echo '<br>';
+                        }
+                        ?>
                     </div>
                 </div>
-            </div>
 
-
-            <!--Eventos-->
-            <div class=" col-lg-7 text-center">
-
-                <!-- Descripción -->
-                <?php
-                if (!empty($descripcion[0]["desc_user"])) {
-                ?>
-                    <h3>Descripción</h3>
-                    <p style="text-align: center;"><?php echo $descripcion[0]["desc_user"]; ?></p>
-                <?php
-                } else {
-                    echo '<br>';
-                }
-                ?>
-
-                <!-- Biogración - Button to Open the Modal -->
-                <?php
-                if (!empty($biografia[0]["bio_user"])) {
-                ?>
-                    <a type="button" class="box-btn" data-bs-toggle="modal" data-bs-target="#ModalBio">Ver Biografía</a>
-                <?php
-                }
-
-                if (!empty($presskit[0]["file"])) {
-                ?>
-                    <a type="button" class="box-btn" href="<?php echo "/dashboard/images/presskit/" . $presskit[0]["file"]; ?>">Descargar Presskit</a>
-                <?php
-                }
-                ?>
-                <!-- Ver Eventos  -->
-                <a type="button" class="box-btn" data-bs-toggle="modal" data-bs-target="#ModalEventos">Ver eventos</a>
-
-                <br>
-                <span class="flaticon-award"></span> Región
-                <span class="flaticon-award"></span> Estilo
-                <span class="flaticon-award"></span> Tipo de artista
-
-
-            </div>
-        </div>
-    </div>
-</section>
-
-</div>
-
-</div>
-
-</div>
-</section>
-<!-- Fin Perfil Artista -->
-
-<!-- Videos -->
-<section class="pricing-area ptb-35">
-    <div class="container">
-        <div class="row align-items-center choose-c justify-content-md-center ">
-            <!--Video-->
-            <div class="col-lg-5 col-sm-5">
-                <div class="row altoVideo align-items-center choose-c justify-content-md-center">
-                    <iframe src="https://echomusic.net/video/videos.php?a=<?php echo $id; ?>" class="altoVideo" style="border: none;" width="100%"></iframe>
-                </div>
-            </div>
-
-            <!-- Playlist -->
-            <div class="col-lg-5 col-sm-5">
                 <!--Playlist-->
                 <?php
                 $playlist = Consultas::playListArtista($respuesta[0]["id_user"]);
@@ -143,16 +113,337 @@ $resultadosEventosPasa = Consultas::eventosPasadosArtista($respuesta[0]["id_user
                     ?>
                 </div>
             </div>
-        </div>
 
+
+            <!--Eventos-->
+            <div class=" col-lg-7">
+                <!-- Próximos eventos -->
+                <?php
+                if (empty($resultadosProxEventos)) {
+                    //                                                echo 'no hay prox eventos';
+
+                } else {
+                ?>
+                    <h3 class="text-center">Próximos Eventos (<?php echo count($resultadosProxEventos); ?>)</h3>
+
+                    <?php
+                    for ($e = 0; $e < count($resultadosProxEventos); $e++) {
+                    ?>
+                        <div class="home-2-contact col-lg-12">
+                            <div class="content">
+                                <div class="row align-items-center choose-c justify-content-md-center">
+                                    <!--img-->
+                                    <div class="col-12 col-sm-4  choose-img text-center">
+                                        <img class="responsiveEveArtista" src="https://echomusic.cl/images/events/<?php echo $resultadosProxEventos[$e]["img"]; ?>.jpg" alt="<?php echo ''; ?>" />
+
+
+                                    </div>
+                                    <!--Descripción-->
+                                    <div class="col-12 col-sm-8" style="vertical-align: middle;">
+                                        <ul>
+                                            <li>
+                                                <?php echo $resultadosProxEventos[$e]["name_event"]; ?>
+                                            </li>
+                                        </ul>
+
+                                        <a class="textoCorto" href=" ">
+                                            <h3><?php echo $resultadosProxEventos[$e]["name_event"]; ?> </h3>
+                                        </a>
+
+
+                                        <p style="font-size: .9em; color: grey; "><?php echo substr($resultadosProxEventos[$e]["desc_event"], 0, 220); ?> </p>
+
+
+                                        <a href=" " class="box-btn">Ver evento</a>
+                                    </div>
+                                </div>
+                                <!--fin del Row-->
+                            </div>
+                        </div>
+                    <?php
+                    } //termina el for 
+                }
+                //                            Termina else de Proximos Eventos     
+                if (empty($resultadosEventosPasa)) {
+                    //                            echo 'no hay eventos pasados';
+
+                } else {
+                    ?>
+                    <!-- Eventos Pasados -->
+                    <h3 class="text-center"> Eventos Pasados (<?php echo count($resultadosEventosPasa); ?>)</h3>
+
+                    <div class="home-2-contact col-lg-12">
+                        <div class="content">
+                            <!--Diseño ANterior-->
+                            <!--             <div class="row">
+                                        img
+                                        <div class="col-12 col-sm-6  choose-img">  
+                                            <img src="https://echomusic.cl/images/events/<?php echo $resultadosEventosPasa[$p]["img"]; ?>.jpg" alt="<?php echo ''; ?>" width="350px"/> 
+                                        </div>
+                                        Descripción
+                                        <div class="col-12 col-sm-6" style="vertical-align: middle;">
+                                            <ul>
+                                                <li>
+                                                    <?php echo $resultadosEventosPasa[$p]["name_event"]; ?>                                                    
+                                                </li> 
+                                            </ul>  
+                                            <h3><?php echo $resultadosEventosPasa[$p]["name_event"]; ?> </h3>  
+                                            <p>Organizado: 
+                                                <?php echo $resultadosEventosPasa[$p]["organizer"]; ?>
+                                                <?php echo $resultadosEventosPasa[$p]["name_location"]; ?>
+                                                / <?php echo $resultadosEventosPasa[$p]["location"]; ?> </p>
+                                            <p><?php echo $resultadosEventosPasa[$p]["desc_event"]; ?> </p>
+ 
+                                        </div>
+                                    </div> fin del Row-->
+
+                            <!--Diseño Nuevvo-->
+                            <div class="row">
+                                <div class="home-team-slider owl-carousel owl-theme">
+                                    <?php
+                                    for ($p = 0; $p < count($resultadosEventosPasa); $p++) {
+                                    ?>
+                                        <div class="single-team">
+                                            <div class="team-img">
+                                                <img class="tamano-4" src="https://echomusic.cl/images/events/<?php echo $resultadosEventosPasa[$p]["img"]; ?>.jpg" alt="<?php echo ''; ?>" width="350px" />
+                                            </div>
+
+                                            <div class="content text-center">
+                                                <h6><?php echo $resultadosEventosPasa[$p]["name_event"]; ?> </h6>
+                                                <p style="font-size: 10px;">Organizado: <?php echo $resultadosEventosPasa[$p]["organizer"]; ?>
+                                                    <?php echo $resultadosEventosPasa[$p]["name_location"]; ?>
+                                                    / <?php echo $resultadosEventosPasa[$p]["location"]; ?>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    <?php
+                                    }
+                                    ?>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                <?php
+
+                }
+                //termina else de Eventos Pasados
+                ?>
+                <!--Nuevo diseño eventos pasados-->
+                <!--Solo Formato HTML-->
+                <!--                        <div class="home-2-contact col-lg-12">                       
+                            <div class="content"> 
+                                <div class="row">
+                                    <div class="home-team-slider owl-carousel owl-theme">
+
+                                        <div class="single-team">
+                                            <div class="team-img">
+                                                <img src="assets/images/avatars/echo-1.jpg" alt="descatado" /> 
+                                            </div>
+
+                                            <div class="content text-center">
+                                                <h3>Destacado 1</h3>
+                                                <p>Texto de destacado 1</p>
+                                            </div>
+                                        </div>
+ 
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>                        -->
+
+                <!--Condición para mostrar video-->
+                <?php
+                if (count($resultadosProxEventos) == 0) { // si no hay eventos proximos
+                ?>
+                    <div class="row align-items-center choose-c justify-content-md-center pt-35">
+                        <div class="section-title ">
+                            <h3>Videos</h3>
+                        </div>
+                        <div class="home-2-contact col-lg-12">
+                            <div class="content">
+                                <div class="row altoVideo align-items-center choose-c justify-content-md-center">
+                                    <iframe src="https://echomusic.net/video/videos.php?a=<?php echo $id; ?>" class="altoVideo" style="border: none;" width="100%"></iframe>
+                                </div>
+                                <!--fin del Row-->
+                            </div>
+                        </div>
+                    </div>
+            </div>
+        </div>
     </div>
 </section>
-<!-- End Videos -->
+<?php
+                } else {
+?>
+    </div>
+
+    </div>
+
+    </div>
+    </section>
+    <!-- Fin Perfil Artista -->
+
+    <!-- Videos -->
+    <section class="pricing-area ptb-35">
+        <div class="container">
+            <div class="row align-items-center choose-c justify-content-md-center">
+                <div class="section-title ">
+                    <h2>Videos</h2>
+                </div>
+                <div class="home-2-contact col-lg-8">
+                    <div class="content">
+                        <div class="row">
+                            <iframe src="https://echomusic.net/video/videos.php?a=<?php echo $id; ?>" class="altoVideo" style="border: none;" width="100%"></iframe>
+                        </div>
+                        <!--fin del Row-->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- End Videos -->
+
+<?php
+                } //Fin del else de Video
+?>
+
+<!-- Crowdfunding 2 -->
+<?php
+$respuestaCrowdfunding = Consultas::crowdfunding($respuesta[0]["id_user"]);
+
+//    si No hay Crowdfunding, no muestra nada
+if (empty($respuestaCrowdfunding)) {
+    // echo '<h2>No hay Crowdfunding'.$respuesta[0]["id_user"].'</h2>';
+} else {
+    $totalARecaudar  = $respuestaCrowdfunding[0]["project_amount"];
+    //  Extrae la suma de lo recaudado
+    //        $sumaRecaudado = array_sum ( Consultas::recaudadoCrowdfunding( $respuestaCrowdfunding[0]["id_project"]) );
+    $sumaRecaudado =  Consultas::recaudadoCrowdfunding($respuestaCrowdfunding[0]["id_project"]);
+    $recaudadoPorcentaje = Consultas::obtenerPorcentaje($sumaRecaudado[0], $totalARecaudar);
+?>
+
+    <section class="pricing-area ptb-35">
+        <div class="container">
+            <div class="row align-items-center choose-c justify-content-md-center">
+
+                <div class="section-title ">
+
+                    <h2>Crowdfunding</h2>
+                </div>
+
+                <div class="home-2-contact col-lg-8">
+                    <div class="content">
+                        <div class="row">
+                            <!--img-->
+                            <div class="col-12 col-sm-6  choose-img">
+                                <a href="crowdfunding.php?c=<?php echo $respuestaCrowdfunding[0]["id_project"]; ?>">
+                                    <img src="https://echomusic.cl/images/avatars/<?php echo $respuesta[0]["id_user"]; ?>.jpg" alt="<?php echo $respuesta[0]["nick_user"]; ?>" width="350px" />
+                                </a>
+                            </div>
+                            <!--Descripción-->
+                            <div class="col-12 col-sm-6" style="vertical-align: middle;">
+                                <ul>
+                                    <li>
+                                        <?php echo $respuesta[0]["nick_user"]; ?>
+                                    </li>
+                                </ul>
+
+                                <a href="crowdfunding.php?c=<?php echo $respuestaCrowdfunding[0]["id_project"]; ?>">
+                                    <h3><?php echo $respuestaCrowdfunding[0]["project_title"]; ?> </h3>
+                                </a>
+                                <h6>Avance del <?php echo $recaudadoPorcentaje; ?>% recaudado</h6>
+                                <div class="progress">
+
+                                    <div class="progress-bar progress-bar-striped bg-warning progress-bar-animated" role="progressbar" style="width: <?php echo $recaudadoPorcentaje; ?>%" aria-valuenow="" aria-valuemin="<?php echo $sumaRecaudado[0]; ?>" aria-valuemax="<?php echo $totalARecaudar; ?>"></div>
+                                </div>
+                                <p><?php echo $respuestaCrowdfunding[0]["project_desc"]; ?> </p>
+
+                                <a href="crowdfunding.php?c=<?php echo $respuestaCrowdfunding[0]["id_project"]; ?>" class="box-btn">Patrocinar</a>
+                            </div>
+                        </div>
+                        <!--fin del Row-->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- End Crwdfunding -->
+<?php
+} //fin del else 
+?>
+
+
+<!--  Integrantes Area -->
+<?php
+
+$muestraIntegrantes = Consultas::integrantes($respuesta[0]["id_user"]);
+
+// condición para mostrar o no las tarifas 
+if (empty($muestraIntegrantes[0]["id_user"])) {
+    echo 'No hay tarifas';
+} else {
+    //Inician tarrifas
+?>
+    <section class="home-blog-area   ptb-35">
+        <div class="container">
+            <div class="section-title">
+                <!--<span>What We Offer</span>-->
+                <h2>Integrantes</h2>
+                <!--<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ipsum suspendisse.</p>-->
+            </div>
+
+            <!--Tarifas formato blog-->
+            <div class="row justify-content-md-center">
+                <?php
+                for ($t = 0; $t < count($muestraIntegrantes); $t++) {
+                ?>
+                    <div class="col-lg-4 col-md-6">
+                        <div class="single-blog">
+                            <div class="blog-img">
+                                <a href="blog-details.html">
+                                    <img style="height: 200px; width: 200px; border-radius: 50%;" src="dashboard/images/integrantes/<?php echo $muestraIntegrantes[$t]["img_member"]; ?>" class="responsiveArtista" alt="" />
+                                </a>
+                            </div>
+
+                            <div class="pricing-top-heading">
+                                <h3><?php echo $muestraIntegrantes[$t]["first_name_member"] . " " . $muestraIntegrantes[$t]["last_name_member"]; ?></h3>
+                            </div>
+                            <p><?php
+                                $muestraInstrumento = Consultas::obtenerInstrumento($muestraIntegrantes[$t]["instrument_member"]);
+                                echo $muestraInstrumento[0]["name_instrument"];
+
+                                ?>
+
+                            </p>
+                            <!-- <a class="box-btn" href="#">
+                                Contratar
+                            </a> -->
+
+                        </div>
+                    </div>
+
+                <?php
+
+                } //fin del FOR
+                ?>
 
 
 
 
+            </div>
 
+
+
+
+        </div>
+    </section>
+    <!-- End Tarifas Area -->
+
+<?php
+} // fin del IF -ELSE para mostrar tarigas
+?>
 
 
 <!--  Tarifas Area -->
@@ -513,153 +804,6 @@ if (empty($tarifasArtista[0]["value_plan"])) {
 <?php
 } // fin del IF -ELSE para mostrar tarigas
 ?>
-
-
-
-
-
-<!-- Crowdfunding 2 -->
-<?php
-$respuestaCrowdfunding = Consultas::crowdfunding($respuesta[0]["id_user"]);
-
-//    si No hay Crowdfunding, no muestra nada
-if (empty($respuestaCrowdfunding)) {
-    // echo '<h2>No hay Crowdfunding'.$respuesta[0]["id_user"].'</h2>';
-} else {
-    $totalARecaudar  = $respuestaCrowdfunding[0]["project_amount"];
-    //  Extrae la suma de lo recaudado
-    //        $sumaRecaudado = array_sum ( Consultas::recaudadoCrowdfunding( $respuestaCrowdfunding[0]["id_project"]) );
-    $sumaRecaudado =  Consultas::recaudadoCrowdfunding($respuestaCrowdfunding[0]["id_project"]);
-    $recaudadoPorcentaje = Consultas::obtenerPorcentaje($sumaRecaudado[0], $totalARecaudar);
-?>
-
-    <section class="pricing-area ptb-35">
-        <div class="container">
-            <div class="row align-items-center choose-c justify-content-md-center">
-
-                <div class="section-title ">
-
-                    <h2>Crowdfunding</h2>
-                </div>
-
-                <div class="home-2-contact col-lg-8">
-                    <div class="content">
-                        <div class="row">
-                            <!--img-->
-                            <div class="col-12 col-sm-6  choose-img">
-                                <a href="crowdfunding.php?c=<?php echo $respuestaCrowdfunding[0]["id_project"]; ?>">
-                                    <img src="https://echomusic.cl/images/avatars/<?php echo $respuesta[0]["id_user"]; ?>.jpg" alt="<?php echo $respuesta[0]["nick_user"]; ?>" width="350px" />
-                                </a>
-                            </div>
-                            <!--Descripción-->
-                            <div class="col-12 col-sm-6" style="vertical-align: middle;">
-                                <ul>
-                                    <li>
-                                        <?php echo $respuesta[0]["nick_user"]; ?>
-                                    </li>
-                                </ul>
-
-                                <a href="crowdfunding.php?c=<?php echo $respuestaCrowdfunding[0]["id_project"]; ?>">
-                                    <h3><?php echo $respuestaCrowdfunding[0]["project_title"]; ?> </h3>
-                                </a>
-                                <h6>Avance del <?php echo $recaudadoPorcentaje; ?>% recaudado</h6>
-                                <div class="progress">
-
-                                    <div class="progress-bar progress-bar-striped bg-warning progress-bar-animated" role="progressbar" style="width: <?php echo $recaudadoPorcentaje; ?>%" aria-valuenow="" aria-valuemin="<?php echo $sumaRecaudado[0]; ?>" aria-valuemax="<?php echo $totalARecaudar; ?>"></div>
-                                </div>
-                                <p><?php echo $respuestaCrowdfunding[0]["project_desc"]; ?> </p>
-
-                                <a href="crowdfunding.php?c=<?php echo $respuestaCrowdfunding[0]["id_project"]; ?>" class="box-btn">Patrocinar</a>
-                            </div>
-                        </div>
-                        <!--fin del Row-->
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <!-- End Crwdfunding -->
-<?php
-} //fin del else 
-?>
-
-
-
-
-
-
-<!--  Integrantes Area -->
-<?php
-
-$muestraIntegrantes = Consultas::integrantes($respuesta[0]["id_user"]);
-
-// condición para mostrar o no las tarifas 
-if (empty($muestraIntegrantes[0]["id_user"])) {
-    echo 'No hay tarifas';
-} else {
-    //Inician Integrantes
-?>
-    <section class="home-blog-area   ptb-35">
-        <div class="container">
-            <div class="section-title">
-                <!--<span>What We Offer</span>-->
-                <h2>Integrantes</h2>
-                <!--<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ipsum suspendisse.</p>-->
-            </div>
-
-            <!--Integrantes formato blog-->
-            <div class="row justify-content-md-center">
-                <?php
-                for ($t = 0; $t < count($muestraIntegrantes); $t++) {
-                ?>
-                    <div class="col-lg-4 col-md-6">
-                        <div class="single-blog">
-                            <div class="blog-img">
-                                <a href="blog-details.html">
-                                    <img style="height: 200px; width: 200px; border-radius: 50%;" src="dashboard/images/integrantes/<?php echo $muestraIntegrantes[$t]["img_member"]; ?>" class="responsiveArtista" alt="" />
-                                </a>
-                            </div>
-
-                            <div class="pricing-top-heading">
-                                <h3><?php echo $muestraIntegrantes[$t]["first_name_member"] . " " . $muestraIntegrantes[$t]["last_name_member"]; ?></h3>
-                            </div>
-                            <p><?php
-                                $muestraInstrumento = Consultas::obtenerInstrumento($muestraIntegrantes[$t]["instrument_member"]);
-                                echo $muestraInstrumento[0]["name_instrument"];
-
-                                ?>
-
-                            </p>
-                            <!-- <a class="box-btn" href="#">
-                                Contratar
-                            </a> -->
-
-                        </div>
-                    </div>
-
-                <?php
-
-                } //fin del FOR
-                ?>
-
-
-
-
-            </div>
-
-
-
-
-        </div>
-    </section>
-    <!-- End Tarifas Area -->
-
-<?php
-} // fin del IF -ELSE para mostrar tarigas
-?>
-
-
-
 
 
 
