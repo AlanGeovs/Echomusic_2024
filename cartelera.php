@@ -1,4 +1,4 @@
-<?php  
+<?php
 include "model/models.php";
 include "header.php";
 
@@ -7,122 +7,130 @@ if (isset($_GET["r"])) {
     $id = $_GET["r"];
     $tipo = $_GET["t"];
     $fechaInicial   = $_GET["fi"];
-    $fechaFinal   = $_GET["ff"]; 
-    $region   = $_GET["reg"]; 
-    $titleBusqueda = "Eventos sobre ".$id;
-    
-//    $eventosRelacionados = Consultas::eventosCarteleraBusqueda($id);
+    $fechaFinal   = $_GET["ff"];
+    $region   = $_GET["reg"];
+    $titleBusqueda = "Eventos sobre " . $id;
+
+    //    $eventosRelacionados = Consultas::eventosCarteleraBusqueda($id);
 } else {
     $titleBusqueda = "Eventos Recomendados";
-//    $eventosRelacionados = Consultas::ultimosEventos2();
+    //    $eventosRelacionados = Consultas::ultimosEventos2();
 }
 
 
 //Fecha
- $fechaEntera = strtotime($respuesta[0]["date_event"]);
+$fechaEntera = strtotime($respuesta[0]["date_event"]);
 $anio = date("Y", $fechaEntera);
 $mes = date("M", $fechaEntera);
 $dia = date("d", $fechaEntera);
 $diaSemana = date("D", $fechaEntera);
 
 $hora = date("H", $fechaEntera);
-$minutos = date("i", $fechaEntera); 
+$minutos = date("i", $fechaEntera);
 
 //var_dump($respuesta);
 
-$idEvento=  $respuesta[0]["id_event"];
-$idUsuario= $respuesta[0]["id_user"];
+$idEvento =  $respuesta[0]["id_event"];
+$idUsuario = $respuesta[0]["id_user"];
 
 //Buscar Género
-$resuestaBuscaGenero =Consultas::buscarGenero($idUsuario); 
-$idGenero= $resuestaBuscaGenero["id_genre"];
+$resuestaBuscaGenero = Consultas::buscarGenero($idUsuario);
+$idGenero = $resuestaBuscaGenero["id_genre"];
 
 //    BUscar nombre Ciudad Region
-$respuestaEventoCiudadRegion = Consultas::buscaCiudadRegion($respuesta[0]["id_city"], $respuesta[0]["id_region"] ) ; 
+$respuestaEventoCiudadRegion = Consultas::buscaCiudadRegion($respuesta[0]["id_city"], $respuesta[0]["id_region"]);
 
- 
-    /* FILTRO de busqueda//////////////////////////////////////////// */
-    if (!isset($_GET["r"])){$_GET["r"] = '';}
-    if (!isset($_GET["fi"])){$_GET["fi"] = '';}
-    if (!isset($_GET["ff"])){$_GET["ff"] = '';}
-    if (!isset($_GET["t"])){$_GET["t"] = '';}
-    if (!isset($_GET["reg"])){$_GET["reg"] = '';}
+
+/* FILTRO de busqueda//////////////////////////////////////////// */
+if (!isset($_GET["r"])) {
+    $_GET["r"] = '';
+}
+if (!isset($_GET["fi"])) {
+    $_GET["fi"] = '';
+}
+if (!isset($_GET["ff"])) {
+    $_GET["ff"] = '';
+}
+if (!isset($_GET["t"])) {
+    $_GET["t"] = '';
+}
+if (!isset($_GET["reg"])) {
+    $_GET["reg"] = '';
+}
 
 //Para VALUE de Evento
-    if(trim($_GET["r"])==''){
-        $valueEvento = '';        
-    }else{
-        $valueEvento = 'value="'.$_GET["r"].'" ';
+if (trim($_GET["r"]) == '') {
+    $valueEvento = '';
+} else {
+    $valueEvento = 'value="' . $_GET["r"] . '" ';
+}
+
+if ($_GET["r"] == '') {
+    $_GET["r"] = ' ';
+}
+$aKeyword = explode(" ", $_GET["r"]);
+
+if ($_GET["r"] == '' and $_GET["t"] == ''  and $_GET["fi"] == '' and $_GET["ff"] == '' and  $_GET["reg"] == '') {
+    //        $query = "SELECT * FROM datos_usuario ";
+    $eventosRelacionados = Consultas::ultimosEventos2();
+} else {
+    //Ambas Fechas  
+    if ($_GET["fi"] != '' && $_GET["ff"] != '') {
+        //Ambas Fechas con  Region 
+        if ($_GET["reg"] != '') {
+            echo "Fechas: Ambas + Region=" . $_GET["reg"];
+            $eventosRelacionados = Consultas::eventosFechasReg($id, $_GET["fi"], $_GET["ff"], $_GET["reg"]);
+        }
+        //Ambas Fechas sin  Region 
+        else {
+            echo "Fechas: Ambas";
+            $eventosRelacionados = Consultas::eventosFechas($id, $_GET["fi"], $_GET["ff"]);
+        }
     }
 
-    if ($_GET["r"] == '') {
-        $_GET["r"] = ' ';
+    if ($_GET["fi"] != '' and $_GET["ff"] = '') {
+        echo "Fechas: Inicial";
+        $eventosRelacionados = Consultas::eventosFechaInicial($id, $_GET["fi"]);
     }
-    $aKeyword = explode(" ", $_GET["r"]);
-
-    if ( $_GET["r"] == '' AND $_GET["t"]== ''  AND $_GET["fi"] == '' AND $_GET["ff"] == '' AND  $_GET["reg"] == '') {
-//        $query = "SELECT * FROM datos_usuario ";
-        $eventosRelacionados = Consultas::ultimosEventos2();
+    if ($_GET["ff"] != '' and $_GET["fi"] = '') {
+        echo "Fechas: Final";
+        $eventosRelacionados = Consultas::eventosFechaFinal($id, $_GET["ff"]);
     } else {
-            //Ambas Fechas  
-            if ($_GET["fi"] != '' && $_GET["ff"] != '') {
-                //Ambas Fechas con  Region 
-                if ($_GET["reg"] != '') {
-                        echo "Fechas: Ambas + Region=".$_GET["reg"];
-                        $eventosRelacionados = Consultas::eventosFechasReg($id,$_GET["fi"],$_GET["ff"], $_GET["reg"]); 
-                    }
-                    //Ambas Fechas sin  Region 
-                     else {
-                        echo "Fechas: Ambas";
-                        $eventosRelacionados = Consultas::eventosFechas($id, $_GET["fi"], $_GET["ff"]);
-                    }
-                }
-            
-            if($_GET["fi"] != '' AND $_GET["ff"] = ''){
-                 echo "Fechas: Inicial";
-                $eventosRelacionados = Consultas::eventosFechaInicial($id,$_GET["fi"]);
-            }
-            if($_GET["ff"] != '' AND $_GET["fi"] = ''){
-                 echo "Fechas: Final";
-                $eventosRelacionados = Consultas::eventosFechaFinal($id,$_GET["ff"]);
-            }
-            else{
-                $eventosRelacionados = Consultas::eventosCarteleraBusqueda($id);
-                
-            }
-//        $query = "SELECT * FROM datos_usuario ";
-//        if ( $_GET["r"] != '') {
-//            $query .= "WHERE (nombre LIKE LOWER('%" . $aKeyword[0] . "%') OR apellidos LIKE LOWER('%" . $aKeyword[0] . "%')) ";
-//
-//            for ($i = 1; $i < count($aKeyword); $i++) {
-//                if (!empty($aKeyword[$i])) {
-//                    $query .= " OR nombre LIKE '%" . $aKeyword[$i] . "%' OR apellidos LIKE '%" . $aKeyword[$i] . "%'";
-//                }
-//            }
-//        }
+        $eventosRelacionados = Consultas::eventosCarteleraBusqueda($id);
+    }
+    //        $query = "SELECT * FROM datos_usuario ";
+    //        if ( $_GET["r"] != '') {
+    //            $query .= "WHERE (nombre LIKE LOWER('%" . $aKeyword[0] . "%') OR apellidos LIKE LOWER('%" . $aKeyword[0] . "%')) ";
+    //
+    //            for ($i = 1; $i < count($aKeyword); $i++) {
+    //                if (!empty($aKeyword[$i])) {
+    //                    $query .= " OR nombre LIKE '%" . $aKeyword[$i] . "%' OR apellidos LIKE '%" . $aKeyword[$i] . "%'";
+    //                }
+    //            }
+    //        }
 
-//        if ($_POST["buscadepartamento"] != '') {
-//            $query .= " AND departamento = '" . $_POST['buscadepartamento'] . "' ";
-//        }
-//
+    //        if ($_POST["buscadepartamento"] != '') {
+    //            $query .= " AND departamento = '" . $_POST['buscadepartamento'] . "' ";
+    //        }
+    //
 
-//
-//        if ($_POST['buscapreciodesde'] != '') {
-//            $query .= " AND precio >= '" . $_POST['buscapreciodesde'] . "' ";
-//        }
-//
-//        if ($_POST['buscapreciohasta'] != '') {
-//            $query .= " AND precio <= '" . $_POST['buscapreciohasta'] . "' ";
-//        }
-//
-//        if ($_POST["color"] != '') {
-//            $query .= " AND color = '" . $_POST["color"] . "' ";
-//        }
+    //
+    //        if ($_POST['buscapreciodesde'] != '') {
+    //            $query .= " AND precio >= '" . $_POST['buscapreciodesde'] . "' ";
+    //        }
+    //
+    //        if ($_POST['buscapreciohasta'] != '') {
+    //            $query .= " AND precio <= '" . $_POST['buscapreciohasta'] . "' ";
+    //        }
+    //
+    //        if ($_POST["color"] != '') {
+    //            $query .= " AND color = '" . $_POST["color"] . "' ";
+    //        }
 
     //    Agregamos el orden
-//        $query .= " ORDER BY nombre ASC ";
-//
-    } //fin del ELSE
+    //        $query .= " ORDER BY nombre ASC ";
+    //
+} //fin del ELSE
 
 
 //$sql = $conexion->query($query);
@@ -130,69 +138,23 @@ $respuestaEventoCiudadRegion = Consultas::buscaCiudadRegion($respuesta[0]["id_ci
 //$numeroSql = mysqli_num_rows($sql);
 ?>
 
-        <!-- Slider Area -->
-        <!--Cambio de imagen en style.css -> "single-slider-bg-1"   -->
-        <section class="slider-area-2">
-            <div class="home-slider owl-carousel owl-theme">
-                <div class="single-slider single-slider-bg-1">
-                    <div class="d-table">
-                        <div class="d-table-cell">
-                            <div class="container">
-                                <div class="row align-items-center">
-                                    <div class="col-lg-12 text-center">
-                                        <div class="slider-content one">
-                                            <h1>Crea tu evento presencial o streaming</h1>
-                                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida incididunt ut.</p>
-                                            
-                                            <div class="slider-btn text-center">
-                                                <a href="#" class="box-btn">Crear evento</a>
-                                                <a href="#" class="box-btn border-btn">Ver más</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+<!-- Slider Area -->
+<!--Cambio de imagen en style.css -> "single-slider-bg-1"   -->
+<section class="slider-area-2">
+    <div class="home-slider owl-carousel owl-theme">
+        <div class="single-slider single-slider-bg-1">
+            <div class="d-table">
+                <div class="d-table-cell">
+                    <div class="container">
+                        <div class="row align-items-center">
+                            <div class="col-lg-12 text-center">
+                                <div class="slider-content one">
+                                    <h1>Crea tu evento presencial o streaming</h1>
+                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida incididunt ut.</p>
 
-                <div class="single-slider single-slider-bg-2">
-                    <div class="d-table">
-                        <div class="d-table-cell">
-                            <div class="container">
-                                <div class="row align-items-center">
-                                    <div class="col-lg-12 text-center">
-                                        <div class="slider-content one">
-                                            <h1>Recauda fondos para tu próximo evento musical</h1>
-                                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida incididunt ut.</p>
-                                            
-                                            <div class="slider-btn text-center">
-                                                <a href="#" class="box-btn">Recaudar fondos</a>
-                                                <a href="#" class="box-btn border-btn">Ver más</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="single-slider single-slider-bg-3">
-                    <div class="d-table">
-                        <div class="d-table-cell">
-                            <div class="container">
-                                <div class="row align-items-center">
-                                    <div class="col-lg-12 text-center">
-                                        <div class="slider-content one">
-                                            <h1>Regístrate hoy mismo, fácil, rápido y seguro.</h1>
-                                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida incididunt ut.</p>
-                                            
-                                            <div class="slider-btn text-center">
-                                                <a href="#" class="box-btn">Registrarme</a>
-                                                <a href="#" class="box-btn border-btn">Ver más</a>
-                                            </div>
-                                        </div>
+                                    <div class="slider-btn text-center">
+                                        <a href="#" class="box-btn">Crear evento</a>
+                                        <a href="#" class="box-btn border-btn">Ver más</a>
                                     </div>
                                 </div>
                             </div>
@@ -200,34 +162,80 @@ $respuestaEventoCiudadRegion = Consultas::buscaCiudadRegion($respuesta[0]["id_ci
                     </div>
                 </div>
             </div>
-        </section>
-        <!-- End Slider Area -->
+        </div>
 
-        
-        <!-- Filtro  -->
-        
-        <!-- BUscador Avanzado -->
-        <section class="home-contact-area home-2-contact ptb-35">
-            <div class="container">
-                <div class="section-title">
-                    <span>Búsqueda avanzada</span>
-                    <h2>Encuentra tu evento, artista o espacio favorito</h2>
-                    <!--<p>It is a long established fact that a reader will be distracted by the rea dable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more.</p>-->
-                </div>
+        <div class="single-slider single-slider-bg-2">
+            <div class="d-table">
+                <div class="d-table-cell">
+                    <div class="container">
+                        <div class="row align-items-center">
+                            <div class="col-lg-12 text-center">
+                                <div class="slider-content one">
+                                    <h1>Recauda fondos para tu próximo evento musical</h1>
+                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida incididunt ut.</p>
 
-                <div class="row">
-                    <div class="col-lg-12 col-md-12">
-                        <div class="content">
-                            <form id="form2"  name="form2" method="GET" action="cartelera.php"> 
-                                <div class="row">
-                                    <div class="col-lg-3 col-sm-3">
-                                        <div class="form-group">
-                                            <input type="text" class="form-control" id="r" name="r" data-error="Buscar un evento o artista" placeholder="Buscar evento, artista o espacio"  <?php echo $valueEvento; ?>  />
-                                            <div class="help-block with-errors"></div>
-                                        </div>
+                                    <div class="slider-btn text-center">
+                                        <a href="#" class="box-btn">Recaudar fondos</a>
+                                        <a href="#" class="box-btn border-btn">Ver más</a>
                                     </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-<!--                                     <div class="col-lg-2 col-md-2">
+        <div class="single-slider single-slider-bg-3">
+            <div class="d-table">
+                <div class="d-table-cell">
+                    <div class="container">
+                        <div class="row align-items-center">
+                            <div class="col-lg-12 text-center">
+                                <div class="slider-content one">
+                                    <h1>Regístrate hoy mismo, fácil, rápido y seguro.</h1>
+                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida incididunt ut.</p>
+
+                                    <div class="slider-btn text-center">
+                                        <a href="#" class="box-btn">Registrarme</a>
+                                        <a href="#" class="box-btn border-btn">Ver más</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- End Slider Area -->
+
+
+<!-- Filtro  -->
+
+<!-- BUscador Avanzado -->
+<section class="home-contact-area home-2-contact ptb-35">
+    <div class="container">
+        <div class="section-title">
+            <span>Búsqueda avanzada</span>
+            <h2>Encuentra tu evento, artista o espacio favorito</h2>
+            <!--<p>It is a long established fact that a reader will be distracted by the rea dable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more.</p>-->
+        </div>
+
+        <div class="row">
+            <div class="col-lg-12 col-md-12">
+                <div class="content">
+                    <form id="formBusquedaArtista" name="form2" method="GET" action="cartelera.php">
+                        <div class="row">
+                            <div class="col-lg-3 col-sm-3">
+                                <div class="form-group">
+                                    <input type="text" class="form-control" id="r" name="r" data-error="Buscar un evento o artista" placeholder="Buscar evento, artista o espacio" <?php echo $valueEvento; ?> />
+                                    <div class="help-block with-errors"></div>
+                                </div>
+                            </div>
+
+                            <!--                                     <div class="col-lg-2 col-md-2">
                                         <div class="form-group">
                                             <select  name="t" id="t" class="form-control"  data-error="Selecciona un tipo de evento"   />
                                             <?php if ($_GET["t"] != '') { ?>
@@ -241,85 +249,94 @@ $respuestaEventoCiudadRegion = Consultas::buscaCiudadRegion($respuesta[0]["id_ci
                                         </div>
                                     </div>-->
 
-                                     <div class="col-lg-2 col-md-2">                                         
+                            <!-- <div class="col-lg-2 col-md-2">                                         
                                         <div class="form-group">
                                             <input type="date" id="fi" name="fi" data-error="Selecciona la fecha inicial" value="<?php echo $_GET["fi"]; ?>" class="form-control" placeholder="Fecha inicial" />
                                             <div class="help-block with-errors"></div>
                                         </div>
                                         <div class="help-block texto-fechas" style="">Fecha inicial</div>
-                                    </div>
+                                    </div> -->
 
-                                     <div class="col-lg-2 col-md-2">
-                                        <div class="form-group">
-                                            <input type="date" id="ff" name="ff" data-error="Selecciona la fecha final" value="<?php echo $_GET["ff"]; ?>" class="form-control" placeholder="Fecha final" />
-                                            <div class="help-block with-errors"></div>
-                                        </div>
-                                        <div class="help-block texto-fechas" style="">Fecha final</div>
-                                    </div>
-
-                                    <div class="col-lg-3 col-md-3">
-                                        <div class="form12-group"> 
-                                            <select  name="reg" id="reg" class="form-control"  data-error="Selecciona una región"   />
-                                            <?php if ($_GET["reg"] != '') { 
-                                                $RegionesArregle = ['1'=>'Arica y Parinacota', '2'=>'Tarapacá', '3'=>'Antofagasta', '4'=>'Atacama', '5'=>'Coquimbo', 
-                                                                    '6'=>'Valparaíso','7'=>'Metropolitana','8'=>'Libertador Gral. Bernando Ohiggins','9'=>'Maule','10'=>'Ñuble',
-                                                                    '11'=>'Bío Bío', '12'=>'La Araucanía', '13'=>'Los Ríos', '14'=>'Los Lagos', '15'=>'Aysén', '16'=>'Magallanes' ]
-                                                ?>                                            
-                                                <option value="<?php echo $_GET["reg"]; ?>"><?php echo $RegionesArregle[$_GET["reg"]]; ?></option>
-                                            <?php } ?> 
-                                                <option value="">Todas las regiones</option>
-                                                <option value="1">Arica y Parinacota</option>
-                                                <option value="2">Tarapacá</option>
-                                                <option value="3">Antofagasta</option>
-                                                <option value="4">Atacama</option>
-                                                <option value="5">Coquimbo</option>
-                                                <option value="6">Valparaíso</option>
-                                                <option value="7">Metropolitana</option>
-                                                <option value="8">Libertador Gral. Bernando O'higgins</option>
-                                                <option value="9">Maule</option>
-                                                <option value="10">Ñuble</option>
-                                                <option value="11">Bío Bío</option>
-                                                <option value="12">La Araucanía</option>
-                                                <option value="13">Los Ríos</option>
-                                                <option value="14">Los Lagos</option>
-                                                <option value="15">Aysén</option>
-                                                <option value="16">Magallanes</option>
-                                            </select>
+                            <div class="col-lg-2 col-md-2">
+                                <div class="form-group">
+                                    <div class="input-group date" id="datepicker">
+                                        <input type="date" id="fi" name="fi" class="form-control" data-error="Selecciona la fecha inicial" value="<?php echo $_GET["fi"]; ?>" placeholder="Fecha inicial" />
+                                        <div class="input-group-append">
+                                            <span class="input-group-text"><i class="icon-calendar"></i></span>
                                         </div>
                                     </div>
-
-                                    <div class="col-lg-2 col-md-2">
-                                        <button type="submit" class="default-btn page-btn box-btn">
-                                           <i class="bx bx-search"></i>   Buscar 
-                                        </button>  
-                                        <div class="btn-clear">
-                                            <button type="reset" class="box-btn-clear" >Limpiar campos</button>
-                                        </div> 
-                                        <div id="msgSubmit" class="h3 text-center hidden"></div>
-                                        <div class="clearfix"></div>
-                                    </div>  
+                                    <div class="help-block with-errors"></div>
                                 </div>
-                            </form>
+                                <div class="help-block texto-fechas">Fecha inicial</div>
+                            </div>
+
+
+                            <div class="col-lg-2 col-md-2">
+                                <div class="form-group">
+                                    <input type="date" id="ff" name="ff" data-error="Selecciona la fecha final" value="<?php echo $_GET["ff"]; ?>" class="form-control" placeholder="Fecha final" />
+                                    <div class="help-block with-errors"></div>
+                                </div>
+                                <div class="help-block texto-fechas" style="">Fecha final</div>
+                            </div>
+
+
+                            <!--Region-->
+                            <div class="col-lg-2 col-md-2">
+                                <div class="form12-group">
+                                    <select name="reg" id="reg" class="form-control" data-error="Selecciona una región">
+                                        <option value="">Todas las regiones</option>
+                                        <?php
+                                        $RegionesArregle = [
+                                            '1' => 'Arica y Parinacota', '2' => 'Tarapacá', '3' => 'Antofagasta',
+                                            '4' => 'Atacama', '5' => 'Coquimbo', '6' => 'Valparaíso',
+                                            '7' => 'Metropolitana', '8' => 'Libertador Gral. Bernando Ohiggins',
+                                            '9' => 'Maule', '10' => 'Ñuble', '11' => 'Bío Bío',
+                                            '12' => 'La Araucanía', '13' => 'Los Ríos', '14' => 'Los Lagos',
+                                            '15' => 'Aysén', '16' => 'Magallanes'
+                                        ];
+
+                                        foreach ($RegionesArregle as $value => $label) {
+                                            $selected = (isset($_GET["reg"]) && $_GET["reg"] == $value) ? 'selected' : '';
+                                            echo "<option value='$value' $selected>$label</option>";
+                                        }
+                                        ?>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-2 col-md-2">
+                                <button type="submit" class="default-btn page-btn box-btn">
+                                    <i class="bx bx-search"></i> Buscar
+                                </button>
+                                <div class="btn-clear">
+                                    <button type="reset" class="box-btn-clear">Limpiar campos</button>
+                                    <button type="button" class="box-btn-clear" onclick="limpiarFormularioCartelera()">Limpiar campos</button>
+                                </div>
+                                <div id="msgSubmit" class="h3 text-center hidden"></div>
+                                <div class="clearfix"></div>
+                            </div>
                         </div>
-                    </div> 
+                    </form>
                 </div>
             </div>
-        </section>
-        <!-- End BUscador Avanzado-->        
-          
-        
- 
-        <!-- Eventos -->   
-        <section class="home-case ptb-35">
-            <div class="container">
-                <div class="section-title">
-                    <!--<span>Descubre</span>-->
-                    <!--<h2>Conoce todo lo que EchoMusic tiene para ti</h2>-->
-                    <h2><?php echo $titleBusqueda; ?></h2>
-                    <!--<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse.</p>-->
-                </div>
+        </div>
+    </div>
+</section>
+<!-- End BUscador Avanzado-->
 
-<!--                <div class="case">
+
+
+<!-- Eventos -->
+<section class="home-case ptb-35">
+    <div class="container">
+        <div class="section-title">
+            <!--<span>Descubre</span>-->
+            <!--<h2>Conoce todo lo que EchoMusic tiene para ti</h2>-->
+            <h2><?php echo $titleBusqueda; ?></h2>
+            <!--<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse.</p>-->
+        </div>
+
+        <!--                <div class="case">
                     <ul class="all-case">
                         <li class="active" data-filter="*"><span>Todo</span></li>
                         <li class="active" data-filter="*"><span>Presencial</span></li>
@@ -328,37 +345,37 @@ $respuestaEventoCiudadRegion = Consultas::buscaCiudadRegion($respuesta[0]["id_ci
                 </div>-->
 
 
-                <div class="row case-list">   
+        <div class="row case-list">
 
-                    <?php 
-                    
-                    #Notar que es lo mismo que hacer
-                    # date("Y-m-d H:i:s")                                
-                    for ($k = 0; $k < count($eventosRelacionados); $k++) {                        
-                        //Busca CIudad y Región
-                        $respuestaCiudadRegion = Consultas::buscaCiudadRegion($eventosRelacionados[$k]["id_city"], $eventosRelacionados[$k]["id_region"]);
-                    
-                        $fechaEntera1 = strtotime($eventosRelacionados[$k]["date_event"]);
-                        $anio = date("Y", $fechaEntera1);
-                        $mes = date("m", $fechaEntera1);
-                        $dia = date("d", $fechaEntera1);
+            <?php
 
-                        $hora = date("H", $fechaEntera1);
-                        $minutos = date("i", $fechaEntera1);
+            #Notar que es lo mismo que hacer
+            # date("Y-m-d H:i:s")                                
+            for ($k = 0; $k < count($eventosRelacionados); $k++) {
+                //Busca CIudad y Región
+                $respuestaCiudadRegion = Consultas::buscaCiudadRegion($eventosRelacionados[$k]["id_city"], $eventosRelacionados[$k]["id_region"]);
 
-                        if (preg_match("/|\b/", $eventosRelacionados[$k]["IMG"])) {
-                            $fotos = explode("|", $eventosRelacionados[$k]["IMG"]);
-                            //var_dump($fotos);
-                            $total = count($fotos) - 1;
-                            $indice = mt_rand(0, intval($total));
-                            $img = substr($fotos[0], 16);
-                            //echo $img."<br>";
-                            //echo "verdadero";
-                        } else {
-                            $img = substr($eventosRelacionados[$k]["IMG"], 16);
-                            //echo "falso";
-                        }
-                        echo '                    
+                $fechaEntera1 = strtotime($eventosRelacionados[$k]["date_event"]);
+                $anio = date("Y", $fechaEntera1);
+                $mes = date("m", $fechaEntera1);
+                $dia = date("d", $fechaEntera1);
+
+                $hora = date("H", $fechaEntera1);
+                $minutos = date("i", $fechaEntera1);
+
+                if (preg_match("/|\b/", $eventosRelacionados[$k]["IMG"])) {
+                    $fotos = explode("|", $eventosRelacionados[$k]["IMG"]);
+                    //var_dump($fotos);
+                    $total = count($fotos) - 1;
+                    $indice = mt_rand(0, intval($total));
+                    $img = substr($fotos[0], 16);
+                    //echo $img."<br>";
+                    //echo "verdadero";
+                } else {
+                    $img = substr($eventosRelacionados[$k]["IMG"], 16);
+                    //echo "falso";
+                }
+                echo '                    
                     <div class="col-lg-4 col-sm-6 item cyber">
                         <div class="single-case">
                             <div class="case-img ">
@@ -381,42 +398,42 @@ $respuestaEventoCiudadRegion = Consultas::buscaCiudadRegion($respuesta[0]["id_ci
                                         <p>' . $dia . '-' . $mes . '-' . $anio . ' | ' . $hora . ':' . $minutos . ' hrs.</p>
 
                                         <a href="#" class="line-bnt"> 
-                                        '.$respuestaCiudadRegion[0]["name_region"].', '.$respuestaCiudadRegion[0]["name_city"].'
+                                        ' . $respuestaCiudadRegion[0]["name_region"] . ', ' . $respuestaCiudadRegion[0]["name_city"] . '
                                         </a>
                                     </div>
                                     
                                     <div class="col-lg-6 col-sm-6">';
-                                    if($eventosRelacionados[$k]["ticket_value"]==0 ){
-                                        echo  '<h3>Gratuito</h3>
+                if ($eventosRelacionados[$k]["ticket_value"] == 0) {
+                    echo  '<h3>Gratuito</h3>
                                                 <a href="eventos.php?e=' . $eventosRelacionados[$k]["id_event"] . '" class="box-btn">Reservar</a>';
-                                    }else{
-                                        echo  '<h4>$ ' .number_format( ($eventosRelacionados[$k]["ticket_value"]+$eventosRelacionados[$k]["ticket_commission"]), 0, ',', '.'). '</h4>
+                } else {
+                    echo  '<h4>$ ' . number_format(($eventosRelacionados[$k]["ticket_value"] + $eventosRelacionados[$k]["ticket_commission"]), 0, ',', '.') . '</h4>
                                                 <a href="eventos.php?e=' . $eventosRelacionados[$k]["id_event"] . '" class="box-btn">Comprar</a>';
-                                    }
-                                    
-                                    echo '
+                }
+
+                echo '
                                     </div> 
                                 </div>                                                                                               
                             </div>
                             
                         </div>
                     </div>';
-                    }
-                    ?>  
-                </div>
+            }
+            ?>
+        </div>
 
-<!--                <div class="case-btn text-center">
+        <!--                <div class="case-btn text-center">
                     <p>  <a href="#">Ver más eventos</a></p>
                     <p>    <a href="#" class="box-btn">Ver más eventos</a></p>
                 </div>-->
-            </div>
-        </section>
-        <!-- End Case  Eventos Artistas Proyectos  Espacios  --> 
+    </div>
+</section>
+<!-- End Case  Eventos Artistas Proyectos  Espacios  -->
 
-       
-            
-       
-        <!-- Artistas - Características  -->
+
+
+
+<!-- Artistas - Características  -->
 <!--        <section class="feature-area bg-color ptb-100">
             <div class="container">
                 <div class="row align-items-center">
@@ -462,9 +479,9 @@ $respuestaEventoCiudadRegion = Consultas::buscaCiudadRegion($respuesta[0]["id_ci
                 </div>
             </div>
         </section>-->
-        <!-- End Artistas - Características  -->
+<!-- End Artistas - Características  -->
 
-        <!-- Team Area -->
+<!-- Team Area -->
 <!--        <section class="home-team-area ptb-100">
             <div class="container">
                 <div class="section-title">
@@ -676,9 +693,9 @@ $respuestaEventoCiudadRegion = Consultas::buscaCiudadRegion($respuesta[0]["id_ci
                 </div>
             </div>
         </section>-->
-        <!-- End Team Area -->
+<!-- End Team Area -->
 
-        <!-- Start Client Area -->
+<!-- Start Client Area -->
 <!--        <section class="client-area ptb-100 bg-color">
             <div class="container">
                 <div class="section-title">
@@ -707,9 +724,9 @@ $respuestaEventoCiudadRegion = Consultas::buscaCiudadRegion($respuesta[0]["id_ci
                 </div>
             </div>
         </section>-->
-        <!-- End Client Area -->
+<!-- End Client Area -->
 
-        <!-- Blog Area -->
+<!-- Blog Area -->
 <!--        <section class="home-blog-area ptb-100">
             <div class="container">
                 <div class="section-title">
@@ -807,42 +824,42 @@ $respuestaEventoCiudadRegion = Consultas::buscaCiudadRegion($respuesta[0]["id_ci
                 </div>
             </div>
         </section>-->
-        <!-- End Blog Area -->
+<!-- End Blog Area -->
 
-        
-            <!-- CTA -->
-        <section class="home-cta-2-morado pt-100 pb-35">
-            <div class="container">
-                
 
-                 <div class="row">
-                    <div class="col-lg-2 col-sm-2"></div>
-                    
-                    <div class="col-lg-5 col-sm-5">
-                        <div class="section-title">                          
-                            <h2>¿Eres artista, productora o espacio de difusión?</h2> 
-                        </div>
-                    </div>
-                    
-                    <div class="col-lg-3 col-sm-3" style="vertical-align: middle; ">
-                        <div class="text-center">
-                            <div class="nav-btn">
-                                <br> 
-                                <a type="button" class="box-btn text-center" data-bs-toggle="modal" data-bs-target="#ModalTipodeRegistro"> 
-    <i class="bx bxs-log-out"></i> Crea tu perfil</a> 
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-2 col-sm-2"></div>
-                 </div>
+<!-- CTA -->
+<section class="home-cta-2-morado pt-100 pb-35">
+    <div class="container">
+
+
+        <div class="row">
+            <div class="col-lg-2 col-sm-2"></div>
+
+            <div class="col-lg-5 col-sm-5">
+                <div class="section-title">
+                    <h2>¿Eres artista, productora o espacio de difusión?</h2>
+                </div>
             </div>
-        </section>
-        <!-- End CTA -->    
- 
-        
-     
-     
-    <!--Footer-->
-    <?php 
-        include 'footer2.php';
-    ?>
+
+            <div class="col-lg-3 col-sm-3" style="vertical-align: middle; ">
+                <div class="text-center">
+                    <div class="nav-btn">
+                        <br>
+                        <a type="button" class="box-btn text-center" data-bs-toggle="modal" data-bs-target="#ModalTipodeRegistro">
+                            <i class="bx bxs-log-out"></i> Crea tu perfil</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-2 col-sm-2"></div>
+        </div>
+    </div>
+</section>
+<!-- End CTA -->
+
+
+
+
+<!--Footer-->
+<?php
+include 'footer2.php';
+?>

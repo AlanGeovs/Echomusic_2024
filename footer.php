@@ -206,6 +206,18 @@
     })
 </script>
 
+<!-- Limpiar / Resetea los campos del buscador de artistas -->
+<script>
+    function limpiarFormulario() {
+        document.getElementById('r').value = '';
+        document.getElementById('gen').selectedIndex = 0;
+        document.getElementById('tip').selectedIndex = 0;
+        document.getElementById('reg').selectedIndex = 0;
+        // Resto de tu lógica de limpieza...
+    }
+</script>
+
+
 <!-- Script para ver contraseña escrita Agrega este script para alternar entre mostrar y ocultar la contraseña: -->
 <script>
     // valida solo un campo de contraseña 'password'

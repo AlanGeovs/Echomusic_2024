@@ -1,58 +1,58 @@
-<?php  
+<?php
 include "model/models.php";
 include "header.php";
 
 //Búsquedas desde la url-> buscador topheader
 if (isset($_GET["r"])) {
     $id = $_GET["r"];
-//    if (!preg_match('/[0-9]/', $id)) {
-//        exit();
-//    }
-//    echo "<h1> " . $id . "</h1>";
+    //    if (!preg_match('/[0-9]/', $id)) {
+    //        exit();
+    //    }
+    //    echo "<h1> " . $id . "</h1>";
     $eventosRelacionados = Consultas::eventosCarteleraBusqueda($id);
 } else {
-//    echo "<h1>NADA</h1>";
+    //    echo "<h1>NADA</h1>";
     $eventosRelacionados = Consultas::ultimosEventos2();
 }
 
 
 //Fecha
- $fechaEntera = strtotime($respuesta[0]["date_event"]);
+$fechaEntera = strtotime($respuesta[0]["date_event"]);
 $anio = date("Y", $fechaEntera);
 $mes = date("M", $fechaEntera);
 $dia = date("d", $fechaEntera);
 $diaSemana = date("D", $fechaEntera);
 
 $hora = date("H", $fechaEntera);
-$minutos = date("i", $fechaEntera); 
+$minutos = date("i", $fechaEntera);
 
 //var_dump($respuesta);
 
-$idEvento=  $respuesta[0]["id_event"];
-$idUsuario= $respuesta[0]["id_user"];
+$idEvento =  $respuesta[0]["id_event"];
+$idUsuario = $respuesta[0]["id_user"];
 
 //Buscar Género
-$resuestaBuscaGenero =Consultas::buscarGenero($idUsuario); 
-$idGenero= $resuestaBuscaGenero["id_genre"];
+$resuestaBuscaGenero = Consultas::buscarGenero($idUsuario);
+$idGenero = $resuestaBuscaGenero["id_genre"];
 
 //    BUscar nombre Ciudad Region
-$respuestaEventoCiudadRegion = Consultas::buscaCiudadRegion($respuesta[0]["id_city"], $respuesta[0]["id_region"] ) ; 
+$respuestaEventoCiudadRegion = Consultas::buscaCiudadRegion($respuesta[0]["id_city"], $respuesta[0]["id_region"]);
 
 ?>
 
-        <!-- Start Page Title Area -->
-        <div class="page-title-area">
-            <div class="container">
-                <div class="page-title-content">
-                    <h2>Búsqueda: <?php echo $id; ?></h2>
-                    <ul>
-                        <li> <a href="index.php"> Inicio </a> </li>
-                        <li> <a href="cartelera.php"> Cartelera</a> </li>
-                        <li class="active"><?php echo $id; ?></li> 
-                    </ul>
-                </div>
-            </div>
-<!--            <div class="page-shape">
+<!-- Start Page Title Area -->
+<div class="page-title-area">
+    <div class="container">
+        <div class="page-title-content">
+            <h2>Búsqueda: <?php echo $id; ?></h2>
+            <ul>
+                <li> <a href="index.php"> Inicio </a> </li>
+                <li> <a href="cartelera.php"> Cartelera</a> </li>
+                <li class="active"><?php echo $id; ?></li>
+            </ul>
+        </div>
+    </div>
+    <!--            <div class="page-shape">
                 <div class="shape1">
                     <img src="assets/images/shape/1.png" alt="shape" />
                 </div>
@@ -69,10 +69,10 @@ $respuestaEventoCiudadRegion = Consultas::buscaCiudadRegion($respuesta[0]["id_ci
                     <img src="assets/images/shape/6.png" alt="shape" />
                 </div>
             </div>-->
-        </div>
-        <!-- End Page Title Area -->
+</div>
+<!-- End Page Title Area -->
 
-        
+
 <!--         Filtro  
         <section class="feature-area bg-color ptb-35">
             <div class="container">
@@ -91,15 +91,20 @@ $respuestaEventoCiudadRegion = Consultas::buscaCiudadRegion($respuesta[0]["id_ci
                                                 <tr class="filters">
                                                     <th>
                                                         <label  class="form-label">Evento o artista </label>
-                                                        <input type="text" class="form-control" id="buscar" name="buscar" value="<?php // echo $_POST["buscar"]  ?>" >
+                                                        <input type="text" class="form-control" id="buscar" name="buscar" value="<?php // echo $_POST["buscar"]  
+                                                                                                                                    ?>" >
                                                         <input type="text" class="form-control" id="buscar" name="buscar" value=" " >   
                                                     </th>
                                                     <th>
                                                         Tipo
                                                         <select id="assigned-tutor-filter" id="buscadepartamento" name="buscadepartamento" class="form-control mt-2" style="border: #bababa 1px solid; color:#000000;" >
-                                                            <?php // if ($_POST["buscadepartamento"] != '') { ?>
-                                                                <option value="//<?php // echo $_POST["buscadepartamento"]; ?>"><?php // echo $_POST["buscadepartamento"]; ?></option>
-                                                            <?php // } ?>
+                                                            <?php // if ($_POST["buscadepartamento"] != '') { 
+                                                            ?>
+                                                                <option value="//<?php // echo $_POST["buscadepartamento"]; 
+                                                                                    ?>"><?php // echo $_POST["buscadepartamento"]; 
+                                                                                                                                ?></option>
+                                                            <?php // } 
+                                                            ?>
                                                             <option value="">Todos</option>
                                                             <option value="Compras">Presencial</option>
                                                             <option value="Ventas">Online</option>
@@ -120,9 +125,13 @@ $respuestaEventoCiudadRegion = Consultas::buscaCiudadRegion($respuesta[0]["id_ci
                                                     <th>
                                                         Región
                                                         <select id="subject-filter" id="color" name="color" class="form-control mt-2" style="border: #bababa 1px solid; color:#000000;" >
-                                                            <?php // if ($_POST["color"] != '') { ?>
-                                                                <option value="<?php // echo $_POST["color"]; ?>"><?php // echo $_POST["color"]; ?></option>
-                                                            <?php // } ?>
+                                                            <?php // if ($_POST["color"] != '') { 
+                                                            ?>
+                                                                <option value="<?php // echo $_POST["color"]; 
+                                                                                ?>"><?php // echo $_POST["color"]; 
+                                                                                                                    ?></option>
+                                                            <?php // } 
+                                                            ?>
                                                             <option value="">Todos</option>
                                                             <option style="color: blue;" value="Azul">Metropolitana</option>
                                                             <option style="color: red;" value="Rojo">Santiago</option>
@@ -145,83 +154,84 @@ $respuestaEventoCiudadRegion = Consultas::buscaCiudadRegion($respuesta[0]["id_ci
 
                                 <?php
                                 /* FILTRO de busqueda//////////////////////////////////////////// */
-//                                if ($_POST['buscar'] == '') {
-//                                    $_POST['buscar'] = ' ';
-//                                }
-//                                $aKeyword = explode(" ", $_POST['buscar']);
-//
-//                                if ($_POST["buscar"] == '' AND $_POST['buscadepartamento'] == '' AND $_POST['color'] == '' AND $_POST['buscafechadesde'] == '' AND $_POST['buscafechahasta'] == '' AND $_POST['buscapreciodesde'] == '' AND $_POST['buscapreciohasta'] == '') {
-//                                    $query = "SELECT * FROM datos_usuario ";
-//                                } else {
-//
-//
-//                                    $query = "SELECT * FROM datos_usuario ";
-//
-//                                    if ($_POST["buscar"] != '') {
-//                                        $query .= "WHERE (nombre LIKE LOWER('%" . $aKeyword[0] . "%') OR apellidos LIKE LOWER('%" . $aKeyword[0] . "%')) ";
-//
-//                                        for ($i = 1; $i < count($aKeyword); $i++) {
-//                                            if (!empty($aKeyword[$i])) {
-//                                                $query .= " OR nombre LIKE '%" . $aKeyword[$i] . "%' OR apellidos LIKE '%" . $aKeyword[$i] . "%'";
-//                                            }
-//                                        }
-//                                    }
-//
-//                                    if ($_POST["buscadepartamento"] != '') {
-//                                        $query .= " AND departamento = '" . $_POST['buscadepartamento'] . "' ";
-//                                    }
-//
-//                                    if ($_POST["buscafechadesde"] != '') {
-//                                        $query .= " AND fecha BETWEEN '" . $_POST["buscafechadesde"] . "' AND '" . $_POST["buscafechahasta"] . "' ";
-//                                    }
-//
-//                                    if ($_POST['buscapreciodesde'] != '') {
-//                                        $query .= " AND precio >= '" . $_POST['buscapreciodesde'] . "' ";
-//                                    }
-//
-//                                    if ($_POST['buscapreciohasta'] != '') {
-//                                        $query .= " AND precio <= '" . $_POST['buscapreciohasta'] . "' ";
-//                                    }
-//
-//                                    if ($_POST["color"] != '') {
-//                                        $query .= " AND color = '" . $_POST["color"] . "' ";
-//                                    }
-//
-//                                    if ($_POST["orden"] == '1') {
-//                                        $query .= " ORDER BY nombre ASC ";
-//                                    }
-//
-//                                    if ($_POST["orden"] == '2') {
-//                                        $query .= " ORDER BY departamento ASC ";
-//                                    }
-//
-//                                    if ($_POST["orden"] == '3') {
-//                                        $query .= " ORDER BY color ASC ";
-//                                    }
-//
-//                                    if ($_POST["orden"] == '4') {
-//                                        $query .= " ORDER BY precio ASC ";
-//                                    }
-//
-//                                    if ($_POST["orden"] == '5') {
-//                                        $query .= " ORDER BY precio DESC ";
-//                                    }
-//
-//                                    if ($_POST["orden"] == '6') {
-//                                        $query .= " ORDER BY fecha ASC ";
-//                                    }
-//
-//                                    if ($_POST["orden"] == '7') {
-//                                        $query .= " ORDER BY fecha DESC ";
-//                                    }
-//                                }
-//
-//
-//                                $sql = $conexion->query($query);
-//
-//                                $numeroSql = mysqli_num_rows($sql);
+                                //                                if ($_POST['buscar'] == '') {
+                                //                                    $_POST['buscar'] = ' ';
+                                //                                }
+                                //                                $aKeyword = explode(" ", $_POST['buscar']);
+                                //
+                                //                                if ($_POST["buscar"] == '' AND $_POST['buscadepartamento'] == '' AND $_POST['color'] == '' AND $_POST['buscafechadesde'] == '' AND $_POST['buscafechahasta'] == '' AND $_POST['buscapreciodesde'] == '' AND $_POST['buscapreciohasta'] == '') {
+                                //                                    $query = "SELECT * FROM datos_usuario ";
+                                //                                } else {
+                                //
+                                //
+                                //                                    $query = "SELECT * FROM datos_usuario ";
+                                //
+                                //                                    if ($_POST["buscar"] != '') {
+                                //                                        $query .= "WHERE (nombre LIKE LOWER('%" . $aKeyword[0] . "%') OR apellidos LIKE LOWER('%" . $aKeyword[0] . "%')) ";
+                                //
+                                //                                        for ($i = 1; $i < count($aKeyword); $i++) {
+                                //                                            if (!empty($aKeyword[$i])) {
+                                //                                                $query .= " OR nombre LIKE '%" . $aKeyword[$i] . "%' OR apellidos LIKE '%" . $aKeyword[$i] . "%'";
+                                //                                            }
+                                //                                        }
+                                //                                    }
+                                //
+                                //                                    if ($_POST["buscadepartamento"] != '') {
+                                //                                        $query .= " AND departamento = '" . $_POST['buscadepartamento'] . "' ";
+                                //                                    }
+                                //
+                                //                                    if ($_POST["buscafechadesde"] != '') {
+                                //                                        $query .= " AND fecha BETWEEN '" . $_POST["buscafechadesde"] . "' AND '" . $_POST["buscafechahasta"] . "' ";
+                                //                                    }
+                                //
+                                //                                    if ($_POST['buscapreciodesde'] != '') {
+                                //                                        $query .= " AND precio >= '" . $_POST['buscapreciodesde'] . "' ";
+                                //                                    }
+                                //
+                                //                                    if ($_POST['buscapreciohasta'] != '') {
+                                //                                        $query .= " AND precio <= '" . $_POST['buscapreciohasta'] . "' ";
+                                //                                    }
+                                //
+                                //                                    if ($_POST["color"] != '') {
+                                //                                        $query .= " AND color = '" . $_POST["color"] . "' ";
+                                //                                    }
+                                //
+                                //                                    if ($_POST["orden"] == '1') {
+                                //                                        $query .= " ORDER BY nombre ASC ";
+                                //                                    }
+                                //
+                                //                                    if ($_POST["orden"] == '2') {
+                                //                                        $query .= " ORDER BY departamento ASC ";
+                                //                                    }
+                                //
+                                //                                    if ($_POST["orden"] == '3') {
+                                //                                        $query .= " ORDER BY color ASC ";
+                                //                                    }
+                                //
+                                //                                    if ($_POST["orden"] == '4') {
+                                //                                        $query .= " ORDER BY precio ASC ";
+                                //                                    }
+                                //
+                                //                                    if ($_POST["orden"] == '5') {
+                                //                                        $query .= " ORDER BY precio DESC ";
+                                //                                    }
+                                //
+                                //                                    if ($_POST["orden"] == '6') {
+                                //                                        $query .= " ORDER BY fecha ASC ";
+                                //                                    }
+                                //
+                                //                                    if ($_POST["orden"] == '7') {
+                                //                                        $query .= " ORDER BY fecha DESC ";
+                                //                                    }
+                                //                                }
+                                //
+                                //
+                                //                                $sql = $conexion->query($query);
+                                //
+                                //                                $numeroSql = mysqli_num_rows($sql);
                                 ?>
-                                <p style="font-weight: bold; color:purple;"><i class="mdi mdi-file-document"></i> <?php // echo $numeroSql; ?> Resultados encontrados</p>
+                                <p style="font-weight: bold; color:purple;"><i class="mdi mdi-file-document"></i> <?php // echo $numeroSql; 
+                                                                                                                    ?> Resultados encontrados</p>
                                 <p style="font-weight: bold; color:purple;"><i class="mdi mdi-file-document"></i>   Resultados encontrados</p>
                             </form>
 
@@ -238,57 +248,57 @@ $respuestaEventoCiudadRegion = Consultas::buscaCiudadRegion($respuesta[0]["id_ci
         </section>
          End Destacados - Características          
         -->
- 
-        <!-- Eventos -->   
-        <section class="home-case ptb-35">
-            <div class="container">
-                <div class="section-title">
-                    <!--<span>Descubre</span>-->
-                    <!--<h2>Conoce todo lo que EchoMusic tiene para ti</h2>-->
-                    <h2>Eventos sobre <?php echo $id; ?></h2>
-                    <!--<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse.</p>-->
-                </div>
 
-                <div class="case">
-                    <ul class="all-case">
-                        <!--<li class="active" data-filter="*"><span>Todo</span></li>-->
-                        <li class="active" data-filter="*"><span>Presencial</span></li>
-                        <li data-filter=".dev"><span>Online</span></li> 
-                    </ul>
-                </div>
+<!-- Eventos -->
+<section class="home-case ptb-35">
+    <div class="container">
+        <div class="section-title">
+            <!--<span>Descubre</span>-->
+            <!--<h2>Conoce todo lo que EchoMusic tiene para ti</h2>-->
+            <h2>Eventos sobre <?php echo $id; ?></h2>
+            <!--<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse.</p>-->
+        </div>
+
+        <div class="case">
+            <ul class="all-case">
+                <!--<li class="active" data-filter="*"><span>Todo</span></li>-->
+                <li class="active" data-filter="*"><span>Presencial</span></li>
+                <li data-filter=".dev"><span>Online</span></li>
+            </ul>
+        </div>
 
 
-                <div class="row case-list">   
+        <div class="row case-list">
 
-                    <?php 
-                    
-                    #Notar que es lo mismo que hacer
-                    # date("Y-m-d H:i:s")                                
-                    for ($k = 0; $k < count($eventosRelacionados); $k++) {                        
-                        //Busca CIudad y Región
-                        $respuestaCiudadRegion = Consultas::buscaCiudadRegion($eventosRelacionados[$k]["id_city"], $eventosRelacionados[$k]["id_region"]);
-                    
-                        $fechaEntera1 = strtotime($eventosRelacionados[$k]["date_event"]);
-                        $anio = date("Y", $fechaEntera1);
-                        $mes = date("m", $fechaEntera1);
-                        $dia = date("d", $fechaEntera1);
+            <?php
 
-                        $hora = date("H", $fechaEntera1);
-                        $minutos = date("i", $fechaEntera1);
+            #Notar que es lo mismo que hacer
+            # date("Y-m-d H:i:s")                                
+            for ($k = 0; $k < count($eventosRelacionados); $k++) {
+                //Busca CIudad y Región
+                $respuestaCiudadRegion = Consultas::buscaCiudadRegion($eventosRelacionados[$k]["id_city"], $eventosRelacionados[$k]["id_region"]);
 
-                        if (preg_match("/|\b/", $eventosRelacionados[$k]["IMG"])) {
-                            $fotos = explode("|", $eventosRelacionados[$k]["IMG"]);
-                            //var_dump($fotos);
-                            $total = count($fotos) - 1;
-                            $indice = mt_rand(0, intval($total));
-                            $img = substr($fotos[0], 16);
-                            //echo $img."<br>";
-                            //echo "verdadero";
-                        } else {
-                            $img = substr($eventosRelacionados[$k]["IMG"], 16);
-                            //echo "falso";
-                        }
-                        echo '                    
+                $fechaEntera1 = strtotime($eventosRelacionados[$k]["date_event"]);
+                $anio = date("Y", $fechaEntera1);
+                $mes = date("m", $fechaEntera1);
+                $dia = date("d", $fechaEntera1);
+
+                $hora = date("H", $fechaEntera1);
+                $minutos = date("i", $fechaEntera1);
+
+                if (preg_match("/|\b/", $eventosRelacionados[$k]["IMG"])) {
+                    $fotos = explode("|", $eventosRelacionados[$k]["IMG"]);
+                    //var_dump($fotos);
+                    $total = count($fotos) - 1;
+                    $indice = mt_rand(0, intval($total));
+                    $img = substr($fotos[0], 16);
+                    //echo $img."<br>";
+                    //echo "verdadero";
+                } else {
+                    $img = substr($eventosRelacionados[$k]["IMG"], 16);
+                    //echo "falso";
+                }
+                echo '                    
                     <div class="col-lg-4 col-sm-6 item cyber">
                         <div class="single-case">
                             <div class="case-img ">
@@ -311,42 +321,42 @@ $respuestaEventoCiudadRegion = Consultas::buscaCiudadRegion($respuesta[0]["id_ci
                                         <p>' . $dia . '-' . $mes . '-' . $anio . ' | ' . $hora . ':' . $minutos . ' hrs.</p>
 
                                         <a href="#" class="line-bnt"> 
-                                        '.$respuestaCiudadRegion[0]["name_region"].', '.$respuestaCiudadRegion[0]["name_city"].'
+                                        ' . $respuestaCiudadRegion[0]["name_region"] . ', ' . $respuestaCiudadRegion[0]["name_city"] . '
                                         </a>
                                     </div>
                                     
                                     <div class="col-lg-6 col-sm-6">';
-                                    if($eventosRelacionados[$k]["ticket_value"]==0 ){
-                                        echo  '<h3>Gratuito</h3>
+                if ($eventosRelacionados[$k]["ticket_value"] == 0) {
+                    echo  '<h3>Gratuito</h3>
                                                 <a href="eventos.php?e=' . $eventosRelacionados[$k]["id_event"] . '" class="box-btn">Reservar</a>';
-                                    }else{
-                                        echo  '<h4>$ ' .number_format( ($eventosRelacionados[$k]["ticket_value"]+$eventosRelacionados[$k]["ticket_commission"]), 0, ',', '.'). '</h4>
+                } else {
+                    echo  '<h4>$ ' . number_format(($eventosRelacionados[$k]["ticket_value"] + $eventosRelacionados[$k]["ticket_commission"]), 0, ',', '.') . '</h4>
                                                 <a href="eventos.php?e=' . $eventosRelacionados[$k]["id_event"] . '" class="box-btn">Comprar</a>';
-                                    }
-                                    
-                                    echo '
+                }
+
+                echo '
                                     </div> 
                                 </div>                                                                                               
                             </div>
                             
                         </div>
                     </div>';
-                    }
-                    ?>  
-                </div>
+            }
+            ?>
+        </div>
 
-                <div class="case-btn text-center">
-                    <!--<p>  <a href="#">Ver más eventos</a></p>-->
-                    <p>    <a href="#" class="box-btn">Ver más eventos</a></p>
-                </div>
-            </div>
-        </section>
-        <!-- End Case  Eventos Artistas Proyectos  Espacios  --> 
+        <div class="case-btn text-center">
+            <!--<p>  <a href="#">Ver más eventos</a></p>-->
+            <p> <a href="#" class="box-btn">Ver más eventos</a></p>
+        </div>
+    </div>
+</section>
+<!-- End Case  Eventos Artistas Proyectos  Espacios  -->
 
-       
-            
-       
-        <!-- Artistas - Características  -->
+
+
+
+<!-- Artistas - Características  -->
 <!--        <section class="feature-area bg-color ptb-100">
             <div class="container">
                 <div class="row align-items-center">
@@ -392,9 +402,9 @@ $respuestaEventoCiudadRegion = Consultas::buscaCiudadRegion($respuesta[0]["id_ci
                 </div>
             </div>
         </section>-->
-        <!-- End Artistas - Características  -->
+<!-- End Artistas - Características  -->
 
-        <!-- Team Area -->
+<!-- Team Area -->
 <!--        <section class="home-team-area ptb-100">
             <div class="container">
                 <div class="section-title">
@@ -606,9 +616,9 @@ $respuestaEventoCiudadRegion = Consultas::buscaCiudadRegion($respuesta[0]["id_ci
                 </div>
             </div>
         </section>-->
-        <!-- End Team Area -->
+<!-- End Team Area -->
 
-        <!-- Start Client Area -->
+<!-- Start Client Area -->
 <!--        <section class="client-area ptb-100 bg-color">
             <div class="container">
                 <div class="section-title">
@@ -637,9 +647,9 @@ $respuestaEventoCiudadRegion = Consultas::buscaCiudadRegion($respuesta[0]["id_ci
                 </div>
             </div>
         </section>-->
-        <!-- End Client Area -->
+<!-- End Client Area -->
 
-        <!-- Blog Area -->
+<!-- Blog Area -->
 <!--        <section class="home-blog-area ptb-100">
             <div class="container">
                 <div class="section-title">
@@ -737,41 +747,41 @@ $respuestaEventoCiudadRegion = Consultas::buscaCiudadRegion($respuesta[0]["id_ci
                 </div>
             </div>
         </section>-->
-        <!-- End Blog Area -->
+<!-- End Blog Area -->
 
-        
-            <!-- CTA -->
-        <section class="home-cta-2-morado pt-100 pb-35">
-            <div class="container">
-                
 
-                 <div class="row">
-                    <div class="col-lg-2 col-sm-2"></div>
-                    
-                    <div class="col-lg-5 col-sm-5">
-                        <div class="section-title">                          
-                            <h2>¿Eres artista, productora o espacio de difusión?</h2> 
-                        </div>
-                    </div>
-                    
-                    <div class="col-lg-3 col-sm-3" style="vertical-align: middle; ">
-                        <div class="text-center">
-                            <div class="nav-btn">
-                                <br> 
-                                <a href="#" class="box-btn text-center">CREA TU EVENTO</a> 
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-2 col-sm-2"></div>
-                 </div>
+<!-- CTA -->
+<section class="home-cta-2-morado pt-100 pb-35">
+    <div class="container">
+
+
+        <div class="row">
+            <div class="col-lg-2 col-sm-2"></div>
+
+            <div class="col-lg-5 col-sm-5">
+                <div class="section-title">
+                    <h2>¿Eres artista, productora o espacio de difusión?</h2>
+                </div>
             </div>
-        </section>
-        <!-- End CTA -->    
- 
-        
-     
-     
-    <!--Footer-->
-    <?php 
-        include 'footer2.php';
-    ?>
+
+            <div class="col-lg-3 col-sm-3" style="vertical-align: middle; ">
+                <div class="text-center">
+                    <div class="nav-btn">
+                        <br>
+                        <a href="ingresar.php" class="box-btn text-center">CREA TU EVENTO</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-2 col-sm-2"></div>
+        </div>
+    </div>
+</section>
+<!-- End CTA -->
+
+
+
+
+<!--Footer-->
+<?php
+include 'footer2.php';
+?>

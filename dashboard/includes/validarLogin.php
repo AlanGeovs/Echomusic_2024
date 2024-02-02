@@ -25,7 +25,7 @@ $respuesta = Usuarios::validaLogin($correo, $password);
 // var_dump($respuesta);
 
 if ($respuesta == "") {
-	header("Location: ../index.php?error=300");
+	header("Location: ../index.php?error=1");
 } else {
 	session_start();
 	$_SESSION["id_user"] = $respuesta["id_user"];
@@ -38,6 +38,6 @@ if ($respuesta == "") {
 	if ($res == "ok") {
 		header("Location: ../site.php");
 	} elseif ($res == "error") {
-		header("Location: ../index.php?error=1");
+		header("Location: ../index.php?error=2");
 	}
 }

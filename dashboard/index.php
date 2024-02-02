@@ -117,6 +117,19 @@
                                     </div>
                                     <div class="col-lg-12">
                                         <input type="submit" class="btn btn-success btn-lg btn-block" value="Acceder">
+
+                                        <?php
+                                        if (@$_GET["error"] == "1") {
+                                            echo "
+                                <div class='alert alert-danger alert-dismissible' role='alert'>
+                                    <button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>×</span>
+                                    </button>
+                                    <strong>Tu correo y/o contraseña</strong> no son correctos, intentalo de nuevo...
+                                </div> ";
+                                        } elseif (@$_GET["error"] == "2") {
+                                            echo "<div class='alert alert-danger'> Debes iniciar sesión para acceder al panel...</div>";
+                                        }
+                                        ?>
                                         <p class="forget-pass text">
                                             ¿Aún no estas registrado?
                                             <a href="../registro.php" data-bs-toggle="modal" data-bs-target="#ModalTipodeRegistro"> Regístrate</a>
@@ -134,13 +147,7 @@
                                     </div>
                                 </div>
                             </form>
-                            <?php
-                            if (@$_GET["error"] == "1") {
-                                echo "<div class='alert alert-danger'>Tu correo y/o contraseña no son correctos, intentalo de nuevo...</div>";
-                            } elseif (@$_GET["error"] == "2") {
-                                echo "<div class='alert alert-danger'> Debes iniciar sesión para acceder al panel...</div>";
-                            }
-                            ?>
+
                         </div>
                     </div>
                 </div>

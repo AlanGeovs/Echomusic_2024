@@ -28,7 +28,8 @@ $resultadosEventosPasa = Consultas::eventosPasadosArtista($respuesta[0]["id_user
             <h2><?php echo $respuesta[0]["nick_user"]; ?></h2>
             <ul>
                 <li> <a href="index.php"> Inicio </a> </li>
-                <li> <a href="buscar_artista.php"> Artistas </a> </li>
+                <!-- <li> <a href="buscar_artista.php"> Artistas </a> </li> -->
+                <li><a href="#" onclick="onBackClick(); return false;">Artistas</a></li>
                 <li class="active"><?php echo $respuesta[0]["nick_user"]; ?></li>
             </ul>
         </div>
@@ -136,55 +137,58 @@ $resultadosEventosPasa = Consultas::eventosPasadosArtista($respuesta[0]["id_user
 <!-- Fin Perfil Artista -->
 
 <!-- Videos -->
+<?php
+$playlist = Consultas::playListArtista($respuesta[0]["id_user"]);
+$videos = Consultas::videoArtista($id);
+?>
 <section class="pricing-area ptb-35">
-    <div class="container">
-        <div class="row align-items-center choose-c justify-content-md-center  ">
-            <div class="col-lg-8 col-sm-8">
+    <?php if (!empty($videos[0]["embed_multi"]) || !empty($playlist[0]["embed_multi"])) : ?>
+        <div class="container">
+            <div class="row align-items-center choose-c justify-content-md-center">
+                <div class="col-lg-8 col-sm-8">
 
-                <ul class="nav nav-tabs" id="myTab" role="tablist">
-                    <li class="nav-item">
-                        <a class="nav-link active" id="video-tab" data-bs-toggle="tab" href="#video" role="tab" aria-controls="video" aria-selected="true">Videos</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" id="playlist-tab" data-bs-toggle="tab" href="#playlist" role="tab" aria-controls="playlist" aria-selected="false">Playlist</a>
-                    </li>
-                </ul>
-                <div class="tab-content" id="myTabContent">
-                    <div class="tab-pane fade show active" id="video" role="tabpanel" aria-labelledby="video-tab">
-                        <!--Video-->
-                        <div class="row justify-content-center">
-                            <div class="col-lg-8 col-sm-8 ptb-35">
-                                <div class="row altoVideo align-items-center choose-c justify-content-md-center">
-                                    <iframe src="https://echomusic.net/video/videos.php?a=<?php echo $id; ?>" class="altoVideo" style="border: none;" width="100%"></iframe>
+                    <ul class="nav nav-tabs" id="myTab" role="tablist">
+                        <?php if (!empty($videos[0]["embed_multi"])) : ?>
+                            <li class="nav-item">
+                                <a class="nav-link active" id="video-tab" data-bs-toggle="tab" href="#video" role="tab" aria-controls="video" aria-selected="true">Videos</a>
+                            </li>
+                        <?php endif; ?>
+                        <?php if (!empty($playlist[0]["embed_multi"])) : ?>
+                            <li class="nav-item">
+                                <a class="nav-link" id="playlist-tab" data-bs-toggle="tab" href="#playlist" role="tab" aria-controls="playlist" aria-selected="false">Playlist</a>
+                            </li>
+                        <?php endif; ?>
+                    </ul>
+
+                    <div class="tab-content" id="myTabContent">
+                        <?php if (!empty($videos[0]["embed_multi"])) : ?>
+                            <div class="tab-pane fade show active" id="video" role="tabpanel" aria-labelledby="video-tab">
+                                <!--Video-->
+                                <div class="row justify-content-center">
+                                    <div class="col-lg-8 col-sm-8 ptb-35">
+                                        <iframe src="https://echomusic.net/video/videos.php?a=<?php echo $id; ?>" class="altoVideo" style="border: none;" width="100%"></iframe>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                    <div class="tab-pane fade" id="playlist" role="tabpanel" aria-labelledby="playlist-tab">
-                        <!-- Playlist -->
-                        <div class="row justify-content-center">
-                            <div class="col-lg-8 col-sm-8 ptb-35">
-                                <?php
-                                $playlist = Consultas::playListArtista($respuesta[0]["id_user"]);
-                                ?>
-                                <div>
-                                    <?php
-                                    echo $playlist[0]["embed_multi"];
-                                    ?>
+                        <?php endif; ?>
+
+                        <?php if (!empty($playlist[0]["embed_multi"])) : ?>
+                            <div class="tab-pane fade" id="playlist" role="tabpanel" aria-labelledby="playlist-tab">
+                                <!-- Playlist -->
+                                <div class="row justify-content-center">
+                                    <div class="col-lg-8 col-sm-8 ptb-35">
+                                        <?php echo $playlist[0]["embed_multi"]; ?>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                        <?php endif; ?>
                     </div>
                 </div>
-
-
-
-
             </div>
         </div>
-
-    </div>
+    <?php endif; ?>
 </section>
+
 <!-- End Videos -->
 
 
@@ -200,7 +204,7 @@ $tarifasArtista = Consultas::tarifas($respuesta[0]["id_user"]);
 
 // condición para mostrar o no las tarifas 
 if (empty($tarifasArtista[0]["value_plan"])) {
-    echo 'No hay tarifas';
+    // echo 'No hay tarifas';
 } else {
     //Inician tarrifas
 ?>
@@ -255,7 +259,7 @@ if (empty($tarifasArtista[0]["value_plan"])) {
                                         &nbsp;&nbsp; Nº de Músicos <?php echo $tarifasArtista[$t]["artists_amount"]; ?>
                                     </li>
                                 </ul>
-                                <a class="box-btn" href="#">
+                                <a class="box-btn" href="#" data-bs-toggle="modal" data-bs-target="#contratarTarifaModal">
                                     Contratar
                                 </a>
 
@@ -526,17 +530,18 @@ if (empty($tarifasArtista[0]["value_plan"])) {
             <div class="home-2-contact justify-content-md-center text-center">
                 <div class="content ">
                     <div class="row">
-                        <div class="col-12 col-sm-6 ">
+                        <div class="col-12 col-sm-12 ">
                             <br>
                             <h3>¿Necesitas una tarifa a convenir?</h3>
-                            <a href="" class="box-btn">Solicitala aquí</a>
+                            <a href="" class="box-btn" data-bs-toggle="modal" data-bs-target="#contratarArtistaModal">Solicitala aquí</a>
+                            <!-- Botón para abrir el modal -->
                         </div>
-                        <div class="col-12 col-sm-6 ">
+                        <!-- <div class="col-12 col-sm-6 ">
                             <br>
                             <h3>Descarga aqui </h3>
                             <a href="" class="box-btn">Ficha Tecnica</a>
                             <a href="" class="box-btn">Dossier</a>
-                        </div>
+                        </div> -->
                     </div>
                 </div>
 
@@ -631,7 +636,7 @@ $muestraIntegrantes = Consultas::integrantes($respuesta[0]["id_user"]);
 
 // condición para mostrar o no las tarifas 
 if (empty($muestraIntegrantes[0]["id_user"])) {
-    echo 'No hay tarifas';
+    //echo 'No hay tarifas';
 } else {
     //Inician Integrantes
 ?>
@@ -651,9 +656,8 @@ if (empty($muestraIntegrantes[0]["id_user"])) {
                     <div class="col-lg-4 col-md-6">
                         <div class="single-blog">
                             <div class="blog-img">
-                                <a href="blog-details.html">
-                                    <img style="height: 200px; width: 200px; border-radius: 50%;" src="dashboard/images/integrantes/<?php echo $muestraIntegrantes[$t]["img_member"]; ?>" class="responsiveArtista" alt="" />
-                                </a>
+                                <img style="height: 200px; width: 200px; border-radius: 50%;" src="dashboard/images/integrantes/<?php echo $muestraIntegrantes[$t]["img_member"]; ?>" class="responsiveArtista" alt="" />
+
                             </div>
 
                             <div class="pricing-top-heading">
@@ -929,6 +933,7 @@ include 'modal.php';
 <!--Script para OWL  
         Ver demos: https://owlcarousel2.github.io/OwlCarousel2/demos/demos.html
         -->
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
 <script>
     $(document).ready(function() {
@@ -1005,6 +1010,50 @@ include 'modal.php';
             })
         </script>          
                -->
+
+
+<!-- Script para enviar email de Tarifa a convenir -->
+<script>
+    function enviarFormulario() {
+        var formData = new FormData();
+        formData.append('nombreArtista', document.getElementById('nombre-artista').value);
+        formData.append('asunto', document.getElementById('asunto').value);
+        formData.append('descripcion', document.getElementById('descripcion').value);
+
+        fetch('includes/enviar_email_tarifaAConvenir.php', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    $('#contratarArtistaModal').modal('hide'); // Cierra el modal antes de mostrar la alerta
+                    // Mensaje de éxito usando SweetAlert
+                    swal("¡Éxito!", "Mensaje enviado con éxito.", "success");
+                } else {
+                    // Mensaje de error usando SweetAlert
+                    swal("Error", "Error al enviar el mensaje.", "error");
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                // Mensaje de error usando SweetAlert
+                swal("Error", "Error al procesar la solicitud: " + error, "error");
+            });
+    }
+</script>
+
+<!-- Script migas de pan -->
+<script>
+    function onBackClick() {
+        window.history.back();
+    }
+</script>
+
+
+
+
+
 </body>
 
 </html>

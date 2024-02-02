@@ -64,7 +64,7 @@ $arregloValues = ['r', 'tip', 'gen', 'reg'];
 if (trim($_GET['r']) == '') {
     $valueForm  = '';
 } else {
-    $valueForm  = 'value="' . $_GET["r"] . '" ';
+    $valueForm  =  $_GET["r"];
 }
 
 //    if ($_GET["r"] == '') {
@@ -74,8 +74,10 @@ if (trim($_GET['r']) == '') {
 
 if ($_GET["r"] == '' and $_GET["tip"] == ''  and $_GET["gen"] == '' and  $_GET["reg"] == '') {
     //        $query = "SELECT * FROM datos_usuario ";
-    $artistasRelacionados = Consultas::ultimosArtistas();
-    $totalPaginas = 10;
+    $query  = "SELECT u.*, gu.*, g.* FROM users u INNER JOIN genre_user gu ON u.id_user=gu.id_user INNER JOIN genres g ON gu.id_genre = g.id_genre ";
+    $query .= "WHERE picture_ready=1 AND verified like 'yes' AND user_destacado=1 ";
+    $condicionesPag = " AND user_destacado=1  ";
+    $artistasRelacionados = Consultas::busquedaArtistas($query);
 } else {
 
     $query  = "SELECT u.*, gu.*, g.* FROM users u INNER JOIN genre_user gu ON u.id_user=gu.id_user INNER JOIN genres g ON gu.id_genre = g.id_genre ";
@@ -102,28 +104,28 @@ if ($_GET["r"] == '' and $_GET["tip"] == ''  and $_GET["gen"] == '' and  $_GET["
         $condicionesPag .= " AND u.id_region = '" . $_GET["reg"] . "' ";
         //            echo 'Region: '.$_GET["reg"].'<br>';
     }
-
-
-    //    Agregamos el orden
-    //        $query .= " ORDER BY RAND() LIMIT 12; ";
-    // $query .= " ORDER BY id_musician DESC LIMIT 12; ";
-    // Modificar la consulta para agregar límite y offset para la paginación
-    $query .= " ORDER BY id_musician DESC LIMIT $inicio, $resultadosPorPagina;";
-    $condicionesPag .= " ORDER BY id_musician DESC ";
-
-
-    // Consulta para contar el total de artistas
-    $totalArtistas = Consultas::contarArtistas($condicionesPag);
-    // Calcular el total de páginas
-    $totalPaginas = ceil($totalArtistas / $resultadosPorPagina);
-    // echo "Total de artistas:" . $totalArtistas . "<br>Total de páginas: " . $totalPaginas . "<br>";
-
-
-    $artistasRelacionados = Consultas::busquedaArtistas($query);
-    //        echo 'Artista: '.$artistasRelacionados[0]["id_user"] ;
-    //        echo '<br><br><br><br><br><br><br>DB: '.$query;
-
 } //fin del ELSE
+
+//    Agregamos el orden
+//        $query .= " ORDER BY RAND() LIMIT 12; ";
+// $query .= " ORDER BY id_musician DESC LIMIT 12; ";
+// Modificar la consulta para agregar límite y offset para la paginación
+$query .= " ORDER BY id_musician DESC LIMIT $inicio, $resultadosPorPagina;";
+$condicionesPag .= " ORDER BY id_musician DESC ";
+
+
+// Consulta para contar el total de artistas
+$totalArtistas = Consultas::contarArtistas($condicionesPag);
+// Calcular el total de páginas
+$totalPaginas = ceil($totalArtistas / $resultadosPorPagina);
+// echo "Total de artistas:" . $totalArtistas . "<br>Total de páginas: " . $totalPaginas . "<br>";
+
+
+$artistasRelacionados = Consultas::busquedaArtistas($query);
+//        echo 'Artista: '.$artistasRelacionados[0]["id_user"] ;
+//        echo '<br><br><br><br><br><br><br>DB: '.$query;
+
+
 
 
 //$sql = $conexion->query($query);
@@ -157,7 +159,42 @@ if ($_GET["r"] == '' and $_GET["tip"] == ''  and $_GET["gen"] == '' and  $_GET["
 
                         <div class="home-team-slider owl-carousel owl-theme">
 
-                            <div class="single-team">
+
+                            <?php
+                            // Asumiendo que $ultimosArtistasDestacados ya contiene los datos de los artistas destacados
+                            $ultimosArtistasDestacados = Consultas::ultimosArtistas();
+
+                            // Verificar si hay artistas destacados
+                            if (!empty($ultimosArtistasDestacados)) {
+                                foreach ($ultimosArtistasDestacados as $artista) {
+                                    // Sustituir los valores dinámicamente
+                                    echo '
+                                        <div class="single-team">
+                                            <div class="team-img">
+                                                <a href="artistas.php?a=' . htmlspecialchars($artista["id_user"]) . '">
+                                                    <img src="https://echomusic.cl/images/avatars/' . htmlspecialchars($artista["id_user"]) . '.jpg" alt="' . htmlspecialchars($artista["nick_user"]) . '" />
+                                                </a>
+                                                <ul class="social">
+                                                    <li>
+                                                        <a href="artistas.php?a=' . htmlspecialchars($artista["id_user"]) . '" target="_blank"><i class=\'bx bx-search\'></i></a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+
+                                            <div class="content text-center">
+                                                <h5><a href="artistas.php?a=' . htmlspecialchars($artista["id_user"]) . '"> ' . htmlspecialchars($artista["nick_user"]) . '</a></h5>
+                                                
+                                            </div>
+                                        </div>';
+                                }
+                            } else {
+                                echo '<p>No se encontraron artistas destacados.</p>';
+                            }
+                            ?>
+
+
+
+                            <!-- <div class="single-team">
                                 <div class="team-img">
                                     <a href="artistas.php?a=7488">
                                         <img src="https://echomusic.cl/images/avatars/7488.jpg" alt="descatado" />
@@ -171,81 +208,10 @@ if ($_GET["r"] == '' and $_GET["tip"] == ''  and $_GET["gen"] == '' and  $_GET["
 
                                 <div class="content text-center">
                                     <h3><a href="artistas.php?a=7488"> Safo999</a></h3>
-                                    <p>Texto de destacado 1</p>
+                                     
                                 </div>
-                            </div>
+                            </div> -->
 
-                            <div class="single-team">
-                                <div class="team-img">
-                                    <a href="artistas.php?a=1156">
-                                        <img src="https://echomusic.cl/images/avatars/1156.jpg" alt="descatado" />
-                                    </a>
-                                    <ul class="social">
-                                        <li>
-                                            <a href="artistas.php?a=1156" target="_blank"><i class='bx bx-search'></i></a>
-                                        </li>
-                                    </ul>
-                                </div>
-
-                                <div class="content text-center">
-                                    <h3><a href="artistas.php?a=1156">Burned Matches</a></h3>
-                                    <p>Texto de destacado 2</p>
-                                </div>
-                            </div>
-
-                            <div class="single-team">
-                                <div class="team-img">
-                                    <a href="artistas.php?a=8087">
-                                        <img src="https://echomusic.cl/images/avatars/8087.jpg" alt="descatado" />
-                                    </a>
-                                    <ul class="social">
-                                        <li>
-                                            <a href="artistas.php?a=8087" target="_blank"><i class='bx bx-search'></i></a>
-                                        </li>
-                                    </ul>
-                                </div>
-
-                                <div class="content text-center">
-                                    <h3><a href="artistas.php?a=8087"> Central</a></h3>
-                                    <p>Texto de destacado 3</p>
-                                </div>
-                            </div>
-
-                            <div class="single-team">
-                                <div class="team-img">
-                                    <a href="artistas.php?a=8087">
-                                        <img src="https://echomusic.cl/images/avatars/13.jpg" alt="descatado" />
-                                    </a>
-                                    <ul class="social">
-                                        <li>
-                                            <a href="artistas.php?a=8087" target="_blank"><i class='bx bx-search'></i></a>
-                                        </li>
-                                    </ul>
-                                </div>
-
-                                <div class="content text-center">
-                                    <h3><a href="artistas.php?a=8087"> Frank's White Canvas</a></h3>
-                                    <p>Texto de destacado 4</p>
-                                </div>
-                            </div>
-
-                            <div class="single-team">
-                                <div class="team-img">
-                                    <a href="artistas.php?a=745">
-                                        <img src="https://echomusic.cl/images/avatars/745.jpg" alt="descatado" />
-                                    </a>
-                                    <ul class="social">
-                                        <li>
-                                            <a href="artistas.php?a=745" target="_blank"><i class='bx bx-search'></i></a>
-                                        </li>
-                                    </ul>
-                                </div>
-
-                                <div class="content text-center">
-                                    <h3><a href="artistas.php?a=745"> Diego Alonso</a></h3>
-                                    <p>Texto de destacado 5</p>
-                                </div>
-                            </div>
 
                         </div>
                     </div>
@@ -282,11 +248,12 @@ if ($_GET["r"] == '' and $_GET["tip"] == ''  and $_GET["gen"] == '' and  $_GET["
         <div class="row align-items-center choose-c justify-content-md-center">
             <div class="col-lg-12 col-md-12 ">
                 <div class="content">
-                    <form id="form2" name="form2" method="GET" action="buscar_artista.php">
+                    <form id="formBusquedaArtista" name="form2" method="GET" action="buscar_artista.php">
                         <div class="row">
                             <div class="col-lg-3 col-sm-3">
                                 <div class="form-group">
-                                    <input type="text" class="form-control" id="r" name="r" data-error="Buscar un artista" placeholder="Buscar artista" <?php echo $valueForm; ?> />
+                                    <input type="text" class="form-control" id="r" name="r" data-error="Buscar un artista" placeholder="Buscar artista <?php echo $valueForm; ?>" value="" />
+                                    <!-- <input type="text" class="form-control" id="r" name="r" data-error="Buscar un artista" placeholder="Buscar artista" value="<?php echo $valueForm; ?>" /> -->
                                     <div class="help-block with-errors"></div>
                                 </div>
                             </div>
@@ -295,103 +262,82 @@ if ($_GET["r"] == '' and $_GET["tip"] == ''  and $_GET["gen"] == '' and  $_GET["
                             <!--Género-->
                             <div class="col-lg-2 col-md-2">
                                 <div class="form12-group">
-                                    <select name="gen" id="gen" class="form-control" data-error="Selecciona un Género" />
-                                    <?php if ($_GET["gen"] != '') {
-                                        $GeneroArregle = ['1' => 'Ambient', '2' => 'Balada', '3' => 'Blues', '4' => 'Country', '5' => 'Cumbia', '6' => 'Electrónica', '7' => 'Folk', '8' => 'Folklore', '9' => 'Funk', '10' => 'Grunge', '11' => 'Indie', '12' => 'Jazz', '13' => 'Latino', '14' => 'Metal', '15' => 'Pop', '16' => 'Punk', '17' => 'Ranchera', '18' => 'Reggae', '19' => 'Rock', '20' => 'Clásica', '21' => 'Disco', '22' => 'DJ', '23' => 'SKA', '24' => 'Soul', '25' => 'Tango']
-                                    ?>
-                                        <option value="<?php echo $_GET["gen"]; ?>"><?php echo $GeneroArregle[$_GET["gen"]]; ?></option>
-                                    <?php } ?>
-                                    <option value="">Todos los Géneros</option>
-                                    <option value="1">Ambient</option>
-                                    <option value="2">Balada</option>
-                                    <option value="3">Blues</option>
-                                    <option value="4">Country</option>
-                                    <option value="5">Cumbia</option>
-                                    <option value="6">Electrónica</option>
-                                    <option value="7">Folk</option>
-                                    <option value="8">Folklore</option>
-                                    <option value="9">Funk</option>
-                                    <option value="10">Grunge</option>
-                                    <option value="11">Indie</option>
-                                    <option value="12">Jazz</option>
-                                    <option value="13">Latino</option>
-                                    <option value="14">Metal</option>
-                                    <option value="15">Pop</option>
-                                    <option value="16">Punk</option>
-                                    <option value="17">Ranchera</option>
-                                    <option value="18">Reggae</option>
-                                    <option value="19">Rock</option>
-                                    <option value="20">Clásica</option>
-                                    <option value="21">Disco</option>
-                                    <option value="22">DJ</option>
-                                    <option value="23">SKA</option>
-                                    <option value="24">Soul</option>
-                                    <option value="25">Tango</option>
+                                    <select name="gen" id="gen" class="form-control" data-error="Selecciona un Género">
+                                        <option value="">Todos los Géneros</option>
+                                        <?php
+                                        $GeneroArregle = [
+                                            '1' => 'Ambient', '2' => 'Balada', '3' => 'Blues', '4' => 'Country',
+                                            '5' => 'Cumbia', '6' => 'Electrónica', '7' => 'Folk', '8' => 'Folklore',
+                                            '9' => 'Funk', '10' => 'Grunge', '11' => 'Indie', '12' => 'Jazz',
+                                            '13' => 'Latino', '14' => 'Metal', '15' => 'Pop', '16' => 'Punk',
+                                            '17' => 'Ranchera', '18' => 'Reggae', '19' => 'Rock', '20' => 'Clásica',
+                                            '21' => 'Disco', '22' => 'DJ', '23' => 'SKA', '24' => 'Soul', '25' => 'Tango'
+                                        ];
+
+                                        foreach ($GeneroArregle as $value => $label) {
+                                            $selected = (isset($_GET["gen"]) && $_GET["gen"] == $value) ? 'selected' : '';
+                                            echo "<option value='$value' $selected>$label</option>";
+                                        }
+                                        ?>
                                     </select>
                                 </div>
                             </div>
+
 
                             <!--Tipo de Artista-->
                             <div class="col-lg-2 col-md-2">
                                 <div class="form12-group">
-                                    <select name="tip" id="tip" class="form-control" data-error="Selecciona un tipo de artista" />
-                                    <?php if ($_GET["tip"] != '') {
-                                        $TipArregle = ['1' => 'Cantante', '2' => 'Banda', '3' => 'Solista', '4' => 'Músico Instrumentista', '5' => 'Tributo', '6' => 'DJ', '7' => 'Músico Home Studio']
-                                    ?>
-                                        <option value="<?php echo $_GET["tip"]; ?>"><?php echo $TipArregle[$_GET["tip"]]; ?></option>
-                                    <?php } ?>
-                                    <option value="">Todos los tipos</option>
-                                    <option value="1">Cantante</option>
-                                    <option value="2">Banda</option>
-                                    <option value="3">Solista</option>
-                                    <option value="4">Músico Instrumentista</option>
-                                    <option value="5">Tributo</option>
-                                    <option value="6">DJ</option>
-                                    <option value="7">Músico Home Studio</option>
+                                    <select name="tip" id="tip" class="form-control" data-error="Selecciona un tipo de artista">
+                                        <option value="">Todos los tipos</option>
+                                        <?php
+                                        $TipArregle = [
+                                            '1' => 'Cantante', '2' => 'Banda', '3' => 'Solista',
+                                            '4' => 'Músico Instrumentista', '5' => 'Tributo',
+                                            '6' => 'DJ', '7' => 'Músico Home Studio'
+                                        ];
+
+                                        foreach ($TipArregle as $value => $label) {
+                                            $selected = (isset($_GET["tip"]) && $_GET["tip"] == $value) ? 'selected' : '';
+                                            echo "<option value='$value' $selected>$label</option>";
+                                        }
+                                        ?>
                                     </select>
                                 </div>
                             </div>
 
+
                             <!--Region-->
                             <div class="col-lg-2 col-md-2">
                                 <div class="form12-group">
-                                    <select name="reg" id="reg" class="form-control" data-error="Selecciona una región" />
-                                    <?php if ($_GET["reg"] != '') {
+                                    <select name="reg" id="reg" class="form-control" data-error="Selecciona una región">
+                                        <option value="">Todas las regiones</option>
+                                        <?php
                                         $RegionesArregle = [
-                                            '1' => 'Arica y Parinacota', '2' => 'Tarapacá', '3' => 'Antofagasta', '4' => 'Atacama', '5' => 'Coquimbo',
-                                            '6' => 'Valparaíso', '7' => 'Metropolitana', '8' => 'Libertador Gral. Bernando Ohiggins', '9' => 'Maule', '10' => 'Ñuble',
-                                            '11' => 'Bío Bío', '12' => 'La Araucanía', '13' => 'Los Ríos', '14' => 'Los Lagos', '15' => 'Aysén', '16' => 'Magallanes'
-                                        ]
-                                    ?>
-                                        <option value="<?php echo $_GET["reg"]; ?>"><?php echo $RegionesArregle[$_GET["reg"]]; ?></option>
-                                    <?php } ?>
-                                    <option value="">Todas las regiones</option>
-                                    <option value="1">Arica y Parinacota</option>
-                                    <option value="2">Tarapacá</option>
-                                    <option value="3">Antofagasta</option>
-                                    <option value="4">Atacama</option>
-                                    <option value="5">Coquimbo</option>
-                                    <option value="6">Valparaíso</option>
-                                    <option value="7">Metropolitana</option>
-                                    <option value="8">Libertador Gral. Bernando O'higgins</option>
-                                    <option value="9">Maule</option>
-                                    <option value="10">Ñuble</option>
-                                    <option value="11">Bío Bío</option>
-                                    <option value="12">La Araucanía</option>
-                                    <option value="13">Los Ríos</option>
-                                    <option value="14">Los Lagos</option>
-                                    <option value="15">Aysén</option>
-                                    <option value="16">Magallanes</option>
+                                            '1' => 'Arica y Parinacota', '2' => 'Tarapacá', '3' => 'Antofagasta',
+                                            '4' => 'Atacama', '5' => 'Coquimbo', '6' => 'Valparaíso',
+                                            '7' => 'Metropolitana', '8' => 'Libertador Gral. Bernando Ohiggins',
+                                            '9' => 'Maule', '10' => 'Ñuble', '11' => 'Bío Bío',
+                                            '12' => 'La Araucanía', '13' => 'Los Ríos', '14' => 'Los Lagos',
+                                            '15' => 'Aysén', '16' => 'Magallanes'
+                                        ];
+
+                                        foreach ($RegionesArregle as $value => $label) {
+                                            $selected = (isset($_GET["reg"]) && $_GET["reg"] == $value) ? 'selected' : '';
+                                            echo "<option value='$value' $selected>$label</option>";
+                                        }
+                                        ?>
                                     </select>
                                 </div>
                             </div>
+
 
                             <div class="col-lg-3 col-md-3">
                                 <button type="submit" class="default-btn page-btn box-btn">
                                     <i class="bx bx-search"></i> Buscar Artista
                                 </button>
                                 <div class="btn-clear">
-                                    <button type="reset" class="box-btn-clear">Limpiar campos</button>
+                                    <button type="button" class="box-btn-clear" onclick="limpiarFormulario()">Limpiar campos</button>
+
                                 </div>
                                 <div id="msgSubmit" class="h3 text-center hidden"></div>
                                 <div class="clearfix"></div>
@@ -514,24 +460,45 @@ if ($_GET["r"] == '' and $_GET["tip"] == ''  and $_GET["gen"] == '' and  $_GET["
 
                 <!-- Página Anterior -->
                 <li class="page-item <?= ($paginaActual <= 1) ? 'disabled' : '' ?>">
-                    <a class="page-link" href="?page=<?= $paginaActual - 1 ?>&r=<?= $_GET["r"] ?>&gen=<?= $_GET["gen"] ?>&tip=<?= $_GET["tip"] ?>&reg=<?= $_GET["reg"] ?>">Anterior</a>
+                    <a class="page-link" href="?page=<?= max($paginaActual - 1, 1) ?>&r=<?= $_GET["r"] ?>&gen=<?= $_GET["gen"] ?>&tip=<?= $_GET["tip"] ?>&reg=<?= $_GET["reg"] ?>">Anterior</a>
                 </li>
 
                 <?php
-                // Generar los números de página
-                for ($i = 1; $i <= $totalPaginas; $i++) {
+                $rango = 2; // Rango de páginas alrededor de la página actual
+                $desde = max(1, $paginaActual - $rango);
+                $hasta = min($totalPaginas, $paginaActual + $rango);
+
+                // Siempre mostrar la primera página
+                if ($desde > 1) {
+                    echo '<li class="page-item"><a class="page-link" href="?page=1&r=' . $_GET["r"] . '&gen=' . $_GET["gen"] . '&tip=&reg=' . '">1</a></li>';
+                    if ($desde > 2) { // Puntos suspensivos para omisión
+                        echo '<li class="page-item disabled"><span class="page-link">...</span></li>';
+                    }
+                }
+
+                // Generar los números de página alrededor de la página actual
+                for ($i = $desde; $i <= $hasta; $i++) {
                     echo '<li class="page-item ' . ($i == $paginaActual ? 'active' : '') . '">';
                     echo '<a class="page-link" href="?page=' . $i . '&r=' . $_GET["r"] . '&gen=' . $_GET["gen"] . '&tip=&reg=' . '">' . $i . '</a>';
                     echo '</li>';
+                }
+
+                // Siempre mostrar la última página
+                if ($hasta < $totalPaginas) {
+                    if ($hasta < $totalPaginas - 1) { // Puntos suspensivos para omisión
+                        echo '<li class="page-item disabled"><span class="page-link">...</span></li>';
+                    }
+                    echo '<li class="page-item"><a class="page-link" href="?page=' . $totalPaginas . '&r=' . $_GET["r"] . '&gen=' . $_GET["gen"] . '&tip=&reg=' . '">' . $totalPaginas . '</a></li>';
                 }
                 ?>
 
                 <!-- Página Siguiente -->
                 <li class="page-item <?= ($paginaActual >= $totalPaginas) ? 'disabled' : '' ?>">
-                    <a class="page-link" href="?page=<?= $paginaActual + 1 ?>&r=<?= $_GET["r"] ?>&gen=<?= $_GET["gen"] ?>&tip=<?= $_GET["tip"] ?>&reg=<?= $_GET["reg"] ?>">Siguiente</a>
+                    <a class="page-link" href="?page=<?= min($paginaActual + 1, $totalPaginas) ?>&r=<?= $_GET["r"] ?>&gen=<?= $_GET["gen"] ?>&tip=<?= $_GET["tip"] ?>&reg=<?= $_GET["reg"] ?>">Siguiente</a>
                 </li>
             </ul>
         </nav>
+
 
 
 

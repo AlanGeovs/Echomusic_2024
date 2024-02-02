@@ -1,4 +1,78 @@
     <!--Modal area-->
+
+    <!-- Modal para contratar artistas -->
+
+    <!-- Modal  Tarifa a convenir-->
+    <div class="modal fade" id="contratarArtistaModal" tabindex="-1" aria-labelledby="contratarArtistaModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="contratarArtistaModalLabel">Contratar Artista</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="formContratarArtista">
+                        <div class="mb-3">
+                            <label for="nombre-artista" class="col-form-label">Nombre del Artista:</label>
+                            <input type="text" class="form-control" id="nombre-artista" value="<?php echo $respuesta[0]['nick_user']; ?>" disabled>
+                        </div>
+                        <div class="mb-3">
+                            <label for="asunto" class="col-form-label">Asunto:</label>
+                            <input type="text" class="form-control" id="asunto" placeholder="Ej. Cotización evento de cumpleaños">
+                        </div>
+                        <div class="mb-3">
+                            <label for="descripcion" class="col-form-label">Descripción:</label>
+                            <textarea class="form-control" id="descripcion" placeholder="Describe los detalles de tu evento, lugar y tiempo requerido"></textarea>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                    <button type="button" class="btn btn-primary" onclick="enviarFormulario()">Enviar Solicitud</button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal  Tarifa  1 -->
+    <div class="modal fade" id="contratarTarifaModal" tabindex="-1" aria-labelledby="contratarTarifaModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="contratarTarifaModalLabel">Contratar Artista</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="mb-3">
+                            <label for="nombre-artista" class="col-form-label">Nombre del Artista:</label>
+                            <input type="text" class="form-control" id="nombre-artista" value="<?php echo $respuesta[0]['nick_user']; ?>" disabled>
+                        </div>
+                        <div class="mb-3">
+                            <label for="asunto" class="col-form-label">Incluye:</label>
+                            <!-- <input type="text" class="form-control" id="asunto" placeholder="Ej. Cotización evento de cumpleaños"> -->
+                            Duración <?php echo $tarifasArtista[$t]["duration_minutes"]; ?> minutos | Backline <?php echo $tarifasArtista[$t]["backline"]; ?> | Ingeniero de Sonido <?php echo $tarifasArtista[$t]["sound_engineer"]; ?>
+                        </div>
+                        <!-- <div class="mb-3">
+                            <label for="asunto" class="col-form-label">Asunto:</label>
+                             <input type="text" class="form-control" id="asunto" placeholder="Ej. Cotización evento de cumpleaños">
+                </div> -->
+                        <div class="mb-3">
+                            <label for="descripcion" class="col-form-label">Descripción:</label>
+                            <textarea class="form-control" id="descripcion" placeholder="Describe los detalles de tu evento, lugar y tiempo requerido"></textarea>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                    <button type="button" class="btn btn-primary">Enviar Solicitud</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
     <!-- The Modal -->
     <div class="modal" id="myModal">
         <div class="modal-dialog">
@@ -69,6 +143,7 @@
                     ?>
                         <div class="home-2-contact col-lg-12">
                             <div class="content">
+
                                 <div class="row align-items-center choose-c justify-content-md-center">
                                     <!--img-->
                                     <div class="col-12 col-sm-4  choose-img text-center">
@@ -112,59 +187,41 @@
 
                         <div class="home-2-contact col-lg-12">
                             <div class="content">
-                                <!--Diseño ANterior-->
-                                <!--             <div class="row">
-                    img
-                    <div class="col-12 col-sm-6  choose-img">  
-                        <img src="https://echomusic.cl/images/events/<?php echo $resultadosEventosPasa[$p]["img"]; ?>.jpg" alt="<?php echo ''; ?>" width="350px"/> 
-                    </div>
-                    Descripción
-                    <div class="col-12 col-sm-6" style="vertical-align: middle;">
-                        <ul>
-                            <li>
-                                <?php echo $resultadosEventosPasa[$p]["name_event"]; ?>                                                    
-                            </li> 
-                        </ul>  
-                        <h3><?php echo $resultadosEventosPasa[$p]["name_event"]; ?> </h3>  
-                        <p>Organizado: 
-                            <?php echo $resultadosEventosPasa[$p]["organizer"]; ?>
-                            <?php echo $resultadosEventosPasa[$p]["name_location"]; ?>
-                            / <?php echo $resultadosEventosPasa[$p]["location"]; ?> </p>
-                        <p><?php echo $resultadosEventosPasa[$p]["desc_event"]; ?> </p>
-
-                    </div>
-                </div> fin del Row-->
 
                                 <!--Diseño Nuevvo-->
-                                <div class="row">
-                                    <div class="home-team-slider owl-carousel owl-theme">
+                                <div class="container">
+                                    <div class="row">
                                         <?php
                                         for ($p = 0; $p < count($resultadosEventosPasa); $p++) {
                                         ?>
-                                            <div class="single-team">
-                                                <div class="team-img">
-                                                    <img class="tamano-4" src="https://echomusic.cl/images/events/<?php echo $resultadosEventosPasa[$p]["img"]; ?>.jpg" alt="<?php echo ''; ?>" width="350px" />
-                                                </div>
-
-                                                <div class="content text-center">
-                                                    <h6><?php echo $resultadosEventosPasa[$p]["name_event"]; ?> </h6>
-                                                    <p style="font-size: 10px;">Organizado: <?php echo $resultadosEventosPasa[$p]["organizer"]; ?>
-                                                        <?php echo $resultadosEventosPasa[$p]["name_location"]; ?>
-                                                        / <?php echo $resultadosEventosPasa[$p]["location"]; ?>
-                                                    </p>
+                                            <div class="col-md-6">
+                                                <div class="card" style="width: 18rem;">
+                                                    <img class="card-img-top" src="https://echomusic.cl/images/events/<?php echo $resultadosEventosPasa[$p]["img"]; ?>.jpg" alt="<?php echo ''; ?>">
+                                                    <div class="card-body">
+                                                        <h5 class="card-title"><?php echo $resultadosEventosPasa[$p]["name_event"]; ?></h5>
+                                                        <p class="card-text">Organizado: <?php echo $resultadosEventosPasa[$p]["organizer"]; ?>
+                                                            <?php echo $resultadosEventosPasa[$p]["name_location"]; ?>
+                                                            / <?php echo $resultadosEventosPasa[$p]["location"]; ?></p>
+                                                    </div>
                                                 </div>
                                             </div>
+
                                         <?php
                                         }
                                         ?>
-                                    </div>
 
+                                    </div>
                                 </div>
+
+
                             </div>
                         </div>
                     <?php
 
                     } ?>
+
+
+
 
                 </div>
 
