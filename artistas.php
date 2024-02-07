@@ -208,12 +208,10 @@ if (empty($tarifasArtista[0]["value_plan"])) {
 } else {
     //Inician tarrifas
 ?>
-    <section class="home-blog-area bg-color ptb-35">
+    <section class="home-blog-area bg-color ptb-35" id="tarifas">
         <div class="container">
             <div class="section-title">
-                <!--<span>What We Offer</span>-->
                 <h2>Tarifas</h2>
-                <!--<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ipsum suspendisse.</p>-->
             </div>
 
             <!--Tarifas formato blog-->
@@ -252,14 +250,14 @@ if (empty($tarifasArtista[0]["value_plan"])) {
                                     </li>
                                     <li>
                                         <i class="bx bx-badge-check"></i>
-                                        &nbsp;&nbsp; Sonidista
+                                        &nbsp;&nbsp; Sonidista <?php echo $tarifasArtista[$t]["sound_reinforcement"]; ?>
                                     </li>
                                     <li>
                                         <i class="bx bx-badge-check"></i>
                                         &nbsp;&nbsp; Nº de Músicos <?php echo $tarifasArtista[$t]["artists_amount"]; ?>
                                     </li>
                                 </ul>
-                                <a class="box-btn" href="#" data-bs-toggle="modal" data-bs-target="#contratarTarifaModal">
+                                <a class="box-btn" href="artistas_contratacion.php?a=<?php echo $id; ?>&id_name_plan=<?php echo $tarifasArtista[$t]["id_name_plan"]; ?>">
                                     Contratar
                                 </a>
 
@@ -778,9 +776,9 @@ if (empty($muestraIntegrantes[0]["id_user"])) {
                             <h3>Servicios</h3>
                             <ul class="footer-list">
                                 <li><a href="#">Perfil de Artistas</a></li>
-                                <li><a href="#">Ticketing</a></li>
-                                <li><a href="#">Crowdfunding</a></li>
-                                <li><a href="#">Marketplace de artistas</a></li> 
+                                <li><a href="cartelera.php">Ticketing</a></li>
+                                <li><a href="buscar_crowdfunding.php">Crowdfunding</a></li>
+                                <li><a href="buscar_artista.php">Marketplace de artistas</a></li> 
                             </ul>
                         </div>
                     </div>-->
@@ -796,9 +794,9 @@ if (empty($muestraIntegrantes[0]["id_user"])) {
 
                     <h3>Servicios</h3>
                     <ul class="footer-list">
-                        <li><a href="#">Ticketing</a></li>
-                        <li><a href="#">Crowdfunding</a></li>
-                        <li><a href="#">Marketplace de artistas</a></li>
+                        <li><a href="cartelera.php">Ticketing</a></li>
+                        <li><a href="buscar_crowdfunding.php">Crowdfunding</a></li>
+                        <li><a href="buscar_artista.php">Marketplace de artistas</a></li>
                     </ul>
                 </div>
             </div>
@@ -871,7 +869,7 @@ if (empty($muestraIntegrantes[0]["id_user"])) {
                 </div>
                 <div class="col-lg-6">
                     <p class="right">
-                        Copyright @2023 EchoMusic | By
+                        Copyright @2024 EchoMusic | By
                         <a href="https://www.genesysapp.com/" target="_blank">GenesysApp.com</a>
                     </p>
                 </div>
@@ -1043,11 +1041,20 @@ include 'modal.php';
     }
 </script>
 
-<!-- Script migas de pan -->
+<?php include "scripts.php"; ?>
+
+<!-- Redirecciona a tarifas -->
 <script>
-    function onBackClick() {
-        window.history.back();
-    }
+    document.addEventListener("DOMContentLoaded", function() {
+        if (window.location.hash === "#tarifas") {
+            var section = document.getElementById("tarifas");
+            if (section) {
+                section.scrollIntoView({
+                    behavior: "smooth"
+                });
+            }
+        }
+    });
 </script>
 
 

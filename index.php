@@ -405,13 +405,13 @@ include "header.php";
             <!--<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse.</p>-->
         </div>
 
-        <div class="case">
+        <!-- <div class="case">
             <ul class="all-case">
-                <!--<li class="active" data-filter="*"><span>Todo</span></li>-->
+                <li class="active" data-filter="*"><span>Todo</span></li>
                 <li class="active" data-filter="*"><span>Presencial</span></li>
                 <li data-filter=".dev"><span>Online</span></li>
             </ul>
-        </div>
+        </div> -->
 
         <div class="row case-list">
 
@@ -701,175 +701,65 @@ $respuestaArtistas = Consultas::ultimosArtistas();
 
                         <div class="home-team-slider owl-carousel owl-theme">
 
+                            <?php
+                            $eventosRelacionados = Consultas::ultimosCrowdfundingPaginaInicio();
+                            for ($k = 0; $k < count($eventosRelacionados); $k++) {
+                            ?>
 
-                            <div class="single-team">
-                                <div class="team-img">
-                                    <img src="assets/images/avatars/echo-1.jpg" alt="descatado" />
-                                    <ul class="social">
-                                        <li>
-                                            <a href="#" target="_blank"><i class='bx bx-search'></i></a>
-                                        </li>
-                                    </ul>
-                                </div>
-
-                                <div class="content">
-                                    <!--Titulo-->
-                                    <div class="row text-center">
-                                        <div class="col-12">
-                                            <a href="#">
-                                                <h3>Frank White Canvas</h3>
-                                            </a>
-                                        </div>
+                                <div class="single-team">
+                                    <div class="team-img">
+                                        <a href="crowdfunding.php?c=<?php echo $eventosRelacionados[$k]["id_project"]; ?>">
+                                            <img src="https://echomusic.cl/images/avatars/<?php echo $eventosRelacionados[$k]["id_user"]; ?>.jpg" alt="descatado" />
+                                        </a>
+                                        <ul class="social">
+                                            <li>
+                                                <a href="crowdfunding.php?c=<?php echo $eventosRelacionados[$k]["id_project"]; ?>"><i class='bx bx-search'></i></a>
+                                            </li>
+                                        </ul>
                                     </div>
-                                    <!--Entrada Fecha hora Costo Compra-->
-                                    <div class="row ">
-                                        <div class="col-lg-6 col-sm-6">
-                                            <p class="descripcion">Rock Región Metropolitana</p>
-                                        </div>
-                                        <div class="col-lg-6 col-sm-6 text-center " style="vertical-align: middle;">
-                                            <br>
-                                            <a href class="box-btn">Ver perfil</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
 
-                            <div class="single-team">
-                                <div class="team-img">
-                                    <img src="assets/images/avatars/echo-2.jpg" alt="descatado" />
-                                    <ul class="social">
-                                        <li>
-                                            <a href="#" target="_blank"><i class='bx bx-search'></i></a>
-                                        </li>
-                                    </ul>
-                                </div>
-
-                                <div class="content">
-                                    <!--Titulo-->
-                                    <div class="row text-center">
-                                        <div class="col-12">
-                                            <a href="#">
-                                                <h3>Frank White Canvas</h3>
-                                            </a>
+                                    <div class="content">
+                                        <!--Titulo-->
+                                        <div class="row text-center">
+                                            <div class="col-12">
+                                                <a href="crowdfunding.php?c=<?php echo $eventosRelacionados[$k]["id_project"]; ?>">
+                                                    <h3><?php echo $eventosRelacionados[$k]["project_title"]; ?></h3>
+                                                </a>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <!--Entrada Fecha hora Costo Compra-->
-                                    <div class="row ">
-                                        <div class="col-lg-6 col-sm-6">
-                                            <p class="descripcion">Rock Región Metropolitana</p>
-                                        </div>
-                                        <div class="col-lg-6 col-sm-6 text-center " style="vertical-align: middle;">
-                                            <br>
-                                            <a href class="box-btn">Ver perfil</a>
+                                        <!--Entrada Fecha hora Costo Compra-->
+                                        <div class="row ">
+                                            <div class="col-lg-6 col-sm-6">
+                                                <p class="descripcion"><?php echo $eventosRelacionados[$k]["id_user"]; ?></p>
+                                            </div>
+                                            <div class="col-lg-6 col-sm-6 text-center " style="vertical-align: middle;">
+                                                <br>
+                                                <a href="crowdfunding.php?c=<?php echo $eventosRelacionados[$k]["id_project"]; ?>" class="box-btn">
+                                                    Ver más</a>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
 
-                            <div class="single-team">
-                                <div class="team-img">
-                                    <img src="assets/images/avatars/echo-3.jpg" alt="descatado" />
-                                    <ul class="social">
-                                        <li>
-                                            <a href="#" target="_blank"><i class='bx bx-search'></i></a>
-                                        </li>
-                                    </ul>
-                                </div>
+                            <?php
 
-                                <div class="content">
-                                    <!--Titulo-->
-                                    <div class="row text-center">
-                                        <div class="col-12">
-                                            <a href="#">
-                                                <h3>Frank White Canvas</h3>
-                                            </a>
-                                        </div>
-                                    </div>
-                                    <!--Entrada Fecha hora Costo Compra-->
-                                    <div class="row ">
-                                        <div class="col-lg-6 col-sm-6">
-                                            <p class="descripcion">Rock Región Metropolitana</p>
-                                        </div>
-                                        <div class="col-lg-6 col-sm-6 text-center " style="vertical-align: middle;">
-                                            <br>
-                                            <a href class="box-btn">Ver perfil</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                            }
+                            ?>
 
-                            <div class="single-team">
-                                <div class="team-img">
-                                    <img src="assets/images/avatars/echo-4.jpg" alt="descatado" />
-                                    <ul class="social">
-                                        <li>
-                                            <a href="#" target="_blank"><i class='bx bx-search'></i></a>
-                                        </li>
-                                    </ul>
-                                </div>
-
-                                <div class="content">
-                                    <!--Titulo-->
-                                    <div class="row text-center">
-                                        <div class="col-12">
-                                            <a href="#">
-                                                <h3>Frank White Canvas</h3>
-                                            </a>
-                                        </div>
-                                    </div>
-                                    <!--Entrada Fecha hora Costo Compra-->
-                                    <div class="row ">
-                                        <div class="col-lg-6 col-sm-6">
-                                            <p class="descripcion">Rock Región Metropolitana</p>
-                                        </div>
-                                        <div class="col-lg-6 col-sm-6 text-center " style="vertical-align: middle;">
-                                            <br>
-                                            <a href class="box-btn">Ver perfil</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="single-team">
-                                <div class="team-img">
-                                    <img src="assets/images/avatars/echo-2.jpg" alt="descatado" />
-                                    <ul class="social">
-                                        <li>
-                                            <a href="#" target="_blank"><i class='bx bx-search'></i></a>
-                                        </li>
-                                    </ul>
-                                </div>
-
-                                <div class="content">
-                                    <!--Titulo-->
-                                    <div class="row text-center">
-                                        <div class="col-12">
-                                            <a href="#">
-                                                <h3>Frank White Canvas</h3>
-                                            </a>
-                                        </div>
-                                    </div>
-                                    <!--Entrada Fecha hora Costo Compra-->
-                                    <div class="row ">
-                                        <div class="col-lg-6 col-sm-6">
-                                            <p class="descripcion">Rock Región Metropolitana</p>
-                                        </div>
-                                        <div class="col-lg-6 col-sm-6 text-center " style="vertical-align: middle;">
-                                            <br>
-                                            <a href class="box-btn">Ver perfil</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
 
                         </div>
                     </div>
-                </section>
-                <!-- End Artistas Carrusel Area -->
-            </div>
 
+
+
+            </div>
         </div>
-    </div>
+</section>
+<!-- End Artistas Carrusel Area -->
+</div>
+
+</div>
+</div>
 </section>
 <!-- End Crowdfunding - Características  -->
 

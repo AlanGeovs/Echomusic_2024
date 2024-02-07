@@ -167,7 +167,7 @@
                                         <p style="font-size: .9em; color: grey; "><?php echo substr($resultadosProxEventos[$e]["desc_event"], 0, 220); ?> </p>
 
 
-                                        <a href=" " class="box-btn">Ver evento</a>
+                                        <a href="eventos.php?e=<?php echo $resultadosProxEventos[$e]["id_event"]; ?> " class="box-btn">Ver evento</a>
                                     </div>
                                 </div>
                                 <!--fin del Row-->

@@ -42,7 +42,7 @@
 
     function formSuccess(){
         $("#contactForm")[0].reset();
-        submitMSG(true, "Message Submitted!")
+        submitMSG(true, "Mensaje enviando. Pronto nos pondremos en contacto.")
     }
 
     function formError(){

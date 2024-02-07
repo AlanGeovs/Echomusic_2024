@@ -1,6 +1,7 @@
 <?php
 include "model/models.php";
 include "header.php";
+// include "dashboard/model/model.php";
 
 //Búsquedas de Eventos
 if (isset($_GET["a"])) {
@@ -10,6 +11,7 @@ if (isset($_GET["a"])) {
     }
     $respuesta = Consultas::detallesArtistas($id);
 }
+$id_name_plan = $_GET["id_name_plan"];
 
 $biografia = Consultas::bioArtistas($id);
 $presskit  = Consultas::bioPresskit($id);
@@ -67,26 +69,52 @@ $resultadosEventosPasa = Consultas::eventosPasadosArtista($respuesta[0]["id_user
             </div>
 
 
-            <!--Eventos-->
+            <!--Detalles de tarifa-->
+            <?php
+            $tarifasArtista = Consultas::tarifasPorId($respuesta[0]["id_user"], $id_name_plan);
+            ?>
             <div class=" col-lg-5 text-center">
 
                 <div class="row justify-content-md-center">
+                    <div class="col-lg-8 col-md-8">
+                        <a type="button" class="text-center" onclick='cambiarPlan("<?php echo $respuesta[0]["id_user"]; ?>"); return false;'>
+                            <icon class="icon-return"></icon>Cambiar plan
+                        </a>
+
+                    </div>
                     <div class="col-lg-12 col-md-12">
                         <div class="single-blog">
-                            <div class="blog-img">
-                                <img style="height: 100px; width: 100px; border-radius: 50%;" src="dashboard/images/integrantes/12172903896282ee734cfbd8_04661328" class="responsiveArtista" alt="">
-                            </div>
 
                             <div class="pricing-top-heading">
-                                <h3>Gustavo Soto</h3>
+                                <h3>Tarifa <?php echo $t + 1; ?></h3>
+                                <p><?php echo $tarifasArtista[0]["desc_plan"]; ?></p>
                             </div>
-                            <p>Batería
-                            </p>
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <ul>
+                                        <li> Duración <?php echo $tarifasArtista[0]["duration_minutes"]; ?> minutos.</li>
+                                        <li> Backline <?php echo $tarifasArtista[0]["backline"]; ?></li>
+                                        <li> Ingeniero de Sonido <?php echo $tarifasArtista[0]["sound_engineer"]; ?></li>
+                                    </ul>
+                                </div>
+                                <div class="col-md-6">
+                                    <ul>
+                                        <li> Refuerzo Sonoro <?php echo $tarifasArtista[0]["sound_reinforcement"]; ?></li>
+                                        <li> Sonidista <?php echo $tarifasArtista[0]["sound_reinforcement"]; ?></li>
+                                        <li> Nº de Músicos <?php echo $tarifasArtista[0]["artists_amount"]; ?></li>
+                                    </ul>
+                                </div>
+                                <div class="col.md-12">
+                                    <h2>$<?php echo number_format($tarifasArtista[0]["value_plan"], 0, ",", "."); ?></h2>
+                                </div>
+                            </div>
+
 
                         </div>
                     </div>
                     <div class="col-lg-8 col-md-8">
-                        <button type="button" class="box-btn  btn-sm text-center">Cambiar plan</button>
+                        <button type="button" class="box-btn  btn-sm text-center" onclick="onBackClick(); return false;">Cambiar plan</button>
                     </div>
 
 
@@ -102,16 +130,133 @@ $resultadosEventosPasa = Consultas::eventosPasadosArtista($respuesta[0]["id_user
 
 <!-- FORMULARIO -->
 
-<section class="pricing-area ptb-35">
+<section class="comprar-area ptb-35">
     <div class="container">
-        <div class="row align-items-center choose-c justify-content-md-center">
-            <div class="col-lg-8 col-sm-8">
+        <div class="row justify-content-center">
+            <div class="col-12">
+                <div class="comprar-form">
+                    <div class="section-tittle text-center">
+                        <p>LLena los siguientes datos para contratar el servicio</p>
+                    </div>
+
+                    <form id="contratarTarifa" method="post" enctype="multipart/form-data">
+                        <input type="hidden" id="id_plan" name="id_plan" value="<?php echo $tarifasArtista[0]["id_plan"]; ?>">
+                        <input type="hidden" id="value_plan_event" name="value_plan_event" value="<?php echo $tarifasArtista[0]["value_plan"]; ?>">
+                        <input type="hidden" id="id_name_plan" name="id_name_plan" value="<?php echo $id_name_plan; ?>">
+                        <!-- Evento -->
+                        <div class="row justify-content-center">
+                            <div class="col-md-12 col-sm-12">
+                                <div class="form-group">
+                                    <label for="evento">Evento</label>
+                                    <input type="text" class="form-control" id="name_event" name="name_event" placeholder="Nombre del Evento" required>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Dirección, Región, Ciudad -->
+                        <div class="row justify-content-center">
+                            <div class="col-md-12 col-sm-12">
+                                <div class="form-group">
+                                    <label for="direccion">Dirección</label>
+                                    <input type="text" class="form-control" id="location" name="location" placeholder="Dirección" required>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-sm-6">
+                                <div class="form-group">
+                                    <label for="id_region">Región</label>
+                                    <select class="form-control" id="id_region" name="id_region" required>
+                                        <option>Selecciona una región</option>
+                                        <?php
+                                        $res = Consultas::listarVariable('regions');
+                                        // var_dump($res);
+                                        for ($i = 0; $i < count($res); $i++) {
+                                            echo "<option value='" . $res[$i]["id_region"] . "' id='" . $res[$i]["id_region"] . "' >" . $res[$i]["name_region"] . "</option>";
+                                        }
+                                        ?>
+
+                                    </select>
+
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-sm-6">
+                                <div class="form-group">
+                                    <label for="id_city">Ciudad</label>
+                                    <select class="form-control" id="id_city" name="id_city" required>
+                                        <option>Selecciona una ciudad</option>
+                                        <?php
+                                        $res = Consultas::listarVariable('cities');
+                                        //var_dump($respuesta);
+                                        for ($i = 0; $i < count($res); $i++) {
+                                            echo "<option value='" . $res[$i]["id_city"] . "' id='" . $res[$i]["id_city"] . "' >" . $res[$i]["name_city"] . "</option>";
+                                        }
+                                        ?>
+
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Fecha y Hora, Teléfono -->
+                        <div class="row justify-content-center">
+                            <div class="col-md-6 col-sm-">
+                                <div class="form-group">
+                                    <label for="date_event">Fecha y Hora</label>
+                                    <input type="datetime-local" class="form-control" id="date_event" name="date_event" required>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-sm-">
+                                <div class="form-group">
+                                    <label for="phone_event">Teléfono</label>
+                                    <input type="phone" class="form-control" id="phone_event" name="phone_event" placeholder="Teléfono de contacto" required>
+                                </div>
+                            </div>
+                        </div>
 
 
+
+                        <!-- Escribe tu solicitud -->
+                        <div class="row justify-content-center">
+                            <div class="col-md-12 col-sm-12">
+                                <div class="form-group">
+                                    <label for="solicitud">Escribe tu solicitud</label>
+                                    <textarea class="form-control" id="desc_event" name="desc_event" rows="5" placeholder="Detalles de tu solicitud..." required></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12 col-sm-12 col-xs-12">
+                            <div class="privecy-txt">
+                                <p><small>Para obtener más información acerca de cómo EchoMusic recopila, utiliza, comparte y protege tus datos personales, consulta la
+                                        <a href="politica-de-privacidad.php" target="_blank">Política de Privacidad</a> de EchoMusic.</small> </p>
+                            </div>
+                        </div>
+
+                        <!-- Botón de enviar -->
+                        <div class="row">
+                            <div class="col-12 text-center">
+                                <button type="submit" class="box-btn  btn-sm text-center comprar-btn" onclick="enviarContratacionTarifa();">Enviar Solicitud</button>
+                            </div>
+                        </div>
+                    </form>
+
+
+                </div>
             </div>
         </div>
     </div>
 </section>
+
+
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-lg-8 col-md-8">
+
+        </div>
+    </div>
+</div>
+
+
+
 
 <!-- End Videos -->
 
@@ -209,9 +354,9 @@ $resultadosEventosPasa = Consultas::eventosPasadosArtista($respuesta[0]["id_user
                             <h3>Servicios</h3>
                             <ul class="footer-list">
                                 <li><a href="#">Perfil de Artistas</a></li>
-                                <li><a href="#">Ticketing</a></li>
-                                <li><a href="#">Crowdfunding</a></li>
-                                <li><a href="#">Marketplace de artistas</a></li> 
+                                <li><a href="cartelera.php">Ticketing</a></li>
+                                <li><a href="buscar_crowdfunding.php">Crowdfunding</a></li>
+                                <li><a href="buscar_artista.php">Marketplace de artistas</a></li> 
                             </ul>
                         </div>
                     </div>-->
@@ -227,9 +372,9 @@ $resultadosEventosPasa = Consultas::eventosPasadosArtista($respuesta[0]["id_user
 
                     <h3>Servicios</h3>
                     <ul class="footer-list">
-                        <li><a href="#">Ticketing</a></li>
-                        <li><a href="#">Crowdfunding</a></li>
-                        <li><a href="#">Marketplace de artistas</a></li>
+                        <li><a href="cartelera.php">Ticketing</a></li>
+                        <li><a href="buscar_crowdfunding.php">Crowdfunding</a></li>
+                        <li><a href="buscar_artista.php">Marketplace de artistas</a></li>
                     </ul>
                 </div>
             </div>
@@ -302,7 +447,7 @@ $resultadosEventosPasa = Consultas::eventosPasadosArtista($respuesta[0]["id_user
                 </div>
                 <div class="col-lg-6">
                     <p class="right">
-                        Copyright @2023 EchoMusic | By
+                        Copyright @2024 EchoMusic | By
                         <a href="https://www.genesysapp.com/" target="_blank">GenesysApp.com</a>
                     </p>
                 </div>
@@ -480,6 +625,93 @@ include 'modal.php';
         window.history.back();
     }
 </script>
+
+
+<!-- Cambio de Región y Ciudad -->
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('#id_region').on('change', function() {
+            var id_region = $(this).val();
+            cargarCiudades(id_region);
+        });
+
+        // Cargar ciudades al abrir el modal
+        $('#editDatos').on('show.bs.modal', function() {
+            var id_region = $('#id_region').val();
+            if (id_region) {
+                cargarCiudades(id_region);
+            }
+        });
+    });
+
+    function cargarCiudades(id_region) {
+        $.ajax({
+            url: 'dashboard/includes/obtener_regiones_ciudades.php',
+            type: 'POST',
+            data: {
+                id_region: id_region
+            },
+            dataType: 'json',
+            success: function(ciudades) {
+                var opciones = '<option value="">Seleccione una ciudad</option>';
+                $.each(ciudades, function(index, ciudad) {
+                    var selected = (ciudad.name_city == "<?php echo $busca_Ciudad["name_city"]; ?>") ? ' selected' : '';
+                    opciones += '<option value="' + ciudad.id_city + '"' + selected + '>' + ciudad.name_city + '</option>';
+                });
+                $('#id_city').html(opciones);
+            },
+            error: function() {
+                alert('Error al cargar las ciudades');
+            }
+        });
+    }
+</script>
+
+<!-- Redirecciona a Tarifas -->
+<script>
+    function cambiarPlan(idUser) {
+        // Construye la URL con el id_user y el ancla #tarifas
+        var url = "artistas.php?a=" + idUser + "#tarifas";
+        // Redirige a la URL
+        window.location.href = url;
+    }
+</script>
+
+<!-- Contratar Tarifa -->
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        document.getElementById('contratarTarifa').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            var formData = new FormData(this);
+
+            fetch('includes/contratarTarifa.php', {
+                    method: 'POST',
+                    body: formData
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        swal("Solicitud enviada", data.message, "success")
+                            .then((value) => {
+                                //redireccionar
+                                //window.location.href =
+                                //   'listar_clientes.php'; // Redirigir al usuario
+
+                                //limpiar form
+                                document.getElementById('contratarTarifa').reset();
+                            });
+                    } else {
+                        swal("Error", data.message, "error");
+                    }
+                })
+                .catch(error => {
+                    swal("Error", "Error al procesar la solicitud: " + error, "error");
+                });
+        });
+    });
+</script>
+
 
 
 

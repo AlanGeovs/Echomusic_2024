@@ -16,10 +16,38 @@ class Consultas
                 $stmt->close();
         }
 
+        // public function detallesBusqueda2($id)
+        // {
+        //         //		$stmt=Conexion::conectar()->prepare("SELECT * FROM events_public WHERE id_event=:id");
+        //         $stmt = Conexion::conectar()->prepare("SELECT a.*, b.*,c.* FROM events_public a 	INNER JOIN users b  ON a.id_user = b.id_user  INNER JOIN tickets_public c  ON a.id_event = c.id_event WHERE a.id_event=:id ORDER BY a.id_user;");
+        //         //$stmt=Conexion::conectar()->prepare("SELECT a.*,b.tag, b.DESCRIPCION FROM marcas a inner join categorias b WHERE a.id=:id and b.id IN (a.clase)");
+        //         $stmt->bindParam(":id", $id, PDO::PARAM_INT);
+        //         $stmt->execute();
+        //         return $stmt->fetchAll();
+        //         //return $id;
+        //         $stmt->close();
+        // }
+
         public function detallesBusqueda2($id)
         {
+                $db = Conexion::conectar();
+                $query = "SELECT a.*, b.*, c.* 
+                                FROM events_public a 
+                                INNER JOIN users b ON a.id_user = b.id_user 
+                                INNER JOIN tickets_public c ON a.id_event = c.id_event 
+                                WHERE a.id_event = :id 
+                                ORDER BY a.id_user";
+                $stmt = $db->prepare($query);
+                $stmt->bindParam(":id", $id, PDO::PARAM_INT);
+                $stmt->execute();
+                $result = $stmt->fetchAll();
+                return $result;
+        }
+
+        public function detallesBusquedaGratuitos($id)
+        {
                 //		$stmt=Conexion::conectar()->prepare("SELECT * FROM events_public WHERE id_event=:id");
-                $stmt = Conexion::conectar()->prepare("SELECT a.*, b.*,c.* FROM events_public a 	INNER JOIN users b  ON a.id_user = b.id_user  INNER JOIN tickets_public c  ON a.id_event = c.id_event WHERE a.id_event=:id ORDER BY a.id_user;");
+                $stmt = Conexion::conectar()->prepare("SELECT a.*, b.* FROM events_public a INNER JOIN users b ON a.id_user = b.id_user WHERE a.id_event=:id ORDER BY a.id_user;");
                 //$stmt=Conexion::conectar()->prepare("SELECT a.*,b.tag, b.DESCRIPCION FROM marcas a inner join categorias b WHERE a.id=:id and b.id IN (a.clase)");
                 $stmt->bindParam(":id", $id, PDO::PARAM_INT);
                 $stmt->execute();
@@ -223,6 +251,77 @@ class Consultas
                 //return $id;
                 $stmt->close();
         }
+        static public function tarifasPorId($id, $id_name_plan)
+        {
+                $stmt = Conexion::conectar()->prepare("SELECT * FROM `plans` WHERE `id_user` = :id AND `id_name_plan`=:id_name_plan ;");
+                $stmt->bindParam(":id", $id, PDO::PARAM_INT);
+                $stmt->bindParam(":id_name_plan", $id_name_plan, PDO::PARAM_INT);
+                $stmt->execute();
+                return $stmt->fetchAll();
+                //return $id;
+                $stmt->close();
+        }
+
+        public static function registrarSolicitudContratacion($data)
+        {
+                $conexion = Conexion::conectar();
+                $stmt = $conexion->prepare("INSERT INTO events_private (id_plan, id_user_buy, id_user_sell, value_plan_event, id_name_plan, name_event, location, id_region, id_city, date_event, phone_event, desc_event) 
+                                            VALUES (:id_plan, 1,1, :value_plan, :id_name_plan, :name_event, :location, :id_region, :id_city, :date_event, :phone_event, :desc_event)");
+
+                // Vincula los parámetros a la consulta SQL
+                $stmt->bindValue(':id_plan', $data['id_plan']);
+                $stmt->bindValue(':value_plan', $data['value_plan']);
+                $stmt->bindValue(':id_name_plan', $data['id_name_plan']);
+                $stmt->bindValue(':name_event', $data['name_event']);
+                $stmt->bindValue(':location', $data['location']);
+                $stmt->bindValue(':id_region', $data['id_region']);
+                $stmt->bindValue(':id_city', $data['id_city']);
+                $stmt->bindValue(':date_event', $data['date_event']);
+                $stmt->bindValue(':phone_event', $data['phone_event']);
+                $stmt->bindValue(':desc_event', $data['desc_event']);
+
+                // Ejecuta la consulta y devuelve el resultado
+                return $stmt->execute();
+        }
+
+
+
+
+        public static function listarVariable($variable)
+        {
+                try {
+                        $conexion = Conexion::conectar();
+                        $stmt = $conexion->prepare("SELECT * FROM $variable");
+                        $stmt->execute();
+                        $resultado = $stmt->fetchAll();
+                } catch (PDOException $e) {
+                        // Manejar error
+                        error_log("Error en listarVariable: " . $e->getMessage());
+                        $resultado = null;
+                } finally {
+                        $stmt = null;
+                        $conexion = null;
+                }
+
+                return $resultado;
+        }
+
+
+        // Newsletter
+        public static function emailYaExiste($email)
+        {
+                $conexion = Conexion::conectar();
+                $stmt = $conexion->prepare("SELECT COUNT(*) FROM newsletter WHERE email = :email");
+                $stmt->execute([':email' => $email]);
+                return $stmt->fetchColumn() > 0;
+        }
+        // Validar EMail Newsletter
+        public static function registrarNewsletter($email)
+        {
+                $conexion = Conexion::conectar();
+                $stmt = $conexion->prepare("INSERT INTO newsletter (email) VALUES (:email)");
+                return $stmt->execute([':email' => $email]);
+        }
 
         public static function obtenerNombreCiudadRegion($id_city)
         {
@@ -293,6 +392,13 @@ class Consultas
                 return $stmt->fetchAll();
                 $stmt->close();
         }
+        static public function ultimosCrowdfundingPaginaInicio()
+        {
+                $stmt = Conexion::conectar()->prepare("SELECT pc.*, pd.* FROM `projects_crowdfunding` pc INNER JOIN project_desc pd ON pd.id_project = pc.id_project WHERE pc.status_project>0 AND pc.status_project<5 ORDER BY RAND() LIMIT 6;");
+                $stmt->execute();
+                return $stmt->fetchAll();
+                $stmt->close();
+        }
         static public function crowdFinanciados()
         {
                 $stmt = Conexion::conectar()->prepare("SELECT pc.*, pd.* FROM `projects_crowdfunding` pc INNER JOIN project_desc pd ON pd.id_project = pc.id_project WHERE  pc.status_project=2 ORDER BY pc.project_date_end DESC;");
@@ -358,6 +464,18 @@ class Consultas
         {
                 $stmt = Conexion::conectar()->prepare("SELECT e.*, t.*, gu.* FROM events_public as e JOIN tickets_public as t ON e.id_event = t.id_event JOIN genre_user as gu ON e.id_user=gu.id_user WHERE e.active_event=1 AND e.id_region=:id GROUP BY e.id_user ORDER BY RAND() LIMIT 6;");
                 $stmt->bindParam(":id", $id, PDO::PARAM_INT);
+                $stmt->execute();
+                return $stmt->fetchAll();
+                //return $id;
+                $stmt->close();
+        }
+
+        static public function eventosRelacionadosRandom()
+        {
+                $stmt = Conexion::conectar()->prepare("SELECT e.*, t.*  FROM events_public as e 
+                                        JOIN tickets_public as t ON e.id_event = t.id_event  
+                                        WHERE e.active_event=1 
+                                        GROUP BY e.id_user ORDER BY RAND() LIMIT 6;");
                 $stmt->execute();
                 return $stmt->fetchAll();
                 //return $id;

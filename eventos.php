@@ -44,8 +44,8 @@ $respuestaEventoCiudadRegion = Consultas::buscaCiudadRegion($respuesta[0]["id_ci
             <h2> <?php echo $respuesta[0]["name_event"]; ?></h2>
             <ul>
                 <li><a href="index.php"> Inicio </a> </li>
-                <li><a href="eventos.php"> Eventos </a></li>
-                <li><a href="eventos.php"> <?php echo $resuestaBuscaGenero["name_genre"]; ?></a></li>
+                <li><a href="#" onclick="onBackClick(); return false;">Eventos</a></li>
+                <!-- <li><a href="eventos.php"> <?php echo $resuestaBuscaGenero["name_genre"]; ?></a></li> -->
                 <li class="active"><?php echo $respuesta[0]["name_event"]; ?></li>
             </ul>
         </div>
@@ -72,7 +72,7 @@ $respuestaEventoCiudadRegion = Consultas::buscaCiudadRegion($respuesta[0]["id_ci
 
 
 <!-- Detalle de Evento SetUp  -->
-<section class="feature-area bg-color pb-100 pt-35">
+<section class="feature-area bg-color pb-35 pt-35">
     <div class="container">
         <div class="row align-items-center ">
             <div class="col-lg-6 col-sm-6 item dev design">
@@ -82,7 +82,7 @@ $respuestaEventoCiudadRegion = Consultas::buscaCiudadRegion($respuesta[0]["id_ci
                         <div class="carousel-inner simple-evento-artista">
                             <div class="carousel-item active">
                                 <img src="https://echomusic.cl/images/events/<?php echo $respuesta[0]["img"]; ?>.jpg" class="d-block w-100">
-                                <img src="https://echomusic.net/dashboard/images/eventos/<?php echo $idUsuario; ?>.jpg" class="d-block w-100">
+                                <!-- <img src="https://echomusic.net/dashboard/images/eventos/<?php echo $idUsuario; ?>.jpg" class="d-block w-100"> -->
                             </div>
                             <!--                                    <div class="carousel-item">
                                         <img src="assets/images/avatars/echo-2.jpg" class="d-block w-100">
@@ -92,25 +92,25 @@ $respuestaEventoCiudadRegion = Consultas::buscaCiudadRegion($respuesta[0]["id_ci
                                     </div>-->
                         </div>
                         <!-- Indicator start -->
-                        <div class="carousel-indicators">
+                        <!-- <div class="carousel-indicators">
                             <button type="button" data-bs-target="#carouselsliderdemo" class="active img-thumbnail" data-bs-slide-to="0">
                                 <img src="https://echomusic.cl/images/events/<?php echo $respuesta[0]["img"]; ?>.jpg" alt="" class="d-block w-50">
                             </button>
-                            <!--                                    <button type="button" data-bs-target="#carouselsliderdemo" class="img-thumbnail" data-bs-slide-to="1">
-                                        <img src="assets/images/avatars/echo-2.jpg" alt="" class="d-block w-100">
-                                    </button>
-                                    <button type="button" data-bs-target="#carouselsliderdemo" class="img-thumbnail" data-bs-slide-to="2">
-                                        <img src="assets/images/avatars/echo-3.jpg" alt="" class="d-block w-100">
-                                    </button>-->
-                        </div>
+                            <button type="button" data-bs-target="#carouselsliderdemo" class="img-thumbnail" data-bs-slide-to="1">
+                                <img src="assets/images/avatars/echo-2.jpg" alt="" class="d-block w-100">
+                            </button>
+                            <button type="button" data-bs-target="#carouselsliderdemo" class="img-thumbnail" data-bs-slide-to="2">
+                                <img src="assets/images/avatars/echo-3.jpg" alt="" class="d-block w-100">
+                            </button>
+                        </div> -->
                         <!-- Indicator Close -->
                     </div>
                     <!-- Carousel Close -->
                 </div>
             </div>
 
-            <div class=" col-lg-6">
 
+            <div class=" col-lg-6">
                 <div class="row">
                     <div class="col-12 col-sm-12">
                         <div class="feature-tittle">
@@ -129,54 +129,79 @@ $respuestaEventoCiudadRegion = Consultas::buscaCiudadRegion($respuesta[0]["id_ci
 
                     <?php
 
-                    for ($j = 0; $j < count($respuesta); $j++) {
+                    // Fecha y hora del evento
+                    $fechaEvento = $respuesta[0]["date_event"];
+                    //  la fecha y hora del evento a timestamp
+                    $timestampEvento = strtotime($fechaEvento);
+                    // Obtener el timestamp actual
+                    $timestampActual = time();
 
-                        echo '<!--<div class="col-12 col-sm-1 text-center"></div>-->
+                    if ($timestampEvento < $timestampActual) {
+                        // La fecha del evento es anterior a la fecha actual 
+                    } else {
+                        // Muestra evento futuro
+
+                        //   Botones de compra del evento
+                        for ($j = 0; $j < count($respuesta); $j++) {
+
+                            echo '<!--<div class="col-12 col-sm-1 text-center"></div>-->
                                             <div class="col-6 col-sm-4 text-left">
                                                <h6><i class="bx bxs-coupon"></i> ' . $respuesta[$j]["ticket_name"] . ' (' . $respuesta[$j]["ticket_audience"] . ')</h6>
                                             </div>';
-                        echo '<div class="col-6 col-sm-3 text-center">';
+                            echo '<div class="col-6 col-sm-3 text-center">';
 
-                        if ($respuesta[$j]["ticket_value"] == 0) {
-                            echo ' <h3> Gratis </h3> 
+                            if ($respuesta[$j]["ticket_value"] == 0) {
+                                echo ' <h3> Gratis </h3> 
                                                 </div>
                                                 <div class="col-12 col-sm-4 text-center">
                                                     <a href="#" class="box-btn">Reservar</a>
                                                 </div>';
-                        } else {
-                            echo ' <h3> $' . number_format(($respuesta[$j]["ticket_value"] + $respuesta[$j]["ticket_commission"]), 0, ',', '.') . ' </h3> 
+                            } else {
+                                echo ' <h3> $' . number_format(($respuesta[$j]["ticket_value"] + $respuesta[$j]["ticket_commission"]), 0, ',', '.') . ' </h3> 
                                             </div>
                                             <div class="col-12 col-sm-4 text-center">
                                                 <a href="#" class="box-btn">Comprar</a>
                                             </div>';
+                            }
+
+                            echo '  <div class="col-12 col-sm-1 text-right"></div>';
                         }
 
-                        echo '  <div class="col-12 col-sm-1 text-right"></div>';
-                    }
                     ?>
 
 
 
-                    <div class="col-12 col-sm-6 text-center">Métodos de pago / <a href="terminos-y-condiciones.php" target="_blank"> Términos y Condiciones</a></div>
-                    <div class="col-12 col-sm-6 text-center">
+                        <div class="col-12 col-sm-6 text-center">Métodos de pago / <a href="terminos-y-condiciones.php" target="_blank"> Términos y Condiciones</a></div>
+                        <div class="col-12 col-sm-6 text-center">
 
-                        <span style="text-align: right;">
-                            <ul class="social">
-                                <li>
-                                    <p>Comparte</p>
-                                </li>
-                                <li> <a href="#" target="_blank"><i class='bx bxl-whatsapp'></i></a></li>
-                                <li> <a href="#" target="_blank"><i class='bx bxl-facebook'></i></a></li>
-                                <li> <a href="#" target="_blank"><i class='bx bxl-instagram'></i></a> </li>
-                            </ul>
-                        </span>
+                            <span style="text-align: right;">
+                                <ul class="social">
+                                    <li>
+                                        <p>Comparte</p>
+                                    </li>
+                                    <li>
+                                        <a href="https://wa.me/?text=https://echomusic.net/eventos.php?e=<?php echo $idEvento; ?>" target="_blank"><i class='bx bxl-whatsapp'></i></a>
+                                    </li>
+                                    <li>
+                                        <a href="https://www.facebook.com/sharer/sharer.php?u=https://echomusic.net/eventos.php?e=<?php echo $idEvento; ?>" target="_blank"><i class='bx bxl-facebook'></i></a>
+                                    </li>
+                                    <!-- Instagram no soporta compartir directamente la URL del evento -->
+                                    <li>
+                                        <a href="https://twitter.com/intent/tweet?url=https://echomusic.net/eventos.php?e=<?php echo $idEvento; ?>&text=Mira%20este%20evento%20en%20EchoMusic.net!" target="_blank"><i class='bx bxl-twitter'></i></a>
+                                    </li>
+                                </ul>
+                            </span>
 
-                    </div>
+
+                        </div>
+
+
+                    <?php
+                        // Fin de mostrar datos del evento futuro
+                    }
+                    ?>
+
                 </div>
-
-
-
-
             </div>
 
             <!--<div class="">-->
@@ -247,9 +272,9 @@ if (empty($respuestaVideoEvento["embed_multi"])) {
 <!--  Eventos  Recoemndados Artistas Proyectos  Espacios  -->
 <?php
 
-echo "ID User: " . $respuesta[0]["id_user"];
-echo "<br>Género: " . $resuestaBuscaGenero["name_genre"];
-echo "<br>ID Género: " . $resuestaBuscaGenero["id_genre"];
+// echo "ID User: " . $respuesta[0]["id_user"];
+// echo "<br>Género: " . $resuestaBuscaGenero["name_genre"];
+// echo "<br>ID Género: " . $resuestaBuscaGenero["id_genre"];
 ?>
 <section class="home-case ptb-35">
     <div class="container">
@@ -260,13 +285,13 @@ echo "<br>ID Género: " . $resuestaBuscaGenero["id_genre"];
             <!--<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse.</p>-->
         </div>
 
-        <div class="case">
+        <!-- <div class="case">
             <ul class="all-case">
-                <!--<li class="active" data-filter="*"><span>Todo</span></li>-->
+                <li class="active" data-filter="*"><span>Todo</span></li>
                 <li class="active" data-filter="*"><span>Presencial</span></li>
                 <li data-filter=".dev"><span>Online</span></li>
             </ul>
-        </div>
+        </div> -->
 
 
         <div class="row case-list">
@@ -275,9 +300,13 @@ echo "<br>ID Género: " . $resuestaBuscaGenero["id_genre"];
             //                    Si el artista no tiene género, buscamos en una tabla de generos aleatoria
             //                    mostrar recomendaciones cuando artistas no tenga definido estilo musical buscar solo por región.
             if (empty($idGenero)) {
-                $eventosRelacionados = Consultas::eventosRelacionadosRegion($respuesta[0]["id_region"]);
+                if (empty($respuesta[0]['id_region'])) {
+                    $eventosRelacionados = Consultas::eventosRelacionadosRandom();
+                } else {
+                    $eventosRelacionados = Consultas::eventosRelacionadosRegion($respuesta[0]["id_region"]);
+                }
             } else {
-                //                        Si no tiene género envoio el ID región para recomendar´por region 
+                //   Si no tiene género envoio el ID región para recomendar´por region 
                 $eventosRelacionados = Consultas::eventosRelacionadosGenero($idGenero);
             }
 
@@ -786,6 +815,8 @@ echo "<br>ID Género: " . $resuestaBuscaGenero["id_genre"];
     </div>
 </section>
 <!-- End CTA -->
+
+
 
 
 <!--Footer-->

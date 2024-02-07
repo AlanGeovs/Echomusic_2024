@@ -4927,6 +4927,77 @@ Signup Area Css
 }
 
 /*
+Comprar Area Css
+======================================================*/
+.comprar-area .comprar-form {
+  -webkit-box-shadow: 0 0 40px rgba(82, 85, 90, 0.1);
+          box-shadow: 0 0 40px rgba(82, 85, 90, 0.1);
+  padding: 40px;
+  max-width: 720px;
+  background: #fff;
+  border-radius: 10px;
+  margin: auto;
+}
+
+.comprar-area .comprar-form .form-control {
+  border-radius: 4px;
+  height: 50px;
+  padding: 10px 20px;
+}
+
+.comprar-area .comprar-form .form-control:focus {
+  -webkit-box-shadow: none;
+          box-shadow: none;
+}
+
+.comprar-area .comprar-form .box-btn {
+  margin-bottom: 15px;
+}
+
+.comprar-area .comprar-form .box-btn i {
+  position: relative;
+  top: 1px;
+}
+
+.comprar-area .comprar-form .google {
+  padding: 15px 25px;
+  background: #dd4b39;
+}
+
+.comprar-area .comprar-form .facebook {
+  padding: 15px 17px;
+  background: #3b5999;
+}
+
+.comprar-area .comprar-form .twitter {
+  padding: 15px 25px;
+  background: #55acee;
+}
+
+.comprar-area .comprar-form .comprar-btn {
+  padding: 15px 50px;
+  margin-bottom: 10px;
+  margin-top: 20px;
+}
+
+.comprar-area .privecy-txt {
+  font-size: 14px;
+}
+
+.comprar-area p.al-acc {
+  margin-bottom: 0;
+  font-size: 14px;
+}
+
+.comprar-area .section-tittle {
+  margin-bottom: 15px;
+}
+
+.comprar-area .form-group {
+  margin-bottom: 15px;
+}
+
+/*
 Price Area Css
 ======================================================*/
 .price-area {

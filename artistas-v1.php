@@ -882,9 +882,9 @@ if (empty($tarifasArtista[0]["value_plan"])) {
                             <h3>Servicios</h3>
                             <ul class="footer-list">
                                 <li><a href="#">Perfil de Artistas</a></li>
-                                <li><a href="#">Ticketing</a></li>
-                                <li><a href="#">Crowdfunding</a></li>
-                                <li><a href="#">Marketplace de artistas</a></li> 
+                                <li><a href="cartelera.php">Ticketing</a></li>
+                                <li><a href="buscar_crowdfunding.php">Crowdfunding</a></li>
+                                <li><a href="buscar_artista.php">Marketplace de artistas</a></li> 
                             </ul>
                         </div>
                     </div>-->
@@ -900,9 +900,9 @@ if (empty($tarifasArtista[0]["value_plan"])) {
 
                     <h3>Servicios</h3>
                     <ul class="footer-list">
-                        <li><a href="#">Ticketing</a></li>
-                        <li><a href="#">Crowdfunding</a></li>
-                        <li><a href="#">Marketplace de artistas</a></li>
+                        <li><a href="cartelera.php">Ticketing</a></li>
+                        <li><a href="buscar_crowdfunding.php">Crowdfunding</a></li>
+                        <li><a href="buscar_artista.php">Marketplace de artistas</a></li>
                     </ul>
                 </div>
             </div>
@@ -975,7 +975,7 @@ if (empty($tarifasArtista[0]["value_plan"])) {
                 </div>
                 <div class="col-lg-6">
                     <p class="right">
-                        Copyright @2023 EchoMusic | By
+                        Copyright @2024 EchoMusic | By
                         <a href="https://www.genesysapp.com/" target="_blank">GenesysApp.com</a>
                     </p>
                 </div>

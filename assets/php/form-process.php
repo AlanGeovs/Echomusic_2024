@@ -2,77 +2,72 @@
 
 $errorMSG = "";
 
-// NAME
+// NOMBRE
 if (empty($_POST["name"])) {
-    $errorMSG = "Name is required ";
+    $errorMSG = "El nombre es requerido ";
 } else {
     $name = $_POST["name"];
 }
 
-// EMAIL
+// CORREO
 if (empty($_POST["email"])) {
-    $errorMSG .= "Email is required ";
+    $errorMSG .= "El correo es requerido ";
 } else {
     $email = $_POST["email"];
 }
 
-// MSG SUBJECT
+// ASUNTO DEL MENSAJE
 if (empty($_POST["msg_subject"])) {
-    $errorMSG .= "Subject is required ";
+    $errorMSG .= "El asunto es requerido ";
 } else {
     $msg_subject = $_POST["msg_subject"];
 }
 
-// Phone Number
+// NÚMERO DE TELÉFONO
 if (empty($_POST["phone_number"])) {
-    $errorMSG .= "Number is required ";
+    $errorMSG .= "El número de teléfono es requerido ";
 } else {
     $phone_number = $_POST["phone_number"];
 }
 
-
-// MESSAGE
+// MENSAJE
 if (empty($_POST["message"])) {
-    $errorMSG .= "Message is required ";
+    $errorMSG .= "El mensaje es requerido ";
 } else {
     $message = $_POST["message"];
 }
 
+$EmailTo = "alan@genesysapp.com";
+$Subject = "Nuevo mensaje de contacto [EchoMusic.net]";
 
-$EmailTo = "example@domainname.com";
-
-$Subject = "New Message Received";
-
-// prepare email body text
+// preparar el texto del correo
 $Body = "";
-$Body .= "Name: ";
+$Body .= "Nombre: ";
 $Body .= $name;
 $Body .= "\n";
-$Body .= "Email: ";
+$Body .= "Correo: ";
 $Body .= $email;
 $Body .= "\n";
-$Body .= "Subject: ";
+$Body .= "Asunto: ";
 $Body .= $msg_subject;
 $Body .= "\n";
-$Body .= "Phone Number: ";
+$Body .= "Número de teléfono: ";
 $Body .= $phone_number;
 $Body .= "\n";
-$Body .= "Message: ";
+$Body .= "Mensaje: ";
 $Body .= $message;
 $Body .= "\n";
 
-// send email
+// enviar correo
 $success = mail($EmailTo, $Subject, $Body);
 
-// redirect to success page
-if ($success && $errorMSG == ""){
-   echo "success";
-}else{
-    if($errorMSG == ""){
-        echo "Something went wrong :(";
+// redirigir a la página de éxito
+if ($success && $errorMSG == "") {
+    echo "Éxito";
+} else {
+    if ($errorMSG == "") {
+        echo "Algo salió mal :(";
     } else {
         echo $errorMSG;
     }
 }
-
-?>
