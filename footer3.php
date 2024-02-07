@@ -129,7 +129,7 @@
 <script src="assets/js/form-validator.min.js"></script>
 <!-- Contact Form Min Js -->
 <script src="assets/js/contact-form-script.js"></script>
-<!-- Main js -->
+<!--   -->
 <script src="assets/js/main.js"></script>
 
 

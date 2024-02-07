@@ -108,13 +108,14 @@ $diff = $date1->diff($date2);
                                 <p style="font-size: 11px;">$<?php echo number_format($sumaRecaudado[0]) . " de $" . number_format($totalARecaudar) . " del total recaudado."; ?></p>
                                 <div class="text-center">
 
-                                    <a href="#recompensas" class="btn btn-outline-success btn-lg position-relative">
-                                        Patrocinar
-                                        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                                            <?php echo $diff->days; ?> días restantes
-                                            <span class="visually-hidden">unread messages</span>
-                                        </span>
-                                    </a>
+                                    <div class="alert alert-danger alert-dismissible" role="alert">
+                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span>
+                                        </button>
+                                        <strong><?php echo $diff->days; ?> </strong> días restantes
+                                    </div>
+
+
+
 
                                 </div>
 
@@ -278,13 +279,6 @@ $diff = $date1->diff($date2);
                     </div>-->
             <div class="col-lg-3 col-md-6">
                 <div class="content">
-
-                    <!-- Button to Open the Modal -->
-                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal">
-                        Open modal
-                    </button>
-
-
 
                     <h3>Servicios</h3>
                     <ul class="footer-list">
@@ -501,6 +495,8 @@ include 'modal.php';
             })
         </script>          
                -->
+
+<?php include "scripts.php"; ?>
 </body>
 
 </html>

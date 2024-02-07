@@ -176,14 +176,14 @@ and open the template in the editor.
 /* Laptop */
 @media (min-width: 1024px) {
   .carousel-caption {
-    bottom: 11rem;
+    bottom: 10rem;
   }
-}
+} 
 
 /* Desktop */
 @media (min-width: 1200px) {
   .carousel-caption {
-    bottom: 22rem;
+    bottom: 20rem;
   }
 }
 
@@ -460,3 +460,18 @@ img.responsiveArtista {
   transform: translateY(-50%);
   cursor: pointer;
 } */
+
+/* CSS para asegurar que el espacio del título tenga un alto uniforme */
+.titulo-proyecto {
+  min-height: 100px; /* alto segun se requiera */
+  display: flex;
+  align-items: center; /* Centra el contenido verticalmente */
+  justify-content: center; /* Centra el contenido horizontalmente */
+}
+ 
+.titulo-proyecto-home {
+  min-height: 60px; /* alto segun se requiera */
+  display: flex;
+  align-items: center; /* Centra el contenido verticalmente */
+  justify-content: center; /* Centra el contenido horizontalmente */
+}

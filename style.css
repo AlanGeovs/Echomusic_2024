@@ -1243,16 +1243,16 @@ Slider 2 Area Css
   z-index: 1;
 }
 
-.slider-area-2 .home-slider .single-slider {
+.slider-area-2 .home-slider   {
   background-position: center center;
   background-repeat: no-repeat;
   background-size: cover;
   /*border-bottom-left-radius: 90px;*/
-  height: 75vh; 
+  height: 85vh;
   /*border-bottom-right-radius: 90px;*/
 }
 
-.slider-area-2 .home-slider .single-slider::before {
+.slider-area-2 .home-slider  ::before {
   position: absolute;
   content: "";
   background: #6610f2;
@@ -1265,41 +1265,41 @@ Slider 2 Area Css
   /*border-bottom-right-radius: 90px;*/
 }
 
-.slider-area-2 .home-slider .single-slider .slider-content {
+.slider-area-2 .home-slider   .slider-content {
   position: relative;
   max-width: 700px;
   margin: auto;
 }
 
-.slider-area-2 .home-slider .single-slider .slider-content h1 {
+.slider-area-2 .home-slider   .slider-content h1 {
   font-size: 60px;
   color: #ffffff;
   margin-bottom: 20px;
 }
 
-.slider-area-2 .home-slider .single-slider .slider-content p {
+.slider-area-2 .home-slider   .slider-content p {
   color: #ffffff;
   margin-bottom: 35px;
 }
 
-.slider-area-2 .home-slider .single-slider .slider-btn .box-btn {
+.slider-area-2 .home-slider   .slider-btn .box-btn {
   margin-right: 20px;
   border-radius: 50px;
 }
 
-.slider-area-2 .home-slider .single-slider .slider-btn .border-btn {
+.slider-area-2 .home-slider   .slider-btn .border-btn {
   border-radius: 50px;
 }
 
-.slider-area-2 .home-slider .single-slider .slider-btn .border-btn:hover {
+.slider-area-2 .home-slider   .slider-btn .border-btn:hover {
   color: #FF6600;
 }
 
-.slider-area-2 .home-slider .single-slider .slider-btn .border-btn:hover::before {
+.slider-area-2 .home-slider   .slider-btn .border-btn:hover::before {
   background-color: #ffffff;
 }
 
-.slider-area-2 .home-slider .single-slider .slider-btn .border-btn:hover::after {
+.slider-area-2 .home-slider   .slider-btn .border-btn:hover::after {
   background-color: #ffffff;
 }
 
@@ -1374,15 +1374,15 @@ Slider 2 Area Css
   color: #ffffff;
 }
 
-.slider-area-2 .single-slider-bg-1 {
+.slider-area-2  -bg-1 {
   background: url(../images/bg/slider-fondo-0.jpg);
 }
 
-.slider-area-2 .single-slider-bg-2 {
+.slider-area-2  -bg-2 {
   background: url(../images/bg/slider-fondo-1.jpg);
 }
 
-.slider-area-2 .single-slider-bg-3 {
+.slider-area-2  -bg-3 {
   background: url(../images/bg/slider-fondo-2.jpg);
 }
 

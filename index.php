@@ -721,9 +721,9 @@ $respuestaArtistas = Consultas::ultimosArtistas();
                                     <div class="content">
                                         <!--Titulo-->
                                         <div class="row text-center">
-                                            <div class="col-12">
+                                            <div class="col-12 titulo-proyecto-home">
                                                 <a href="crowdfunding.php?c=<?php echo $eventosRelacionados[$k]["id_project"]; ?>">
-                                                    <h3><?php echo $eventosRelacionados[$k]["project_title"]; ?></h3>
+                                                    <h4><?php echo $eventosRelacionados[$k]["project_title"]; ?></h4>
                                                 </a>
                                             </div>
                                         </div>

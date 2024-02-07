@@ -784,14 +784,6 @@ if (empty($muestraIntegrantes[0]["id_user"])) {
                     </div>-->
             <div class="col-lg-3 col-md-6">
                 <div class="content">
-
-                    <!-- Button to Open the Modal -->
-                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal">
-                        Open modal
-                    </button>
-
-
-
                     <h3>Servicios</h3>
                     <ul class="footer-list">
                         <li><a href="cartelera.php">Ticketing</a></li>

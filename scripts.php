@@ -38,3 +38,35 @@
         });
     });
 </script>
+
+<!-- Recorta titulos de Crowdfunding Home-->
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Selecciona todos los elementos que contienen los títulos de los proyectos
+        var titulos = document.querySelectorAll('.titulo-proyecto-home h4');
+
+        titulos.forEach(function(titulo) {
+            // Verifica si la longitud del texto del título excede los 30 caracteres
+            if (titulo.innerText.length > 30) {
+                // Trunca el texto a 30 caracteres y añade puntos suspensivos
+                titulo.innerText = titulo.innerText.substring(0, 30) + '...';
+            }
+        });
+    });
+</script>
+
+<!-- Recorta titulos de Crowdfunding -->
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Selecciona todos los elementos que contienen los títulos de los proyectos
+        var titulos = document.querySelectorAll('.titulo-proyecto h3');
+
+        titulos.forEach(function(titulo) {
+            // Verifica si la longitud del texto del título excede los 45 caracteres
+            if (titulo.innerText.length > 45) {
+                // Trunca el texto a 45 caracteres y añade puntos suspensivos
+                titulo.innerText = titulo.innerText.substring(0, 45) + '...';
+            }
+        });
+    });
+</script>

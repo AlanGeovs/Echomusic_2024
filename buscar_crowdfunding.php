@@ -339,7 +339,7 @@ $crowfundingFinanciados = Consultas::crowdFinanciados();
 
                             <div class="content">
                                 <!--Titulo-->
-                                <div class="row text-center">
+                                <div class="row text-center titulo-proyecto">
                                     <div class="col-12"> 
                                         <a href="crowdfunding.php?c=' . $eventosRelacionados[$k]["id_project"] . '"> <h3>' . $eventosRelacionados[$k]["project_title"] . '</h3></a>
                                     </div> 
@@ -452,7 +452,7 @@ $crowfundingFinanciados = Consultas::crowdFinanciados();
 
                             <div class="content">
                                 <!--Titulo-->
-                                <div class="row text-center">
+                                <div class="row text-center titulo-proyecto">
                                     <div class="col-12"> 
                                         <a href="crowdfunding.php?c=' . $crowfundingFinanciados[$k]["id_project"] . '"> <h3>' . $crowfundingFinanciados[$k]["project_title"] . '</h3></a>
                                     </div> 

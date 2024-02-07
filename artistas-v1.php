@@ -893,7 +893,7 @@ if (empty($tarifasArtista[0]["value_plan"])) {
 
                     <!-- Button to Open the Modal -->
                     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal">
-                        Open modal
+
                     </button>
 
 
