@@ -3,11 +3,11 @@
 /*==============================================================*/
 (function ($) {
     "use strict"; // Start of use strict
-    $("#contactForm").validator().on("submit", function (event) {
+    $("# ").validator().on("submit", function (event) {
         if (event.isDefaultPrevented()) {
             // handle the invalid form...
             formError();
-            submitMSG(false, "Did you fill in the form properly?");
+            submitMSG(false, "Falta rellenar algunos campos");
         } else {
             // everything looks good!
             event.preventDefault();
@@ -41,12 +41,12 @@
     }
 
     function formSuccess(){
-        $("#contactForm")[0].reset();
+        $("# ")[0].reset();
         submitMSG(true, "Mensaje enviando. Pronto nos pondremos en contacto.")
     }
 
     function formError(){
-        $("#contactForm").removeClass().addClass('shake animated').one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function(){
+        $("# ").removeClass().addClass('shake animated').one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function(){
             $(this).removeClass();
         });
     }

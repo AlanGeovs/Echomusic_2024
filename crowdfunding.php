@@ -200,13 +200,13 @@ $diff = $date1->diff($date2);
                             </div>
                             <p style="font-size: 11px;">$<?php echo number_format($sumaRecaudado[0]) . " de $" . number_format($totalARecaudar) . " del total recaudado."; ?></p>
                             <div class="text-center">
-
+                                <p><?php echo  $diff->days; ?> días restantes</p>
                                 <a href="#recompensas" class="btn btn-outline-success btn-lg position-relative">
                                     Patrocinar
-                                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                                        <?php echo  $diff->days; ?> días restantes
+                                    <!-- <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                        
                                         <span class="visually-hidden">unread messages</span>
-                                    </span>
+                                    </span> -->
                                 </a>
 
                                 <!--                                        <button type="button" class="btn btn-primary position-relative">
@@ -217,19 +217,23 @@ $diff = $date1->diff($date2);
                                             </span>
                                         </button>-->
                             </div>
-                            <div class=" ">
+                            <div class="text-center">
                                 <span style="text-align: right;">
-
                                     <ul class="social">
                                         <li>
                                             <p>Comparte</p>
                                         </li>
-                                        <li> <a href="#" target="_blank"><i class='bx bxl-whatsapp'></i></a></li>
-                                        <li> <a href="#" target="_blank"><i class='bx bxl-facebook'></i></a></li>
-                                        <li> <a href="#" target="_blank"><i class='bx bxl-instagram'></i></a> </li>
+                                        <li>
+                                            <a href="https://wa.me/?text=https://echomusic.net/crowdfunding.php?c=<?php echo $id; ?>" target="_blank"><i class='bx bxl-whatsapp'></i></a>
+                                        </li>
+                                        <li>
+                                            <a href="https://www.facebook.com/sharer/sharer.php?u=https://echomusic.net/crowdfunding.php?c=<?php echo $id; ?>" target="_blank"><i class='bx bxl-facebook'></i></a>
+                                        </li>
+                                        <!-- Instagram no soporta compartir directamente la URL del evento -->
+                                        <li>
+                                            <a href="https://twitter.com/intent/tweet?url=https://echomusic.net/crowdfunding.php?c=<?php echo $id; ?>&text=Mira%20este%20evento%20en%20EchoMusic.net!" target="_blank"><i class='bx bxl-twitter'></i></a>
+                                        </li>
                                     </ul>
-
-
                                 </span>
                             </div>
                         </div>
@@ -276,7 +280,34 @@ $diff = $date1->diff($date2);
                                 </h2>
                                 <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
                                     <div class="accordion-body">
-                                        Aún no cuenta con preguntas.
+
+
+
+                                        <form id="project_questions" method="post" enctype="multipart/form-data">
+                                            <input name="id_project" id="id_project" class="form-control" type="hidden" value="<?php echo $respuesta[0]['id_project']; ?>" />
+                                            <input name="id_user" id="id_user" class="form-control" type="hidden" value="<?php echo $respuesta[0]['id_user']; ?>" />
+
+                                            <div class="row justify-content-center">
+
+                                                <div class="col-lg-12 col-md-12">
+                                                    <div class="form-group">
+                                                        <textarea name="question_desc" class="form-control" id="question_desc" cols="15" rows="4" required data-error="Deja tu pregunta" placeholder="Tu pregunta"></textarea>
+                                                        <div class="help-block with-errors"></div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-lg-12 col-md-12">
+                                                    <button type="submit" class="default-btn page-btn box-btn">
+                                                        Enviar
+                                                    </button>
+                                                    <div id="msgSubmit" class="h3 text-center hidden"></div>
+                                                    <div class="clearfix"></div>
+                                                </div>
+
+                                            </div>
+                                        </form>
+
+
                                     </div>
                                 </div>
                             </div>
@@ -648,7 +679,7 @@ $diff = $date1->diff($date2);
 <!-- End CTA -->
 
 
-<section class="home-team-area  ">
+<!-- <section class="home-team-area  ">
     <div class="container">
         <div class="row text-center pb-35">
             <br><br><br>
@@ -657,28 +688,14 @@ $diff = $date1->diff($date2);
 
         <div class="home-team-slider owl-carousel owl-theme">
 
-            <!--                    <div class="single-team">
-                        <div class="team-img">
-                            <img src="assets/images/avatars/echo-1.jpg" alt="descatado" />
-                            <ul class="social">
-                                <li>
-                                    <a href="#" target="_blank"><i class='bx bx-search'></i></a>
-                                </li> 
-                            </ul>
-                        </div>
-
-                        <div class="content text-center">
-                            <h3>Destacado 1</h3>
-                            <p>Texto de destacado 1</p>
-                        </div>
-                    </div>        -->
+            -->
 
 
-            <!--TIERS Tarifas Bucle-->
-            <?php
-            for ($i = 0; $i < count($respuestaTierCrow); $i++) {
-            ?>
-                <div class="col-lg-12 col-md-12">
+<!--TIERS Tarifas Bucle-->
+<?php
+for ($i = 0; $i < count($respuestaTierCrow); $i++) {
+?>
+    <!-- <div class="col-lg-12 col-md-12">
                     <div class="single-blog">
                         <div class="blog-img">
                             <a href="#">
@@ -687,8 +704,7 @@ $diff = $date1->diff($date2);
                         </div>
 
                         <div class="pricing-top-heading">
-                            <h3><?php echo $respuestaTierCrow[$i]['tier_title']; ?></h3>
-                            <!--<p><?php echo $respuestaTierCrow[$i]['tier_desc']; ?></p>-->
+                            <h3><?php echo $respuestaTierCrow[$i]['tier_title']; ?></h3> 
                         </div>
                         <h3>$<?php echo number_format($respuestaTierCrow[$i]['tier_amount']); ?></h3>
                         <ul style="  margin: 0 auto 10px;">
@@ -708,60 +724,58 @@ $diff = $date1->diff($date2);
 
 
                     </div>
-                </div>
+                </div> -->
 
 
 
-                <!-- MODAL Croudfunding Recompensas  -->
-                <!--                        <div class="modal" id="ModalRecompensa<?php echo $i; ?>">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-
-                                     Modal Header 
-                                    <div class="modal-header">
-                                        <h4 class="modal-title"><?php echo $respuestaTierCrow[$i]['tier_title']; ?> </h4>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                                    </div>
-
-                                     Modal body 
-                                    <div class="modal-body"> 
-                                        <p style="text-align: left;"><?php echo $respuestaTierCrow[$i]['tier_desc']; ?></p> 
-                                        <ul>
-                                            
-                                        <?php
-                                        for ($j = 1; $j <= 4; $j++) {
-                                            $t_reward_num = 't_reward_0' . $j;
-                                        ?>
-                                            <?php if (!empty($respuestaTierCrow[$i][$t_reward_num])) { ?> 
-                                            <li> <i class="bx bx-gift"></i>  <?php echo $respuestaTierCrow[$i][$t_reward_num]; ?> </li>
-
-                                                    <?php
-                                                } //fin del IF
-                                            } // fin del FOR
-                                                    ?>   
-                                                
-                                        </ul> 
-                                    </div>
-
-                                     Modal footer 
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cerrar</button>
-                                    </div>
-
-                                </div>
+    <!-- MODAL Croudfunding Recompensas  -->
+    <!-- <div class="modal" id="ModalRecompensa<?php echo $i; ?>">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+ 
+                            <div class="modal-header">
+                                <h4 class="modal-title"><?php echo $respuestaTierCrow[$i]['tier_title']; ?> </h4>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                             </div>
-                        </div>                    -->
-                <!-- FINAL MODAL Croudfunding Recompensas  -->
+ 
+                            <div class="modal-body">
+                                <p style="text-align: left;"><?php echo $respuestaTierCrow[$i]['tier_desc']; ?></p>
+                                <ul>
 
-            <?php
-            } //fin del FOR
-            ?>
+                                    <?php
+                                    for ($j = 1; $j <= 4; $j++) {
+                                        $t_reward_num = 't_reward_0' . $j;
+                                    ?>
+                                        <?php if (!empty($respuestaTierCrow[$i][$t_reward_num])) { ?>
+                                            <li> <i class="bx bx-gift"></i> <?php echo $respuestaTierCrow[$i][$t_reward_num]; ?> </li>
+
+                                    <?php
+                                        } //fin del IF
+                                    } // fin del FOR
+                                    ?>
+
+                                </ul>
+                            </div>
+
+                            
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cerrar</button>
+                            </div>
+
+                        </div>
+                    </div>
+                </div> -->
+    <!-- FINAL MODAL Croudfunding Recompensas  -->
+
+<?php
+} //fin del FOR
+?>
 
 
-        </div>
-    </div>
+<!-- </div> -->
+<!-- </div>
 
-</section>
+</section> -->
 
 
 <!--  Tarifas Recompensas  Area -->
@@ -795,7 +809,7 @@ $diff = $date1->diff($date2);
 
                         <div class="pricing-top-heading">
                             <h3><?php echo $respuestaTierCrow[$i]['tier_title']; ?></h3>
-                            <!--<p><?php echo $respuestaTierCrow[$i]['tier_desc']; ?></p>-->
+                            <?php echo $respuestaTierCrow[$i]['tier_desc']; ?>
                         </div>
                         <h3>$<?php echo number_format($respuestaTierCrow[$i]['tier_amount']); ?></h3>
                         <ul style="  margin: 0 auto 10px;">
@@ -819,44 +833,44 @@ $diff = $date1->diff($date2);
 
 
                 <!-- MODAL Croudfunding Recompensas  -->
-                <!--                        <div class="modal" id="ModalRecompensa<?php echo $i; ?>">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
+                <div class="modal" id="ModalRecompensa<?php echo $i; ?>">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
 
-                                     Modal Header 
-                                    <div class="modal-header">
-                                        <h4 class="modal-title"><?php echo $respuestaTierCrow[$i]['tier_title']; ?> </h4>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                                    </div>
-
-                                     Modal body 
-                                    <div class="modal-body"> 
-                                        <p style="text-align: left;"><?php echo $respuestaTierCrow[$i]['tier_desc']; ?></p> 
-                                        <ul>
-                                            
-                                        <?php
-                                        for ($j = 1; $j <= 4; $j++) {
-                                            $t_reward_num = 't_reward_0' . $j;
-                                        ?>
-                                            <?php if (!empty($respuestaTierCrow[$i][$t_reward_num])) { ?> 
-                                            <li> <i class="bx bx-gift"></i>  <?php echo $respuestaTierCrow[$i][$t_reward_num]; ?> </li>
-
-                                                    <?php
-                                                } //fin del IF
-                                            } // fin del FOR
-                                                    ?>   
-                                                
-                                        </ul> 
-                                    </div>
-
-                                     Modal footer 
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cerrar</button>
-                                    </div>
-
-                                </div>
+                            <!-- Modal Header  -->
+                            <div class="modal-header">
+                                <h4 class="modal-title"><?php echo $respuestaTierCrow[$i]['tier_title']; ?> </h4>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                             </div>
-                        </div>                    -->
+
+                            <!-- Modal body  -->
+                            <div class="modal-body">
+                                <p style="text-align: left;"><?php echo $respuestaTierCrow[$i]['tier_desc']; ?></p>
+                                <ul>
+
+                                    <?php
+                                    for ($j = 1; $j <= 4; $j++) {
+                                        $t_reward_num = 't_reward_0' . $j;
+                                    ?>
+                                        <?php if (!empty($respuestaTierCrow[$i][$t_reward_num])) { ?>
+                                            <li> <i class="bx bx-gift"></i> <?php echo $respuestaTierCrow[$i][$t_reward_num]; ?> </li>
+
+                                    <?php
+                                        } //fin del IF
+                                    } // fin del FOR
+                                    ?>
+
+                                </ul>
+                            </div>
+
+                            <!-- Modal footer  -->
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cerrar</button>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
                 <!-- FINAL MODAL Croudfunding Recompensas  -->
 
             <?php
@@ -1145,7 +1159,7 @@ $diff = $date1->diff($date2);
             <div class="content justify-content-md-center text-center">
                 <div class="row ">
                     <div class="col-12 col-sm-12 ">
-                        <a href="mailto:contacto@echomusic.cl" class="">Denunciar</a> |
+                        <a href="" data-bs-toggle="modal" data-bs-target="#projectReportsModal">Denunciar</a> |
                         <a href="" class=" ">FAQ's </a> |
                         <a href="#" data-bs-toggle="modal" data-bs-target="#crowdfundingTosModal">Leer Términos y Condiciones Crowdfunding</a>
 

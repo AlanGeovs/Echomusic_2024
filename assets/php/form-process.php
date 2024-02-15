@@ -63,7 +63,7 @@ $success = mail($EmailTo, $Subject, $Body);
 
 // redirigir a la página de éxito
 if ($success && $errorMSG == "") {
-    echo "Éxito";
+    echo " ";
 } else {
     if ($errorMSG == "") {
         echo "Algo salió mal :(";

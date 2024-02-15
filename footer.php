@@ -167,6 +167,9 @@
 <!-- Main js -->
 <script src="assets/js/main.js"></script>
 
+<!-- Bootstrap Bundle JS (includes Popper) -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+
 
 <!-- Owl carasol Min Js -->
 <script src="assets/js/owl.carousel.min.js"></script>

@@ -703,14 +703,31 @@ $respuestaArtistas = Consultas::ultimosArtistas();
 
                             <?php
                             $eventosRelacionados = Consultas::ultimosCrowdfundingPaginaInicio();
+
+
                             for ($k = 0; $k < count($eventosRelacionados); $k++) {
+                                $respuestaCrowdfunding = Consultas::crowdfunding($eventosRelacionados[$k]["id_user"]);
+
+                                // Recaudado
+                                $totalARecaudar = $respuestaCrowdfunding[$k]["project_amount"];
+                                $sumaRecaudado[$k] = Consultas::recaudadoCrowdfunding($respuestaCrowdfunding[$k]["id_project"]);
+                                $recaudadoPorcentaje = Consultas::obtenerPorcentaje($sumaRecaudado[$k][0], $totalARecaudar);
+
+
+                                $artistaCrowd = Consultas::detallesArtistas($eventosRelacionados[$k]["id_user"]);
                             ?>
 
                                 <div class="single-team">
-                                    <div class="team-img">
+                                    <div class="team-img overlay-container">
                                         <a href="crowdfunding.php?c=<?php echo $eventosRelacionados[$k]["id_project"]; ?>">
-                                            <img src="https://echomusic.cl/images/avatars/<?php echo $eventosRelacionados[$k]["id_user"]; ?>.jpg" alt="descatado" />
+                                            <img src="https://echomusic.cl/images/avatars/<?php echo $eventosRelacionados[$k]["id_user"]; ?>.jpg" alt="destacado" />
                                         </a>
+
+                                        <div class="author">
+                                            <!-- <img src="https://echomusic.cl/images/avatars/<?php echo $artistaCrowd[0]["id_user"]; ?>.jpg" alt="Foto del autor"> -->
+                                            <?php echo '<a href="https://echomusic.cl/profile.php?userid=' . $artistaCrowd[0]["id_user"] . '">' . $artistaCrowd[0]["nick_user"] . '</a>'; ?>
+                                        </div>
+
                                         <ul class="social">
                                             <li>
                                                 <a href="crowdfunding.php?c=<?php echo $eventosRelacionados[$k]["id_project"]; ?>"><i class='bx bx-search'></i></a>
@@ -718,24 +735,40 @@ $respuestaArtistas = Consultas::ultimosArtistas();
                                         </ul>
                                     </div>
 
-                                    <div class="content">
+                                    <div class="content ">
+
+
                                         <!--Titulo-->
                                         <div class="row text-center">
                                             <div class="col-12 titulo-proyecto-home">
                                                 <a href="crowdfunding.php?c=<?php echo $eventosRelacionados[$k]["id_project"]; ?>">
-                                                    <h4><?php echo $eventosRelacionados[$k]["project_title"]; ?></h4>
+                                                    <h3><?php echo $eventosRelacionados[$k]["project_title"]; ?></h3>
                                                 </a>
                                             </div>
                                         </div>
                                         <!--Entrada Fecha hora Costo Compra-->
                                         <div class="row ">
                                             <div class="col-lg-6 col-sm-6">
-                                                <p class="descripcion"><?php echo $eventosRelacionados[$k]["id_user"]; ?></p>
+                                                <p class="descripcion">
+                                                    <?php
+                                                    if ($eventosRelacionados[$k]["status_project"] == 2) {
+                                                        echo "<span class='badge badge-warning'>Finalizado</span> ";
+                                                    } else {
+                                                        echo "<span class='badge badge-primary'>En proceso</span> ";
+                                                    }
+
+                                                    ?> </p>
                                             </div>
                                             <div class="col-lg-6 col-sm-6 text-center " style="vertical-align: middle;">
-                                                <br>
                                                 <a href="crowdfunding.php?c=<?php echo $eventosRelacionados[$k]["id_project"]; ?>" class="box-btn">
                                                     Ver más</a>
+                                            </div>
+                                            <div class="col-lg-12 col-sm-12 text-center" style="vertical-align: middle; margin-top: 10px;">
+                                                <div class="progress">
+                                                    <div class="progress-bar progress-bar-striped bg-warning progress-bar-animated" role="progressbar" style="width: <?php echo $recaudadoPorcentaje; ?>%" aria-valuenow="" aria-valuemin="<?php echo $sumaRecaudado[$k]; ?>" aria-valuemax="<?php echo $totalARecaudar; ?>"></div>
+
+                                                </div>
+                                                <p style="font-size: 11px;">$<?php echo number_format($sumaRecaudado[$k][0]) . " de $" . number_format($totalARecaudar); ?></p>
                                             </div>
                                         </div>
                                     </div>
@@ -826,9 +859,9 @@ $respuestaArtistas = Consultas::ultimosArtistas();
             ?>
                 <div class="col-lg-4 col-md-6">
                     <div class="single-blog">
-                        <div class="blog-img">
+                        <div>
                             <a href="<?php echo $vinculo; ?>" target="_blank">
-                                <img src="<?php echo $img[$i]; ?>" class="imgEvent tamano-1" alt="blog" />
+                                <img src="<?php echo $img[$i]; ?>" class="imgEvent" alt="blog" />
                             </a>
                         </div>
 
@@ -943,39 +976,55 @@ $respuestaArtistas = Consultas::ultimosArtistas();
 
             <div class="col-lg-6 col-md-6">
                 <div class="content">
-                    <form id="contactForm">
-                        <div class="row">
-                            <div class="col-lg-12 col-sm-12">
+
+
+                    <form id="contacto" method="post" enctype="multipart/form-data">
+                        <div class="row justify-content-center">
+                            <div class="col-lg-6 col-sm-6">
                                 <div class="form-group">
-                                    <input type="text" name="name" id="name" class="form-control" required data-error="Ingresa tu nombre" placeholder="Nombre" />
+                                    <input type="text" name="fname_request" id="fname_request" class="form-control" required data-error="Ingresa tu nombre" placeholder="Nombre" />
+                                    <div class="help-block with-errors"></div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-sm-6">
+                                <div class="form-group">
+                                    <input type="text" name="lname_request" id="lname_request" class="form-control" required data-error="Ingresa tus apellidos" placeholder="Apellidos" />
                                     <div class="help-block with-errors"></div>
                                 </div>
                             </div>
 
-                            <div class="col-lg-12 col-sm-12">
+                            <div class="col-lg-6 col-sm-6">
                                 <div class="form-group">
-                                    <input type="email" name="email" id="email" class="form-control" required data-error="Escribe tu email" placeholder="Email" />
+                                    <input type="text" name="subject_request" id="subject_request" class="form-control" required data-error="Asunto" placeholder="Asunto" />
+                                    <div class="help-block with-errors"></div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-sm-6">
+                                <div class="form-group">
+                                    <input type="text" name="company_request" id="company_request" class="form-control" required data-error="Empresa" placeholder="Empresa/Organización" />
                                     <div class="help-block with-errors"></div>
                                 </div>
                             </div>
 
-                            <div class="col-lg-12 col-sm-12">
+                            <div class="col-lg-6 col-sm-6">
                                 <div class="form-group">
-                                    <input type="text" name="phone_number" id="phone_number" required data-error="Ingresa tu número celular" class="form-control" placeholder="Número celular" />
+                                    <input type="email" name="email_request" id="email_request" class="form-control" required data-error="Escribe tu email" placeholder="Email" />
                                     <div class="help-block with-errors"></div>
                                 </div>
                             </div>
 
-                            <div class="col-lg-12 col-sm-12">
+                            <div class="col-lg-6 col-sm-6">
                                 <div class="form-group">
-                                    <input type="text" name="msg_subject" id="msg_subject" class="form-control" required data-error="Escribe el ausnto" placeholder="Asunto" />
+                                    <input type="text" name="phone_request" id="phone_request" required data-error="Ingresa tu número celular" class="form-control" placeholder="Número celular" />
                                     <div class="help-block with-errors"></div>
                                 </div>
                             </div>
+
+
 
                             <div class="col-lg-12 col-md-12">
                                 <div class="form-group">
-                                    <textarea name="message" class="form-control" id="message" cols="30" rows="5" required data-error="Deja tu mensaje" placeholder="Tu mensaje"></textarea>
+                                    <textarea name="message_request" class="form-control" id="message_request" cols="30" rows="5" required data-error="Deja tu mensaje" placeholder="Tu mensaje"></textarea>
                                     <div class="help-block with-errors"></div>
                                 </div>
                             </div>
@@ -989,6 +1038,7 @@ $respuestaArtistas = Consultas::ultimosArtistas();
                             </div>
                         </div>
                     </form>
+
                 </div>
             </div>
         </div>

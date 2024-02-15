@@ -169,13 +169,25 @@ class Consultas
         //Detalle de Artistas
         static public function detallesArtistas($id)
         {
-                $stmt = Conexion::conectar()->prepare("SELECT u.*, gu.*, g.* FROM users u INNER JOIN genre_user gu ON u.id_user=gu.id_user INNER JOIN genres g ON gu.id_genre = g.id_genre  WHERE u.id_user=:id AND verified like 'yes'  ;");
+                // Primera consulta que intenta obtener los detalles junto con el género
+                $stmt = Conexion::conectar()->prepare("SELECT u.*, gu.*, g.* FROM users u LEFT JOIN genre_user gu ON u.id_user=gu.id_user LEFT JOIN genres g ON gu.id_genre = g.id_genre WHERE u.id_user=:id AND u.verified like 'yes'");
                 $stmt->bindParam(":id", $id, PDO::PARAM_INT);
                 $stmt->execute();
-                return $stmt->fetchAll();
-                //return $id;
-                $stmt->close();
+                $resultados = $stmt->fetchAll();
+
+                // Si la primera consulta devuelve un conjunto de resultados vacío o sin géneros asociados
+                if (empty($resultados) || (count($resultados) === 1 && $resultados[0]['id_genre'] === null)) {
+                        // Realiza la segunda consulta que solo obtiene los detalles del usuario sin el género
+                        $stmt = Conexion::conectar()->prepare("SELECT * FROM users WHERE id_user=:id AND verified like 'yes'");
+                        $stmt->bindParam(":id", $id, PDO::PARAM_INT);
+                        $stmt->execute();
+                        $resultados = $stmt->fetchAll();
+                }
+
+                return $resultados;
+                // Nota: No es necesario el $stmt->close(); en PDO, es un método que no existe. 
         }
+
 
         //////////****************************
         // BUSQUEDA DE ARTISTAS GENÉRICA
@@ -205,7 +217,47 @@ class Consultas
                 return $resultado['total'];
         }
 
+        //CONTACTO  Método para insertar una nueva solicitud de contacto
+        public static function insertarSolicitud($data)
+        {
+                // Preparar la consulta SQL para insertar los datos de la solicitud
+                $sql = "INSERT INTO `requests` (`fname_request`, `lname_request`, `subject_request`, `company_request`, `email_request`, `phone_request`, `message_request`) VALUES (:fname_request, :lname_request, :subject_request, :company_request, :email_request, :phone_request, :message_request)";
 
+                // Conectar a la base de datos
+                $stmt = Conexion::conectar()->prepare($sql);
+
+                // Vincular los parámetros a la consulta
+                $stmt->bindParam(':fname_request', $data['fname_request'], PDO::PARAM_STR);
+                $stmt->bindParam(':lname_request', $data['lname_request'], PDO::PARAM_STR);
+                $stmt->bindParam(':subject_request', $data['subject_request'], PDO::PARAM_STR);
+                $stmt->bindParam(':company_request', $data['company_request'], PDO::PARAM_STR);
+                $stmt->bindParam(':email_request', $data['email_request'], PDO::PARAM_STR);
+                $stmt->bindParam(':phone_request', $data['phone_request'], PDO::PARAM_STR);
+                $stmt->bindParam(':message_request', $data['message_request'], PDO::PARAM_STR);
+
+                // Ejecutar la consulta
+                if ($stmt->execute()) {
+                        return true; // Devolver true si la inserción fue exitosa
+                } else {
+                        return false; // Devolver false en caso de error
+                }
+        }
+
+        // public static function insertarSolicitud($data)
+        // {
+        //         $db = self::conectar();
+        //         $stmt = $db->prepare("INSERT INTO `requests` (`fname_request`, `lname_request`, `subject_request`, `company_request`, `email_request`, `phone_request`, `message_request`) VALUES (?, ?, ?, ?, ?, ?, ?)");
+
+        //         return $stmt->execute([
+        //                 $data['fname_request'],
+        //                 $data['lname_request'],
+        //                 $data['subject_request'],
+        //                 $data['company_request'],
+        //                 $data['email_request'],
+        //                 $data['phone_request'],
+        //                 $data['message_request']
+        //         ]);
+        // }
 
         //
         //////////****************************
@@ -371,7 +423,7 @@ class Consultas
 
         static public function ultimosEventos()
         {
-                $stmt = Conexion::conectar()->prepare("SELECT * FROM events_public WHERE 1 ORDER BY id_event DESC LIMIT 6");
+                $stmt = Conexion::conectar()->prepare("SELECT e.*, t.* FROM events_public as e JOIN tickets_public as t ON e.id_event = t.id_event WHERE e.active_event=1 AND e.date_event >= CURDATE() GROUP BY e.id_user ORDER BY e.date_event ASC LIMIT 6;");
                 $stmt->execute();
                 return $stmt->fetchAll();
                 $stmt->close();
@@ -379,11 +431,12 @@ class Consultas
 
         static public function ultimosEventos2()
         {
-                $stmt = Conexion::conectar()->prepare("SELECT e.*, t.* FROM events_public as e JOIN tickets_public as t ON e.id_event = t.id_event WHERE e.active_event=1 GROUP BY e.id_user ORDER BY e.date_event DESC  LIMIT 6;");
+                $stmt = Conexion::conectar()->prepare("SELECT e.*, t.* FROM events_public as e JOIN tickets_public as t ON e.id_event = t.id_event WHERE e.active_event=1 AND e.date_event >= CURDATE() GROUP BY e.id_user ORDER BY e.date_event ASC LIMIT 6;");
                 $stmt->execute();
                 return $stmt->fetchAll();
                 $stmt->close();
         }
+
 
         static public function ultimosCrowdfunding()
         {
@@ -394,13 +447,34 @@ class Consultas
         }
         static public function ultimosCrowdfundingPaginaInicio()
         {
-                $stmt = Conexion::conectar()->prepare("SELECT pc.*, pd.* FROM `projects_crowdfunding` pc INNER JOIN project_desc pd ON pd.id_project = pc.id_project WHERE pc.status_project>0 AND pc.status_project<5 ORDER BY RAND() LIMIT 6;");
+                // $stmt = Conexion::conectar()->prepare("SELECT pc.*, pd.*
+                //                                 FROM `projects_crowdfunding` pc
+                //                                 INNER JOIN project_desc pd ON pd.id_project = pc.id_project
+                //                                 WHERE pc.status_project > 0 AND pc.status_project < 5
+                //                                 AND pc.project_date_end > CURDATE()
+                //                                 ORDER BY RAND() LIMIT 6;
+                // ;");
+                // Nueva consulta que une la consulta de los 3 proyectos más recients activos y los 4 últimos financiados
+                $stmt = Conexion::conectar()->prepare("(SELECT pc.*, pd.*
+                                                FROM `projects_crowdfunding` pc
+                                                INNER JOIN project_desc pd ON pd.id_project = pc.id_project
+                                                WHERE pc.status_project > 0 AND pc.status_project < 5
+                                                AND pc.project_date_end > CURDATE()
+                                                ORDER BY RAND() LIMIT 3)
+                                                UNION ALL
+                                                (SELECT pc.*, pd.*
+                                                FROM `projects_crowdfunding` pc 
+                                                INNER JOIN project_desc pd ON pd.id_project = pc.id_project 
+                                                WHERE pc.status_project = 2
+                                                ORDER BY pc.project_date_end DESC LIMIT 4); 
+                ");
                 $stmt->execute();
                 return $stmt->fetchAll();
                 $stmt->close();
         }
         static public function crowdFinanciados()
         {
+                // $stmt = Conexion::conectar()->prepare("SELECT pc.*, pd.* FROM `projects_crowdfunding` pc INNER JOIN project_desc pd ON pd.id_project = pc.id_project WHERE  pc.status_project=2 ORDER BY pc.project_date_end DESC;");
                 $stmt = Conexion::conectar()->prepare("SELECT pc.*, pd.* FROM `projects_crowdfunding` pc INNER JOIN project_desc pd ON pd.id_project = pc.id_project WHERE  pc.status_project=2 ORDER BY pc.project_date_end DESC;");
                 $stmt->execute();
                 return $stmt->fetchAll();
@@ -450,6 +524,38 @@ class Consultas
         //        }  
 
 
+        public static function insertarPreguntaCrowdfunding($id_project, $id_user, $question_desc)
+        {
+                try {
+                        $db = Conexion::conectar();
+                        $stmt = $db->prepare("INSERT INTO project_questions (id_project, id_user, question_desc) VALUES (:id_project, :id_user, :question_desc)");
+                        $stmt->bindParam(':id_project', $id_project, PDO::PARAM_INT);
+                        $stmt->bindParam(':id_user', $id_user, PDO::PARAM_INT);
+                        $stmt->bindParam(':question_desc', $question_desc, PDO::PARAM_STR);
+                        return $stmt->execute();
+                } catch (PDOException $e) {
+                        // Manejo del error
+                        return false;
+                }
+        }
+
+        // Denunciak
+        public static function insertarDenuncia($id_project, $id_user, $question_desc, $report_category)
+        {
+                try {
+                        $db = Conexion::conectar();
+                        $stmt = $db->prepare("INSERT INTO project_reports (id_project, id_user, report_desc, report_category) VALUES (:id_project, :id_user, :report_desc, :report_category)");
+                        $stmt->bindParam(':id_project', $id_project);
+                        $stmt->bindParam(':id_user', $id_user);
+                        $stmt->bindParam(':report_desc', $question_desc);
+                        $stmt->bindParam(':report_category', $report_category);
+                        return $stmt->execute();
+                } catch (PDOException $e) {
+                        // Manejo del error
+                        return false;
+                }
+        }
+
         static public function eventosRelacionadosGenero($id)
         {
                 $stmt = Conexion::conectar()->prepare("SELECT e.*, t.*, gu.* FROM events_public as e JOIN tickets_public as t ON e.id_event = t.id_event JOIN genre_user as gu ON e.id_user=gu.id_user WHERE e.active_event=1 AND gu.id_genre=:id GROUP BY e.id_user ORDER BY e.id_event DESC LIMIT 6;");
@@ -485,7 +591,8 @@ class Consultas
         //Eventos de Büsqeuda por Cartelera
         static public function eventosCarteleraBusqueda($id)
         {
-                $stmt = Conexion::conectar()->prepare("SELECT e.* FROM events_public as e WHERE e.active_event=1 AND e.name_event LIKE ? GROUP BY e.id_user ORDER BY date_event DESC LIMIT 6;");
+                $stmt = Conexion::conectar()->prepare("SELECT e.*, t.* FROM events_public as e JOIN tickets_public as t ON e.id_event = t.id_event WHERE e.active_event=1 AND e.date_event >= CURDATE() GROUP BY e.id_user ORDER BY e.date_event ASC LIMIT 6;");
+                // $stmt = Conexion::conectar()->prepare("SELECT e.* FROM events_public as e WHERE e.active_event=1 AND e.name_event LIKE ? GROUP BY e.id_user ORDER BY date_event DESC LIMIT 9;");
                 //                $stmt=Conexion::conectar()->prepare("SELECT e.* FROM events_public as e WHERE e.active_event=1 AND e.id_event =:id GROUP BY e.id_user ORDER BY RAND() LIMIT 3;");
                 //        $stmt->bindParam(":id",$id,PDO::PARAM_INT);
                 $stmt->bindValue(1, "%$id%", PDO::PARAM_STR);
@@ -562,14 +669,29 @@ class Consultas
         //        falta definir qué hacer cada uno de los estados
         static public function crowdfunding($id)
         {
-                //                $stmt=Conexion::conectar()->prepare("SELECT * FROM `projects_crowdfunding` WHERE `id_user`=:id AND `status_project` != 0");
-                $stmt = Conexion::conectar()->prepare("SELECT pc.*, pd.* FROM `projects_crowdfunding` pc INNER JOIN project_desc pd ON pd.id_project = pc.id_project WHERE pc.status_project=1 AND pc.id_user=:id;");
+                // Conectar a la base de datos
+                $conexion = Conexion::conectar();
+
+                // Primera consulta con status_project = 1
+                $stmt = $conexion->prepare("SELECT pc.*, pd.* FROM `projects_crowdfunding` pc INNER JOIN project_desc pd ON pd.id_project = pc.id_project WHERE pc.status_project=1 AND pc.id_user=:id;");
                 $stmt->bindParam(":id", $id, PDO::PARAM_INT);
                 $stmt->execute();
-                return $stmt->fetchAll();
-                //return $id;
-                $stmt->close();
+                $resultados = $stmt->fetchAll();
+
+                // Verificar si la primera consulta no devuelve resultados
+                if (empty($resultados)) {
+                        // Segunda consulta con status_project = 2 si la primera no devuelve resultados
+                        // $stmt = $conexion->prepare("SELECT pc.*, pd.* FROM `projects_crowdfunding` pc INNER JOIN project_desc pd ON pd.id_project = pc.id_project WHERE pc.status_project=2 AND pc.id_user=:id;");
+                        $stmt = $conexion->prepare("SELECT pc.*, pd.* FROM `projects_crowdfunding` pc INNER JOIN project_desc pd ON pd.id_project = pc.id_project WHERE  pc.status_project=2 ORDER BY pc.project_date_end DESC;");
+                        $stmt->bindParam(":id", $id, PDO::PARAM_INT);
+                        $stmt->execute();
+                        $resultados = $stmt->fetchAll();
+                }
+
+                return $resultados;
+                // La llamada a $stmt->close(); no es necesaria en PDO, así que se puede omitir
         }
+
 
         static public function crowdfunding2($id)
         {
@@ -584,7 +706,8 @@ class Consultas
 
         static public function recaudadoCrowdfunding($id)
         {
-                $stmt = Conexion::conectar()->prepare("SELECT sum(`backer_amount`+`backer_added_amount`) FROM `project_backers` WHERE `id_project` =:id AND status_backer=1");
+                // $stmt = Conexion::conectar()->prepare("SELECT sum(`backer_amount`+`backer_added_amount`) FROM `project_backers` WHERE `id_project` =:id AND status_backer=1");
+                $stmt = Conexion::conectar()->prepare("SELECT sum(`backer_amount`+`backer_added_amount`) FROM `project_backers` WHERE `id_project` =:id ");
                 $stmt->bindParam(":id", $id, PDO::PARAM_INT);
                 $stmt->execute();
                 return $stmt->fetch();

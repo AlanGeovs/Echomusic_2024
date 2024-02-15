@@ -98,44 +98,10 @@ if ($_GET["r"] == '' and $_GET["t"] == ''  and $_GET["fi"] == '' and $_GET["ff"]
     } else {
         $eventosRelacionados = Consultas::eventosCarteleraBusqueda($id);
     }
-    //        $query = "SELECT * FROM datos_usuario ";
-    //        if ( $_GET["r"] != '') {
-    //            $query .= "WHERE (nombre LIKE LOWER('%" . $aKeyword[0] . "%') OR apellidos LIKE LOWER('%" . $aKeyword[0] . "%')) ";
-    //
-    //            for ($i = 1; $i < count($aKeyword); $i++) {
-    //                if (!empty($aKeyword[$i])) {
-    //                    $query .= " OR nombre LIKE '%" . $aKeyword[$i] . "%' OR apellidos LIKE '%" . $aKeyword[$i] . "%'";
-    //                }
-    //            }
-    //        }
-
-    //        if ($_POST["buscadepartamento"] != '') {
-    //            $query .= " AND departamento = '" . $_POST['buscadepartamento'] . "' ";
-    //        }
-    //
-
-    //
-    //        if ($_POST['buscapreciodesde'] != '') {
-    //            $query .= " AND precio >= '" . $_POST['buscapreciodesde'] . "' ";
-    //        }
-    //
-    //        if ($_POST['buscapreciohasta'] != '') {
-    //            $query .= " AND precio <= '" . $_POST['buscapreciohasta'] . "' ";
-    //        }
-    //
-    //        if ($_POST["color"] != '') {
-    //            $query .= " AND color = '" . $_POST["color"] . "' ";
-    //        }
-
-    //    Agregamos el orden
-    //        $query .= " ORDER BY nombre ASC ";
-    //
 } //fin del ELSE
 
 
-//$sql = $conexion->query($query);
-//
-//$numeroSql = mysqli_num_rows($sql);
+
 ?>
 
 <!-- Slider Area -->
@@ -335,14 +301,6 @@ if ($_GET["r"] == '' and $_GET["t"] == ''  and $_GET["fi"] == '' and $_GET["ff"]
             <h2><?php echo $titleBusqueda; ?></h2>
             <!--<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse.</p>-->
         </div>
-
-        <!--                <div class="case">
-                    <ul class="all-case">
-                        <li class="active" data-filter="*"><span>Todo</span></li>
-                        <li class="active" data-filter="*"><span>Presencial</span></li>
-                        <li data-filter=".dev"><span>Online</span></li> 
-                    </ul>
-                </div>-->
 
 
         <div class="row case-list">

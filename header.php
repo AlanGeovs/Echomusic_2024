@@ -101,12 +101,14 @@
                     <div class="header-content-right">
                         <ul class="header-contact">
                             <li><a href="ingresar.php"><i class="bx bxs-log-in"></i> Ingresar</a></li>
-                            <!--<li><a href="registro.php"><i class="bx bxs-log-out"></i> Regístrate</a></li>-->
                             <li>
                                 <a type="button" class=" text-center" data-bs-toggle="modal" data-bs-target="#ModalTipodeRegistro">
                                     <i class="bx bxs-log-out"></i> Regístrate</a>
                             </li>
                         </ul>
+
+
+
                     </div>
                 </div>
                 <div class="col-lg-2 col-sm-4 text-right pl-0">
@@ -238,9 +240,26 @@
                             </button>
                         </form>
                     </div>
-                    <div class="nav-btn">
+
+                    <!-- Botón Reg´sitrata desaparece cuando está logueado -->
+                    <!-- <div class="nav-btn">
                         <a type="button" class="box-btn text-center" data-bs-toggle="modal" data-bs-target="#ModalTipodeRegistro">
                             <i class="bx bxs-log-out"></i> Regístrate</a>
+                    </div> -->
+
+                    <!-- Dropdown Menu -->
+                    <div class="dropdown">
+                        <button class="btn box-btn dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                            Nombre de Artista <i class='bx bxs-down-arrow'></i>
+                        </button>
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                            <li><a class="dropdown-item" href="https://echomusic.net/dashboard/perfil-editar.php">Mi Perfil</a></li>
+                            <li><a class="dropdown-item" href="https://echomusic.net/dashboard/eventos.php">Mis Eventos</a></li>
+                            <li><a class="dropdown-item" href="https://echomusic.net/dashboard/crowdfunding.php">Crowdfunding</a></li>
+                            <li><a class="dropdown-item" href="#">Datos</a></li>
+                            <li><a class="dropdown-item" href="#">Mis gustos</a></li>
+                            <li><a class="dropdown-item" href="#">Cerrar Sesión</a></li>
+                        </ul>
                     </div>
                 </nav>
             </div>

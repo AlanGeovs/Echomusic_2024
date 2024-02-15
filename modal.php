@@ -233,3 +233,58 @@
             </div>
         </div>
     </div>
+
+
+    <!-- Modal Report -->
+    <!-- Modal -->
+    <div class="modal fade" id="projectReportsModal" tabindex="-1" aria-labelledby="projectReportsModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="projectReportsModalLabel">Reportar Proyecto</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <!-- Formulario -->
+                    <form id="project_reports" method="post" enctype="multipart/form-data">
+                        <input name="id_project" id="id_project" class="form-control" type="hidden" value="<?php echo $respuesta[0]['id_project']; ?>" />
+                        <input name="id_user" id="id_user" class="form-control" type="hidden" value="<?php echo $respuesta[0]['id_user']; ?>" />
+
+                        <div class="row justify-content-center">
+
+                            <div class="col-md-12 col-sm-12">
+                                <div class="form-group">
+                                    <select name="report_category" id="report_category" class="form-control" data-error="Selecciona un tipo de denuncia" required="">
+                                        <option value="">Selecciona un tipo </option>
+                                        <option value="1">Abuso 1</option>
+                                        <option value="2">Abuso 2</option>
+                                        <option value="3">Abuso 3</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-12 col-md-12">
+                                <div class="form-group">
+                                    <textarea name="report_desc" class="form-control" id="report_desc" cols="15" rows="4" required data-error="Escribe tu denuncia" placeholder="Escribe tu denuncia"></textarea>
+                                    <div class="help-block with-errors"></div>
+                                </div>
+                            </div>
+
+
+
+                            <div class="col-lg-12 col-md-12">
+                                <button type="submit" class="default-btn page-btn box-btn">
+                                    Enviar
+                                </button>
+                                <div id="msgSubmit" class="h3 text-center hidden"></div>
+                                <div class="clearfix"></div>
+                            </div>
+
+                        </div>
+                    </form>
+
+
+                </div>
+            </div>
+        </div>
+    </div>

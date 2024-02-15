@@ -2341,7 +2341,7 @@ Blog Area Css
   content: "";
   width: 2px;
   height: 15px;
-  left: -16px;
+  left: -23px;
   top: 3px;
   background: #7a7e9a;
 }
@@ -4618,7 +4618,7 @@ Blog Details Area Style
   border-bottom: 1px solid #eeeeee;
   padding-top: 15px;
   padding-bottom: 15px;
-  padding-left: 15px;
+  padding-left: 23px;
   padding-right: 35px;
   color: #5d6576;
   z-index: 1;
@@ -6271,7 +6271,7 @@ Project Area Six Style
 .single-blog  ul li {
   margin-bottom: 10px;
   position: relative;
-  padding-left: 15px;
+  padding-left: 23px;
   font-weight: 600;
 }
 
