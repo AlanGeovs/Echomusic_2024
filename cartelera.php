@@ -4,11 +4,16 @@ include "header.php";
 
 //Búsquedas desde la url-> buscador topheader
 if (isset($_GET["r"])) {
-    $id = $_GET["r"];
-    $tipo = $_GET["t"];
-    $fechaInicial   = $_GET["fi"];
-    $fechaFinal   = $_GET["ff"];
-    $region   = $_GET["reg"];
+    // $id = $_GET["r"];  // dato a buscar en el  name_event
+    // $fechaInicial   = $_GET["fi"]; // fecha inicial a buscar en date_event
+    // $fechaFinal   = $_GET["ff"]; // fecha final a buscar en date_event
+    // $region   = $_GET["reg"]; // región a buscar en id_region
+
+    $id = $_GET["r"] ?? '';
+    $fechaInicial = $_GET["fi"] ?? '';
+    $fechaFinal = $_GET["ff"] ?? '';
+    $region = $_GET["reg"] ?? '';
+
     $titleBusqueda = "Eventos sobre " . $id;
 
     //    $eventosRelacionados = Consultas::eventosCarteleraBusqueda($id);
@@ -16,6 +21,10 @@ if (isset($_GET["r"])) {
     $titleBusqueda = "Eventos Recomendados";
     //    $eventosRelacionados = Consultas::ultimosEventos2();
 }
+
+//Para VALUE de Evento
+// Asegúrate de que $valueEvento solo se establezca si $_GET["r"] está definido y no está vacío
+$valueEvento = isset($_GET["r"]) && !empty($_GET["r"]) ?  htmlspecialchars($_GET["r"]) : '';
 
 
 //Fecha
@@ -33,74 +42,53 @@ $minutos = date("i", $fechaEntera);
 $idEvento =  $respuesta[0]["id_event"];
 $idUsuario = $respuesta[0]["id_user"];
 
+// Determinar la página actual
+$paginaActual = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+$resultadosPorPagina = 3;  // Número de resultados por página
+$inicio = ($paginaActual - 1) * $resultadosPorPagina;
+
 //Buscar Género
 $resuestaBuscaGenero = Consultas::buscarGenero($idUsuario);
 $idGenero = $resuestaBuscaGenero["id_genre"];
 
-//    BUscar nombre Ciudad Region
+// BUscar nombre Ciudad Region
 $respuestaEventoCiudadRegion = Consultas::buscaCiudadRegion($respuesta[0]["id_city"], $respuesta[0]["id_region"]);
 
+// NUEVA Consulta Dinámicamente
 
-/* FILTRO de busqueda//////////////////////////////////////////// */
-if (!isset($_GET["r"])) {
-    $_GET["r"] = '';
-}
-if (!isset($_GET["fi"])) {
-    $_GET["fi"] = '';
-}
-if (!isset($_GET["ff"])) {
-    $_GET["ff"] = '';
-}
-if (!isset($_GET["t"])) {
-    $_GET["t"] = '';
-}
-if (!isset($_GET["reg"])) {
-    $_GET["reg"] = '';
+// $condiciones = "WHERE e.active_event=1 AND e.date_event >= CURDATE()";
+// Construcción de las condiciones como se describió anteriormente
+$condiciones = "WHERE e.active_event=1 AND e.date_event >= CURDATE()"; // Añadir condiciones basadas en $_GET
+
+if (!empty($id)) {
+    // Suponiendo que 'name_event' es el campo a buscar para 'r'
+    $condiciones .= " AND e.name_event LIKE '%" . $id . "%'";
 }
 
-//Para VALUE de Evento
-if (trim($_GET["r"]) == '') {
-    $valueEvento = '';
-} else {
-    $valueEvento = 'value="' . $_GET["r"] . '" ';
+if (!empty($fechaInicial) && !empty($fechaFinal)) {
+    $condiciones .= " AND e.date_event BETWEEN '" . $fechaInicial . "' AND '" . $fechaFinal . "'";
+} else if (!empty($fechaInicial)) {
+    $condiciones .= " AND e.date_event >= '" . $fechaInicial . "'";
+} else if (!empty($fechaFinal)) {
+    $condiciones .= " AND e.date_event <= '" . $fechaFinal . "'";
 }
 
-if ($_GET["r"] == '') {
-    $_GET["r"] = ' ';
+if (!empty($region)) {
+    $condiciones .= " AND e.id_region = '" . $region . "'";
 }
-$aKeyword = explode(" ", $_GET["r"]);
-
-if ($_GET["r"] == '' and $_GET["t"] == ''  and $_GET["fi"] == '' and $_GET["ff"] == '' and  $_GET["reg"] == '') {
-    //        $query = "SELECT * FROM datos_usuario ";
-    $eventosRelacionados = Consultas::ultimosEventos2();
-} else {
-    //Ambas Fechas  
-    if ($_GET["fi"] != '' && $_GET["ff"] != '') {
-        //Ambas Fechas con  Region 
-        if ($_GET["reg"] != '') {
-            echo "Fechas: Ambas + Region=" . $_GET["reg"];
-            $eventosRelacionados = Consultas::eventosFechasReg($id, $_GET["fi"], $_GET["ff"], $_GET["reg"]);
-        }
-        //Ambas Fechas sin  Region 
-        else {
-            echo "Fechas: Ambas";
-            $eventosRelacionados = Consultas::eventosFechas($id, $_GET["fi"], $_GET["ff"]);
-        }
-    }
-
-    if ($_GET["fi"] != '' and $_GET["ff"] = '') {
-        echo "Fechas: Inicial";
-        $eventosRelacionados = Consultas::eventosFechaInicial($id, $_GET["fi"]);
-    }
-    if ($_GET["ff"] != '' and $_GET["fi"] = '') {
-        echo "Fechas: Final";
-        $eventosRelacionados = Consultas::eventosFechaFinal($id, $_GET["ff"]);
-    } else {
-        $eventosRelacionados = Consultas::eventosCarteleraBusqueda($id);
-    }
-} //fin del ELSE
 
 
+
+$query = "SELECT e.*, t.* FROM events_public AS e JOIN tickets_public AS t ON e.id_event = t.id_event " . $condiciones . " GROUP BY e.id_user ORDER BY e.date_event ASC ";
+
+$query .= " LIMIT $inicio, $resultadosPorPagina";
+
+// consulta construida dinámicamente
+$eventosRelacionados = Consultas::ejecutarEventos($query);
+
+
+$totalEventos = Consultas::contarEventosFiltrados($condiciones);
+$totalPaginas = ceil($totalEventos / $resultadosPorPagina);
 
 ?>
 
@@ -119,8 +107,8 @@ if ($_GET["r"] == '' and $_GET["t"] == ''  and $_GET["fi"] == '' and $_GET["ff"]
                                     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida incididunt ut.</p>
 
                                     <div class="slider-btn text-center">
-                                        <a href="#" class="box-btn">Crear evento</a>
-                                        <a href="#" class="box-btn border-btn">Ver más</a>
+                                        <a href="https://echomusic.net/dashboard/eventos.php" class="box-btn">Crear evento</a>
+                                        <!-- <a href="#" class="box-btn border-btn">Ver más</a> -->
                                     </div>
                                 </div>
                             </div>
@@ -141,8 +129,8 @@ if ($_GET["r"] == '' and $_GET["t"] == ''  and $_GET["fi"] == '' and $_GET["ff"]
                                     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida incididunt ut.</p>
 
                                     <div class="slider-btn text-center">
-                                        <a href="#" class="box-btn">Recaudar fondos</a>
-                                        <a href="#" class="box-btn border-btn">Ver más</a>
+                                        <a href="https://echomusic.net/dashboard/crowdfunding.php" class="box-btn">Recaudar fondos</a>
+                                        <!-- <a href="#" class="box-btn border-btn">Ver más</a> -->
                                     </div>
                                 </div>
                             </div>
@@ -163,8 +151,8 @@ if ($_GET["r"] == '' and $_GET["t"] == ''  and $_GET["fi"] == '' and $_GET["ff"]
                                     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida incididunt ut.</p>
 
                                     <div class="slider-btn text-center">
-                                        <a href="#" class="box-btn">Registrarme</a>
-                                        <a href="#" class="box-btn border-btn">Ver más</a>
+                                        <a href="https://echomusic.net/registro.php" class="box-btn">Registrarme</a>
+                                        <!-- <a href="#" class="box-btn border-btn">Ver más</a> -->
                                     </div>
                                 </div>
                             </div>
@@ -186,50 +174,26 @@ if ($_GET["r"] == '' and $_GET["t"] == ''  and $_GET["fi"] == '' and $_GET["ff"]
         <div class="section-title">
             <span>Búsqueda avanzada</span>
             <h2>Encuentra tu evento, artista o espacio favorito</h2>
-            <!--<p>It is a long established fact that a reader will be distracted by the rea dable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more.</p>-->
         </div>
 
         <div class="row">
             <div class="col-lg-12 col-md-12">
                 <div class="content">
-                    <form id="formBusquedaArtista" name="form2" method="GET" action="cartelera.php">
+                    <form id="formBusquedaCartelera" name="form2" method="GET" action="cartelera.php">
                         <div class="row">
                             <div class="col-lg-3 col-sm-3">
                                 <div class="form-group">
-                                    <input type="text" class="form-control" id="r" name="r" data-error="Buscar un evento o artista" placeholder="Buscar evento, artista o espacio" <?php echo $valueEvento; ?> />
-                                    <div class="help-block with-errors"></div>
+                                    <input type="text" id="r" name="r" class="form-control" value="<?php echo $valueEvento; ?>" placeholder="Buscar evento" />
+                                    <div class=" help-block with-errors">
+                                    </div>
                                 </div>
                             </div>
 
-                            <!--                                     <div class="col-lg-2 col-md-2">
-                                        <div class="form-group">
-                                            <select  name="t" id="t" class="form-control"  data-error="Selecciona un tipo de evento"   />
-                                            <?php if ($_GET["t"] != '') { ?>
-                                                <option value="<?php echo $_GET["t"]; ?>"><?php echo $_GET["t"]; ?></option>
-                                            <?php } ?>                                            
-                                                <option value="">Tipo de evento</option>
-                                                <option value="Presencial">Presencial</option>
-                                                <option value="Online">Online</option>
-                                            </select>
-                                            <div class="help-block with-errors"></div>
-                                        </div>
-                                    </div>-->
-
-                            <!-- <div class="col-lg-2 col-md-2">                                         
-                                        <div class="form-group">
-                                            <input type="date" id="fi" name="fi" data-error="Selecciona la fecha inicial" value="<?php echo $_GET["fi"]; ?>" class="form-control" placeholder="Fecha inicial" />
-                                            <div class="help-block with-errors"></div>
-                                        </div>
-                                        <div class="help-block texto-fechas" style="">Fecha inicial</div>
-                                    </div> -->
 
                             <div class="col-lg-2 col-md-2">
                                 <div class="form-group">
                                     <div class="input-group date" id="datepicker">
                                         <input type="date" id="fi" name="fi" class="form-control" data-error="Selecciona la fecha inicial" value="<?php echo $_GET["fi"]; ?>" placeholder="Fecha inicial" />
-                                        <div class="input-group-append">
-                                            <span class="input-group-text"><i class="icon-calendar"></i></span>
-                                        </div>
                                     </div>
                                     <div class="help-block with-errors"></div>
                                 </div>
@@ -242,13 +206,13 @@ if ($_GET["r"] == '' and $_GET["t"] == ''  and $_GET["fi"] == '' and $_GET["ff"]
                                     <input type="date" id="ff" name="ff" data-error="Selecciona la fecha final" value="<?php echo $_GET["ff"]; ?>" class="form-control" placeholder="Fecha final" />
                                     <div class="help-block with-errors"></div>
                                 </div>
-                                <div class="help-block texto-fechas" style="">Fecha final</div>
+                                <div class="help-block texto-fechas">Fecha final</div>
                             </div>
 
 
                             <!--Region-->
                             <div class="col-lg-2 col-md-2">
-                                <div class="form12-group">
+                                <div class="form-group">
                                     <select name="reg" id="reg" class="form-control" data-error="Selecciona una región">
                                         <option value="">Todas las regiones</option>
                                         <?php
@@ -275,8 +239,8 @@ if ($_GET["r"] == '' and $_GET["t"] == ''  and $_GET["fi"] == '' and $_GET["ff"]
                                     <i class="bx bx-search"></i> Buscar
                                 </button>
                                 <div class="btn-clear">
-                                    <button type="reset" class="box-btn-clear">Limpiar campos</button>
-                                    <button type="button" class="box-btn-clear" onclick="limpiarFormularioCartelera()">Limpiar campos</button>
+                                    <button type="button" id="btnLimpiar" class="box-btn-clear">Limpiar campos</button>
+
                                 </div>
                                 <div id="msgSubmit" class="h3 text-center hidden"></div>
                                 <div class="clearfix"></div>
@@ -380,10 +344,52 @@ if ($_GET["r"] == '' and $_GET["t"] == ''  and $_GET["fi"] == '' and $_GET["ff"]
             ?>
         </div>
 
-        <!--                <div class="case-btn text-center">
-                    <p>  <a href="#">Ver más eventos</a></p>
-                    <p>    <a href="#" class="box-btn">Ver más eventos</a></p>
-                </div>-->
+
+
+        <nav aria-label="Page navigation example">
+            <ul class="pagination">
+
+                <!-- Página Anterior -->
+                <li class="page-item <?= ($paginaActual <= 1) ? 'disabled' : '' ?>">
+                    <a class="page-link" href="?page=<?= max($paginaActual - 1, 1) ?>&r=<?= $_GET["r"] ?>&fi=<?= $_GET["fi"] ?>&ff=<?= $_GET["ff"] ?>&reg=<?= $_GET["reg"] ?>">Anterior</a>
+                </li>
+
+                <?php
+                $rango = 2; // Rango de páginas alrededor de la página actual
+                $desde = max(1, $paginaActual - $rango);
+                $hasta = min($totalPaginas, $paginaActual + $rango);
+
+                // Siempre mostrar la primera página
+                if ($desde > 1) {
+                    echo '<li class="page-item"><a class="page-link" href="?page=1&r=' . $_GET["r"] . '&fi=' . $_GET["fi"] . '&ff=' . $_GET["ff"] . '&reg=' . $_GET["reg"] . '">1</a></li>';
+                    if ($desde > 2) { // Puntos suspensivos para omisión
+                        echo '<li class="page-item disabled"><span class="page-link">...</span></li>';
+                    }
+                }
+
+                // Generar los números de página alrededor de la página actual
+                for ($i = $desde; $i <= $hasta; $i++) {
+                    echo '<li class="page-item ' . ($i == $paginaActual ? 'active' : '') . '">';
+                    echo '<a class="page-link" href="?page=' . $i . '&r=' . $_GET["r"] . '&fi=' . $_GET["fi"] . '&ff=&reg=' . $_GET["reg"] . '">' . $i . '</a>';
+                    echo '</li>';
+                }
+
+                // Siempre mostrar la última página
+                if ($hasta < $totalPaginas) {
+                    if ($hasta < $totalPaginas - 1) { // Puntos suspensivos para omisión
+                        echo '<li class="page-item disabled"><span class="page-link">...</span></li>';
+                    }
+                    echo '<li class="page-item"><a class="page-link" href="?page=' . $totalPaginas . '&r=' . $_GET["r"] . '&fi=' . $_GET["fi"] . '&ff=' . $_GET["ff"] . '&reg=' . $_GET["reg"] . '">' . $totalPaginas . '</a></li>';
+                }
+                ?>
+
+                <!-- Página Siguiente -->
+                <li class="page-item <?= ($paginaActual >= $totalPaginas) ? 'disabled' : '' ?>">
+                    <a class="page-link" href="?page=<?= min($paginaActual + 1, $totalPaginas) ?>&r=<?= $_GET["r"] ?>&fi=<?= $_GET["fi"] ?>&ff=<?= $_GET["ff"] ?>&reg=<?= $_GET["reg"] ?>">Siguiente</a>
+                </li>
+            </ul>
+        </nav>
+
     </div>
 </section>
 <!-- End Case  Eventos Artistas Proyectos  Espacios  -->

@@ -239,14 +239,38 @@
 
 <!-- Limpiar / Resetea los campos del buscador de artistas -->
 <script>
-    function limpiarFormularioCartelera() {
-        document.getElementById('r').value = '';
-        document.getElementById('gen').selectedIndex = 0;
-        document.getElementById('ff').selectedIndex = 0;
-        document.getElementById('fi').selectedIndex = 0;
-        // Resto de tu lógica de limpieza...
-    }
+    $(document).ready(function() {
+        $("#btnLimpiar").click(function() {
+            // Limpiar cada campo manualmente
+            $("#r").val(''); // Asegúrate de que este es el ID correcto y no hay duplicados
+            $("#fi").val('');
+            $("#ff").val('');
+            $("#reg").val('');
+            // Continúa con el resto de los campos según sea necesario
+        });
+    });
 </script>
+
+<!-- despliegue el calendario al hacer clic en el campo y no solo elicono -->
+<!-- Incluir jQuery primero -->
+<!-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> -->
+<!-- Luego incluir jQuery UI -->
+<!-- <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script> -->
+<!-- Asegúrate de incluir también el CSS de jQuery UI para estilos -->
+<!-- <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"> -->
+
+<!-- <script>
+    $(document).ready(function() {
+        $("#fi").datepicker({
+            showOn: "focus" // Muestra el datepicker al hacer clic en el campo de fecha inicial
+        });
+
+        $("#ff").datepicker({
+            showOn: "focus" // Muestra el datepicker al hacer clic en el campo de fecha final
+        });
+    });
+</script> -->
+
 
 <?php include "scripts.php"; ?>
 

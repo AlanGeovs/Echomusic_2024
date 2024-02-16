@@ -576,6 +576,31 @@ class Consultas
                 $stmt->close();
         }
 
+        // Nueva consulta para ejecutar Eventos 
+        public static function ejecutarEventos($query)
+        {
+                $stmt = Conexion::conectar()->prepare($query);
+                $stmt->execute();
+                return $stmt->fetchAll();
+        }
+
+        // public static function contarEventosFiltrados($condiciones)
+        // {
+        //         $query = "SELECT COUNT(DISTINCT e.id_event) FROM events_public AS e JOIN tickets_public AS t ON e.id_event = t.id_event " . $condiciones;
+        //         $stmt = Conexion::conectar()->prepare($query);
+        //         $stmt->execute();
+        //         return $stmt->fetchColumn();
+        // }
+        public static function contarEventosFiltrados($condiciones)
+        {
+                $query = "SELECT COUNT(DISTINCT e.id_event) FROM events_public AS e JOIN tickets_public AS t ON e.id_event = t.id_event " . $condiciones;
+                $stmt = Conexion::conectar()->prepare($query);
+                $stmt->execute();
+                return $stmt->fetchColumn();
+        }
+
+
+
         static public function eventosRelacionadosRandom()
         {
                 $stmt = Conexion::conectar()->prepare("SELECT e.*, t.*  FROM events_public as e 

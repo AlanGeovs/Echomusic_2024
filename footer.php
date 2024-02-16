@@ -112,7 +112,7 @@
 <!-- End Go Top Area -->
 
 <!-- reCaptcha -->
-<button class="g-recaptcha" data-sitekey="6LdRjVQpAAAAALErmJXGFDCcXgyHUq9V22XxaeHH" data-callback='onSubmit' data-action='submit'>Enviar</button>
+<button class="g-recaptcha" data-sitekey="6LdRjVQpAAAAALErmJXGFDCcXgyHUq9V22XxaeHH" data-callback='onSubmit' data-action='submit'></button>
 
 <!-- reCaptcha -->
 <script>

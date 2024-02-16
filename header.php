@@ -231,9 +231,10 @@
                         </ul>
                     </div>
                     <div class="nav-right">
-                        <form method="GET" action="buscador.php">
+                        <!-- <form method="GET" action="buscador.php"> -->
+                        <form method="GET" action="cartelera.php">
                             <div class="input-group">
-                                <input type="text" class="form-control search" id="r" name="r" placeholder="Buscar evento..." />
+                                <input type="text" class="form-control search" id="res" name="r" placeholder="Buscar evento..." />
                             </div>
                             <button type="submit">
                                 <i class="bx bx-search"></i>

@@ -252,7 +252,7 @@ $artistasRelacionados = Consultas::busquedaArtistas($query);
                         <div class="row">
                             <div class="col-lg-3 col-sm-3">
                                 <div class="form-group">
-                                    <input type="text" class="form-control" id="r" name="r" data-error="Buscar un artista" placeholder="Buscar artista <?php echo $valueForm; ?>" value="" />
+                                    <input type="text" class="form-control" id="r" name="r" data-error="Buscar un artista" placeholder="Buscar artista" value="<?php echo $valueForm; ?>" />
                                     <!-- <input type="text" class="form-control" id="r" name="r" data-error="Buscar un artista" placeholder="Buscar artista" value="<?php echo $valueForm; ?>" /> -->
                                     <div class="help-block with-errors"></div>
                                 </div>
