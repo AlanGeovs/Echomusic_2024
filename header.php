@@ -1,3 +1,6 @@
+<?php
+session_start();
+?>
 <!DOCTYPE html>
 <html lang="es">
 
@@ -99,13 +102,55 @@
                 </div>
                 <div class="col-lg-8 col-sm-8 text-right pr-0">
                     <div class="header-content-right">
-                        <ul class="header-contact">
-                            <li><a href="ingresar.php"><i class="bx bxs-log-in"></i> Ingresar</a></li>
-                            <li>
-                                <a type="button" class=" text-center" data-bs-toggle="modal" data-bs-target="#ModalTipodeRegistro">
-                                    <i class="bx bxs-log-out"></i> Regístrate</a>
-                            </li>
-                        </ul>
+                        <?php
+
+                        // Verificar si la sesión está iniciada
+                        if (isset($_SESSION["id_type_user"])) {
+                            // La sesión está iniciada
+                            // Determinar el tipo de usuario y almacenarlo en una variable
+                            $tipoUsuario = '';
+                            switch ($_SESSION["id_type_user"]) {
+                                case 1:
+                                    $tipoUsuario = "Artista";
+                                    break;
+                                case 2:
+                                    $tipoUsuario = "Usuario";
+                                    break;
+                                case 3:
+                                    $tipoUsuario = "Espacio";
+                                    break;
+                                case 4:
+                                    $tipoUsuario = "Admin";
+                                    break;
+                                case 5:
+                                    $tipoUsuario = "Agente";
+                                    break;
+                                default:
+                                    $tipoUsuario = "Usuario Desconocido";
+                                    break;
+                            }
+
+                            // Menú para usuarios logueados
+                            echo '<ul class="header-contact">
+            <li><i class="bx bxs-user-circle"></i> Perfil de ' . $tipoUsuario . '</li>
+            <li>
+                <a href="dashboard/includes/cerrarSesion.php" class="text-center">
+                    <i class="bx bxs-user-circle"></i> Cerrar sesión</a>
+            </li>
+          </ul>';
+                        } else {
+                            // La sesión no está iniciada
+                            // Menú para usuarios no logueados
+                            echo '<ul class="header-contact">
+            <li><a href="ingresar.php"><i class="bx bxs-log-in"></i> Ingresar</a></li>
+            <li>
+                <a type="button" class="text-center" data-bs-toggle="modal" data-bs-target="#ModalTipodeRegistro">
+                    <i class="bx bxs-log-out"></i> Regístrate</a>
+            </li>
+          </ul>';
+                        }
+                        ?>
+
 
 
 
@@ -181,50 +226,9 @@
                             </li>
                             <li class="nav-item">
                                 <a href="blog.php" class="nav-link dropdown-toggle">Blog</a>
-                                <!--                                    <ul class="dropdown-menu">
-                                        <li class="nav-item">
-                                            <a href="blog.html" class="nav-link">Blog</a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a href="blog-details.html" class="nav-link">Blog Details</a>
-                                        </li>
-                                    </ul>-->
+
                             </li>
-                            <!--                                <li class="nav-item">
-                                    <a href="#" class="nav-link dropdown-toggle">Pages</a>
-                                    <ul class="dropdown-menu">
-                                        <li class="nav-item">
-                                            <a href="team.html" class="nav-link">Team</a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a href="pricing.html" class="nav-link">Pricing</a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a href="gallery.html" class="nav-link">Gallery</a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a href="testimonials.html" class="nav-link">Testimonials</a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a href="singnup.html" class="nav-link">Sign Up</a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a href="signin.html" class="nav-link">Sign In</a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a href="404.html" class="nav-link">Error 404</a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a href="faq.html" class="nav-link">FAQ</a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a href="terms-condition.html" class="nav-link">Terms & Conditions</a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a href="privecy.html" class="nav-link">Privacy Policy</a>
-                                        </li>
-                                    </ul>
-                                </li>-->
+
                             <li class="nav-item">
                                 <a href="contacto.php" class="nav-link">Contacto </a>
                             </li>
@@ -242,26 +246,41 @@
                         </form>
                     </div>
 
-                    <!-- Botón Reg´sitrata desaparece cuando está logueado -->
-                    <!-- <div class="nav-btn">
-                        <a type="button" class="box-btn text-center" data-bs-toggle="modal" data-bs-target="#ModalTipodeRegistro">
-                            <i class="bx bxs-log-out"></i> Regístrate</a>
-                    </div> -->
+                    <?php
 
-                    <!-- Dropdown Menu -->
-                    <div class="dropdown">
-                        <button class="btn box-btn dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                            Nombre de Artista <i class='bx bxs-down-arrow'></i>
-                        </button>
-                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                            <li><a class="dropdown-item" href="https://echomusic.net/dashboard/perfil-editar.php">Mi Perfil</a></li>
-                            <li><a class="dropdown-item" href="https://echomusic.net/dashboard/eventos.php">Mis Eventos</a></li>
-                            <li><a class="dropdown-item" href="https://echomusic.net/dashboard/crowdfunding.php">Crowdfunding</a></li>
-                            <li><a class="dropdown-item" href="#">Datos</a></li>
-                            <li><a class="dropdown-item" href="#">Mis gustos</a></li>
-                            <li><a class="dropdown-item" href="#">Cerrar Sesión</a></li>
-                        </ul>
-                    </div>
+                    if (isset($_SESSION["id_type_user"])) {
+
+                    ?>
+                        <!-- Dropdown Menu -->
+                        <div class="dropdown">
+                            <button class="btn box-btn dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+
+                                <?php
+                                echo   $_SESSION["nick_user"];
+                                ?>
+                                <i class='bx bxs-down-arrow'></i>
+                            </button>
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                <li><a class="dropdown-item" href="https://echomusic.net/dashboard/perfil-editar.php">Mi Perfil</a></li>
+                                <li><a class="dropdown-item" href="https://echomusic.net/dashboard/eventos.php">Mis Eventos</a></li>
+                                <li><a class="dropdown-item" href="https://echomusic.net/dashboard/crowdfunding.php">Crowdfunding</a></li>
+                                <li><a class="dropdown-item" href="#">Datos</a></li>
+                                <li><a class="dropdown-item" href="#">Mis gustos</a></li>
+                                <li><a class="dropdown-item" href="dashboard/includes/cerrarSesion.php">Cerrar Sesión</a></li>
+                            </ul>
+                        </div>
+                    <?php
+                    } else {
+                    ?>
+                        <!-- Botón Regsitrata desaparece cuando está logueado -->
+                        <div class="nav-btn">
+                            <a type="button" class="box-btn text-center" data-bs-toggle="modal" data-bs-target="#ModalTipodeRegistro">
+                                <i class="bx bxs-log-out"></i> Regístrate</a>
+                        </div>
+                    <?php
+                    }
+
+                    ?>
                 </nav>
             </div>
         </div>

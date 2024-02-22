@@ -36,8 +36,10 @@ if ($respuesta == "") {
 	$res = Usuarios::registrarBitacora($respuesta["id_user"], "bitacora", "Inició Sesión");
 	// $res = Consultas::registrarBitacora($respuesta["usuario"], "bitacora", "Inició Sesión");
 	if ($res == "ok") {
-		header("Location: ../site.php");
+		// header("Location: ../site.php");
+		header("Location: ../../index.php");
 	} elseif ($res == "error") {
-		header("Location: ../index.php?error=2");
+		// header("Location: ../index.php?error=2");
+		header("Location: ../../index.php?error=2");
 	}
 }

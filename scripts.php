@@ -154,3 +154,28 @@
             });
     });
 </script>
+
+<!-- Seleccionaa ambas fehcas de buscar en cartelera  -->
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        var form = document.getElementById('formBusquedaCartelera');
+        form.addEventListener('submit', function(e) {
+            var fechaInicial = document.getElementById('fi').value;
+            var fechaFinal = document.getElementById('ff').value;
+
+            if ((fechaInicial !== '' && fechaFinal === '') || (fechaInicial === '' && fechaFinal !== '')) {
+                e.preventDefault(); // Detiene el envío del formulario
+                // Muestra una alerta con SweetAlert
+                swal({
+                    title: "Atención",
+                    text: "Por favor, selecciona ambas fechas.",
+                    icon: "warning",
+                    button: "Aceptar",
+                });
+            }
+            // Si ambas fechas están vacías, el formulario se envía normalmente
+        });
+    });
+</script>
