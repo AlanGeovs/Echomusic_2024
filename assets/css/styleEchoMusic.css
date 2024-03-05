@@ -87,9 +87,40 @@ and open the template in the editor.
 .home-cta-gris {
   background-color: #ededed;
 }
-.home-cta-gris .section-title h2 {
+.home-cta-gris h2 {
+  font-size: 25px;
   color: #ff6600;
 }
+.card {
+  padding: 0; /* Elimina el padding si es necesario */
+  overflow: hidden; /* Para asegurar que el overlay no se salga de los bordes */
+  margin: 0.5rem 0.75rem;
+  border-radius: 10px;
+  border-color: #ededed;
+  background-color: #f4f0f0;
+}
+
+.card img.card-img-top {
+  width: 100%; /* Asegura que la imagen ocupe el ancho completo */
+  height: auto; /* Mantiene la proporción de la imagen */
+  aspect-ratio: 16 / 9; /* Opcional, ajusta según necesites */
+  object-fit: cover; /* Cubre el área sin perder la proporción */
+}
+
+.card-img-overlay {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0; /* Asegúrate de que esto cubra solo la parte de la imagen que deseas */
+  left: 0;
+  background-color: rgba(
+    0,
+    0,
+    255,
+    0.5
+  ); /* Ajusta el color y la transparencia según necesites */
+}
+
 .perfil {
   height: 50px;
   left: -65px;
@@ -178,7 +209,7 @@ and open the template in the editor.
   .carousel-caption {
     bottom: 10rem;
   }
-} 
+}
 
 /* Desktop */
 @media (min-width: 1200px) {
@@ -222,7 +253,7 @@ and open the template in the editor.
   background-repeat: no-repeat;
   width: 100%;
   height: 100%;
-  object-fit: cover;  
+  object-fit: cover;
 }
 .tamano-1 {
   width: 420px;
@@ -429,6 +460,48 @@ img.responsiveArtista {
   /*font: 3rem;*/
 }
 
+.owl-dots {
+  position: relative;
+  margin-top: 20px;
+  text-align: center;
+  line-height: 1;
+  .owl-dot {
+    width: 10px;
+    height: 10px;
+    background: #ededed;
+    border-radius: 50%;
+    margin: 0 5px;
+  }
+  button.owl-dot {
+    background: #ededed;
+  }
+  button.owl-dot.active {
+    background: #f60;
+  }
+}
+
+/* Muestra video en Crowdfunding de diferentes tamaños según dispositivo */
+/* Estilo por defecto para desktop */
+.responsive-iframe {
+  width: 450px;
+  height: 290px;
+}
+
+/* Tablet */
+@media (max-width: 768px) {
+  .responsive-iframe {
+    width: 450px; /* O el ancho que consideres adecuado para tablets */
+  }
+}
+
+/* Móviles */
+@media (max-width: 576px) {
+  .responsive-iframe {
+    width: 295px;
+    height: auto; /* Ajusta la altura automáticamente para mantener la proporción */
+  }
+}
+
 /*CHeckBox del registro*/
 .list-group-checkable .list-group-item {
   cursor: pointer;
@@ -468,7 +541,6 @@ img.responsiveArtista {
   /* Estilos adicionales si son necesarios */
 }
 
-
 /* .form-group.position-relative {
   position: relative;
 }
@@ -488,7 +560,7 @@ img.responsiveArtista {
   align-items: center; /* Centra el contenido verticalmente */
   justify-content: center; /* Centra el contenido horizontalmente */
 }
- 
+
 .titulo-proyecto-home {
   min-height: 60px; /* alto segun se requiera */
   display: flex;
@@ -496,17 +568,16 @@ img.responsiveArtista {
   justify-content: center; /* Centra el contenido horizontalmente */
 }
 
-
 .badge {
   display: inline-block;
-  padding: .65em 1.25em;
+  padding: 0.65em 1.25em;
   font-size: 85%;
   font-weight: 700;
   line-height: 1;
   text-align: center;
   white-space: nowrap;
   vertical-align: baseline;
-  border-radius: .85rem;
+  border-radius: 0.85rem;
 }
 
 .badge-success {
@@ -522,7 +593,6 @@ img.responsiveArtista {
   background-color: #03a9f4;
 }
 
-
 /* Author */
 
 .team-img {
@@ -534,13 +604,12 @@ img.responsiveArtista {
   height: 100%; /* O define una altura específica */
 }
 
-
- .contentCrowd {
+.contentCrowd {
   padding: 0;
   /* position: relative; */
   top: -70px;
 }
- /* .author {
+/* .author {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -569,7 +638,9 @@ img.responsiveArtista {
   position: absolute;
   bottom: 10px; /* Ajusta según sea necesario para el espacio desde el fondo */
   left: 50%; /* Centra el span horizontalmente */
-  transform: translateX(-50%); /* Ajuste fino para centrar exactamente el span */
+  transform: translateX(
+    -50%
+  ); /* Ajuste fino para centrar exactamente el span */
   display: flex;
   align-items: center; /* Alinea verticalmente la imagen y el texto dentro del span */
   white-space: nowrap; /* Evita que el texto se ajuste a la línea siguiente */
@@ -585,8 +656,8 @@ img.responsiveArtista {
   margin-right: 15px;
 }
 
-.author a, .author a:hover {
+.author a,
+.author a:hover {
   color: #fff;
   text-decoration: none; /* Opcional: elimina el subrayado de los enlaces */
 }
-

@@ -86,5 +86,31 @@ if (Consultas::registrarUsuario($data)) {
 	$response['message'] = 'Error al registrar el usuario.';
 }
 
+if ($response['success'] == 'true') {
+
+	$para = $_POST['mail_user'];
+	$asunto = "Registro como usuario en  EchoMusic.Net";
+	$mensaje = "Te hemos registrado como cliente en nuestra plataforma. Ya puedes ingresar para levantar pedidos.\n\n";
+	$mensaje .= "Tus datos de acceso son:\n";
+	$mensaje .= "Link a plataforma: https://www.echomusic.net\n";
+	$mensaje .= "Usuario: " . $correo . "\n";
+	$mensaje .= "Contraseña: " . $_POST['password'] . "\n\n";
+	$mensaje .= "Estamos para servirte.";
+
+	// Para enviar un correo HTML, la cabecera Content-type debe definirse
+	$cabeceras  = 'MIME-Version: 1.0' . "\r\n";
+	$cabeceras .= 'Content-type: text/plain; charset=utf-8' . "\r\n";
+	$cabeceras .= 'From: info@echomusic.net' . "\r\n";
+
+	if (mail($para, $asunto, $mensaje, $cabeceras)) {
+		$response = ['success' => true, 'message' => 'Usuario registrado con éxito y correo enviado.'];
+	} else {
+		$response = ['success' => false, 'message' => 'Usuario registrado pero el correo no se pudo enviar.'];
+	}
+} else {
+	$response = ['success' => false, 'message' => 'Error al registrar en bitácora.'];
+}
+
+
 // Enviar respuesta
 echo json_encode($response);

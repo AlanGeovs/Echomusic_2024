@@ -385,7 +385,7 @@ if (empty($respuestaVideoEvento["embed_multi"])) {
 
         <div class="case-btn text-center">
             <!--<p>  <a href="#">Ver más eventos</a></p>-->
-            <p> <a href="#" class="box-btn">Ver más eventos</a></p>
+            <!-- <p> <a href="#" class="box-btn">Ver más eventos</a></p> -->
         </div>
     </div>
 </section>

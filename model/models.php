@@ -558,7 +558,10 @@ class Consultas
 
         static public function eventosRelacionadosGenero($id)
         {
-                $stmt = Conexion::conectar()->prepare("SELECT e.*, t.*, gu.* FROM events_public as e JOIN tickets_public as t ON e.id_event = t.id_event JOIN genre_user as gu ON e.id_user=gu.id_user WHERE e.active_event=1 AND gu.id_genre=:id GROUP BY e.id_user ORDER BY e.id_event DESC LIMIT 6;");
+                $stmt = Conexion::conectar()->prepare("SELECT e.*, t.*, gu.* FROM events_public as e JOIN tickets_public as t 
+                        ON e.id_event = t.id_event JOIN genre_user as gu ON e.id_user=gu.id_user 
+                        WHERE e.active_event=1 AND gu.id_genre=:id AND e.date_event >= CURDATE()
+                        GROUP BY e.id_user ORDER BY e.id_event DESC LIMIT 6;");
                 $stmt->bindParam(":id", $id, PDO::PARAM_INT);
                 $stmt->execute();
                 return $stmt->fetchAll();
@@ -568,7 +571,10 @@ class Consultas
 
         static public function eventosRelacionadosRegion($id)
         {
-                $stmt = Conexion::conectar()->prepare("SELECT e.*, t.*, gu.* FROM events_public as e JOIN tickets_public as t ON e.id_event = t.id_event JOIN genre_user as gu ON e.id_user=gu.id_user WHERE e.active_event=1 AND e.id_region=:id GROUP BY e.id_user ORDER BY RAND() LIMIT 6;");
+                $stmt = Conexion::conectar()->prepare("SELECT e.*, t.*, gu.* FROM events_public as e JOIN tickets_public as t 
+                        ON e.id_event = t.id_event JOIN genre_user as gu ON e.id_user=gu.id_user 
+                        WHERE e.active_event=1 AND e.id_region=:id AND e.date_event >= CURDATE()
+                        GROUP BY e.id_user ORDER BY RAND() LIMIT 6;");
                 $stmt->bindParam(":id", $id, PDO::PARAM_INT);
                 $stmt->execute();
                 return $stmt->fetchAll();
@@ -605,7 +611,7 @@ class Consultas
         {
                 $stmt = Conexion::conectar()->prepare("SELECT e.*, t.*  FROM events_public as e 
                                         JOIN tickets_public as t ON e.id_event = t.id_event  
-                                        WHERE e.active_event=1 
+                                        WHERE e.active_event=1  AND e.date_event >= CURDATE()
                                         GROUP BY e.id_user ORDER BY RAND() LIMIT 6;");
                 $stmt->execute();
                 return $stmt->fetchAll();

@@ -54,58 +54,58 @@ $minutos = date("i", $fechaEntera);
 
         <div class="row align-items-center choose-c justify-content-md-center">
 
-            <div class="col-lg-2 col-sm-2">
-                <!--                        <div class="section-title ">  
-                            <p style="font-size: 25px; padding-bottom: -15px;">Conoce más de </p>
-                            <h2><?php echo $respuesta[0]['nick_user']; ?></h2> 
-                        </div>-->
-            </div>
+            <div class="col-lg-8">
 
-            <div class="col-lg-6 col-sm-6" style="vertical-align: middle; ">
                 <div class="content text-center">
 
                     <div class="row">
-                        <div class="col-4 col-sm-4">
-                            <a href="artistas.php?a=<?php echo $respuesta[0]['id_user']; ?>">
-                                <img style="height: 200px; width: 200px; border-radius: 50%;" class="responsiveArtista" src="https://echomusic.cl/images/avatars/<?php echo $respuesta[0]['id_user']; ?>.jpg" alt="descatado" />
-                            </a>
+
+                        <div class="col-12 col-sm-4">
+                            <p style="font-size: 20px; font-weight:900; color: #293a5c; margin-bottom:-10px;">Conoce más de </p>
+                            <h2>
+                                <a href="artistas.php?a=<?php echo $respuesta[0]['id_user']; ?>" style="font-size: 40px; color: #FF6600;">
+                                    <?php echo $respuesta[0]['nick_user']; ?>
+                                </a>
+                            </h2>
                         </div>
-                        <div class="col-8 col-sm-8">
-                            <p style="font-size: 20px;  ">Conoce más de </p>
-                            <h2><a href="artistas.php?a=<?php echo $respuesta[0]['id_user']; ?>"> <?php echo $respuesta[0]['nick_user']; ?> </a></h2>
-                            <p><span><?php echo $respuestaCiudadRegion[0]["name_city"]; ?> / Región <?php echo $respuestaCiudadRegion[0]["name_region"]; ?></span></p>
-                            <!--Biogración - Button to Open the Modal-->
-                            <?php
-                            if (!empty($biografia[0]["bio_user"])) {
-                            ?>
-                                <a type="button" class="box-btn text-center" data-bs-toggle="modal" data-bs-target="#ModalBio">Ver Biografía</a>
-                            <?php
-                            } else {
-                                echo '<br>';
-                            }
-                            ?>
+
+
+
+                        <div class="col-12 col-sm-5 d-flex align-items-center">
+                            <!-- Foto -->
+                            <div class="pe-3">
+                                <a href="artistas.php?a=<?php echo $respuesta[0]['id_user']; ?>">
+                                    <img style="height: 100px; width: 100px; border-radius: 50%;" src="https://echomusic.cl/images/avatars/<?php echo $respuesta[0]['id_user']; ?>.jpg" alt="Destacado" />
+                                </a>
+                            </div>
+
+                            <!-- Nombre y Ubicación -->
+                            <div>
+                                <h2><a href="artistas.php?a=<?php echo $respuesta[0]['id_user']; ?>"> <?php echo $respuesta[0]['nick_user']; ?> </a></h2>
+                                <p><span><?php echo $respuestaCiudadRegion[0]["name_city"]; ?> / Región <?php echo $respuestaCiudadRegion[0]["name_region"]; ?></span></p>
+                            </div>
                         </div>
+
+
+
+                        <div class="col-12 col-sm-3 d-flex align-items-center justify-content-center" style="height: 100%;">
+                            <!-- Biografía - Button to Open the Modal -->
+                            <?php if (!empty($biografia[0]["bio_user"])) { ?>
+                                <a type="button" class="box-btn text-center" data-bs-toggle="modal" data-bs-target="#ModalBio" style="margin-top: 22px;">Ver Biografía</a>
+                            <?php } else { ?>
+                                <br>
+                            <?php } ?>
+                        </div>
+
 
 
 
                     </div>
 
                 </div>
+
             </div>
-            <div class="col-lg-2 col-sm-2">
-                <!--                         <div class="nav-btn">         
-                              Biogración - Button to Open the Modal 
-                                <?php
-                                if (!empty($biografia[0]["bio_user"])) {
-                                ?>
-                                    <a type="button" class="box-btn text-center" data-bs-toggle="modal" data-bs-target="#ModalBio">Ver Biografía</a>
-                                    <?php
-                                } else {
-                                    echo '<br>';
-                                }
-                                    ?> 
-                         </div>-->
-            </div>
+
         </div>
     </div>
 </section>
@@ -178,20 +178,25 @@ $diff = $date1->diff($date2);
                     <div class="row">
                         <!--img-->
                         <div class="col-12 col-sm-7  choose-img">
-                            <!--<img src="assets/images/avatars/13.jpg" alt="choose" width="350px" />-->
-                            <iframe width="450" height="290" src="https://www.youtube.com/embed/<?php echo $respuestaMultimediaCrow[0]['project_multimedia_name']; ?>" title="<?php echo $respuesta[0]['nick_user'] . " - " . $respuesta[0]['project_title']; ?>" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                            <iframe class="responsive-iframe" src="https://www.youtube.com/embed/<?php echo $respuestaMultimediaCrow[0]['project_multimedia_name']; ?>" title="<?php echo $respuesta[0]['nick_user'] . " - " . $respuesta[0]['project_title']; ?>" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
                         </div>
+
                         <!--Descripción-->
                         <div class="col-12 col-sm-5" style="vertical-align: middle;">
-                            <i class="flaticon-calendar"></i> &nbsp; <b>Plazo de ejecución</b> <?php echo $diaSemana . ' ' . $dia . ' de ' . $mes . ', ' . $anio; ?>
-                            <ul>
-                                <li>
-                                    <?php echo $respuesta[0]['project_title']; ?>
-                                </li>
-                            </ul>
-                            <a href="artistas.php?a=<?php echo $respuesta[0]['id_user']; ?>">
-                                <h3><?php echo $respuesta[0]['nick_user']; ?></h3>
-                            </a>
+                            <div class="row">
+                                <div class="col-12 col-sm-4"></div>
+                                <div class="col-12 col-sm-8 d-flex justify-content-end align-items-center" style="text-align: right;">
+                                    <div>
+                                        <i class="flaticon-calendar"></i> &nbsp; <b>Plazo de ejecución</b> <br><?php echo $diaSemana . ' ' . $dia . ' de ' . $mes . ', ' . $anio; ?>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <p style="color:#FF6600; font-weight:bold; margin-botom: -15px;"> <?php echo $respuesta[0]['project_title']; ?> </p>
+                            <a href="artistas.php?a=<?php echo $respuesta[0]['id_user']; ?>" style="font-weight: 700; font-size:15px; color:#0d6efd; margin-botom:15px;">
+                                <p><?php echo $respuesta[0]['nick_user']; ?></p>
+                            </a><br><br>
+                            <!-- <p><?php echo $respuesta[0]['project_desc']; ?></p> -->
 
 
                             <div class="progress">
@@ -255,7 +260,7 @@ $diff = $date1->diff($date2);
         <div class="row  align-items-center choose-c justify-content-md-center">
 
 
-            <div class="home-2-contact col-lg-6">
+            <div class="home-2-contact col-lg-8">
                 <div class="content">
                     <div class="row">
 
@@ -281,31 +286,42 @@ $diff = $date1->diff($date2);
                                 <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
                                     <div class="accordion-body">
 
+                                        <?php
+                                        if (isset($_SESSION["id_type_user"])) {
 
+                                        ?>
+                                            <form id="project_questions" method="post" enctype="multipart/form-data">
+                                                <input name="id_project" id="id_project" class="form-control" type="hidden" value="<?php echo $respuesta[0]['id_project']; ?>" />
+                                                <input name="id_user" id="id_user" class="form-control" type="hidden" value="<?php echo $respuesta[0]['id_user']; ?>" />
 
-                                        <form id="project_questions" method="post" enctype="multipart/form-data">
-                                            <input name="id_project" id="id_project" class="form-control" type="hidden" value="<?php echo $respuesta[0]['id_project']; ?>" />
-                                            <input name="id_user" id="id_user" class="form-control" type="hidden" value="<?php echo $respuesta[0]['id_user']; ?>" />
+                                                <div class="row justify-content-center">
 
-                                            <div class="row justify-content-center">
-
-                                                <div class="col-lg-12 col-md-12">
-                                                    <div class="form-group">
-                                                        <textarea name="question_desc" class="form-control" id="question_desc" cols="15" rows="4" required data-error="Deja tu pregunta" placeholder="Tu pregunta"></textarea>
-                                                        <div class="help-block with-errors"></div>
+                                                    <div class="col-lg-12 col-md-12">
+                                                        <div class="form-group">
+                                                            <textarea name="question_desc" class="form-control" id="question_desc" cols="15" rows="4" required data-error="Deja tu pregunta" placeholder="Tu pregunta"></textarea>
+                                                            <div class="help-block with-errors"></div>
+                                                        </div>
                                                     </div>
-                                                </div>
 
-                                                <div class="col-lg-12 col-md-12">
-                                                    <button type="submit" class="default-btn page-btn box-btn">
-                                                        Enviar
-                                                    </button>
-                                                    <div id="msgSubmit" class="h3 text-center hidden"></div>
-                                                    <div class="clearfix"></div>
-                                                </div>
+                                                    <div class="col-lg-12 col-md-12">
+                                                        <button type="submit" class="default-btn page-btn box-btn">
+                                                            Enviar
+                                                        </button>
+                                                        <div id="msgSubmit" class="h3 text-center hidden"></div>
+                                                        <div class="clearfix"></div>
+                                                    </div>
 
-                                            </div>
-                                        </form>
+                                                </div>
+                                            </form>
+
+                                        <?php
+
+                                        } else {
+                                            echo '<a href="https://echomusic.net/ingresar.php" type="button" class="default-btn page-btn box-btn">
+                                                            Para preguntar, debes iniciar sesión
+                                                        </a>';
+                                        }
+                                        ?>
 
 
                                     </div>
@@ -779,7 +795,7 @@ for ($i = 0; $i < count($respuestaTierCrow); $i++) {
 
 
 <!--  Tarifas Recompensas  Area -->
-<section class="home-blog-area ptb-100" id="recompensas">
+<section class="home-blog-area  ptb-100  justify-content-md-center" id="recompensas">
     <div class="container">
         <!--                <div class="section-title">
                     <span>What We Offer</span>
@@ -793,43 +809,70 @@ for ($i = 0; $i < count($respuestaTierCrow); $i++) {
         <div class="row text-center pb-35">
             <h2>Recompensas</h2>
         </div>
-        <div class="row">
+
+        <div class="owl-carousel owl-theme">
+            <!--TIERS Tarifas Bucle-->
+            <?php
+            $backgroundColors = [
+                'rgba(0, 0, 255, 0.5)', // Azul
+                'rgba(128, 0, 128, 0.5)', // Morado
+                'rgba(255, 102, 0, 0.5)', // Naranja
+                'rgba(255, 0, 0, 0.5)', // Rojo
+                'rgba(255, 20, 147, 0.5)', // Rosa
+                'rgba(0, 0, 0, 0.5)', // Negro
+                'rgba(255, 255, 0, 0.5)' // Amarillo
+            ];
+
+            for ($i = 0; $i < count($respuestaTierCrow); $i++) {
+                $colorIndex = $i % count($backgroundColors);
+                $currentColor = $backgroundColors[$colorIndex];
+            ?>
+
+
+
+                <div class="card" style="width: 22rem;  ">
+                    <img src="https://echomusic.cl/images/avatars/<?php echo $respuesta[0]['id_user']; ?>.jpg" class="card-img-top" alt="..." style="width: 100%; height: auto; aspect-ratio: 16 / 9; object-fit: cover;">
+                    <div class="card-img-overlay d-flex justify-content-center align-items-center" style="background-color: <?php echo $currentColor; ?>; position: absolute; top: 0; right: 0; height: 197px;  bottom: 0; left: 0;">
+                        <h5 class="card-title" style="color: white; text-align: center; z-index: 2;"><?php echo $respuestaTierCrow[$i]['tier_title']; ?></h5>
+                    </div>
+
+
+                    <div class="card-body">
+                        <p class="card-text tier-desc"><?php echo $respuestaTierCrow[$i]['tier_desc']; ?></p>
+                        <h3 style="text-align: center; font-size: 35px; font-weight:bold; color:#FF6600;">$<?php echo number_format($respuestaTierCrow[$i]['tier_amount']); ?></h3>
+
+                        <!-- Contenedor de flexbox para centrar enlaces -->
+                        <div class="d-flex justify-content-center flex-column align-items-center">
+                            <a type="button" class="text-center" data-bs-toggle="modal" data-bs-target="#ModalRecompensa<?php echo $i; ?>">
+                                Ver todas las recompensas
+                            </a>
+                            <a class="box-btn text-center" href="pago_crowdfunding.php?c=<?php echo $id; ?>&t=<?php echo $respuestaTierCrow[$i]['id_tier']; ?>">
+                                Colaborar
+                            </a>
+                        </div>
+
+                    </div>
+                </div>
+
+
+
+            <?php
+            } //fin del FOR
+            ?>
+        </div>
+
+
+
+        <!-- -------------******------------- -->
+
+
+        <div class="row align-items-center justify-content-center">
 
             <!--TIERS Tarifas Bucle-->
             <?php
             for ($i = 0; $i < count($respuestaTierCrow); $i++) {
             ?>
-                <div class="col-lg-4 col-md-6">
-                    <div class="single-blog">
-                        <div class="blog-img">
-                            <a href="#">
-                                <img style="height: 200px; width: 200px; border-radius: 50%;" class="responsiveArtista" src="https://echomusic.cl/images/avatars/<?php echo $respuesta[0]['id_user']; ?>.jpg" alt="descatado" />
-                            </a>
-                        </div>
 
-                        <div class="pricing-top-heading">
-                            <h3><?php echo $respuestaTierCrow[$i]['tier_title']; ?></h3>
-                            <?php echo $respuestaTierCrow[$i]['tier_desc']; ?>
-                        </div>
-                        <h3>$<?php echo number_format($respuestaTierCrow[$i]['tier_amount']); ?></h3>
-                        <ul style="  margin: 0 auto 10px;">
-                            <li> <i class="bx bx-gift"></i> <?php echo $respuestaTierCrow[$i]['t_reward_01']; ?> </li>
-                            <li> <i class="bx bx-gift"></i> <?php echo $respuestaTierCrow[$i]['t_reward_02']; ?> </li>
-                            <li> <i class="bx bx-gift"></i> <?php echo $respuestaTierCrow[$i]['t_reward_03']; ?> </li>
-
-                        </ul>
-                        <div style="  margin: 0 auto 10px;">
-                            <i class="bx bx-arrow-to-right"></i><a type="button" class=" text-center" data-bs-toggle="modal" data-bs-target="#ModalRecompensa<?php echo $i; ?>">Ver todas las recompensas</a><br>
-                        </div>
-                        <div>
-                            <a class="box-btn" href="pago_crowdfunding.php?c=<?php echo $id; ?>&t=<?php echo $respuestaTierCrow[$i]['id_tier']; ?>">
-                                Colaborar
-                            </a>
-                        </div>
-
-
-                    </div>
-                </div>
 
 
                 <!-- MODAL Croudfunding Recompensas  -->
@@ -1155,11 +1198,16 @@ for ($i = 0; $i < count($respuestaTierCrow); $i++) {
         <!-- <div class="home-2-contact col-lg-8">                       
                         <div class="content"> 
                             <div class="row">-->
-        <div class="home-2-contact ">
+        <div class="home-2-contact mt-30">
             <div class="content justify-content-md-center text-center">
                 <div class="row ">
                     <div class="col-12 col-sm-12 ">
-                        <a href="" data-bs-toggle="modal" data-bs-target="#projectReportsModal">Denunciar</a> |
+                        <?php
+                        if (isset($_SESSION["id_type_user"])) {
+
+                        ?>
+                            <a href="" data-bs-toggle="modal" data-bs-target="#projectReportsModal">Denunciar</a> |
+                        <?php } ?>
                         <a href="" class=" ">FAQ's </a> |
                         <a href="#" data-bs-toggle="modal" data-bs-target="#crowdfundingTosModal">Leer Términos y Condiciones Crowdfunding</a>
 

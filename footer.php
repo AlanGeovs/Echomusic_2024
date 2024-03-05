@@ -181,6 +181,7 @@
     owl.owlCarousel({
         loop: true,
         nav: true,
+        dots: true,
         margin: 10,
         responsiveClass: true,
         autoplay: true,
@@ -351,6 +352,55 @@
 
         // Cargar artistas para la página inicial
         cargarArtistas(1); // Cargar la primera página al inicio
+    });
+</script>
+
+<!-- Acortar tier-desc de crowdfounding -->
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        // Selecciona todos los elementos que tienen la clase 'tier-desc'
+        var tierDescElements = document.querySelectorAll('.tier-desc');
+
+        tierDescElements.forEach(function(element) {
+            // Obtiene el texto del elemento
+            var text = element.innerText;
+
+            // Divide el texto en palabras
+            var words = text.split(' ');
+
+            // Si hay más de 20 palabras, recorta el texto
+            if (words.length > 16) {
+                // Une las primeras 20 palabras y agrega '...'
+                var shortened = words.slice(0, 16).join(' ') + '...';
+                // Establece el texto recortado como el contenido del elemento
+                element.innerText = shortened;
+            }
+        });
+    });
+</script>
+
+
+<!-- Carrusel de Recompensas -->
+<script>
+    $(document).ready(function() {
+        $('.owl-carousel').owlCarousel({
+            center: true, // Centra el ítem activo
+            loop: false, // Permite el bucle de los ítems
+            dots: true,
+            margin: 10, // Espacio entre ítems
+            autoplayHoverPause: true,
+            responsive: {
+                0: {
+                    items: 1
+                },
+                600: {
+                    items: 5
+                },
+                1000: {
+                    items: 5
+                }
+            }
+        });
     });
 </script>
 

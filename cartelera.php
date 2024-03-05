@@ -190,28 +190,28 @@ $totalPaginas = ceil($totalEventos / $resultadosPorPagina);
                             </div>
 
 
-                            <div class="col-lg-2 col-md-2">
+                            <div class="col-lg-3 col-md-3">
                                 <div class="form-group">
                                     <div class="input-group date" id="datepicker">
                                         <input type="date" id="fi" name="fi" class="form-control" data-error="Selecciona la fecha inicial" value="<?php echo $_GET["fi"]; ?>" placeholder="Fecha inicial" />
                                     </div>
                                     <div class="help-block with-errors"></div>
                                 </div>
-                                <div class="help-block texto-fechas">Fecha inicial</div>
+                                <!-- <div class="help-block texto-fechas">Fecha inicial</div> -->
                             </div>
 
 
-                            <div class="col-lg-2 col-md-2">
+                            <!-- <div class="col-lg-2 col-md-2">
                                 <div class="form-group">
                                     <input type="date" id="ff" name="ff" data-error="Selecciona la fecha final" value="<?php echo $_GET["ff"]; ?>" class="form-control" placeholder="Fecha final" />
                                     <div class="help-block with-errors"></div>
                                 </div>
                                 <div class="help-block texto-fechas">Fecha final</div>
-                            </div>
+                            </div> -->
 
 
                             <!--Region-->
-                            <div class="col-lg-2 col-md-2">
+                            <div class="col-lg-3 col-md-3">
                                 <div class="form-group">
                                     <select name="reg" id="reg" class="form-control" data-error="Selecciona una región">
                                         <option value="">Todas las regiones</option>
