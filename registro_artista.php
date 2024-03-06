@@ -10,7 +10,7 @@ include "header.php";
             <h2>Registro</h2>
             <ul>
                 <li>
-                    <a href="index.html">
+                    <a href="index.php">
                         Inicio
                     </a>
                 </li>
