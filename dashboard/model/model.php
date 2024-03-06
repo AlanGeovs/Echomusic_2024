@@ -311,6 +311,53 @@ class Consultas  extends Conexion
 		return $stmt->execute();
 	}
 
+	// Registro con Google -  buscará en la base de datos si existe un usuario con el correo electrónico dado
+	public static function checkUserExists($email)
+	{
+		try {
+			$db = Conexion::conectar();
+			$stmt = $db->prepare("SELECT COUNT(*) FROM users WHERE mail_user = :email");
+			$stmt->bindParam(":email", $email, PDO::PARAM_STR);
+			$stmt->execute();
+			return $stmt->fetchColumn() > 0;
+		} catch (PDOException $e) {
+			// Manejar el error o registrar
+			return false;
+		}
+	}
+
+	// Registro Google - registra un nuevo usuario en la base de datos con los datos obtenidos de Google. 
+	public static function registrarUsuarioGoogle($email, $name, $type_user)
+	{
+		try {
+			$db = Conexion::conectar();
+			//$stmt = $db->prepare("INSERT INTO users (mail_user, first_name_user, method_login) VALUES (:email, :name, 2)");
+			$stmt = $db->prepare("INSERT INTO users (id_type_user, first_name_user, last_name_user, nick_user, mail_user, password_user, first_login, user_destacado, tipo, id_genero, id_subgenero, descripcion, space, type_agent, method_login)  
+								             VALUES (:type_user, :name, '', '', :email, 'NULL', 'no', 0, '',0,0,'', 'NULL', 0, 2)");
+			$stmt->bindParam(":type_user", $type_user, PDO::PARAM_INT);
+			$stmt->bindParam(":email", $email, PDO::PARAM_STR);
+			$stmt->bindParam(":name", $name, PDO::PARAM_STR);
+			return $stmt->execute();
+		} catch (PDOException $e) {
+			// Manejar el error o registrar
+			return false;
+		}
+	}
+
+	public static function registrarGoogle($email, $name)
+	{
+		try {
+			$db = Conexion::conectar();
+			$stmt = $db->prepare("INSERT INTO google (mail_user, first_name_user, method_login) VALUES (:email, :name, 2)");
+			$stmt->bindParam(":email", $email, PDO::PARAM_STR);
+			$stmt->bindParam(":name", $name, PDO::PARAM_STR);
+			return $stmt->execute();
+		} catch (PDOException $e) {
+			// Manejar el error o registrar
+			return false;
+		}
+	}
+
 	// Verificación de Email
 	public static function verificarEmailExistente($email)
 	{

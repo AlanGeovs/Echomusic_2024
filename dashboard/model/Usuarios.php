@@ -36,6 +36,7 @@ class Usuarios extends Conn
     //     }
     // }
 
+
     public static function registrarBitacora($usuario, $tabla, $accion)
     {
         $stmt = Conexion::conectar()->prepare("INSERT INTO $tabla (usuario, accion) VALUES (:usuario, :accion)");

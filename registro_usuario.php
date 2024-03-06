@@ -1,6 +1,8 @@
 <?php
 include "model/models.php";
 include "header.php";
+require_once 'vendor/autoload.php';
+
 ?>
 
 <!-- Start Page Title Area -->
@@ -35,15 +37,31 @@ include "header.php";
 
                     </div>
 
+
                     <form id="formRegistroUsuario" method="post" enctype="multipart/form-data">
                         <div class="row justify-content-center">
-                            <div class="col-md-6 col-sm-6">
+
+                            <div class="col-md-12 col-sm-12 d-flex justify-content-center">
+                                <a class="box-btn google" href="registroConGoogle.php?u=2">
+                                    <i class='bx bxl-google'></i> Registrarse con Google
+                                </a>
+                            </div>
+
+                            <div class="col-md-12 col-sm-12 justify-content-center ">
+                                <div class="text-center">
+                                    <p>--- o ---</p>
+                                    <p>Registrarse con una cuenta de email</p>
+                                </div>
+                            </div>
+
+
+                            <div class="col-md-6 col-sm-6 pt-35">
                                 <div class="form-group">
                                     <input id="id_type_user" name="id_type_user" class="form-control" type="hidden" value="2">
                                     <input id="first_name_user" name="first_name_user" class="form-control" type="text" placeholder="Nombre" required>
                                 </div>
                             </div>
-                            <div class="col-md-6 col-sm-6">
+                            <div class="col-md-6 col-sm-6 pt-35">
                                 <div class="form-group">
                                     <input id="last_name_user" name="last_name_user" class="form-control" type="text" placeholder="Apellidos" required>
                                 </div>

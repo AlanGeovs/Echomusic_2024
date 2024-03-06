@@ -70,6 +70,10 @@ session_start();
     <!-- Tittle -->
     <title>EchoMusic - Marketplace de servicios musicales </title>
 
+    <!-- Librería de Google OAuth -->
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+
+
 </head>
 
 <body>
