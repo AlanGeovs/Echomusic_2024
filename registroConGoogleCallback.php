@@ -48,6 +48,7 @@ if (isset($_GET['code'])) {
             $_SESSION['user_email'] = $email;
             $_SESSION["nick_user"] =  $name;
             $_SESSION["id_type_user"] = 2;
+            $_SESSION["id_user"] = 5971;
             // $_SESSION["id_user"] = $respuesta["id_user"];
             // $_SESSION["nick_user"] = $respuesta["nick_user"];
             // $_SESSION["id_type_user"] = $respuesta["id_type_user"];

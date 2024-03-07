@@ -6,7 +6,7 @@ require_once "model/model.php";
 $id = $_SESSION["id_user"];
 
 if (!isset($_SESSION["id_user"])) {
-    header("Location: index.php?error=2");
+    header("Location: index.php?error=21");
 } else {
 ?>
 

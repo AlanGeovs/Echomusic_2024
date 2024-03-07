@@ -40,6 +40,6 @@ if ($respuesta == "") {
 		header("Location: ../../index.php");
 	} elseif ($res == "error") {
 		// header("Location: ../index.php?error=2");
-		header("Location: ../../index.php?error=2");
+		header("Location: ../../index.php?error=111");
 	}
 }

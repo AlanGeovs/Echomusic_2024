@@ -260,7 +260,7 @@ session_start();
                             <button class="btn box-btn dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
 
                                 <?php
-                                echo   $_SESSION["nick_user"];
+                                echo   $_SESSION["nick_user"] . " - " . $_SESSION["id_user"];
                                 ?>
                                 <i class='bx bxs-down-arrow'></i>
                             </button>

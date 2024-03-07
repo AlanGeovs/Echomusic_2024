@@ -24,8 +24,9 @@ if (isset($_GET['code'])) {
     if ($userExists) {
         // Iniciar sesión 
         $_SESSION['user_email'] = $email;
-        $_SESSION["nick_user"] =  $name;
+        $_SESSION["nick_user"] =  $email;
         $_SESSION["id_type_user"] = 2;
+        $_SESSION["id_user"] = 5971;
         // Redirige al usuario a la página principal o a su perfil
         header('Location: index.php');
     } else {
