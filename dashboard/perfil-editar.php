@@ -1,12 +1,15 @@
 <?php
+// ini_set('session.save_path', realpath(dirname($_SERVER['DOCUMENT_ROOT']) . '/sessions'));
+ini_set('session.save_path', realpath(dirname($_SERVER['DOCUMENT_ROOT']) . '/sessions'));
 session_start();
 
 require_once "model/model.php";
 
 $id = $_SESSION["id_user"];
+$nick = $_SESSION["nick_user"];
 
 if (!isset($_SESSION["id_user"])) {
-    header("Location: index.php?error=21");
+    header("Location: index.php?error=21&id_user=" . $id . "&nick=" . $nick);
 } else {
 ?>
 

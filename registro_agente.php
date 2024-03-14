@@ -124,7 +124,7 @@ include "header.php";
                             <div class="col-12 text-center">
                                 <p class="al-acc">
                                     ¿Ya tienes una cuenta?
-                                    <a href="ingresar.php"> Inicia sesión</a>
+                                    <a href="dashboard/index.php"> Inicia sesión</a>
                                 </p>
                             </div>
                         </div>

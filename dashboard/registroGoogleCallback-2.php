@@ -3,16 +3,22 @@
 ini_set('session.save_path', realpath(dirname($_SERVER['DOCUMENT_ROOT']) . '/sessions'));
 session_start();
 
-require_once 'vendor/autoload.php';
-require_once 'dashboard/model/model.php'; // Ajusta la ruta según tu estructura
+require_once '../vendor/autoload.php';
+require_once 'model/model.php'; // Ajusta la ruta según tu estructura
 
 $type_user = $_GET['u'];
-
+// Verifici si se envia tipo de usaurio
+if (empty($type_user)) {
+    $url = 'https://www.echomusic.net/dashboard/registroGoogleCallback-2.php';
+} else {
+    $url = 'https://www.echomusic.net/dashboard/registroGoogleCallback-2.php?u=' . $type_user;
+}
 
 $client = new Google_Client();
 $client->setClientId('958916104006-2sr5okp27ss5c67vbfjdnvsp8gdott72.apps.googleusercontent.com');
 $client->setClientSecret('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');
-$client->setRedirectUri('https://www.echomusic.net/registroConGoogleCallback.php?u=' . $type_user);
+// $client->setRedirectUri('https://www.echomusic.net/dashboard/registroGoogleCallback-2.php?u=' . $type_user);
+$client->setRedirectUri($url);
 
 if (isset($_GET['code'])) {
     $token = $client->fetchAccessTokenWithAuthCode($_GET['code']);
@@ -36,29 +42,31 @@ if (isset($_GET['code'])) {
     //     // Manejar error
     // }
 
-    // Aquí deberías verificar si el usuario ya existe en tu base de datos
+    // Aquí  verifica si el usuario ya existe en tu base de datos
     $userExists = Consultas::checkUserExists($email);
 
     if ($userExists) {
         // Iniciar sesión
         $_SESSION['user_email'] = $email;
+
+        // Obtener datos de BD del usuarios pasando el mail de login desde GMAIL
+        $result = Consultas::loginUsuarioGoogle($email);
+        $_SESSION["user_email"] = $email;
+        $_SESSION["nick_user"] =  $result['nick_user'];
+        $_SESSION["id_type_user"] = $result['id_type_user'];
+        $_SESSION["id_user"] = $result['id_user'];
         // Redirige al usuario a su perfil o a la página principal
-        // header('Location: ingresar.php?m=1');
-        header('Location: dashboard/index.php');
+        header('Location: perfil-editar.php');
     } else {
         // Registrar nuevo usuario
         $result = Consultas::registrarUsuarioGoogle($email, $name, $type_user);
         if ($result) {
-            $_SESSION['user_email'] = $email;
-            $_SESSION["nick_user"] =  $name;
-            $_SESSION["id_type_user"] = 2;
-            $_SESSION["id_user"] = 5971;
-            // $_SESSION["id_user"] = $respuesta["id_user"];
-            // $_SESSION["nick_user"] = $respuesta["nick_user"];
-            // $_SESSION["id_type_user"] = $respuesta["id_type_user"];
-            // $_SESSION["tipo"] = $respuesta["tipo"];
-            // Redirige al usuario a su perfil o a la página principal
-            header('Location: index.php');
+            $resultRegistrado = Consultas::loginUsuarioGoogle($email);
+            $_SESSION["user_email"] = $email;
+            $_SESSION["nick_user"] =  $resultRegistrado['nick_user'];
+            $_SESSION["id_type_user"] = $resultRegistrado['id_type_user'];
+            $_SESSION["id_user"] = $resultRegistrado['id_user'];
+            header('Location: perfil-editar.php');
         } else {
             echo "Error al registrar el usuario";
             // Manejar error

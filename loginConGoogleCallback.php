@@ -2,6 +2,8 @@
 require_once 'vendor/autoload.php';
 require_once 'dashboard/model/model.php';
 
+// ini_set('session.save_path', realpath(dirname($_SERVER['DOCUMENT_ROOT']) . '/sessions'));
+ini_set('session.save_path', realpath(dirname($_SERVER['DOCUMENT_ROOT']) . '/sessions'));
 session_start();
 
 $client = new Google_Client();
@@ -36,5 +38,6 @@ if (isset($_GET['code'])) {
     }
 } else {
     // Manejar el caso de error o acceso denegado
-    header('Location: ingresar.php?error=acceso_denegado');
+    // header('Location: ingresar.php?error=acceso_denegado');
+    header('Location: dashboard/index.php');
 }

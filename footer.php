@@ -287,7 +287,7 @@
                         if (data.success) {
                             swal("Registro exitoso", data.message, "success")
                                 .then((value) => {
-                                    window.location.href = 'ingresar.php'; // Redirigir al usuario
+                                    window.location.href = 'dashboard/index.php'; // Redirigir al usuario
                                 });
                         } else {
                             swal("Error", data.message, "error");

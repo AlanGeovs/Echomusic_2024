@@ -696,6 +696,17 @@ class Consultas
                 return $stmt->fetchAll();
                 $stmt->close();
         }
+
+        //obtener los datos de los tickets asociados a un evento específico
+        public static function obtenerTicketsPorEvento($id_event)
+        {
+                $stmt = Conexion::conectar()->prepare("SELECT `id_ticket`, `ticket_name`, `ticket_value`, `ticket_commission` FROM `tickets_public` WHERE `id_event` = :id_event");
+                $stmt->bindParam(":id_event", $id_event, PDO::PARAM_INT);
+                $stmt->execute();
+                return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        }
+
+
         //        Crowdfunding Temporalmete dejo `status_project` != 0 para enlistar todos los crowd activos o que pasaron
         //        falta definir qué hacer cada uno de los estados
         static public function crowdfunding($id)

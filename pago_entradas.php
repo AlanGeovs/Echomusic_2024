@@ -2,15 +2,19 @@
 include "model/models.php";
 include "header.php";
 
+$id_event = $_GET['e'];
+
 //Búsquedas de Crowdfunding
 if (isset($_GET["c"])) {
     $id = $_GET["c"];
-    $idTier = $_GET['t'];
+
     if (!preg_match('/[0-9]/', $id)) {
         exit();
     }
     $respuesta = Consultas::detallesCrowdfunding($id);
 }
+
+$respuesta = Consultas::detallesBusqueda2($id_event);
 
 $idUser = $respuesta[0]['id_user'];
 
@@ -76,12 +80,64 @@ $diff = $date1->diff($date2);
                             <!-- Inicia el Form -->
                             <div class="row">
                                 <!-- Columna derecha Status Carrito -->
-                                <div class="col-md-5 col-lg-4 order-md-last">
+                                <div class="col-md-6 col-lg-6 order-md-last">
+
+                                    <h3 class="mb-3" style="text-align: left; font-size: 18px;">Selecciona el medio de pago</h3>
+
+                                    <div class="my-3">
+                                        <div class="form-check">
+                                            <input id="credit" name="paymentMethod" type="radio" class="form-check-input" checked="" required="">
+                                            <label class="form-check-label" for="credit">WebPay</label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input id="debit" name="paymentMethod" type="radio" class="form-check-input" required="">
+                                            <label class="form-check-label" for="debit">Khipu</label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input id="paypal" name="paymentMethod" type="radio" class="form-check-input" required="">
+                                            <label class="form-check-label" for="paypal">PayPal</label>
+                                        </div>
+                                    </div>
+
+                                    <hr class="my-4">
+
+
                                     <h4 class="d-flex justify-content-between align-items-center mb-3">
-                                        <span class="text-primary">Carrito de compra</span>
-                                        <span class="badge bg-primary rounded-pill">3</span>
+                                        <span class="text-primary">Tickets</span>
+                                        <!-- <s pan class="badge bg-primary rounded-pill">3</span> -->
                                     </h4>
-                                    <ul class="list-group mb-3">
+
+                                    <?php
+                                    $tickets = Consultas::obtenerTicketsPorEvento($id_event);
+                                    ?>
+                                    <table class="table" id="tiposEntradaTabla">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col" class="align-middle">#</th>
+                                                <th scope="col" class="align-middle">Nombre Entrada</th>
+                                                <th scope="col" class="align-middle">Valor</th>
+                                                <th scope="col" class="align-middle">Cantidad</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <?php foreach ($tickets as $index => $ticket) : ?>
+                                                <tr>
+                                                    <th scope="row" class="align-middle"><?php echo $index + 1; ?></th>
+                                                    <td class="align-middle"><?php echo htmlspecialchars($ticket['ticket_name']); ?></td>
+                                                    <td class="align-middle">$<?php echo number_format(($ticket['ticket_value'] + $ticket['ticket_commission']), 0, ',', '.') ?></td>
+                                                    <td class="align-middle">
+                                                        <select name="ticket_quantity_<?php echo $ticket['id_ticket']; ?>" id="ticket_quantity_<?php echo $ticket['id_ticket']; ?>" class="form-control" required="">
+                                                            <option value="">Cantidad</option>
+                                                            <?php for ($i = 0; $i <= 10; $i++) : ?>
+                                                                <option value="<?php echo $i; ?>"><?php echo $i; ?></option>
+                                                            <?php endfor; ?>
+                                                        </select>
+                                                    </td>
+                                                </tr>
+                                            <?php endforeach; ?>
+                                        </tbody>
+                                    </table>
+                                    <!-- <ul class="list-group mb-3">
                                         <li class="list-group-item d-flex justify-content-between lh-sm">
                                             <div>
                                                 <h6 class="my-0">Product name</h6>
@@ -114,7 +170,9 @@ $diff = $date1->diff($date2);
                                             <span>Total (USD)</span>
                                             <strong>$20</strong>
                                         </li>
-                                    </ul>
+                                    </ul> -->
+
+
 
                                     <form class="card p-2">
                                         <div class="input-group">
@@ -124,9 +182,13 @@ $diff = $date1->diff($date2);
                                     </form>
                                 </div>
                                 <!-- Datos de comprados -->
-                                <div class="col-md-7 col-lg-8">
-                                    <h4 class="mb-3">Portal de pago</h4>
-                                    <form class="needs-validation" novalidate="">
+                                <div class="col-md-6 col-lg-6">
+
+
+
+                                    <h4 class="mb-3" style="text-align: left; font-size: 20px;">Portal de pago</h4>
+                                    <h3 style="text-align: left; font-size: 18px; font-weight:bold; color:#FF6600;"><?php echo $respuesta[0]["name_event"]; ?></h3>
+                                    <form class=" needs-validation" novalidate="">
                                         <div class="row g-3">
                                             <div class="col-sm-6">
                                                 <label for="firstName" class="form-label">Nombre</label>
@@ -165,9 +227,9 @@ $diff = $date1->diff($date2);
 
                                             <div class="col-12">
                                                 <label for="rut" class="form-label">RUT</label>
-                                                <input type="text" class="form-control" id="rut" name="rut" placeholder="ASD456ASD" required="">
+                                                <input type="text" class="form-control" id="rut" name="rut" placeholder="89.382.888-5" required="">
                                                 <div class="invalid-feedback">
-                                                    Please enter your shipping address.
+                                                    Ingresar un RUT válido
                                                 </div>
                                             </div>
 
@@ -175,130 +237,13 @@ $diff = $date1->diff($date2);
 
                                         <hr class="my-4">
 
-                                        <!-- Muestra Detalles de boletos -->
-                                        <div id="tiposEntradaTabla-id" class="form-group col-md-12">
-                                            <table id="tiposEntradaTabla">
-                                                <tbody>
-                                                    <tr>
-                                                        <th>Nombre Entrada</th>
-                                                        <th>Valor</th>
-                                                        <th>Cantidad</th>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>
-                                                            PREVENTA NIÑO NUCLEAR </td>
-                                                        <td>
-                                                            $ 3.000 <input id="valor_800" type="hidden" value="3000" class="inputHiddenSelect">
-                                                            <input id="comision_800" type="hidden" value="300" class="inputHiddenSelectComision">
-                                                        </td>
-                                                        <td>
-                                                            <select id="inputEntries" name="nTicket[800]" class="form-control cantidadTicketSelect">
-
-                                                                <option value="0" selected="">0</option>
-                                                                <option value="1">1</option>
-                                                                <option value="2">2</option>
-                                                                <option value="3">3</option>
-                                                                <option value="4">4</option>
-                                                                <option value="5">5</option>
-                                                                <option value="6">6</option>
-                                                                <option value="7">7</option>
-                                                                <option value="8">8</option>
-                                                                <option value="9">9</option>
-                                                                <option value="10">10</option>
 
 
-                                                            </select>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>
-                                                            PREVENTA EL CLUB REHABILITADOR DE LAS MARIONETAS </td>
-                                                        <td>
-                                                            $ 3.000 <input id="valor_801" type="hidden" value="3000" class="inputHiddenSelect">
-                                                            <input id="comision_801" type="hidden" value="300" class="inputHiddenSelectComision">
-                                                        </td>
-                                                        <td>
-                                                            <select id="inputEntries" name="nTicket[801]" class="form-control cantidadTicketSelect">
-
-                                                                <option value="0" selected="">0</option>
-                                                                <option value="1">1</option>
-                                                                <option value="2">2</option>
-                                                                <option value="3">3</option>
-                                                                <option value="4">4</option>
-                                                                <option value="5">5</option>
-                                                                <option value="6">6</option>
-                                                                <option value="7">7</option>
-                                                                <option value="8">8</option>
-                                                                <option value="9">9</option>
-                                                                <option value="10">10</option>
 
 
-                                                            </select>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>
-                                                            PREVENTA LOS CRUSHERS </td>
-                                                        <td>
-                                                            $ 3.000 <input id="valor_802" type="hidden" value="3000" class="inputHiddenSelect">
-                                                            <input id="comision_802" type="hidden" value="300" class="inputHiddenSelectComision">
-                                                        </td>
-                                                        <td>
-                                                            <select id="inputEntries" name="nTicket[802]" class="form-control cantidadTicketSelect">
-
-                                                                <option value="0" selected="">0</option>
-                                                                <option value="1">1</option>
-                                                                <option value="2">2</option>
-                                                                <option value="3">3</option>
-                                                                <option value="4">4</option>
-                                                                <option value="5">5</option>
-                                                                <option value="6">6</option>
-                                                                <option value="7">7</option>
-                                                                <option value="8">8</option>
-                                                                <option value="9">9</option>
-                                                                <option value="10">10</option>
 
 
-                                                            </select>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>
-                                                            GENERAL </td>
-                                                        <td>
-                                                            $ 5.000 <input id="valor_803" type="hidden" value="5000" class="inputHiddenSelect">
-                                                            <input id="comision_803" type="hidden" value="500" class="inputHiddenSelectComision">
-                                                        </td>
-                                                        <td>
-                                                            <select id="inputEntries" name="nTicket[803]" class="form-control cantidadTicketSelect" disabled="">
 
-                                                                <option value="">No disponible</option>
-
-                                                            </select>
-                                                        </td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
-                                        </div>
-
-                                        <hr class="my-4">
-
-                                        <h4 class="mb-3">Selecciona el medio de pago</h4>
-
-                                        <div class="my-3">
-                                            <div class="form-check">
-                                                <input id="credit" name="paymentMethod" type="radio" class="form-check-input" checked="" required="">
-                                                <label class="form-check-label" for="credit">WebPay</label>
-                                            </div>
-                                            <div class="form-check">
-                                                <input id="debit" name="paymentMethod" type="radio" class="form-check-input" required="">
-                                                <label class="form-check-label" for="debit">Khipu</label>
-                                            </div>
-                                            <div class="form-check">
-                                                <input id="paypal" name="paymentMethod" type="radio" class="form-check-input" required="">
-                                                <label class="form-check-label" for="paypal">PayPal</label>
-                                            </div>
-                                        </div>
 
                                         <!-- Detalles de tarjeta -->
                                         <!-- <div class="row gy-3">

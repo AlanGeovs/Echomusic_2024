@@ -344,6 +344,29 @@ class Consultas  extends Conexion
 		}
 	}
 
+	// Inicio de sesión Google - busca un usuario en la base de datos por su email y retorna sus datos de sesión
+	public static function loginUsuarioGoogle($email)
+	{
+		try {
+			$db = Conexion::conectar();
+			$stmt = $db->prepare("SELECT * FROM users WHERE mail_user = :email AND method_login = 2 LIMIT 1");
+			$stmt->bindParam(":email", $email, PDO::PARAM_STR);
+			$stmt->execute();
+
+			if ($stmt->rowCount() > 0) {
+				$userData = $stmt->fetch(PDO::FETCH_ASSOC);
+				return $userData;
+			} else {
+				// No se encontró el usuario
+				return false;
+			}
+		} catch (PDOException $e) {
+			// Manejar el error o registrar
+			return false;
+		}
+	}
+
+
 	public static function registrarGoogle($email, $name)
 	{
 		try {

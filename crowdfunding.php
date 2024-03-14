@@ -317,7 +317,7 @@ $diff = $date1->diff($date2);
                                         <?php
 
                                         } else {
-                                            echo '<a href="https://echomusic.net/ingresar.php" type="button" class="default-btn page-btn box-btn">
+                                            echo '<a href="https://echomusic.net/dashboard/index.php" type="button" class="default-btn page-btn box-btn">
                                                             Para preguntar, debes iniciar sesión
                                                         </a>';
                                         }

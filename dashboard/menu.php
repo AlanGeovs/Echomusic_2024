@@ -684,8 +684,9 @@ for ($i = 0; $i < count($fotosArray); $i++) {
             <div class="relative">
                 <div class="d-flex">
                     <div class="d-none d-md-block">
-                        <img src="../assets/images/logo/echomusic-LOGO-HOR-BIC.png" width="300px" alt="" />
-                        <!--<h1 class="nav-title">AutoMayoreo</h1>-->
+                        <a href="../index.php">
+                            <img src="../assets/images/logo/echomusic-LOGO-HOR-BIC.png" width="300px" alt="" /></a>
+
                     </div>
                 </div>
             </div>

@@ -1,7 +1,8 @@
 <?php
-
 require_once 'vendor/autoload.php';
 
+// ini_set('session.save_path', realpath(dirname($_SERVER['DOCUMENT_ROOT']) . '/sessions'));
+ini_set('session.save_path', realpath(dirname($_SERVER['DOCUMENT_ROOT']) . '/sessions'));
 session_start();
 
 $client = new Google_Client();

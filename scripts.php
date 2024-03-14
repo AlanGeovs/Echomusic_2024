@@ -179,3 +179,71 @@
         });
     });
 </script>
+
+
+<script>
+    function validaRut(rut) {
+        // Eliminar puntos y guion
+        var valor = rut.replace(/[.-]/g, '');
+
+        // Aislar cuerpo y dígito verificador
+        var cuerpo = valor.slice(0, -1);
+        var dv = valor.slice(-1).toUpperCase();
+
+        // Formatear RUN
+        rut = cuerpo + '-' + dv;
+
+        // Si no cumple con el mínimo ej. (n.nnn.nnn)
+        if (cuerpo.length < 7) {
+            return false;
+        }
+
+        // Calcular Dígito Verificador
+        var suma = 0;
+        var multiplo = 2;
+
+        // Para cada dígito del cuerpo
+        for (var i = 1; i <= cuerpo.length; i++) {
+            // Obtener su producto con el módulo
+            var index = multiplo * valor.charAt(cuerpo.length - i);
+
+            // Sumar al contador general
+            suma = suma + index;
+
+            // Consolidar multiplicador
+            if (multiplo < 7) {
+                multiplo = multiplo + 1;
+            } else {
+                multiplo = 2;
+            }
+        }
+
+        // Calcular Dígito Verificador en base al módulo 11
+        var dvEsperado = 11 - (suma % 11);
+
+        // Casos especiales (0 y K)
+        dv = (dv == 'K') ? 10 : dv;
+        dv = (dv == 0) ? 11 : dv;
+
+        // Validar que el Cuerpo coincide con su Dígito Verificador
+        if (dvEsperado != dv) {
+            return false;
+        }
+
+        // Si todo está correcto
+        return true;
+    }
+
+    // Evento de validación al perder el foco
+    document.getElementById('rut').addEventListener('blur', function() {
+        var rut = this.value;
+        if (!validaRut(rut)) {
+            // Mostrar error
+            alert('RUT inválido. Por favor, intenta nuevamente.');
+            this.classList.add('is-invalid');
+        } else {
+            // RUT válido
+            this.classList.remove('is-invalid');
+        }
+    });
+</script>

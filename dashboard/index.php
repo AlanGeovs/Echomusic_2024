@@ -1,3 +1,9 @@
+<?php
+// ini_set('session.save_path', realpath(dirname($_SERVER['DOCUMENT_ROOT']) . '/sessions'));
+ini_set('session.save_path', realpath(dirname($_SERVER['DOCUMENT_ROOT']) . '/sessions'));
+session_start();
+
+?>
 <!DOCTYPE html>
 <html lang="es">
 
@@ -119,6 +125,8 @@
                                         <input type="submit" class="btn btn-success btn-lg btn-block" value="Acceder">
 
                                         <?php
+                                        echo "Usuario: " . $_SESSION["id_user"];
+                                        echo "Usuario: " . $_SESSION["nick_user"];
                                         if (@$_GET["error"] == "1") {
                                             echo "
                                 <div class='alert alert-danger alert-dismissible' role='alert'>
@@ -135,14 +143,8 @@
                                             <a href="../registro.php" data-bs-toggle="modal" data-bs-target="#ModalTipodeRegistro"> Regístrate</a>
                                         </p>
                                         <p class="text-center">---- o ----</p>
-                                        <a href="#" class="btn btn-lg btn-block btn-social gplus">
+                                        <a href="registroGoogle-2.php?u=<?php echo $_GET["u"]; ?>" class="btn btn-lg btn-block btn-social gplus">
                                             <i class="icon-google"></i> Ingresar con Google
-                                        </a>
-                                        <a href="#" class="btn btn-lg btn-block btn-social facebook">
-                                            <i class="icon-facebook"></i> Ingresar con Facebook
-                                        </a>
-                                        <a href="#" class="btn btn-lg btn-block btn-social twitter">
-                                            <i class="icon-twitter"></i> Ingresar con Twitter
                                         </a>
                                     </div>
                                 </div>

@@ -1,0 +1,8 @@
+#DirectorySlash Off
+RewriteEngine on
+RewriteCond %{HTTPS} !=on
+RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+
+   php_value session.gc_maxlifetime 5440
+  # php_value session.save_path "/var/www/sessions"

@@ -102,7 +102,7 @@ $respuestaEventoCiudadRegion = Consultas::buscaCiudadRegion($respuesta[0]["id_ci
                                                             ?>
                                                                 <option value="//<?php // echo $_POST["buscadepartamento"]; 
                                                                                     ?>"><?php // echo $_POST["buscadepartamento"]; 
-                                                                                                                                ?></option>
+                                                                                        ?></option>
                                                             <?php // } 
                                                             ?>
                                                             <option value="">Todos</option>
@@ -129,7 +129,7 @@ $respuestaEventoCiudadRegion = Consultas::buscaCiudadRegion($respuesta[0]["id_ci
                                                             ?>
                                                                 <option value="<?php // echo $_POST["color"]; 
                                                                                 ?>"><?php // echo $_POST["color"]; 
-                                                                                                                    ?></option>
+                                                                                    ?></option>
                                                             <?php // } 
                                                             ?>
                                                             <option value="">Todos</option>
@@ -768,7 +768,7 @@ $respuestaEventoCiudadRegion = Consultas::buscaCiudadRegion($respuesta[0]["id_ci
                 <div class="text-center">
                     <div class="nav-btn">
                         <br>
-                        <a href="ingresar.php" class="box-btn text-center">CREA TU EVENTO</a>
+                        <a href="dashboard/index.php" class="box-btn text-center">CREA TU EVENTO</a>
                     </div>
                 </div>
             </div>

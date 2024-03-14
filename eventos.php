@@ -160,7 +160,7 @@ $respuestaEventoCiudadRegion = Consultas::buscaCiudadRegion($respuesta[0]["id_ci
                                 echo ' <h3> $' . number_format(($respuesta[$j]["ticket_value"] + $respuesta[$j]["ticket_commission"]), 0, ',', '.') . ' </h3> 
                                             </div>
                                             <div class="col-12 col-sm-4 text-center">
-                                                <a href="pago_entradas.php?t=' . $respuesta[$j]["id_ticket"] . '" class="box-btn">Comprar</a>
+                                                <a href="pago_entradas.php?e=' . $respuesta[$j]["id_event"] . '" class="box-btn">Comprar</a>
                                             </div>';
                             }
 

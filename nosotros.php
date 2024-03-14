@@ -23,7 +23,7 @@ include "header.php";
                             <div class="banner-btn">
                                 <a type="button" class="box-btn text-center" data-bs-toggle="modal" data-bs-target="#ModalTipodeRegistro">
                                     <i class="bx bxs-user-plus"></i>Regístrate</a>
-                                <a href="ingresar.php" class="box-btn border-btn"> <i class="bx bxs-log-in"></i>Ingresar</a>
+                                <a href="dashboard/index.php" class="box-btn border-btn"> <i class="bx bxs-log-in"></i>Ingresar</a>
                             </div>
                         </div>
                     </div>
