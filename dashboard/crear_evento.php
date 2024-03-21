@@ -304,11 +304,10 @@ if (!isset($_SESSION["id_user"])) {
 
 
                                                         <div class="form-row">
-                                                            <div class="col-md-3 mb-3">
+                                                            <div class="col-md-6 mb-6">
                                                                 <label for="validationCustom01">Fecha</label>
-
                                                                 <div class="input-group">
-                                                                    <input type="text" class="date-time-picker form-control" id="date_event" name="date_event" data-options="{&quot;timepicker&quot;:false, &quot;format&quot;:&quot;d-m-Y&quot;}" value="2018/06/01">
+                                                                    <input type="text" class="date-time-picker form-control" id="date_event" name="date_event" data-options='{"timepicker":true, "format":"d-m-Y H:i"}' value="2018/06/01 12:00">
                                                                     <span class="input-group-append">
                                                                         <span class="input-group-text add-on white">
                                                                             <i class="icon-calendar"></i>
@@ -318,7 +317,7 @@ if (!isset($_SESSION["id_user"])) {
 
                                                             </div>
 
-                                                            <div class="col-md-3 mb-3">
+                                                            <!-- <div class="col-md-3 mb-3">
                                                                 <label for="validationCustom01">Hora</label>
                                                                 <div class="input-group">
                                                                     <input type="text" class="date-time-picker form-control" id="hour_event" name="hour_event" value="22:46" data-options="{&quot;datepicker&quot;:false, &quot;format&quot;:&quot;H:i&quot;}">
@@ -328,7 +327,7 @@ if (!isset($_SESSION["id_user"])) {
                                                                         </span>
                                                                     </span>
                                                                 </div>
-                                                            </div>
+                                                            </div> -->
 
                                                             <div class="col-md-3 mb-3">
                                                                 <label for="validationCustom02">Tipo de evento</label>

@@ -1407,7 +1407,7 @@ class Consultas  extends Conexion
 	public static function crearEventos($data)
 	{
 		$sql = "INSERT INTO events_public (id_type_event, id_user, id_region, id_city, date_event, name_event, name_location, location, organizer, desc_event, audience_event, value_OLD, value_commission_OLD, value_plan_OLD, payment_event, img, id_multimedia_featured, verifier_event, active_event) 
-				VALUES (:id_type_event, :id_user, :id_region, :id_city, :date_event, :name_event, :name_location, :location, :organizer, :desc_event, :audience_event, '0', '0', '0', '0', '', NULL, '', 1)";
+				VALUES (:id_type_event, :id_user, :id_region, :id_city, :date_event, :name_event, :name_location, :location, :organizer, :desc_event, :audience_event, '0', '0', '0', '0', :img, NULL, '', 1)";
 
 		$stmt = self::conectar()->prepare($sql);
 
@@ -1422,6 +1422,7 @@ class Consultas  extends Conexion
 		$stmt->bindValue(':organizer', $data['organizer'], PDO::PARAM_STR);
 		$stmt->bindValue(':desc_event', $data['desc_event'], PDO::PARAM_STR);
 		$stmt->bindValue(':audience_event', $data['audience_event'], PDO::PARAM_INT);
+		$stmt->bindValue(':img', $data['img'], PDO::PARAM_INT);
 
 		try {
 			$result = $stmt->execute();

@@ -661,3 +661,7 @@ img.responsiveArtista {
   color: #fff;
   text-decoration: none; /* Opcional: elimina el subrayado de los enlaces */
 }
+
+.input-group-text {
+  padding: 12px 0.75rem;
+}

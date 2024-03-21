@@ -109,8 +109,6 @@ $diff = $date1->diff($date2);
                                 <div class="text-center">
 
                                     <div class="alert alert-danger alert-dismissible" role="alert">
-                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span>
-                                        </button>
                                         <strong><?php echo $diff->days; ?> </strong> días restantes
                                     </div>
 
@@ -147,11 +145,16 @@ $diff = $date1->diff($date2);
                             <div class="col-12 col-sm-6">
                                 <p><b>Incluye:</b></p>
                                 <ul>
-                                    <li> <i class="bx bx-gift"></i> <?php echo $respuestaTierCrow[0]['t_reward_01']; ?> </li>
-                                    <li> <i class="bx bx-gift"></i> <?php echo $respuestaTierCrow[0]['t_reward_02']; ?> </li>
-                                    <li> <i class="bx bx-gift"></i> <?php echo $respuestaTierCrow[0]['t_reward_03']; ?> </li>
-                                    <!--<li> <i class="bx bx-gift"></i> <?php echo $respuestaTierCrow[$i]['t_reward_04']; ?> </li>-->
+                                    <?php
+                                    for ($i = 1; $i <= 5; $i++) {
+                                        $rewardKey = 't_reward_' . str_pad($i, 2, '0', STR_PAD_LEFT); // Construye la clave del array  t_reward_01
+                                        if (!empty($respuestaTierCrow[0][$rewardKey])) { // Verifica si el dato no está vacío
+                                            echo '<li><i class="bx bx-gift"></i> ' . $respuestaTierCrow[0][$rewardKey] . '</li>'; // Muestra la recompensa
+                                        }
+                                    }
+                                    ?>
                                 </ul>
+
                             </div>
                         </div>
 
@@ -164,10 +167,16 @@ $diff = $date1->diff($date2);
                                     <div class="col-lg-4 col-sm-4">
                                         <div class="form-group">
                                             <label for="ap">Aporte</label>
-                                            <input type="text" class="form-control" id="ap" name="ap" placeholder="$ <?php echo number_format($respuestaTierCrow[0]['tier_amount'], 0, '', '.'); ?>" />
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text">$</span>
+                                                </div>
+                                                <input type="text" class="form-control" id="ap" name="ap" value="<?php echo number_format($respuestaTierCrow[0]['tier_amount'], 0, '', '.'); ?>" placeholder="$ <?php echo number_format($respuestaTierCrow[0]['tier_amount'], 0, '', '.'); ?>" />
+                                            </div>
                                             <div class="help-block with-errors"></div>
                                         </div>
                                     </div>
+
                                     <div class="col-lg-4 col-sm-4">
                                         <div class="form-group">
                                             <label for="ad">Aporte adicional</label>
@@ -175,13 +184,6 @@ $diff = $date1->diff($date2);
                                             <div class="help-block with-errors"></div>
                                         </div>
                                     </div>
-                                    <!--                                                <div class="col-lg-4 col-sm-4">
-                                                    <div class="form-group">
-                                                        <p>Costo servicio</p>
-                                                        <input type="text" class="form-control" id="r" name="r"   placeholder="$ 0"    />
-                                                        <div class="help-block with-errors"></div>
-                                                    </div>
-                                                </div>  -->
                                     <div class="col-lg-4 col-sm-4">
                                         <div class="form-group">
                                             <label for="tot">Total</label>
@@ -497,6 +499,26 @@ include 'modal.php';
                -->
 
 <?php include "scripts.php"; ?>
+
+//escuchará cualquier cambio en los campos de "Aporte" y "Aporte adicional", sumará sus valores al TOTAL
+<script>
+    $(document).ready(function() {
+        // Función para calcular el total cada vez que cambian los valores de 'ap' o 'ad'
+        function calcularTotal() {
+            var aporte = $('#ap').val().replace(/\./g, '') || 0; // Elimina puntos y asume 0 si es vacío
+            var adicional = $('#ad').val().replace(/\./g, '') || 0; // Elimina puntos y asume 0 si es vacío
+            var total = parseInt(aporte, 10) + parseInt(adicional, 10); // Suma como números enteros
+
+            // Formatea y muestra el total
+            $('#tot').val('$ ' + total.toLocaleString('es'));
+        }
+
+        // Evento para cuando cambia el valor de los campos 'aporte' y 'adicional'
+        $('#ap, #ad').on('input', function() {
+            calcularTotal();
+        });
+    });
+</script>
 </body>
 
 </html>

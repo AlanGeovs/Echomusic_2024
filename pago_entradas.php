@@ -78,117 +78,60 @@ $diff = $date1->diff($date2);
                         <div class="row">
 
                             <!-- Inicia el Form -->
-                            <div class="row">
-                                <!-- Columna derecha Status Carrito -->
-                                <div class="col-md-6 col-lg-6 order-md-last">
+                            <form class=" needs-validation" novalidate="">
+                                <div class="row">
+                                    <!-- Columna derecha Status Carrito -->
+                                    <div class="col-md-6 col-lg-6 order-md-last">
 
-                                    <h3 class="mb-3" style="text-align: left; font-size: 18px;">Selecciona el medio de pago</h3>
+                                        <h3 class="mb-3" style="text-align: left; font-size: 18px;">Selecciona el medio de pago</h3>
 
-                                    <div class="my-3">
-                                        <div class="form-check">
-                                            <input id="credit" name="paymentMethod" type="radio" class="form-check-input" checked="" required="">
-                                            <label class="form-check-label" for="credit">WebPay</label>
+                                        <div class="my-3">
+                                            <div class="form-check">
+                                                <input id="credit" name="paymentMethod" type="radio" class="form-check-input" checked="" required="">
+                                                <label class="form-check-label" for="credit">WebPay</label>
+                                            </div>
+                                            <div class="form-check">
+                                                <input id="debit" name="paymentMethod" type="radio" class="form-check-input" required="">
+                                                <label class="form-check-label" for="debit">Khipu</label>
+                                            </div>
+                                            <div class="form-check">
+                                                <input id="paypal" name="paymentMethod" type="radio" class="form-check-input" required="">
+                                                <label class="form-check-label" for="paypal">PayPal</label>
+                                            </div>
                                         </div>
-                                        <div class="form-check">
-                                            <input id="debit" name="paymentMethod" type="radio" class="form-check-input" required="">
-                                            <label class="form-check-label" for="debit">Khipu</label>
-                                        </div>
-                                        <div class="form-check">
-                                            <input id="paypal" name="paymentMethod" type="radio" class="form-check-input" required="">
-                                            <label class="form-check-label" for="paypal">PayPal</label>
+
+                                        <hr class="my-4">
+
+                                        <h4 class="d-flex justify-content-between align-items-center mb-3">
+                                            <span class="text-primary">Tickets</span>
+                                        </h4>
+                                        <!-- Contenedor del resumen de compra -->
+                                        <div id="resumenCompra" class="mb-3"></div>
+
+                                        <div class="row">
+                                            <div class="col-md-6 col-lg-6  ">
+                                                <span>Total</span>
+                                                <h3 id="totalCompra">$0</h3>
+                                            </div>
+
+                                            <div class="col-md-6 col-lg-6  align-middle">
+                                                <span></span>
+                                                <button class="box-btn btn-lg text-center align-middle" type="submit">Pagar</button>
+                                                <!-- <button class="w-100 btn btn-primary btn-lg align-middle" type="submit">Pagar</button> -->
+                                            </div>
                                         </div>
                                     </div>
 
-                                    <hr class="my-4">
 
 
-                                    <h4 class="d-flex justify-content-between align-items-center mb-3">
-                                        <span class="text-primary">Tickets</span>
-                                        <!-- <s pan class="badge bg-primary rounded-pill">3</span> -->
-                                    </h4>
-
-                                    <?php
-                                    $tickets = Consultas::obtenerTicketsPorEvento($id_event);
-                                    ?>
-                                    <table class="table" id="tiposEntradaTabla">
-                                        <thead>
-                                            <tr>
-                                                <th scope="col" class="align-middle">#</th>
-                                                <th scope="col" class="align-middle">Nombre Entrada</th>
-                                                <th scope="col" class="align-middle">Valor</th>
-                                                <th scope="col" class="align-middle">Cantidad</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <?php foreach ($tickets as $index => $ticket) : ?>
-                                                <tr>
-                                                    <th scope="row" class="align-middle"><?php echo $index + 1; ?></th>
-                                                    <td class="align-middle"><?php echo htmlspecialchars($ticket['ticket_name']); ?></td>
-                                                    <td class="align-middle">$<?php echo number_format(($ticket['ticket_value'] + $ticket['ticket_commission']), 0, ',', '.') ?></td>
-                                                    <td class="align-middle">
-                                                        <select name="ticket_quantity_<?php echo $ticket['id_ticket']; ?>" id="ticket_quantity_<?php echo $ticket['id_ticket']; ?>" class="form-control" required="">
-                                                            <option value="">Cantidad</option>
-                                                            <?php for ($i = 0; $i <= 10; $i++) : ?>
-                                                                <option value="<?php echo $i; ?>"><?php echo $i; ?></option>
-                                                            <?php endfor; ?>
-                                                        </select>
-                                                    </td>
-                                                </tr>
-                                            <?php endforeach; ?>
-                                        </tbody>
-                                    </table>
-                                    <!-- <ul class="list-group mb-3">
-                                        <li class="list-group-item d-flex justify-content-between lh-sm">
-                                            <div>
-                                                <h6 class="my-0">Product name</h6>
-                                                <small class="text-muted">Brief description</small>
-                                            </div>
-                                            <span class="text-muted">$12</span>
-                                        </li>
-                                        <li class="list-group-item d-flex justify-content-between lh-sm">
-                                            <div>
-                                                <h6 class="my-0">Second product</h6>
-                                                <small class="text-muted">Brief description</small>
-                                            </div>
-                                            <span class="text-muted">$8</span>
-                                        </li>
-                                        <li class="list-group-item d-flex justify-content-between lh-sm">
-                                            <div>
-                                                <h6 class="my-0">Third item</h6>
-                                                <small class="text-muted">Brief description</small>
-                                            </div>
-                                            <span class="text-muted">$5</span>
-                                        </li>
-                                        <li class="list-group-item d-flex justify-content-between bg-light">
-                                            <div class="text-success">
-                                                <h6 class="my-0">Promo code</h6>
-                                                <small>EXAMPLECODE</small>
-                                            </div>
-                                            <span class="text-success">−$5</span>
-                                        </li>
-                                        <li class="list-group-item d-flex justify-content-between">
-                                            <span>Total (USD)</span>
-                                            <strong>$20</strong>
-                                        </li>
-                                    </ul> -->
+                                    <!-- Datos de comprados -->
+                                    <div class="col-md-6 col-lg-6">
 
 
 
-                                    <form class="card p-2">
-                                        <div class="input-group">
-                                            <input type="text" class="form-control" placeholder="Código promocional">
-                                            <button type="submit" class="btn btn-secondary">Aplicar</button>
-                                        </div>
-                                    </form>
-                                </div>
-                                <!-- Datos de comprados -->
-                                <div class="col-md-6 col-lg-6">
+                                        <h4 class="mb-3" style="text-align: left; font-size: 20px;">Portal de pago</h4>
+                                        <h3 style="text-align: left; font-size: 18px; font-weight:bold; color:#FF6600;"><?php echo $respuesta[0]["name_event"]; ?></h3>
 
-
-
-                                    <h4 class="mb-3" style="text-align: left; font-size: 20px;">Portal de pago</h4>
-                                    <h3 style="text-align: left; font-size: 18px; font-weight:bold; color:#FF6600;"><?php echo $respuesta[0]["name_event"]; ?></h3>
-                                    <form class=" needs-validation" novalidate="">
                                         <div class="row g-3">
                                             <div class="col-sm-6">
                                                 <label for="firstName" class="form-label">Nombre</label>
@@ -206,18 +149,8 @@ $diff = $date1->diff($date2);
                                                 </div>
                                             </div>
 
-                                            <!-- <div class="col-12">
-                                                <label for="username" class="form-label">Username</label>
-                                                <div class="input-group has-validation">
-                                                    <span class="input-group-text">@</span>
-                                                    <input type="text" class="form-control" id="username" placeholder="Username" required="">
-                                                    <div class="invalid-feedback">
-                                                        Your username is required.
-                                                    </div>
-                                                </div>
-                                            </div> -->
 
-                                            <div class="col-12">
+                                            <div class="col-6">
                                                 <label for="email" class="form-label">Email </label>
                                                 <input type="email" class="form-control" id="email" name="email" placeholder="juan@ejemplo.com">
                                                 <div class="invalid-feedback">
@@ -225,7 +158,7 @@ $diff = $date1->diff($date2);
                                                 </div>
                                             </div>
 
-                                            <div class="col-12">
+                                            <div class="col-6">
                                                 <label for="rut" class="form-label">RUT</label>
                                                 <input type="text" class="form-control" id="rut" name="rut" placeholder="89.382.888-5" required="">
                                                 <div class="invalid-feedback">
@@ -233,60 +166,59 @@ $diff = $date1->diff($date2);
                                                 </div>
                                             </div>
 
+                                            <hr class="my-4">
+
+                                            <?php
+                                            $tickets = Consultas::obtenerTicketsPorEvento($id_event);
+                                            ?>
+                                            <table class="table" id="tiposEntradaTabla">
+                                                <thead>
+                                                    <tr>
+                                                        <th scope="col" class="align-middle">#</th>
+                                                        <th scope="col" class="align-middle">Nombre Entrada</th>
+                                                        <th scope="col" class="align-middle">Valor</th>
+                                                        <th scope="col" class="align-middle">Cantidad</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <?php foreach ($tickets as $index => $ticket) : ?>
+                                                        <tr>
+                                                            <th scope="row" class="align-middle"><?php echo $index + 1; ?></th>
+                                                            <td class="align-middle"><?php echo htmlspecialchars($ticket['ticket_name']); ?></td>
+                                                            <td class="align-middle">$<?php echo number_format(($ticket['ticket_value'] + $ticket['ticket_commission']), 0, ',', '.') ?></td>
+                                                            <td class="align-middle">
+                                                                <select name="ticket_quantity_<?php echo $ticket['id_ticket']; ?>" id="ticket_quantity_<?php echo $ticket['id_ticket']; ?>" class="form-control" required="">
+                                                                    <option value="">Cantidad</option>
+                                                                    <?php for ($i = 0; $i <= 10; $i++) : ?>
+                                                                        <option value="<?php echo $i; ?>"><?php echo $i; ?></option>
+                                                                    <?php endfor; ?>
+                                                                </select>
+                                                            </td>
+                                                        </tr>
+                                                    <?php endforeach; ?>
+                                                </tbody>
+                                            </table>
+                                            <hr class="my-4">
+
+                                            <!-- Formulario Cupon -->
+                                            <form class="card p-2">
+                                                <div class="input-group">
+                                                    <input type="text" class="form-control" placeholder="Código promocional">
+                                                    <button type="submit" class="btn btn-secondary">Aplicar</button>
+                                                </div>
+                                            </form>
+
                                         </div>
 
-                                        <hr class="my-4">
 
 
 
 
 
 
-
-
-
-                                        <!-- Detalles de tarjeta -->
-                                        <!-- <div class="row gy-3">
-                                            <div class="col-md-6">
-                                                <label for="cc-name" class="form-label">Name on card</label>
-                                                <input type="text" class="form-control" id="cc-name" placeholder="" required="">
-                                                <small class="text-muted">Full name as displayed on card</small>
-                                                <div class="invalid-feedback">
-                                                    Name on card is required
-                                                </div>
-                                            </div>
-
-                                            <div class="col-md-6">
-                                                <label for="cc-number" class="form-label">Credit card number</label>
-                                                <input type="text" class="form-control" id="cc-number" placeholder="" required="">
-                                                <div class="invalid-feedback">
-                                                    Credit card number is required
-                                                </div>
-                                            </div>
-
-                                            <div class="col-md-3">
-                                                <label for="cc-expiration" class="form-label">Expiration</label>
-                                                <input type="text" class="form-control" id="cc-expiration" placeholder="" required="">
-                                                <div class="invalid-feedback">
-                                                    Expiration date required
-                                                </div>
-                                            </div>
-
-                                            <div class="col-md-3">
-                                                <label for="cc-cvv" class="form-label">CVV</label>
-                                                <input type="text" class="form-control" id="cc-cvv" placeholder="" required="">
-                                                <div class="invalid-feedback">
-                                                    Security code required
-                                                </div>
-                                            </div>
-                                        </div> -->
-
-                                        <hr class="my-4">
-
-                                        <button class="w-100 btn btn-primary btn-lg" type="submit">Pagar</button>
-                                    </form>
+                                    </div>
                                 </div>
-                            </div>
+                            </form>
                             <!-- Fin del Form -->
 
                         </div>
@@ -653,6 +585,65 @@ include 'modal.php';
                -->
 
 <?php include "scripts.php"; ?>
+
+<!-- Actualia el resumen de la compra -->
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Función para actualizar el resumen de compra
+        function actualizarResumenCompra() {
+            // var tickets = document.querySelectorAll('[id^=ticket_quantity_]'); // Seleccionar todos los selects de cantidad de boletos
+            var resumenCompra = document.getElementById('resumenCompra'); // Seleccionar el contenedor del resumen
+            const tickets = document.querySelectorAll('[id^=ticket_quantity_]');
+            let totalCompra = 0; // Variable para almacenar el total de la compra
+            var resumenHTML = `<table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Nombre Entrada</th>
+                                        <th>Valor</th>
+                                        <th>Cantidad</th>
+                                        <th>Total</th>
+                                    </tr>
+                                </thead>
+                                <tbody>`;
+            tickets.forEach(ticket => {
+                if (ticket.value > 0) { // Solo agregar al resumen los boletos seleccionados
+                    var nombreEntrada = ticket.closest('tr').querySelector('td:nth-child(2)').innerText;
+                    var valor = ticket.closest('tr').querySelector('td:nth-child(3)').innerText.replace('$', '').replace(/\./g, ''); // Eliminar símbolo de dólar y puntos
+                    var cantidad = ticket.value;
+                    var total = parseInt(valor) * parseInt(cantidad);
+                    resumenHTML += `<tr>
+                                    <td>${nombreEntrada}</td>
+                                    <td>$${(valor).toLocaleString()}</td>
+                                    <td>${cantidad}</td>
+                                    <td>$${(total).toLocaleString()}</td>
+                                </tr>`;
+                }
+            });
+            resumenHTML += `   </tbody>
+                        </table>`;
+            resumenCompra.innerHTML = resumenHTML; // Actualizar el HTML del contenedor del resumen
+
+            //agregar el cálculo del total de la compra y actualizar el contenido de #totalCompra con este valor:
+            tickets.forEach((ticket) => {
+                const cantidad = ticket.value;
+                if (cantidad > 0) {
+                    const fila = ticket.closest('tr');
+                    const valor = parseInt(fila.querySelector('td:nth-child(3)').textContent.replace(/\$|\./g, ''), 10);
+                    totalCompra += valor * cantidad; // Acumula el total de la compra
+                }
+            });
+
+            document.getElementById('totalCompra').textContent = `$${new Intl.NumberFormat().format(totalCompra)}`;
+
+        }
+
+        // Agregar evento change a todos los selects de cantidad de boletos
+        document.querySelectorAll('[id^=ticket_quantity_]').forEach(select => {
+            select.addEventListener('change', actualizarResumenCompra);
+        });
+    });
+</script>
+
 </body>
 
 </html>
