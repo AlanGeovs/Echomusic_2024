@@ -147,7 +147,7 @@
                                 <div class="row align-items-center choose-c justify-content-md-center">
                                     <!--img-->
                                     <div class="col-12 col-sm-4  choose-img text-center">
-                                        <img class="responsiveEveArtista" src="https://echomusic.cl/images/events/<?php echo $resultadosProxEventos[$e]["img"]; ?>.jpg" alt="<?php echo ''; ?>" />
+                                        <img class="responsiveEveArtista" src="https://echomusic.net/dashboard/images/eventos/<?php echo $resultadosProxEventos[$e]["img"]; ?>.jpg" alt="<?php echo ''; ?>" />
 
 
                                     </div>
@@ -196,7 +196,7 @@
                                         ?>
                                             <div class="col-md-6">
                                                 <div class="card" style="width: 18rem;">
-                                                    <img class="card-img-top" src="https://echomusic.cl/images/events/<?php echo $resultadosEventosPasa[$p]["img"]; ?>.jpg" alt="<?php echo ''; ?>">
+                                                    <img class="card-img-top" src="https://echomusic.net/dashboard/images/eventos/<?php echo $resultadosEventosPasa[$p]["img"]; ?>.jpg" alt="<?php echo ''; ?>">
                                                     <div class="card-body">
                                                         <h5 class="card-title"><?php echo $resultadosEventosPasa[$p]["name_event"]; ?></h5>
                                                         <p class="card-text">Organizado: <?php echo $resultadosEventosPasa[$p]["organizer"]; ?>

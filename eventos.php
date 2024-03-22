@@ -81,8 +81,8 @@ $respuestaEventoCiudadRegion = Consultas::buscaCiudadRegion($respuesta[0]["id_ci
                     <div id="carouselsliderdemo" class="carousel slide" data-bs-ride="carousel">
                         <div class="carousel-inner simple-evento-artista">
                             <div class="carousel-item active">
-                                <img src="https://echomusic.cl/images/events/<?php echo $respuesta[0]["img"]; ?>.jpg" class="d-block w-100">
-                                <!-- <img src="https://echomusic.net/dashboard/images/eventos/<?php echo $idUsuario; ?>.jpg" class="d-block w-100"> -->
+                                <img src="https://echomusic.net/dashboard/images/eventos/<?php echo $respuesta[0]["img"]; ?>.jpg" class="d-block w-100">
+                                <!-- <img src="https://echomusic.net/dashboard/images/eventos//<?php echo $idUsuario; ?>.jpg" class="d-block w-100"> -->
                             </div>
                             <!--                                    <div class="carousel-item">
                                         <img src="assets/images/avatars/echo-2.jpg" class="d-block w-100">
@@ -94,7 +94,7 @@ $respuestaEventoCiudadRegion = Consultas::buscaCiudadRegion($respuesta[0]["id_ci
                         <!-- Indicator start -->
                         <!-- <div class="carousel-indicators">
                             <button type="button" data-bs-target="#carouselsliderdemo" class="active img-thumbnail" data-bs-slide-to="0">
-                                <img src="https://echomusic.cl/images/events/<?php echo $respuesta[0]["img"]; ?>.jpg" alt="" class="d-block w-50">
+                                <img src="https://echomusic.net/dashboard/images/eventos/<?php echo $respuesta[0]["img"]; ?>.jpg" alt="" class="d-block w-50">
                             </button>
                             <button type="button" data-bs-target="#carouselsliderdemo" class="img-thumbnail" data-bs-slide-to="1">
                                 <img src="assets/images/avatars/echo-2.jpg" alt="" class="d-block w-100">
@@ -154,7 +154,7 @@ $respuestaEventoCiudadRegion = Consultas::buscaCiudadRegion($respuesta[0]["id_ci
                                 echo ' <h3> Gratis </h3> 
                                                 </div>
                                                 <div class="col-12 col-sm-4 text-center">
-                                                    <a href="#" class="box-btn">Reservar</a>
+                                                    <a href="pago_entradas.php?e=' . $respuesta[$j]["id_event"] . '" class="box-btn">Reservar</a>
                                                 </div>';
                             } else {
                                 echo ' <h3> $' . number_format(($respuesta[$j]["ticket_value"] + $respuesta[$j]["ticket_commission"]), 0, ',', '.') . ' </h3> 
@@ -341,7 +341,7 @@ if (empty($respuestaVideoEvento["embed_multi"])) {
                         <div class="single-case">
                             <div class="case-img ">
                                 <a href="eventos.php?e=' . $eventosRelacionados[$k]["id_event"] . '">
-                                    <img class="imgEvent tamano-1" src="https://echomusic.cl/images/events/' . $eventosRelacionados[$k]["img"] . '.jpg" height="100%"  alt="case"/> 
+                                    <img class="imgEvent tamano-1" src="https://echomusic.net/dashboard/images/eventos/' . $eventosRelacionados[$k]["img"] . '.jpg" height="100%"  alt="case"/> 
                                 </a>
                             </div>
 

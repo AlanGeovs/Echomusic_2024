@@ -134,7 +134,7 @@ $resultadosEventosPasa = Consultas::eventosPasadosArtista($respuesta[0]["id_user
                                 <div class="row align-items-center choose-c justify-content-md-center">
                                     <!--img-->
                                     <div class="col-12 col-sm-4  choose-img text-center">
-                                        <img class="responsiveEveArtista" src="https://echomusic.cl/images/events/<?php echo $resultadosProxEventos[$e]["img"]; ?>.jpg" alt="<?php echo ''; ?>" />
+                                        <img class="responsiveEveArtista" src="https://echomusic.net/dashboard/images/eventos/<?php echo $resultadosProxEventos[$e]["img"]; ?>.jpg" alt="<?php echo ''; ?>" />
 
 
                                     </div>
@@ -178,7 +178,7 @@ $resultadosEventosPasa = Consultas::eventosPasadosArtista($respuesta[0]["id_user
                             <!--             <div class="row">
                                         img
                                         <div class="col-12 col-sm-6  choose-img">  
-                                            <img src="https://echomusic.cl/images/events/<?php echo $resultadosEventosPasa[$p]["img"]; ?>.jpg" alt="<?php echo ''; ?>" width="350px"/> 
+                                            <img src="https://echomusic.net/dashboard/images/eventos/<?php echo $resultadosEventosPasa[$p]["img"]; ?>.jpg" alt="<?php echo ''; ?>" width="350px"/> 
                                         </div>
                                         Descripción
                                         <div class="col-12 col-sm-6" style="vertical-align: middle;">
@@ -205,7 +205,7 @@ $resultadosEventosPasa = Consultas::eventosPasadosArtista($respuesta[0]["id_user
                                     ?>
                                         <div class="single-team">
                                             <div class="team-img">
-                                                <img class="tamano-4" src="https://echomusic.cl/images/events/<?php echo $resultadosEventosPasa[$p]["img"]; ?>.jpg" alt="<?php echo ''; ?>" width="350px" />
+                                                <img class="tamano-4" src="https://echomusic.net/dashboard/images/eventos/<?php echo $resultadosEventosPasa[$p]["img"]; ?>.jpg" alt="<?php echo ''; ?>" width="350px" />
                                             </div>
 
                                             <div class="content text-center">

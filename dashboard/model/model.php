@@ -1432,11 +1432,34 @@ class Consultas  extends Conexion
 		}
 	}
 
-	// Crear tICKETS
-	public static function crearTickets($ticket)
+	//buscar id_Event  
+	public static function obtenerIdEventPorImagen($nombreImagen)
 	{
-		$sql = "INSERT INTO tickets_public (ticket_name, ticket_value, ticket_audience, ticket_dateStart, ticket_dateEnd) 
-				VALUES (:ticket_name, :ticket_value, :ticket_audience, :ticket_dateStart, :ticket_dateEnd)";
+		try {
+			// Obtener conexión a la base de datos
+			$db = Conexion::conectar();
+			$stmt = $db->prepare("SELECT id_event FROM events_public WHERE img like :nombreImagen LIMIT 1");
+			$stmt->bindParam(':nombreImagen', $nombreImagen, PDO::PARAM_STR);
+			$stmt->execute();
+			$resultado = $stmt->fetch(PDO::FETCH_ASSOC);
+			$stmt->closeCursor();
+			if ($resultado) {
+				return $resultado['id_event']; // Retornar el id_event encontrado
+			} else {
+				return false; // No se encontró un evento con esa imagen
+			}
+		} catch (PDOException $e) {
+			// En caso de error, retornar false o manejar el error como prefieras
+			return false;
+		}
+	}
+
+
+	// Crear tICKETS
+	public static function crearTickets($ticket, $idEvento)
+	{
+		$sql = "INSERT INTO tickets_public (ticket_name, ticket_value, ticket_commission, ticket_audience, ticket_dateStart, ticket_dateEnd, id_event) 
+				VALUES (:ticket_name, :ticket_value, 0, :ticket_audience, :ticket_dateStart, :ticket_dateEnd, :id_event)";
 
 		$stmt = self::conectar()->prepare($sql);
 
@@ -1444,7 +1467,8 @@ class Consultas  extends Conexion
 		$stmt->bindValue(':ticket_value', $ticket['ticket_value'], PDO::PARAM_INT);
 		$stmt->bindValue(':ticket_audience', $ticket['ticket_audience'], PDO::PARAM_INT);
 		$stmt->bindValue(':ticket_dateStart', $ticket['ticket_dateStart'], PDO::PARAM_STR);
-		$stmt->bindValue(':ticket_dateEnd', $ticket['ticket_dateEnd'], PDO::PARAM_STR);
+		$stmt->bindValue(':ticket_dateEnd', $ticket['ticket_dateStart'], PDO::PARAM_STR);
+		$stmt->bindValue(':id_event', $idEvento, PDO::PARAM_STR);
 		try {
 			$result = $stmt->execute();
 			return ['success' => $result];

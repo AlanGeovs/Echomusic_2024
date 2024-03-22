@@ -449,7 +449,7 @@ include "header.php";
                         <div class="single-case">
                             <div class="case-img ">
                                 <a href="eventos.php?e=' . $respuesta[$j]["id_event"] . '">
-                                    <img class="imgEvent tamano-1" src="https://echomusic.cl/images/events/' . $respuesta[$j]["img"] . '.jpg" height="100%"  alt="case"/> 
+                                    <img class="imgEvent tamano-1" src="https://echomusic.net/dashboard/images/eventos/' . $respuesta[$j]["img"] . '.jpg" height="100%"  alt="case"/> 
                                 </a>
                             </div>
 

@@ -303,7 +303,7 @@ $respuestaEventoCiudadRegion = Consultas::buscaCiudadRegion($respuesta[0]["id_ci
                         <div class="single-case">
                             <div class="case-img ">
                                 <a href="eventos.php?e=' . $eventosRelacionados[$k]["id_event"] . '">
-                                    <img class="imgEvent tamano-1" src="https://echomusic.cl/images/events/' . $eventosRelacionados[$k]["img"] . '.jpg" height="100%"  alt="case"/> 
+                                    <img class="imgEvent tamano-1" src="https://echomusic.net/dashboard/images/eventos/' . $eventosRelacionados[$k]["img"] . '.jpg" height="100%"  alt="case"/> 
                                 </a>
                             </div>
 
