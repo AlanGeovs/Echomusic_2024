@@ -25,6 +25,7 @@ if (!isset($_SESSION["id_user"])) {
         <title>Eventos de Artista</title>
         <!-- CSS -->
         <link rel="stylesheet" href="assets/css/app.css">
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
         <style>
             .user_avatar2 {
@@ -165,14 +166,14 @@ if (!isset($_SESSION["id_user"])) {
                                                         <th>Lugar</th>
                                                         <th>Fecha</th>
                                                         <th>Status</th>
-                                                        <th>Ventas</th>
+                                                        <th>Audiencia</th>
                                                         <th>Acciones</th>
                                                         <th>Activar</th>
                                                         <th>Duplicar</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    <tr>
+                                                    <!-- <tr>
                                                         <td>
                                                             <span class="icon-person_pin"></span>
                                                         </td>
@@ -220,7 +221,7 @@ if (!isset($_SESSION["id_user"])) {
                                                         <td>
                                                             <a class="btn-fab btn-fab-sm btn-primary shadow text-white" href=""><i class="icon-control_point_duplicate"></i></a>
                                                         </td>
-                                                    </tr>
+                                                    </tr> -->
 
                                                 </tbody>
                                             </table>
@@ -231,11 +232,29 @@ if (!isset($_SESSION["id_user"])) {
                                         </div>
                                     </div>
                                 </div>
+
                             </div>
                         </div>
+
+
                     </div>
 
 
+                    <!-- Paginador -->
+                    <nav class="my-3" aria-label="Page navigation">
+                        <ul class="pagination">
+                            <li class="page-item"><a class="page-link" href="#">Anterior</a>
+                            </li>
+                            <li class="page-item"><a class="page-link" href="#">1</a>
+                            </li>
+                            <li class="page-item"><a class="page-link" href="#">2</a>
+                            </li>
+                            <li class="page-item"><a class="page-link" href="#">3</a>
+                            </li>
+                            <li class="page-item"><a class="page-link" href="#">Siguiente</a>
+                            </li>
+                        </ul>
+                    </nav>
 
                 </div>
             </div>
@@ -261,29 +280,188 @@ if (!isset($_SESSION["id_user"])) {
         <!--/#app -->
         <script src="assets/js/app.js"></script>
 
+        <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+        <!-- Obtener y listar eventos  -->
         <script>
-            document.addEventListener('DOMContentLoaded', function() {
-                fetch('includes/obtener_eventos.php') // Asegúrate de poner la ruta correcta
+            function cargarEventos(pagina = 1) {
+                fetch(`includes/obtener_eventos.php?pagina=${pagina}`)
                     .then(response => response.json())
-                    .then(eventos => {
+                    .then(respuesta => { // Cambia `eventos` a `respuesta` para evitar confusiones
                         let tabla = document.getElementById('recent-orders').getElementsByTagName('tbody')[0];
-                        eventos.forEach(evento => {
+                        tabla.innerHTML = ''; // Limpia la tabla antes de agregar los nuevos eventos
+                        respuesta.eventos.forEach(evento => { // Accede a `respuesta.eventos` en lugar de `eventos` directamente
                             let fila = tabla.insertRow();
                             fila.innerHTML = `
-                        <td><span class="icon-person_pin"></span></td>
-                        <td>${evento.id_event}</td> <!-- Asegúrate de que estas son las claves correctas -->
-                        <td><a href="https://echomusic.net/eventos.php?e=${evento.id_event}" target="_blank">${evento.name_event}</a></td>
-                        <td>${evento.name_location}</td>
-                        <td>${evento.date_event}</td>
-                        <td><span class="badge badge-light">Estado</span></td>
-                        <td>$ ${evento.ventas}</td> <!-- Cambia 'ventas' por la clave correcta -->
-                        <!-- Más celdas según sea necesario -->
-                    `;
+                    <td><span class="icon-person_pin"></span></td>
+                    <td>${evento.id_event}</td>  
+                    <td><a href="https://echomusic.net/eventos.php?e=${evento.id_event}" target="_blank">${evento.name_event}</a></td>
+                    <td>${evento.name_location}</td>
+                    <td>${evento.date_event}</td>
+                    <td><span class="badge badge-light">Estado</span></td>
+                    <td>${evento.audience_event}</td>  
+                    <td> 
+                        <a class="btn-fab btn-fab-sm btn-primary shadow text-white" href="editar_evento.php?id_evento=${evento.id_event}"><i class="icon-pencil"></i></a>
+                        <a class="btn-fab btn-fab-sm btn-danger shadow text-white" onclick="confirmarBorrado(${evento.id_event})"><i class="icon-trash"></i></a>
+                    </td>
+                    <td>
+                        <div class="material-switch">
+                            <input id="sw${evento.id_event}" name="someSwitchOption001${evento.id_event}" type="checkbox" ${evento.active_event == 1 ? 'checked' : ''} onchange="cambiarEstadoEvento(${evento.id_event}, this.checked)">
+                            <label for="sw${evento.id_event}" class="bg-primary"></label>
+                        </div>
+                    </td>
+                    <td>     
+                        <a class="btn-fab btn-fab-sm btn-primary shadow text-white" onclick="duplicarEvento(${evento.id_event});"><i class="icon-control_point_duplicate"></i></a>
+                    </td>
+                `;
                         });
+
+                        // Actualiza el paginador basado en respuesta.paginaActual y respuesta.totalPaginas
+                        actualizarPaginador(respuesta.paginaActual, respuesta.totalPaginas);
                     })
                     .catch(error => console.error('Error:', error));
+            }
+
+            // Función para actualizar paginador 
+            function actualizarPaginador(paginaActual, totalPaginas) {
+                let paginador = document.querySelector('.pagination');
+                paginador.innerHTML = ''; // Limpia el paginador existente
+
+                // Agrega "Anterior" si no es la primera página
+                if (paginaActual > 1) {
+                    paginador.innerHTML += `<li class="page-item"><a class="page-link" href="#" onclick="cargarEventos(${paginaActual - 1})">Anterior</a></li>`;
+                }
+
+                // Muestra hasta 2 páginas antes de la actual si es posible
+                for (let i = Math.max(1, paginaActual - 2); i < paginaActual; i++) {
+                    paginador.innerHTML += `<li class="page-item"><a class="page-link" href="#" onclick="cargarEventos(${i})">${i}</a></li>`;
+                }
+
+                // Página actual
+                paginador.innerHTML += `<li class="page-item active"><a class="page-link" href="#">${paginaActual}</a></li>`;
+
+                // Muestra hasta 2 páginas después de la actual si es posible
+                for (let i = paginaActual + 1; i <= Math.min(paginaActual + 2, totalPaginas); i++) {
+                    paginador.innerHTML += `<li class="page-item"><a class="page-link" href="#" onclick="cargarEventos(${i})">${i}</a></li>`;
+                }
+
+                // Si hay muchas páginas, muestra puntos suspensivos hacia el final
+                if (paginaActual + 2 < totalPaginas) {
+                    paginador.innerHTML += `<li class="page-item disabled"><span class="page-link">...</span></li>`;
+                    paginador.innerHTML += `<li class="page-item"><a class="page-link" href="#" onclick="cargarEventos(${totalPaginas})">${totalPaginas}</a></li>`;
+                }
+
+                // Agrega "Siguiente" si no es la última página
+                if (paginaActual < totalPaginas) {
+                    paginador.innerHTML += `<li class="page-item"><a class="page-link" href="#" onclick="cargarEventos(${paginaActual + 1})">Siguiente</a></li>`;
+                }
+            }
+
+
+            // Para llamar a la función al cargar la página:
+            document.addEventListener('DOMContentLoaded', function() {
+                cargarEventos();
             });
+
+
+            // Función confirmarBorrado
+            function confirmarBorrado(idEvent) {
+                swal({
+                        title: "¿Estás seguro?",
+                        text: "Una vez borrado, ¡no podrás recuperar este evento!",
+                        icon: "warning",
+                        buttons: true,
+                        dangerMode: true,
+                    })
+                    .then((willDelete) => {
+                        if (willDelete) {
+                            fetch(`includes/borrar_evento.php?id=${idEvent}`, {
+                                    method: 'DELETE',
+                                })
+                                .then(response => response.json())
+                                .then(data => {
+                                    if (data.success) {
+                                        swal("El evento ha sido borrado.", {
+                                            icon: "success",
+                                        });
+                                        // Recargar la tabla de eventos
+                                        cargarEventos(); // Recargar los eventos
+                                    } else {
+                                        swal("Error al borrar el evento.", {
+                                            icon: "error",
+                                        });
+                                    }
+                                })
+                                .catch(error => console.error('Error:', error));
+                        } else {
+                            swal("Tu evento está seguro.");
+                        }
+                    });
+            }
+
+            // función duplicarEvento que reciba el id del evento a duplicar.
+            function duplicarEvento(eventoId) {
+                swal({
+                        title: "¿Estás seguro?",
+                        text: "Esto duplicará el evento y sus tickets.",
+                        icon: "warning",
+                        buttons: true,
+                        dangerMode: true,
+                    })
+                    .then((willDuplicate) => {
+                        if (willDuplicate) {
+                            fetch('includes/duplicar_evento.php', {
+                                    method: 'POST',
+                                    body: JSON.stringify({
+                                        id_event: eventoId
+                                    }),
+                                    headers: {
+                                        'Content-Type': 'application/json'
+                                    }
+                                })
+                                .then(response => response.json())
+                                .then(data => {
+                                    if (data.success) {
+                                        swal("¡Duplicado!", "El evento ha sido duplicado correctamente.", "success")
+                                            .then(() => {
+                                                cargarEventos(); // Re-cargar los eventos
+                                            });
+                                    } else {
+                                        swal("Error", "No se pudo duplicar el evento.", "error");
+                                    }
+                                })
+                                .catch(error => console.error('Error:', error));
+                        }
+                    });
+            }
+
+            // Cambiar estado de Evento con botón Material Switch
+            function cambiarEstadoEvento(idEvento, estado) {
+                fetch('includes/cambiar_estado_evento.php', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            id_event: idEvento,
+                            active_event: estado ? 1 : 0
+                        })
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            swal("Éxito", "El estado del evento ha sido actualizado.", "success");
+                        } else {
+                            swal("Error", "No se pudo actualizar el estado del evento.", "error");
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        swal("Error", "Error al procesar la solicitud.", "error");
+                    });
+            }
         </script>
+
 
 
     </body>

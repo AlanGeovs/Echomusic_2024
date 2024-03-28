@@ -172,7 +172,7 @@ $artistasRelacionados = Consultas::busquedaArtistas($query);
                                         <div class="single-team">
                                             <div class="team-img">
                                                 <a href="artistas.php?a=' . htmlspecialchars($artista["id_user"]) . '">
-                                                    <img src="https://echomusic.cl/images/avatars/' . htmlspecialchars($artista["id_user"]) . '.jpg" alt="' . htmlspecialchars($artista["nick_user"]) . '" />
+                                                    <img src="https://echomusic.net/dashboard/images/usuarios/' . htmlspecialchars($artista["id_user"]) . '.jpg" alt="' . htmlspecialchars($artista["nick_user"]) . '" />
                                                 </a>
                                                 <ul class="social">
                                                     <li>
@@ -197,7 +197,7 @@ $artistasRelacionados = Consultas::busquedaArtistas($query);
                             <!-- <div class="single-team">
                                 <div class="team-img">
                                     <a href="artistas.php?a=7488">
-                                        <img src="https://echomusic.cl/images/avatars/7488.jpg" alt="descatado" />
+                                        <img src="https://echomusic.net/dashboard/images/usuarios/7488.jpg" alt="descatado" />
                                     </a>
                                     <ul class="social">
                                         <li>
@@ -410,7 +410,7 @@ $artistasRelacionados = Consultas::busquedaArtistas($query);
                         <div class="single-case">
                             <div class="case-img ">
                                 <a href="artistas.php?a=' . $artistasRelacionados[$k]["id_user"] . '">
-                                    <img class="imgEvent tamano-1" src="https://echomusic.cl/images/avatars/' . $artistasRelacionados[$k]["id_user"] . '.jpg" height="100%"  alt="case"/> 
+                                    <img class="imgEvent tamano-1" src="https://echomusic.net/dashboard/images/usuarios/' . $artistasRelacionados[$k]["id_user"] . '.jpg" height="100%"  alt="case"/> 
                                 </a>
                             </div>
 

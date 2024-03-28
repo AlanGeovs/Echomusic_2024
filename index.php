@@ -602,7 +602,7 @@ $respuestaArtistas = Consultas::ultimosArtistas();
                                     <div class="single-team">
                                         <div class="team-img">
                                             <a href="artistas.php?a=' . $respuestaArtistas[$i]["id_user"] . '"  >
-                                                <img src="https://echomusic.cl/images/avatars/' . $respuestaArtistas[$i]["id_user"] . '.jpg" alt="descatado" />
+                                                <img src="https://echomusic.net/dashboard/images/usuarios/' . $respuestaArtistas[$i]["id_user"] . '.jpg" alt="descatado" />
                                             </a>
                                             <ul class="social">
                                                 <li> 
@@ -720,11 +720,11 @@ $respuestaArtistas = Consultas::ultimosArtistas();
                                 <div class="single-team">
                                     <div class="team-img overlay-container">
                                         <a href="crowdfunding.php?c=<?php echo $eventosRelacionados[$k]["id_project"]; ?>">
-                                            <img src="https://echomusic.cl/images/avatars/<?php echo $eventosRelacionados[$k]["id_user"]; ?>.jpg" alt="destacado" />
+                                            <img src="https://echomusic.net/dashboard/images/usuarios/<?php echo $eventosRelacionados[$k]["id_user"]; ?>.jpg" alt="destacado" />
                                         </a>
 
                                         <div class="author">
-                                            <!-- <img src="https://echomusic.cl/images/avatars/<?php echo $artistaCrowd[0]["id_user"]; ?>.jpg" alt="Foto del autor"> -->
+                                            <!-- <img src="https://echomusic.net/dashboard/images/usuarios/<?php echo $artistaCrowd[0]["id_user"]; ?>.jpg" alt="Foto del autor"> -->
                                             <?php echo '<a href="https://echomusic.cl/profile.php?userid=' . $artistaCrowd[0]["id_user"] . '">' . $artistaCrowd[0]["nick_user"] . '</a>'; ?>
                                         </div>
 

@@ -5,6 +5,12 @@ require_once "model/model.php";
 
 $id = $_SESSION["id_user"];
 
+$idEvento = $_GET['id_evento']; // Asegúrate de validar y sanear este valor
+
+$datosEvento = Consultas::obtenerEventoPorId($idEvento); //  devuelve los datos del evento
+$entradasEvento = Consultas::obtenerEntradasPorEvento($idEvento); //  devuelve las entradas del evento
+
+
 if (!isset($_SESSION["id_user"])) {
     header("Location: index.php?error=2");
 } else {
@@ -215,7 +221,7 @@ if (!isset($_SESSION["id_user"])) {
                                                 <span class="icon-sound text-light-blue s-48"> </span>
                                             </div>
                                             <div class="card-header white">
-                                                <h2>Ingresa los datos de tu evento</h2>
+                                                <h2>Edita los datos de tu evento</h2>
                                             </div>
 
                                             <div class="card-body">
@@ -229,14 +235,14 @@ if (!isset($_SESSION["id_user"])) {
                                                         <div class="form-row">
                                                             <div class="col-md-4 mb-3">
                                                                 <label for="validationCustom01">Nombre del Evento</label>
-                                                                <input type="text" class="form-control" id="name_event" name="name_event" placeholder="Nombre del evento ..." required="">
+                                                                <input type="text" class="form-control" id="name_event" name="name_event" placeholder="Nombre del evento ..." value="<?php echo htmlspecialchars($datosEvento['name_event']); ?>" required="">
                                                                 <div class="valid-feedback">
                                                                     Nombre de evento
                                                                 </div>
                                                             </div>
                                                             <div class="col-md-4 mb-3">
                                                                 <label for="validationCustom02">Nombre del Lugar</label>
-                                                                <input type="text" class="form-control" id="name_location" name="name_location" placeholder="Lugar del evento" required="">
+                                                                <input type="text" class="form-control" id="name_location" name="name_location" placeholder="Lugar del evento" value="<?php echo htmlspecialchars($datosEvento['name_location']); ?>" required="">
                                                                 <div class="valid-feedback">
                                                                     Lugar
                                                                 </div>
@@ -244,7 +250,7 @@ if (!isset($_SESSION["id_user"])) {
                                                             <div class="col-md-4 mb-3">
                                                                 <label for="validationCustomUsername">Organizador </label>
                                                                 <div class="input-group">
-                                                                    <input type="text" class="form-control" id="organizer" name="organizer" placeholder="Nombre del organizador" aria-describedby="inputGroupPrepend" required="">
+                                                                    <input type="text" class="form-control" id="organizer" name="organizer" placeholder="Nombre del organizador" value="<?php echo htmlspecialchars($datosEvento['organizer']); ?>" aria-describedby="inputGroupPrepend" required="">
                                                                     <div class="invalid-feedback">
                                                                         Lugar
                                                                     </div>
@@ -260,41 +266,28 @@ if (!isset($_SESSION["id_user"])) {
                                                                 <select class="form-control" id="id_region" name="id_region">
                                                                     <?php
                                                                     $res = Consultas::listarVariable('regions');
-                                                                    //var_dump($respuesta);
-                                                                    for ($i = 0; $i < count($res); $i++) {
-                                                                        if ($res[$i]["name_region"] == $busca_Ciudad["name_region"]) {
-                                                                            echo "<option value='" . $res[$i]["id_region"] . "' id='" . $res[$i]["id_region"] . "' selected>" . $res[$i]["name_region"] . "</option>";
-                                                                        } else {
-                                                                            echo "<option value='" . $res[$i]["id_region"] . "' id='" . $res[$i]["id_region"] . "' >" . $res[$i]["name_region"] . "</option>";
-                                                                        }
+                                                                    foreach ($res as $region) {
+                                                                        $selected = ($region["id_region"] == $datosEvento["id_region"]) ? 'selected' : '';
+                                                                        echo "<option value='" . $region["id_region"] . "' $selected>" . $region["name_region"] . "</option>";
                                                                     }
                                                                     ?>
-
                                                                 </select>
+
                                                             </div>
 
                                                             <div class="mb-3 col-md-4">
                                                                 <label for="id_city" class="form-label">Ciudad</label>
                                                                 <select class="form-control" id="id_city" name="id_city">
-                                                                    <?php
-                                                                    $res = Consultas::listarVariable('cities');
-                                                                    //var_dump($respuesta);
-                                                                    for ($i = 0; $i < count($res); $i++) {
-                                                                        if ($res[$i]["name_city"] == $busca_Ciudad["name_city"]) {
-                                                                            echo "<option value='" . $res[$i]["id_city"] . "' id='" . $res[$i]["id_city"] . "'  selected>" . $res[$i]["name_city"] . "</option>";
-                                                                        } else {
-                                                                            echo "<option value='" . $res[$i]["id_city"] . "' id='" . $res[$i]["id_city"] . "' >" . $res[$i]["name_city"] . "</option>";
-                                                                        }
-                                                                    }
-                                                                    ?>
-
+                                                                    <option value="">Seleccione una ciudad</option>
+                                                                    <!-- Las ciudades se cargarán aquí con AJAX -->
                                                                 </select>
                                                             </div>
+
 
                                                             <div class="col-md-4 mb-3">
                                                                 <label for="validationCustomUsername">Dirección</label>
                                                                 <div class="input-group">
-                                                                    <input type="text" class="form-control" id="location" name="location" placeholder=" " aria-describedby="inputGroupPrepend" required="">
+                                                                    <input type="text" class="form-control" id="location" name="location" placeholder=" " value="<?php echo htmlspecialchars($datosEvento['location']); ?>" aria-describedby="inputGroupPrepend" required="">
                                                                     <div class="invalid-feedback">
                                                                         Lugar
                                                                     </div>
@@ -304,11 +297,15 @@ if (!isset($_SESSION["id_user"])) {
 
 
                                                         <div class="form-row">
+                                                            <?php
+
+                                                            $fechaEventoFormato = DateTime::createFromFormat('Y-m-d H:i:s', $datosEvento['date_event'])->format('d-m-Y H:i');
+
+                                                            ?>
                                                             <div class="col-md-6 mb-6">
                                                                 <label for="validationCustom01">Fecha</label>
                                                                 <div class="input-group">
-                                                                    <!-- Poner Fecha actua -->
-                                                                    <input type="text" class="date-time-picker form-control" id="date_event" name="date_event" data-options='{"timepicker":true, "format":"d-m-Y H:i"}' value="<?php echo date("d-m-Y H:i"); ?>">
+                                                                    <input type="text" class="date-time-picker form-control" id="date_event" name="date_event" data-options='{"timepicker":true, "format":"d-m-Y H:i"}' value="<?php echo $fechaEventoFormato; ?>">
                                                                     <span class="input-group-append">
                                                                         <span class="input-group-text add-on white">
                                                                             <i class="icon-calendar"></i>
@@ -333,14 +330,15 @@ if (!isset($_SESSION["id_user"])) {
                                                             <div class="col-md-3 mb-3">
                                                                 <label for="validationCustom02">Tipo de evento</label>
                                                                 <select name="id_type_event" class="form-control form-custom-1" id="id_type_event">
-                                                                    <option value="1">Gratuito</option>
-                                                                    <option value="2">De pago</option>
+                                                                    <option value="1" <?php echo ($datosEvento['id_type_event'] == 1) ? 'selected' : ''; ?>>Gratuito</option>
+                                                                    <option value="2" <?php echo ($datosEvento['id_type_event'] == 2) ? 'selected' : ''; ?>>De pago</option>
                                                                 </select>
                                                             </div>
+
                                                             <div class="col-md-3 mb-3">
                                                                 <label for="validationCustomUsername">Audiencia</label>
                                                                 <div class="input-group">
-                                                                    <input type="text" class="form-control" id="audience_event" name="audience_event" placeholder="Cantidad total de entradas" aria-describedby="inputGroupPrepend" required="">
+                                                                    <input type="text" class="form-control" id="audience_event" name="audience_event" placeholder="Cantidad total de entradas" value="<?php echo htmlspecialchars($datosEvento['audience_event']); ?>" aria-describedby="inputGroupPrepend" required="">
                                                                     <div class="invalid-feedback">
                                                                         Lugar
                                                                     </div>
@@ -348,8 +346,46 @@ if (!isset($_SESSION["id_user"])) {
                                                             </div>
                                                         </div>
 
+
+                                                        <div id="camposAdicionales">
+
+                                                            <!-- Falta agregar uan condicional para que si está editando un evento que era GRATUITO y lo cambia a DE PAGO, muestre nuevamente los campos adicionales. si queito el if de abajo funciona pero debo quietar el indice 0 de camposAdicionales cuando es gratuito. Quizas porvar con un camposAdicionales2 -->
+                                                            <?php if ($datosEvento['id_type_event'] == 2) :
+                                                            ?>
+                                                                <?php foreach ($entradasEvento as $index => $entrada) : ?>
+                                                                    <div class="entrada" data-index="<?php echo $index; ?>">
+                                                                        <div class="form-row">
+                                                                            <div class="col-md-3 mb-3">
+                                                                                <label for="ticket_name<?php echo $index; ?>">Nombre de Entrada</label>
+                                                                                <input type="text" class="form-control" id="ticket_name<?php echo $index; ?>" name="ticket_name[<?php echo $index; ?>]" placeholder="Nombre de la entrada" value="<?php echo htmlspecialchars($entrada['ticket_name']); ?>">
+                                                                                <input type="hidden" class="form-control" id="id_ticket<?php echo $index; ?>" name="id_ticket[<?php echo $index; ?>]" value="<?php echo htmlspecialchars($entrada['id_ticket']); ?>">
+                                                                            </div>
+                                                                            <div class="col-md-2 mb-3">
+                                                                                <label for="ticket_value<?php echo $index; ?>">Valor Entrada</label>
+                                                                                <input type="number" class="form-control" id="ticket_value<?php echo $index; ?>" name="ticket_value[<?php echo $index; ?>]" placeholder="Valor de la entrada" value="<?php echo htmlspecialchars($entrada['ticket_value']); ?>">
+                                                                            </div>
+                                                                            <div class="col-md-2 mb-3">
+                                                                                <label for="ticket_audience<?php echo $index; ?>">Cantidad</label>
+                                                                                <input type="number" class="form-control" id="ticket_audience<?php echo $index; ?>" name="ticket_audience[<?php echo $index; ?>]" placeholder="Cantidad" value="<?php echo htmlspecialchars($entrada['ticket_audience']); ?>">
+                                                                            </div>
+                                                                            <div class="col-md-2 mb-3">
+                                                                                <label for="ticket_dateStart<?php echo $index; ?>">Inicio Venta (Fecha y Hora)</label>
+                                                                                <input type="datetime-local" class="form-control" id="ticket_dateStart<?php echo $index; ?>" name="ticket_dateStart[<?php echo $index; ?>]" value="<?php echo htmlspecialchars((new DateTime($entrada['ticket_dateStart']))->format('Y-m-d\TH:i')); ?>">
+                                                                            </div>
+                                                                            <div class="col-md-3 mb-3">
+                                                                                <label for="ticket_dateEnd<?php echo $index; ?>">Término Venta (Fecha y Hora)</label>
+                                                                                <input type="datetime-local" class="form-control" id="ticket_dateEnd<?php echo $index; ?>" name="ticket_dateEnd[<?php echo $index; ?>]" value="<?php echo htmlspecialchars((new DateTime($entrada['ticket_dateEnd']))->format('Y-m-d\TH:i')); ?>">
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                <?php endforeach; ?>
+                                                            <?php endif;
+                                                            ?>
+                                                        </div>
+
+
                                                         <!-- Contenedor para los campos adicionales -->
-                                                        <div id="camposAdicionales" class="form-row" style="display: none;">
+                                                        <!-- <div id="camposAdicionales" class="form-row" style="display: none;">
                                                             <div class="col-md-2 mb-3">
                                                                 <label for="ticket_name">Nombre de Entrada </label>
                                                                 <input type="text" class="form-control" id="ticket_name" name="ticket_name" placeholder="Nombre de la entrada">
@@ -372,10 +408,7 @@ if (!isset($_SESSION["id_user"])) {
                                                                 <input type="hidden" id="contadorEntradas" name="contadorEntradas" value="1">
 
                                                             </div>
-
-
-
-                                                        </div>
+                                                        </div> -->
 
                                                         <button type="button" id="btnAgregarEntradas" class="btn btn-primary">
                                                             <i class="icon-plus"></i> Agregar más entradas
@@ -392,14 +425,14 @@ if (!isset($_SESSION["id_user"])) {
                                                             <!-- Campo para Video Promocional del Evento (opcional) -->
                                                             <div class="col-md-4 mb-3">
                                                                 <label for="eventVideo">Video Promocional del Evento (Opcional)</label>
-                                                                <input type="text" class="form-control" id="eventVideo" name="eventVideo" placeholder="URL del video...">
+                                                                <input type="text" class="form-control" id="eventVideo" name="eventVideo" placeholder="URL del video..." value="<?php echo htmlspecialchars($datosEvento['eventVideo']); ?>">
                                                             </div>
 
 
                                                             <!-- Campo para descripción del evento -->
                                                             <div class="col-md-4 mb-3">
                                                                 <label for="eventDescription">Descripción del Evento</label>
-                                                                <textarea class="form-control" id="desc_event" name="desc_event" rows="3" placeholder="Escribe aquí la descripción del evento..."></textarea>
+                                                                <textarea class="form-control" id="desc_event" name="desc_event" rows="3" placeholder="Escribe aquí la descripción del evento..."><?php echo htmlspecialchars($datosEvento['desc_event']); ?></textarea>
                                                             </div>
                                                         </div>
 
@@ -414,7 +447,7 @@ if (!isset($_SESSION["id_user"])) {
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <button class="btn btn-primary" type="submit">Registrar evento</button>
+                                                        <button class="btn btn-primary" type="submit">Actualizar evento</button>
                                                     </form>
 
 
@@ -620,6 +653,14 @@ if (!isset($_SESSION["id_user"])) {
         <!-- Cambio de Región y Ciudad -->
         <script type="text/javascript">
             $(document).ready(function() {
+
+                var id_regionActual = $('#id_region').val();
+                var id_ciudadActual = "<?php echo $datosEvento["id_city"]; ?>"; // Asume que tienes esta variable disponible
+                if (id_regionActual) {
+                    cargarCiudades(id_regionActual, id_ciudadActual);
+                }
+
+
                 $('#id_region').on('change', function() {
                     var id_region = $(this).val();
                     cargarCiudades(id_region);
@@ -634,7 +675,18 @@ if (!isset($_SESSION["id_user"])) {
                 });
             });
 
-            function cargarCiudades(id_region) {
+            $(document).ready(function() {
+                // Cargar ciudades basadas en la región seleccionada al cargar la página
+                var id_regionActual = $('#id_region').val();
+                cargarCiudades(id_regionActual, "<?php echo $datosEvento['id_city']; ?>");
+
+                $('#id_region').on('change', function() {
+                    var id_region = $(this).val();
+                    cargarCiudades(id_region);
+                });
+            });
+
+            function cargarCiudades(id_region, ciudadSeleccionada = '') {
                 $.ajax({
                     url: 'includes/obtener_regiones_ciudades.php',
                     type: 'POST',
@@ -644,21 +696,18 @@ if (!isset($_SESSION["id_user"])) {
                     dataType: 'json',
                     success: function(ciudades) {
                         var opciones = '<option value="">Seleccione una ciudad</option>';
-                        $.each(ciudades, function(index, ciudad) {
-                            var selected = (ciudad.name_city == "<?php echo $busca_Ciudad["name_city"]; ?>") ? ' selected' : '';
-                            opciones += '<option value="' + ciudad.id_city + '"' + selected + '>' + ciudad.name_city + '</option>';
+                        ciudades.forEach(function(ciudad) {
+                            var selected = (ciudad.id_city == ciudadSeleccionada) ? ' selected' : '';
+                            opciones += `<option value="${ciudad.id_city}"${selected}>${ciudad.name_city}</option>`;
                         });
                         $('#id_city').html(opciones);
-                    },
-                    error: function() {
-                        alert('Error al cargar las ciudades');
                     }
                 });
             }
         </script>
 
         <!-- Crear evento -->
-        <script>
+        <!-- <script>
             document.addEventListener('DOMContentLoaded', function() {
                 document.getElementById('formEvento').addEventListener('submit', function(e) {
                     e.preventDefault();
@@ -676,7 +725,39 @@ if (!isset($_SESSION["id_user"])) {
                                     .then(() => {
                                         setTimeout(function() {
                                             window.location.href = 'eventos.php';
-                                        }, 500); // 2000 milisegundos = 2 segundos
+                                        }, 500); 
+                                    });
+                            } else {
+                                swal("Error", data.message, "error");
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Error:', error);
+                            swal("Error", "Error al procesar la solicitud.", "error");
+                        });
+                });
+            });
+        </script> -->
+
+        <!-- Actualizar Evento -->
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                document.getElementById('formEvento').addEventListener('submit', function(e) {
+                    e.preventDefault();
+
+                    var formData = new FormData(this);
+                    formData.append('id_evento', '<?php echo $idEvento; ?>'); // Asegúrate de tener el ID del evento en alguna parte de tu formulario o script
+
+                    fetch('includes/actualizar_evento.php', {
+                            method: 'POST',
+                            body: formData
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.success) {
+                                swal("¡Actualizado!", data.message, "success")
+                                    .then(() => {
+                                        window.location.href = 'eventos.php';
                                     });
                             } else {
                                 swal("Error", data.message, "error");
@@ -689,6 +770,7 @@ if (!isset($_SESSION["id_user"])) {
                 });
             });
         </script>
+
 
         <!-- Manjeador de cambio de Tickets Gratuito a pago  -->
         <script>

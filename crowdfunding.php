@@ -75,7 +75,7 @@ $minutos = date("i", $fechaEntera);
                             <!-- Foto -->
                             <div class="pe-3">
                                 <a href="artistas.php?a=<?php echo $respuesta[0]['id_user']; ?>">
-                                    <img style="height: 100px; width: 100px; border-radius: 50%;" src="https://echomusic.cl/images/avatars/<?php echo $respuesta[0]['id_user']; ?>.jpg" alt="Destacado" />
+                                    <img style="height: 100px; width: 100px; border-radius: 50%;" src="https://echomusic.net/dashboard/images/usuarios/<?php echo $respuesta[0]['id_user']; ?>.jpg" alt="Destacado" />
                                 </a>
                             </div>
 
@@ -715,7 +715,7 @@ for ($i = 0; $i < count($respuestaTierCrow); $i++) {
                     <div class="single-blog">
                         <div class="blog-img">
                             <a href="#">
-                                <img style="height: 200px; width: 200px; border-radius: 50%;" class="responsiveArtista" src="https://echomusic.cl/images/avatars/<?php echo $respuesta[0]['id_user']; ?>.jpg" alt="descatado" />
+                                <img style="height: 200px; width: 200px; border-radius: 50%;" class="responsiveArtista" src="https://echomusic.net/dashboard/images/usuarios/<?php echo $respuesta[0]['id_user']; ?>.jpg" alt="descatado" />
                             </a>
                         </div>
 
@@ -831,7 +831,7 @@ for ($i = 0; $i < count($respuestaTierCrow); $i++) {
 
 
                 <div class="card" style="width: 22rem;  ">
-                    <img src="https://echomusic.cl/images/avatars/<?php echo $respuesta[0]['id_user']; ?>.jpg" class="card-img-top" alt="..." style="width: 100%; height: auto; aspect-ratio: 16 / 9; object-fit: cover;">
+                    <img src="https://echomusic.net/dashboard/images/usuarios/<?php echo $respuesta[0]['id_user']; ?>.jpg" class="card-img-top" alt="..." style="width: 100%; height: auto; aspect-ratio: 16 / 9; object-fit: cover;">
                     <div class="card-img-overlay d-flex justify-content-center align-items-center" style="background-color: <?php echo $currentColor; ?>; position: absolute; top: 0; right: 0; height: 197px;  bottom: 0; left: 0;">
                         <h5 class="card-title" style="color: white; text-align: center; z-index: 2;"><?php echo $respuestaTierCrow[$i]['tier_title']; ?></h5>
                     </div>

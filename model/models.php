@@ -317,10 +317,11 @@ class Consultas
         public static function registrarSolicitudContratacion($data)
         {
                 $conexion = Conexion::conectar();
-                $stmt = $conexion->prepare("INSERT INTO events_private (id_plan, id_user_buy, id_user_sell, value_plan_event, id_name_plan, name_event, location, id_region, id_city, date_event, phone_event, desc_event) 
-                                            VALUES (:id_plan, 1,1, :value_plan, :id_name_plan, :name_event, :location, :id_region, :id_city, :date_event, :phone_event, :desc_event)");
+                $stmt = $conexion->prepare("INSERT INTO events_private (id_plan_key,id_plan, id_user_buy, id_user_sell, value_plan_event, id_name_plan, name_event, location, id_region, id_city, date_event, phone_event, desc_event) 
+                                            VALUES (:id_plan_key, :id_plan, 1,1, :value_plan, :id_name_plan, :name_event, :location, :id_region, :id_city, :date_event, :phone_event, :desc_event)");
 
                 // Vincula los parámetros a la consulta SQL
+                $stmt->bindValue(':id_plan_key', $data['id_plan_key']);
                 $stmt->bindValue(':id_plan', $data['id_plan']);
                 $stmt->bindValue(':value_plan', $data['value_plan']);
                 $stmt->bindValue(':id_name_plan', $data['id_name_plan']);

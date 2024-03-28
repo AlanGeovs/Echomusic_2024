@@ -1026,33 +1026,58 @@ class Consultas  extends Conexion
 	public static function guardarPlan($data)
 	{
 		try {
-			$conexion = Conexion::conectar();
-			$sql = "INSERT INTO plans (id_user, id_name_plan, value_plan, slot_plan, duration_hours, duration_minutes, backline, sound_reinforcement, sound_engineer, artists_amount, desc_plan) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+			$db = Conexion::conectar();
+			$query = "INSERT INTO plans (id_plan, id_user, id_name_plan, value_plan, commission_plan, desc_plan, active, duration_hours, duration_minutes, backline, sound_engineer, artists_amount, sound_reinforcement) VALUES (:id_plan, :id_user, :id_name_plan, :value_plan, :commission_plan, :desc_plan, :active, :duration_hours, :duration_minutes, :backline, :sound_engineer, :artists_amount, :sound_reinforcement)";
 
-			$stmt = $conexion->prepare($sql);
-			$stmt->bind_param(
-				"sssssssssss",
-				$data['id_user'],
-				$data['plan_type1'],
-				$data['value_plan1'],
-				$data['plan_type1'], // Asumo que 'slot_plan' toma el mismo valor que 'plan_type1'
-				$data['hours_plan1'],
-				$data['minutes_plan1'],
-				$data['backline_plan1'],
-				$data['soundReinforcement_plan1'],
-				$data['soundEngineer_plan1'],
-				$data['nArtists_plan1'],
-				$data['plan_desc1']
-			);
+			$stmt = $db->prepare($query);
 
-			$resultado = $stmt->execute();
+			// bindValue para cada parámetro
+			$stmt->bindValue(':id_plan', 123, PDO::PARAM_INT);
+			$stmt->bindValue(':id_user', $data['id_user'], PDO::PARAM_INT);
+			$stmt->bindValue(':id_name_plan', $data['id_name_plan'], PDO::PARAM_INT);
+			$stmt->bindValue(':value_plan', $data['value_plan'], PDO::PARAM_INT); // o PDO::PARAM_INT si es un valor numérico sin decimales
+			$stmt->bindValue(':commission_plan', $data['commission_plan'], PDO::PARAM_INT); // o PDO::PARAM_INT dependiendo del tipo de dato
+			$stmt->bindValue(':desc_plan', $data['desc_plan'], PDO::PARAM_STR);
+			$stmt->bindValue(':active', $data['active'], PDO::PARAM_STR);
+			$stmt->bindValue(':duration_hours', $data['duration_hours'], PDO::PARAM_INT);
+			$stmt->bindValue(':duration_minutes', $data['duration_minutes'], PDO::PARAM_INT);
+			$stmt->bindValue(':backline', $data['backline'], PDO::PARAM_INT);
+			$stmt->bindValue(':sound_engineer', $data['sound_engineer'], PDO::PARAM_INT);
+			$stmt->bindValue(':artists_amount', $data['artists_amount'], PDO::PARAM_INT);
+			$stmt->bindValue(':sound_reinforcement', $data['sound_reinforcement'], PDO::PARAM_INT);
 
-			$stmt->close();
-			return $resultado;
-		} catch (Exception $e) {
-			// Manejar el error
-			error_log("Error en guardarPlan: " . $e->getMessage());
+			if ($stmt->execute()) {
+				return true; // O puedes retornar $db->lastInsertId(); si necesitas el ID del plan insertado
+			} else {
+				return false;
+			}
+		} catch (PDOException $e) {
+			// Aquí deberías manejar o registrar el error de alguna manera
 			return false;
+		}
+	}
+
+	//Tarifas actuales por usuario
+	public static function obtenerTarifasPorUsuario($idUsuario)
+	{
+		$conexion = Conexion::conectar();
+		$stmt = $conexion->prepare("SELECT * FROM plans WHERE id_user = :idUsuario");
+		$stmt->bindParam(':idUsuario', $idUsuario, PDO::PARAM_INT);
+		$stmt->execute();
+		return $stmt->fetchAll(PDO::FETCH_ASSOC);
+	}
+
+	//Borrrar tarifas
+	public static function borrarTarifa($idTarifa)
+	{
+		$conexion = Conexion::conectar();
+		$stmt = $conexion->prepare("DELETE FROM plans WHERE id_plan_key = :id_plan");
+		$stmt->bindParam(":id_plan", $idTarifa, PDO::PARAM_INT);
+
+		if ($stmt->execute()) {
+			return true; // Éxito al borrar la tarifa
+		} else {
+			return false; // Falló al intentar borrar la tarifa
 		}
 	}
 
@@ -1453,7 +1478,22 @@ class Consultas  extends Conexion
 			return false;
 		}
 	}
+	// buscar número de tickets
+	public static function contarTicketsPorEvento($idEvento)
+	{
+		try {
+			$db = Conexion::conectar();
+			$stmt = $db->prepare("SELECT COUNT(*) AS total_tickets FROM tickets_public WHERE id_event = :id_event");
+			$stmt->bindParam(":id_event", $idEvento, PDO::PARAM_INT);
+			$stmt->execute();
 
+			$resultado = $stmt->fetch(PDO::FETCH_ASSOC);
+			return $resultado['total_tickets'];
+		} catch (PDOException $e) {
+			// Manejar el error o registrar
+			return false;
+		}
+	}
 
 	// Crear tICKETS
 	public static function crearTickets($ticket, $idEvento)
@@ -1478,14 +1518,392 @@ class Consultas  extends Conexion
 	}
 
 	// Mostrar eventos 
-	public static function obtenerEventosPorUsuario($id_usuario)
+	// public static function obtenerEventosPorUsuario($id_usuario)
+	// {
+	// 	$sql = "SELECT * FROM events_public WHERE id_user = :id_user ORDER BY date_event DESC";
+	// 	$stmt = self::conectar()->prepare($sql);
+	// 	$stmt->bindValue(':id_user', $id_usuario, PDO::PARAM_INT);
+	// 	$stmt->execute();
+	// 	return $stmt->fetchAll(PDO::FETCH_ASSOC);
+	// }
+
+	// Mostrar eventos con paginador
+	public static function obtenerEventosPorUsuario($id_usuario, $offset, $numPorPagina)
 	{
-		$sql = "SELECT * FROM events_public WHERE id_user = :id_user ORDER BY date_event DESC";
+		$sql = "SELECT * FROM events_public WHERE id_user = :id_user ORDER BY date_event DESC LIMIT :offset, :numPorPagina";
 		$stmt = self::conectar()->prepare($sql);
 		$stmt->bindValue(':id_user', $id_usuario, PDO::PARAM_INT);
+		$stmt->bindValue(':offset', $offset, PDO::PARAM_INT);
+		$stmt->bindValue(':numPorPagina', $numPorPagina, PDO::PARAM_INT);
 		$stmt->execute();
 		return $stmt->fetchAll(PDO::FETCH_ASSOC);
 	}
+
+	public static function totalEventos($id_usuario)
+	{
+		$sql = "SELECT COUNT(id_event) FROM events_public WHERE id_user = :id_user";
+		$stmt = self::conectar()->prepare($sql);
+		$stmt->bindValue(':id_user', $id_usuario, PDO::PARAM_INT);
+		$stmt->execute();
+		return $stmt->fetchColumn();
+	}
+
+	// Total de Reservas
+	public static function totalReservas($id_usuario)
+	{
+		$sql = "SELECT COUNT(id_event) FROM `events_private` ep JOIN `plans` p ON ep.`id_plan` = p.`id_plan` AND ep.`id_plan_key` = p.`id_plan_key` WHERE p.`id_user` = :id_user";
+		$stmt = self::conectar()->prepare($sql);
+		$stmt->bindValue(':id_user', $id_usuario, PDO::PARAM_INT);
+		$stmt->execute();
+		return $stmt->fetchColumn();
+	}
+
+	// Eventos por ID de evento
+	public static function obtenerEventoPorId($idEvento)
+	{
+		try {
+			$db = Conexion::conectar();
+			$stmt = $db->prepare("SELECT * FROM events_public WHERE id_event = :idEvento");
+			$stmt->bindParam(":idEvento", $idEvento, PDO::PARAM_INT);
+			$stmt->execute();
+			$evento = $stmt->fetch(PDO::FETCH_ASSOC);
+			return $evento; // Devuelve los datos del evento o null si no se encontró
+		} catch (PDOException $e) {
+			// Manejo de error
+			return null;
+		}
+	}
+
+	//función recupera todas las entradas (tickets) asociadas a un evento específico,
+	public static function obtenerEntradasPorEvento($idEvento)
+	{
+		try {
+			$db = Conexion::conectar();
+			$stmt = $db->prepare("SELECT * FROM tickets_public WHERE id_event = :idEvento ORDER BY ticket_dateStart ASC");
+			$stmt->bindParam(":idEvento", $idEvento, PDO::PARAM_INT);
+			$stmt->execute();
+			$entradas = $stmt->fetchAll(PDO::FETCH_ASSOC);
+			return $entradas; // Devuelve un array de entradas o un array vacío si no hay entradas
+		} catch (PDOException $e) {
+			// Manejo de error
+			return [];
+		}
+	}
+
+	//Actualizar Evento
+	public static function actualizarEvento($idEvento, $dataEvento)
+	{
+		try {
+			$db = Conexion::conectar();
+			// Preparar la consulta SQL para actualizar el evento
+			$sql = "UPDATE events_public SET
+					id_type_event = :id_type_event,
+					id_user = :id_user,
+					id_region = :id_region,
+					id_city = :id_city,
+					date_event = :date_event,
+					name_event = :name_event,
+					name_location = :name_location,
+					location = :location,
+					organizer = :organizer,
+					desc_event = :desc_event,
+					audience_event = :audience_event";
+
+			// Si se actualiza la imagen, agregar la columna correspondiente al SQL
+			if (!empty($dataEvento['img'])) {
+				$sql .= ", img = :img";
+			}
+
+			$sql .= " WHERE id_event = :id_event";
+
+			$stmt = $db->prepare($sql);
+
+			// Vincular los valores a la consulta preparada
+			$stmt->bindParam(':id_type_event', $dataEvento['id_type_event'], PDO::PARAM_INT);
+			$stmt->bindParam(':id_user', $dataEvento['id_user'], PDO::PARAM_INT);
+			$stmt->bindParam(':id_region', $dataEvento['id_region'], PDO::PARAM_INT);
+			$stmt->bindParam(':id_city', $dataEvento['id_city'], PDO::PARAM_INT);
+			$stmt->bindParam(':date_event', $dataEvento['date_event'], PDO::PARAM_STR);
+			$stmt->bindParam(':name_event', $dataEvento['name_event'], PDO::PARAM_STR);
+			$stmt->bindParam(':name_location', $dataEvento['name_location'], PDO::PARAM_STR);
+			$stmt->bindParam(':location', $dataEvento['location'], PDO::PARAM_STR);
+			$stmt->bindParam(':organizer', $dataEvento['organizer'], PDO::PARAM_STR);
+			$stmt->bindParam(':desc_event', $dataEvento['desc_event'], PDO::PARAM_STR);
+			$stmt->bindParam(':audience_event', $dataEvento['audience_event'], PDO::PARAM_INT);
+			$stmt->bindParam(':id_event', $idEvento, PDO::PARAM_INT);
+
+			// Si se actualiza la imagen, vincular este valor también
+			if (!empty($dataEvento['img'])) {
+				$stmt->bindParam(':img', $dataEvento['img'], PDO::PARAM_STR);
+			}
+
+			$stmt->execute();
+
+			return true; // Retornar verdadero si la actualización fue exitosa
+		} catch (PDOException $e) {
+			// En caso de error, puedes manejarlo aquí. Por ejemplo, registrando el error en un archivo log.
+			return false; // Retornar falso si hubo un error al actualizar
+		}
+	}
+
+	//función se encargará de actualizar cada ticket individualmente en la base de datos:
+	public static function actualizarEntradaEvento($dataTicket)
+	{
+		try {
+			$db = Conexion::conectar();
+			$stmt = $db->prepare("UPDATE tickets_public SET ticket_name = :ticket_name, ticket_value = :ticket_value, ticket_audience = :ticket_audience, ticket_dateStart = :ticket_dateStart, ticket_dateEnd = :ticket_dateEnd WHERE id_ticket = :id_ticket");
+			$stmt->bindParam(":ticket_name", $dataTicket['ticket_name'], PDO::PARAM_STR);
+			$stmt->bindParam(":ticket_value", $dataTicket['ticket_value'], PDO::PARAM_STR);
+			$stmt->bindParam(":ticket_audience", $dataTicket['ticket_audience'], PDO::PARAM_INT);
+			$stmt->bindParam(":ticket_dateStart", $dataTicket['ticket_dateStart'], PDO::PARAM_STR);
+			$stmt->bindParam(":ticket_dateEnd", $dataTicket['ticket_dateEnd'], PDO::PARAM_STR);
+			$stmt->bindParam(":id_ticket", $dataTicket['id_ticket'], PDO::PARAM_INT);
+			$stmt->execute();
+			return true;
+		} catch (PDOException $e) {
+			// Manejar el error
+			return false;
+		}
+	}
+
+	// se encargaría específicamente de manejar la lógica para actualizar o crear el ticket gratuito asociado al evento
+	public static function actualizarEntradaEventoGratis($idEvento, $dataTicket)
+	{
+		try {
+			$db = Conexion::conectar();
+			// Verificar si ya existe un ticket gratuito para este evento
+			$stmt = $db->prepare("SELECT * FROM tickets_public WHERE id_event = :idEvento AND ticket_value = 0");
+			$stmt->bindParam(":idEvento", $idEvento, PDO::PARAM_INT);
+			$stmt->execute();
+			$ticketExistente = $stmt->fetch(PDO::FETCH_ASSOC);
+
+			if ($ticketExistente) {
+				// Actualizar el ticket gratuito existente
+				$stmt = $db->prepare("UPDATE tickets_public SET ticket_audience = :ticket_audience, ticket_dateStart = :ticket_dateStart, ticket_dateEnd = :ticket_dateEnd WHERE id_ticket = :id_ticket");
+				$stmt->bindParam(":ticket_audience", $dataTicket['ticket_audience'], PDO::PARAM_INT);
+				$stmt->bindParam(":ticket_dateStart", $dataTicket['ticket_dateStart'], PDO::PARAM_STR);
+				$stmt->bindParam(":ticket_dateEnd", $dataTicket['ticket_dateEnd'], PDO::PARAM_STR);
+				$stmt->bindParam(":id_ticket", $ticketExistente['id_ticket'], PDO::PARAM_INT);
+				$stmt->execute();
+			} else {
+				// Crear un nuevo ticket gratuito
+				$stmt = $db->prepare("INSERT INTO tickets_public (ticket_name, ticket_value, ticket_audience, ticket_dateStart, ticket_dateEnd, id_event) VALUES (:ticket_name, :ticket_value, :ticket_audience, :ticket_dateStart, :ticket_dateEnd, :id_event)");
+				$stmt->bindParam(":ticket_name", $dataTicket['ticket_name'], PDO::PARAM_STR);
+				$stmt->bindParam(":ticket_value", $dataTicket['ticket_value'], PDO::PARAM_INT);
+				$stmt->bindParam(":ticket_audience", $dataTicket['ticket_audience'], PDO::PARAM_INT);
+				$stmt->bindParam(":ticket_dateStart", $dataTicket['ticket_dateStart'], PDO::PARAM_STR);
+				$stmt->bindParam(":ticket_dateEnd", $dataTicket['ticket_dateEnd'], PDO::PARAM_STR);
+				$stmt->bindParam(":id_event", $idEvento, PDO::PARAM_INT);
+				$stmt->execute();
+			}
+			return true;
+		} catch (PDOException $e) {
+			// Manejo de error
+			return false;
+		}
+	}
+
+
+
+	//borrar eventos y tickets
+	public static function borrarEventoYTickets($idEvent)
+	{
+		try {
+			$db = self::conectar();
+			// Inicia transacción
+			$db->beginTransaction();
+
+			// Borrar tickets asociados
+			$stmt = $db->prepare("DELETE FROM tickets_public WHERE id_event = :idEvent");
+			$stmt->execute([':idEvent' => $idEvent]);
+
+			// Borrar evento
+			$stmt = $db->prepare("DELETE FROM events_public WHERE id_event = :idEvent");
+			$stmt->execute([':idEvent' => $idEvent]);
+
+			// Confirma los cambios
+			$db->commit();
+
+			return true;
+		} catch (Exception $e) {
+			// En caso de error, revierte los cambios
+			$db->rollback();
+			return false;
+		}
+	}
+
+
+
+	//borrar reserva
+	public static function borrarReserva($idEvent)
+	{
+		try {
+			$db = self::conectar();
+			// Inicia transacción
+			$db->beginTransaction();
+
+			// Borrar reserva
+			$stmt = $db->prepare("DELETE FROM `events_private` WHERE `events_private`.`id_event` = :idEvent");
+			$stmt->execute([':idEvent' => $idEvent]);
+
+			// Confirma los cambios
+			$db->commit();
+
+			return true;
+		} catch (Exception $e) {
+			// En caso de error, revierte los cambios
+			$db->rollback();
+			return false;
+		}
+	}
+
+	// agrega las funciones duplicarEvento y duplicarTicketsDelEvento 
+	public static function duplicarEvento($idEventoOriginal)
+	{
+		try {
+			$db = Conexion::conectar();
+			// Primero, obtenemos los datos del evento original
+			$stmt = $db->prepare("SELECT * FROM events_public WHERE id_event = :idEventoOriginal");
+			$stmt->bindParam(":idEventoOriginal", $idEventoOriginal, PDO::PARAM_INT);
+			$stmt->execute();
+			$eventoOriginal = $stmt->fetch(PDO::FETCH_ASSOC);
+			$nombreEventoDuplicado = $eventoOriginal['name_event'] . ' (Evento duplicado)';
+			$eventoOriginal['active_event'] = 0;
+
+			if ($eventoOriginal) {
+				$stmt = $db->prepare("INSERT INTO events_public (id_type_event, id_user, id_region, id_city, id_plan, date_event, name_event, name_location, location, organizer, value_OLD, value_commission_OLD, value_plan_OLD, desc_event, audience_event, payment_event, img, id_multimedia_featured, verifier_event, active_event) VALUES (:id_type_event, :id_user, :id_region, :id_city, :id_plan, :date_event, :name_event, :name_location, :location, :organizer, :value_OLD, :value_commission_OLD, :value_plan_OLD, :desc_event, :audience_event, :payment_event, :img, :id_multimedia_featured, :verifier_event, :active_event)");
+				// Vincular parámetros. Asegúrate de vincular todos los necesarios.
+				$stmt->bindParam(":id_type_event", $eventoOriginal['id_type_event']);
+				$stmt->bindParam(":id_user", $eventoOriginal['id_user']);
+				$stmt->bindParam(":id_region", $eventoOriginal['id_region']);
+				$stmt->bindParam(":id_city", $eventoOriginal['id_city']);
+				$stmt->bindParam(":id_plan", $eventoOriginal['id_plan']);
+				$stmt->bindParam(":date_event", $eventoOriginal['date_event']);
+				$stmt->bindParam(":name_event", $nombreEventoDuplicado, PDO::PARAM_STR);
+				$stmt->bindParam(":name_location", $eventoOriginal['name_location']);
+				$stmt->bindParam(":location", $eventoOriginal['location']);
+				$stmt->bindParam(":organizer", $eventoOriginal['organizer']);
+				$stmt->bindParam(":value_OLD", $eventoOriginal['value_OLD']);
+				$stmt->bindParam(":value_commission_OLD", $eventoOriginal['value_commission_OLD']);
+				$stmt->bindParam(":value_plan_OLD", $eventoOriginal['value_plan_OLD']);
+				$stmt->bindParam(":desc_event", $eventoOriginal['desc_event']);
+				$stmt->bindParam(":audience_event", $eventoOriginal['audience_event']);
+				$stmt->bindParam(":payment_event", $eventoOriginal['payment_event']);
+				$stmt->bindParam(":img", $eventoOriginal['img']);
+				$stmt->bindParam(":id_multimedia_featured", $eventoOriginal['id_multimedia_featured']);
+				$stmt->bindParam(":verifier_event", $eventoOriginal['verifier_event']);
+				$stmt->bindParam(":active_event", $eventoOriginal['active_event']);
+
+				if ($stmt->execute()) {
+					// Obtener el ID del nuevo evento creado
+					$idNuevoEvento = $db->lastInsertId();
+					return ['success' => true, 'id_event' => $idNuevoEvento];
+				}
+			}
+			return ['success' => false];
+		} catch (PDOException $e) {
+			return ['success' => false, 'error' => $e->getMessage()];
+		}
+	}
+
+	public static function duplicarTicketsDelEvento($idEventoOriginal, $idNuevoEvento)
+	{
+		try {
+			$db = Conexion::conectar();
+			// Obtener los tickets del evento original
+			$stmt = $db->prepare("SELECT * FROM tickets_public WHERE id_event = :idEventoOriginal");
+			$stmt->bindParam(":idEventoOriginal", $idEventoOriginal, PDO::PARAM_INT);
+			$stmt->execute();
+			$tickets = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+			if ($tickets) {
+				foreach ($tickets as $ticket) {
+					// Insertamos cada ticket en el nuevo evento
+					$stmt = $db->prepare("INSERT INTO tickets_public (id_event, ticket_name, ticket_value, ticket_commission, ticket_audience, ticket_dateStart, ticket_dateEnd) VALUES (:id_event, :ticket_name, :ticket_value, :ticket_commission, :ticket_audience, :ticket_dateStart, :ticket_dateEnd)");
+					$stmt->bindParam(":id_event", $idNuevoEvento);
+					$stmt->bindParam(":ticket_name", $ticket['ticket_name']);
+					$stmt->bindParam(":ticket_value", $ticket['ticket_value']);
+					$stmt->bindParam(":ticket_commission", $ticket['ticket_commission']);
+					$stmt->bindParam(":ticket_audience", $ticket['ticket_audience']);
+					$stmt->bindParam(":ticket_dateStart", $ticket['ticket_dateStart']);
+					$stmt->bindParam(":ticket_dateEnd", $ticket['ticket_dateEnd']);
+					$stmt->execute();
+					// Considera manejar errores específicos o confirmación para cada ticket
+				}
+				return ['success' => true];
+			}
+			return ['success' => false, 'message' => 'No se encontraron tickets para duplicar.'];
+		} catch (PDOException $e) {
+			return ['success' => false, 'error' => $e->getMessage()];
+		}
+	}
+
+	// Función en el modelo para cambiar el estado del evento 
+	public static function cambiarEstadoEvento($idEvento, $activeEvent)
+	{
+		try {
+			$db = self::conectar();
+			$stmt = $db->prepare("UPDATE events_public SET active_event = :active_event WHERE id_event = :id_event");
+			$stmt->bindParam(':active_event', $activeEvent, PDO::PARAM_INT);
+			$stmt->bindParam(':id_event', $idEvento, PDO::PARAM_INT);
+
+			return $stmt->execute();
+		} catch (PDOException $e) {
+			// Log o manejo del error
+			return false;
+		}
+	}
+
+	// Función en el modelo para cambiar el estado del Reserva
+	public static function cambiarEstadoReserva($idEvento, $activeEvent)
+	{
+		try {
+			$db = self::conectar();
+			$stmt = $db->prepare("UPDATE events_private  SET status_event = :status_event WHERE id_event = :id_event");
+			$stmt->bindParam(':status_event', $activeEvent, PDO::PARAM_STR);
+			$stmt->bindParam(':id_event', $idEvento, PDO::PARAM_INT);
+
+			return $stmt->execute();
+		} catch (PDOException $e) {
+			// Log o manejo del error
+			return false;
+		}
+	}
+
+
+	// Mostrar reservar con paginador
+	// public static function obtenerReservasPorUsuario($id_usuario, $offset, $numPorPagina)
+	// {
+	// 	$sql = "SELECT ep.*, p.* FROM events_private ep JOIN plans p ON ep.id_plan = p.id_plan AND ep.id_plan_key = p.id_plan_key WHERE p.id_user = :id_user ORDER BY ep.id_plan_key DESC LIMIT :offset, :numPorPagina";
+	// 	$stmt = self::conectar()->prepare($sql);
+	// 	$stmt->bindValue(':id_user', $id_usuario, PDO::PARAM_INT);
+	// 	$stmt->bindValue(':offset', $offset, PDO::PARAM_INT);
+	// 	$stmt->bindValue(':numPorPagina', $numPorPagina, PDO::PARAM_INT);
+	// 	$stmt->execute();
+	// 	return $stmt->fetchAll(PDO::FETCH_ASSOC);
+	// }
+
+	// Mostrar reservar con paginador y agrego JOIN de nombre de Ciudades y Regiones
+	public static function obtenerReservasPorUsuario($id_usuario, $offset, $numPorPagina)
+	{
+		$sql = "SELECT ep.*, p.*, c.name_city, r.name_region 
+				FROM events_private ep 
+				JOIN plans p ON ep.id_plan = p.id_plan AND ep.id_plan_key = p.id_plan_key 
+				JOIN cities c ON ep.id_city = c.id_city 
+				JOIN regions_cities rc ON c.id_city = rc.id_city 
+				JOIN regions r ON rc.id_region = r.id_region 
+				WHERE p.id_user = :id_user 
+				ORDER BY ep.id_plan_key DESC 
+				LIMIT :offset, :numPorPagina";
+		$stmt = self::conectar()->prepare($sql);
+		$stmt->bindValue(':id_user', $id_usuario, PDO::PARAM_INT);
+		// El bindValue para LIMIT debe ser específico para manejar correctamente los valores enteros
+		$stmt->bindParam(':offset', $offset, PDO::PARAM_INT);
+		$stmt->bindParam(':numPorPagina', $numPorPagina, PDO::PARAM_INT);
+		$stmt->execute();
+		return $stmt->fetchAll(PDO::FETCH_ASSOC);
+	}
+
 
 
 	public function datosUsuario($id)

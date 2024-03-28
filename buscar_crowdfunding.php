@@ -333,7 +333,7 @@ $crowfundingFinanciados = Consultas::crowdFinanciados();
                         <div class="single-case">
                             <div class="case-img ">
                                 <a href="crowdfunding.php?c=' . $eventosRelacionados[$k]["id_project"] . '">
-                                    <img class="imgEvent tamano-1" src="https://echomusic.cl/images/avatars/' . $eventosRelacionados[$k]["id_user"] . '.jpg" height="100%"  alt="case"/> 
+                                    <img class="imgEvent tamano-1" src="https://echomusic.net/dashboard/images/usuarios/' . $eventosRelacionados[$k]["id_user"] . '.jpg" height="100%"  alt="case"/> 
                                 </a>
                             </div>
 
@@ -446,7 +446,7 @@ $crowfundingFinanciados = Consultas::crowdFinanciados();
                         <div class="single-case">
                             <div class="case-img ">
                                 <a href="crowdfunding.php?c=' . $crowfundingFinanciados[$k]["id_project"] . '">
-                                    <img class="imgEvent tamano-1" src="https://echomusic.cl/images/avatars/' . $crowfundingFinanciados[$k]["id_user"] . '.jpg" height="100%"  alt="case"/> 
+                                    <img class="imgEvent tamano-1" src="https://echomusic.net/dashboard/images/usuarios/' . $crowfundingFinanciados[$k]["id_user"] . '.jpg" height="100%"  alt="case"/> 
                                 </a>
                             </div>
 

@@ -74,7 +74,7 @@ $diff = $date1->diff($date2);
                         <div class="row">
                             <div class="col-6 col-sm-4">
                                 <a href="artistas.php?a=<?php echo $respuesta[0]['id_user']; ?>">
-                                    <img style="height: 100px; width: 100px; border-radius: 50%;" class="responsiveArtista" src="https://echomusic.cl/images/avatars/<?php echo $respuesta[0]['id_user']; ?>.jpg" alt="descatado" />
+                                    <img style="height: 100px; width: 100px; border-radius: 50%;" class="responsiveArtista" src="https://echomusic.net/dashboard/images/usuarios/<?php echo $respuesta[0]['id_user']; ?>.jpg" alt="descatado" />
                                 </a>
                                 <p>Comparte:</p>
                                 <span style="text-align: right;">

@@ -1,35 +1,34 @@
 <?php
 session_start();
-require_once "../model/model.php";
+require_once "../model/model.php"; // Asegúrate de incluir correctamente tu archivo del modelo
 
-// Asegúrate de que el formulario haya sido enviado
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-  // Recopilar datos del formulario
+$response = ['success' => false, 'message' => 'Error al guardar el plan'];
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+  $valueAndCommission = $_POST['value_plan'] * 0.1;
+
   $data = [
-    'plan_type1' => $_POST['plan_type1'] ?? '',
-    'value_plan1' => $_POST['value_plan1'] ?? '',
-    'hours_plan1' => $_POST['hours_plan1'] ?? 0,
-    'minutes_plan1' => $_POST['minutes_plan1'] ?? 0,
-    'backline_plan1' => $_POST['backline_plan1'] ?? 0,
-    'soundReinforcement_plan1' => $_POST['soundReinforcement_plan1'] ?? 0,
-    'soundEngineer_plan1' => $_POST['soundEngineer_plan1'] ?? 0,
-    'nArtists_plan1' => $_POST['nArtists_plan1'] ?? 0,
-    'plan_desc1' => $_POST['plan_desc1'] ?? ''
+    'id_user' => $_POST['id_user'],
+    'id_name_plan' => $_POST['id_name_plan'],
+    'value_plan' => $_POST['value_plan'],
+    'commission_plan' => $valueAndCommission,
+    'desc_plan' => $_POST['desc_plan'],
+    'active' => 'active',
+    'duration_hours' => $_POST['duration_hours'],
+    'duration_minutes' => $_POST['duration_minutes'],
+    'backline' => $_POST['backline'],
+    'sound_reinforcement' => $_POST['sound_reinforcement'],
+    'sound_engineer' => $_POST['sound_engineer'],
+    'artists_amount' => $_POST['artists_amount']
   ];
 
-  // Validaciones adicionales pueden ir aquí
-
-  // Crear instancia de la clase Consultas y llamar al método para insertar el plan
-  $consultas = new Consultas();
-  $resultado = $consultas->insertPlan($data);
-
-  // Enviar respuesta
-  if ($resultado) {
-    echo json_encode(['success' => true]);
+  if (Consultas::guardarPlan($data)) {
+    $response['success'] = true;
+    $response['message'] = 'Plan guardado con éxito';
   } else {
-    echo json_encode(['success' => false, 'message' => 'Error al guardar el plan.']);
+    $response['message'] = 'Error al intentar guardar el plan';
   }
-} else {
-  // Método de solicitud no permitido
-  echo json_encode(['success' => false, 'message' => 'Método de solicitud no válido.']);
 }
+
+echo json_encode($response);

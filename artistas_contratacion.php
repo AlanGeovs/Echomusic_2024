@@ -48,7 +48,7 @@ $resultadosEventosPasa = Consultas::eventosPasadosArtista($respuesta[0]["id_user
                 <div class="row w-100">
                     <div class="col-lg-4 col-sm-4 text-center d-flex flex-column justify-content-center">
                         <a href="#">
-                            <img class="responsiveArtista" src="https://echomusic.cl/images/avatars/<?php echo $respuesta[0]["id_user"]; ?>.jpg" alt="destacado" />
+                            <img class="responsiveArtista" src="https://echomusic.net/dashboard/images/usuarios/<?php echo $respuesta[0]["id_user"]; ?>.jpg" alt="destacado" />
                         </a>
                     </div>
                     <div class="col-lg-8 col-sm-8 feature-tittle d-flex align-items-center justify-content-center">
@@ -141,6 +141,7 @@ $resultadosEventosPasa = Consultas::eventosPasadosArtista($respuesta[0]["id_user
 
                     <form id="contratarTarifa" method="post" enctype="multipart/form-data">
                         <input type="hidden" id="id_plan" name="id_plan" value="<?php echo $tarifasArtista[0]["id_plan"]; ?>">
+                        <input type="hidden" id="id_plan_key" name="id_plan_key" value="<?php echo $tarifasArtista[0]["id_plan_key"]; ?>">
                         <input type="hidden" id="value_plan_event" name="value_plan_event" value="<?php echo $tarifasArtista[0]["value_plan"]; ?>">
                         <input type="hidden" id="id_name_plan" name="id_name_plan" value="<?php echo $id_name_plan; ?>">
                         <!-- Evento -->

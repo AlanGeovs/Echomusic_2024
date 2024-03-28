@@ -70,7 +70,7 @@ $resultadosEventosPasa = Consultas::eventosPasadosArtista($respuesta[0]["id_user
                 <div class="single-case text-center">
                     <div class="simple-evento-artista">
                         <a href="#">
-                            <img class="responsiveArtista" src="https://echomusic.cl/images/avatars/<?php echo $respuesta[0]["id_user"]; ?>.jpg" alt="descatado" />
+                            <img class="responsiveArtista" src="https://echomusic.net/dashboard/images/usuarios/<?php echo $respuesta[0]["id_user"]; ?>.jpg" alt="descatado" />
                         </a>
                     </div>
 
@@ -339,7 +339,7 @@ if (empty($respuestaCrowdfunding)) {
                             <!--img-->
                             <div class="col-12 col-sm-6  choose-img">
                                 <a href="crowdfunding.php?c=<?php echo $respuestaCrowdfunding[0]["id_project"]; ?>">
-                                    <img src="https://echomusic.cl/images/avatars/<?php echo $respuesta[0]["id_user"]; ?>.jpg" alt="<?php echo $respuesta[0]["nick_user"]; ?>" width="350px" />
+                                    <img src="https://echomusic.net/dashboard/images/usuarios/<?php echo $respuesta[0]["id_user"]; ?>.jpg" alt="<?php echo $respuesta[0]["nick_user"]; ?>" width="350px" />
                                 </a>
                             </div>
                             <!--Descripción-->
@@ -475,7 +475,7 @@ if (empty($tarifasArtista[0]["value_plan"])) {
                             <div class="single-blog">
                                 <div class="blog-img">
                                     <a href="blog-details.html">
-                                        <img style="height: 200px; width: 200px; border-radius: 50%;" src="https://echomusic.cl/images/avatars/<?php echo $respuesta[0]["id_user"]; ?>.jpg" class="responsiveArtista" alt="" />
+                                        <img style="height: 200px; width: 200px; border-radius: 50%;" src="https://echomusic.net/dashboard/images/usuarios/<?php echo $respuesta[0]["id_user"]; ?>.jpg" class="responsiveArtista" alt="" />
                                     </a>
                                 </div>
 

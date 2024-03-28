@@ -8,17 +8,17 @@ if (!isset($_SESSION["id_user"])) {
 }
 
 $id_usuario = $_SESSION["id_user"];
-$numPorPagina = 5; // Ajustar según se necesite
+$numPorPagina = 10; // Ajustar según se necesite
 $paginaActual = isset($_GET['pagina']) ? (int)$_GET['pagina'] : 1;
 $offset = ($paginaActual - 1) * $numPorPagina;
 
-$eventos = Consultas::obtenerEventosPorUsuario($id_usuario, $offset, $numPorPagina);
-$totalEventos = Consultas::totalEventos($id_usuario);
-$totalPaginas = ceil($totalEventos / $numPorPagina);
+$reservas = Consultas::obtenerReservasPorUsuario($id_usuario, $offset, $numPorPagina);
+$totalReservas = Consultas::totalReservas($id_usuario);
+$totalPaginas = ceil($totalReservas / $numPorPagina);
 
 echo json_encode([
-    'eventos' => $eventos,
+    'reservas' => $reservas,
     'paginaActual' => $paginaActual,
     'totalPaginas' => $totalPaginas,
-    'totalEventos' => $totalEventos // Opcional, si deseas mostrar el total de eventos en la UI
+    'totalReservas' => $totalReservas //  
 ]);

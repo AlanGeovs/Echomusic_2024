@@ -93,12 +93,14 @@ $resultado = Consultas::crearEventos($data);
 if ($resultado['success']) {
     // Obtener el ID del evento creado
     $idEvento = Consultas::obtenerIdEventPorImagen($data['img']);
+    //función para saber cuántos tickets se han agregado a ese evento
+    $cantidadEntradas = $_POST['contadorEntradas'];
 
     if ($idEvento) {
         // Comprueba si el evento es de pago y procesa los tickets
         if ($_POST['id_type_event'] == '2') { // Si el evento es de pago
             // Suponiendo que tienes un contador o algún método para saber cuántos tickets se han agregado
-            for ($i = 1; $i <= 2; $i++) {
+            for ($i = 1; $i <= $cantidadEntradas; $i++) {
                 if ($i == 1) {
                     $ticket = [
                         'ticket_name' => $_POST['ticket_name'],
