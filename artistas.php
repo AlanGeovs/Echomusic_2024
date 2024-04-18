@@ -47,7 +47,15 @@ $resultadosEventosPasa = Consultas::eventosPasadosArtista($respuesta[0]["id_user
                 <div class="  text-center">
                     <div class=" ">
                         <a href="#">
-                            <img class="responsiveArtista" src="https://echomusic.net/dashboard/images/usuarios/<?php echo $respuesta[0]["id_user"]; ?>.jpg" alt="descatado" />
+                            <?php
+
+                            if ($respuesta[0]["picture_ready"] == 0) {
+                                echo   '<img class="responsiveArtista" src="https://echomusic.net/dashboard/images/usuarios/profile_default.jpg" height="100%"  alt="descatado"/> ';
+                            } else {
+                                echo   '<img class="responsiveArtista" src="https://echomusic.net/dashboard/images/usuarios/' . $respuesta[0]["id_user"] . '.jpg" height="100%"  alt="case"/> ';
+                            }
+                            ?>
+                            <!-- <img class="responsiveArtista" src="https://echomusic.net/dashboard/images/usuarios/<?php echo $respuesta[0]["id_user"]; ?>.jpg" alt="descatado" /> -->
                         </a>
 
                         <h2 class="text-center"> <?php echo $respuesta[0]["nick_user"]; ?></h2>
@@ -114,11 +122,12 @@ $resultadosEventosPasa = Consultas::eventosPasadosArtista($respuesta[0]["id_user
 
                 $respuestaCiudadRegion = Consultas::buscaCiudadRegion($respuesta[0]["id_city"], $respuesta[0]["id_region"]);
                 $respuestaMusician = Consultas::buscaTipoArtista($respuesta[0]["id_musician"]);
-                $respuestaBuscaGenero = Consultas::buscarGenero($respuesta[0]["id_user"]);
+                $respuestaBuscaGenero = Consultas::buscarGeneroAdmin($respuesta[0]["id_user"]);
 
                 echo "<span class='flaticon-award'></span> " . $respuestaCiudadRegion[0]["name_region"] . " / " . $respuestaCiudadRegion[0]["name_city"];
                 echo "  <span class='flaticon-award'></span> " . $respuestaMusician[0]["name_musician"];
                 echo "  <span class='flaticon-award'></span> " . $respuestaBuscaGenero["name_genre"];
+                echo "  <span class='flaticon-award'></span> " . $respuestaBuscaGenero["name_subGenre"];
                 ?>
 
 
@@ -587,7 +596,15 @@ if (empty($respuestaCrowdfunding)) {
                             <!--img-->
                             <div class="col-12 col-sm-6  choose-img">
                                 <a href="crowdfunding.php?c=<?php echo $respuestaCrowdfunding[0]["id_project"]; ?>">
-                                    <img src="https://echomusic.net/dashboard/images/usuarios/<?php echo $respuesta[0]["id_user"]; ?>.jpg" alt="<?php echo $respuesta[0]["nick_user"]; ?>" width="350px" />
+                                    <?php
+
+                                    if ($respuesta[0]["picture_ready"] == 0) {
+                                        echo   '<img class="responsiveArtista" src="https://echomusic.net/dashboard/images/usuarios/profile_default.jpg" alt="' . $respuesta[0]["nick_user"] . '" width="350px" /> ';
+                                    } else {
+                                        echo   '<img class="responsiveArtista" src="https://echomusic.net/dashboard/images/usuarios/' . $respuesta[0]["id_user"] . '.jpg"  alt="' . $respuesta[0]["nick_user"] . '" width="350px" /> ';
+                                    }
+                                    ?>
+                                    <!-- <img src="https://echomusic.net/dashboard/images/usuarios/<?php echo $respuesta[0]["id_user"]; ?>.jpg" alt="<?php echo $respuesta[0]["nick_user"]; ?>" width="350px" /> -->
                                 </a>
                             </div>
                             <!--Descripción-->

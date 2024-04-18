@@ -34,6 +34,7 @@ if ($respuesta == "") {
 	$_SESSION["nick_user"] = $respuesta["nick_user"];
 	$_SESSION["id_type_user"] = $respuesta["id_type_user"];
 	$_SESSION["tipo"] = $respuesta["tipo"];
+	$_SESSION["id_type_user"] = $respuesta["id_type_user"];
 
 	$res = Usuarios::registrarBitacora($respuesta["id_user"], "bitacora", "Inició Sesión");
 	// $res = Consultas::registrarBitacora($respuesta["usuario"], "bitacora", "Inició Sesión");

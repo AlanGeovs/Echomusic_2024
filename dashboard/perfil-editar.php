@@ -292,7 +292,7 @@ if (!isset($_SESSION["id_user"])) {
                                     <?php
                                     if ($portada == null) {
                                         echo "<div class='text-center '>Agregar foto de portada</div>";
-                                        echo Consultas::botonAgregar('galleryModal');
+                                        echo Consultas::botonAgregar('portadaModal');
                                     } else {
                                         echo "<div class='text-center '>  <img src=\"" . $portada[0]['name_photo'] . "\"  ></div>";
                                         // echo Consultas::botonEditar('editarPortada');
@@ -477,7 +477,7 @@ if (!isset($_SESSION["id_user"])) {
                                                 Ver y Borrar Fotos
                                             </button>
                                             <!-- Button trigger modal -->
-                                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#galleryModal">
+                                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#galleryModalGaleria">
                                                 Insertar Galería
                                             </button>
 
@@ -1035,7 +1035,7 @@ if (!isset($_SESSION["id_user"])) {
 
 
         <!-- Modal Fotos -->
-        <div class="modal fade" id="galleryModal" tabindex="-1" aria-labelledby="galleryModalLabel" aria-hidden="true">
+        <div class="modal fade" id="galleryModalGaleria" tabindex="-1" aria-labelledby="galleryModalLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -1043,7 +1043,7 @@ if (!isset($_SESSION["id_user"])) {
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">X</button>
                     </div>
                     <div class="modal-body">
-                        <form id="uploadForm" enctype="multipart/form-data">
+                        <form id="uploadFormGaleria" enctype="multipart/form-data">
                             <input type="file" name="images[]" id="galleryImages" multiple accept="image/*">
                             <input type="hidden" name="id_user" value="<?php echo $id; ?>">
                             <p>Seleccione hasta 10 imágenes (JPG, PNG).</p>
@@ -1052,7 +1052,7 @@ if (!isset($_SESSION["id_user"])) {
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                        <button type="button" class="btn btn-primary" onclick="uploadImages()">Subir Imágenes</button>
+                        <button type="button" class="btn btn-primary" onclick="uploadImagesGaleria()">Subir Imágenes</button>
                     </div>
                 </div>
             </div>
@@ -1199,7 +1199,7 @@ if (!isset($_SESSION["id_user"])) {
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">X</button>
                     </div>
                     <div class="modal-body">
-                        <form id="uploadForm" enctype="multipart/form-data">
+                        <form id="uploadFormPortada" enctype="multipart/form-data">
                             <input type="file" name="images[]" id="galleryImages" multiple accept="image/*">
                             <input type="hidden" name="id_user" value="<?php echo $id; ?>">
                             <p>Seleccione una imagen (JPG, PNG).</p>
@@ -1208,11 +1208,10 @@ if (!isset($_SESSION["id_user"])) {
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                        <button type="button" class="btn btn-primary" onclick="uploadImages()">Subir foto</button>
+                        <button type="button" class="btn btn-primary" onclick="uploadImagesPortada()">Subir foto</button>
                     </div>
                 </div>
             </div>
-        </div> >
         </div>
 
         <!-- Modal de Confirmación de Borrar  Foto Portada -->
@@ -1455,18 +1454,52 @@ if (!isset($_SESSION["id_user"])) {
                                 data: formData,
                                 processData: false,
                                 contentType: false,
-                                success: function() {
+
+                                success: function(response) {
+                                    console.log(response); // Manejar la respuesta del servidor
+                                    swal("¡Éxito!", "Foto de perfil subida correctamente.", "success");
                                     $('#imageModal').modal('hide');
-                                    // Actualiza la imagen de perfil en la página o muestra un mensaje de éxito
+                                    // Recargar la página o actualizar la vista para mostrar las nuevas imágenes
+
                                     location.reload();
                                 },
-                                error: function() {
-                                    alert('Hubo un error al subir la imagen.');
-                                },
+                                error: function(xhr, status, error) {
+                                    console.error("Error en la subida: ", xhr, status, error);
+                                    swal("Error", "Ha ocurrido un error al subir las imágenes.", "error");
+                                }
                             });
                         });
                     }
                 });
+
+                // function uploadImagesPortada() {
+                //     var formData = new FormData(document.getElementById('uploadFormPortada'));
+                //     $.ajax({
+                //         url: 'includes/upload_images_portada.php', // Endpoint para la subida de imágenes
+                //         type: 'POST',
+                //         data: formData,
+                //         contentType: false,
+                //         processData: false,
+                //         beforeSend: function() {
+                //             swal("Subiendo...", "Por favor espera mientras las imágenes se cargan.", "info", {
+                //                 buttons: false,
+                //                 timer: 3000,
+                //             });
+                //         },
+                //         success: function(response) {
+                //             console.log(response); // Manejar la respuesta del servidor
+                //             swal("¡Éxito!", "Foto de portada subidas correctamente.", "success");
+                //             $('#portadaModal').modal('hide');
+                //             // Recargar la página o actualizar la vista para mostrar las nuevas imágenes
+
+                //             location.reload();
+                //         },
+                //         error: function(xhr, status, error) {
+                //             console.error("Error en la subida: ", xhr, status, error);
+                //             swal("Error", "Ha ocurrido un error al subir las imágenes.", "error");
+                //         }
+                //     });
+                // }
             });
         </script>
 
@@ -1479,6 +1512,7 @@ if (!isset($_SESSION["id_user"])) {
                 }, 10000);
             });
         </script>
+
         <!-- Script para contador de caracteres en descripción     -->
         <script type="text/javascript">
             $(document).ready(function() {
@@ -1523,7 +1557,7 @@ if (!isset($_SESSION["id_user"])) {
                 var videoTitle = $('#videoTitle').val();
                 var videoUrl = $('#videoUrl').val();
 
-                // Suponiendo que tienes un endpoint 'editar_video.php' para manejar la edición del video
+                // endpoint 'editar_video.php' para manejar la edición del video
                 $.post('includes/editar_videos.php', {
                     videoId: videoId,
                     videoTitle: videoTitle,
@@ -1733,10 +1767,12 @@ if (!isset($_SESSION["id_user"])) {
 
 
         <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-        <!-- Subida de imágenes -->
+
+
+        <!-- Subida de imágenes de Galeria -->
         <script type="text/javascript">
-            function uploadImages() {
-                var formData = new FormData(document.getElementById('uploadForm'));
+            function uploadImagesGaleria() {
+                var formData = new FormData(document.getElementById('uploadFormGaleria'));
                 $.ajax({
                     url: 'includes/upload_images.php', // Endpoint para la subida de imágenes
                     type: 'POST',
@@ -1752,7 +1788,7 @@ if (!isset($_SESSION["id_user"])) {
                     success: function(response) {
                         console.log(response); // Manejar la respuesta del servidor
                         swal("¡Éxito!", "Imágenes subidas correctamente.", "success");
-                        $('#galleryModal').modal('hide');
+                        $('#galleryModalGaleria').modal('hide');
                         // Recargar la página o actualizar la vista para mostrar las nuevas imágenes
                     },
                     error: function(xhr, status, error) {
@@ -1765,8 +1801,8 @@ if (!isset($_SESSION["id_user"])) {
 
         <!-- Subida de Foto Portada -->
         <script type="text/javascript">
-            function uploadImages() {
-                var formData = new FormData(document.getElementById('uploadForm'));
+            function uploadImagesPortada() {
+                var formData = new FormData(document.getElementById('uploadFormPortada'));
                 $.ajax({
                     url: 'includes/upload_images_portada.php', // Endpoint para la subida de imágenes
                     type: 'POST',
@@ -1973,7 +2009,7 @@ if (!isset($_SESSION["id_user"])) {
                     type: 'GET',
                     dataType: 'json',
                     success: function(response) {
-                        // Suponiendo que response es un array de objetos con id y nombre
+                        // response es un array de objetos con id y nombre
                         var opciones = response.map(function(instrumento) {
                             return `<option value="${instrumento.id_instrument}">${instrumento.name_instrument}</option>`;
                         });
@@ -1995,7 +2031,7 @@ if (!isset($_SESSION["id_user"])) {
                 //         type: 'GET',
                 //         dataType: 'json',
                 //         success: function(response) {
-                //             // Suponiendo que response es un array de objetos con id y nombre
+                //             //  response es un array de objetos con id y nombre
                 //             var opciones = response.map(function(instrumento) {
                 //                 return `<option value="${instrumento.id_instrument}">${instrumento.name_instrument}</option>`;
                 //             });

@@ -44,7 +44,7 @@ $idUsuario = $respuesta[0]["id_user"];
 
 // Determinar la página actual
 $paginaActual = isset($_GET['page']) ? (int)$_GET['page'] : 1;
-$resultadosPorPagina = 3;  // Número de resultados por página
+$resultadosPorPagina = 9;  // Número de resultados por página
 $inicio = ($paginaActual - 1) * $resultadosPorPagina;
 
 //Buscar Género
@@ -58,7 +58,8 @@ $respuestaEventoCiudadRegion = Consultas::buscaCiudadRegion($respuesta[0]["id_ci
 
 // $condiciones = "WHERE e.active_event=1 AND e.date_event >= CURDATE()";
 // Construcción de las condiciones como se describió anteriormente
-$condiciones = "WHERE e.active_event=1 AND e.date_event >= CURDATE()"; // Añadir condiciones basadas en $_GET
+$condiciones = "WHERE active_event=1 AND date_event >= CURDATE()"; // Añadir condiciones basadas en $_GET
+// $condiciones = "WHERE e.active_event=1 AND e.date_event >= CURDATE()"; // Añadir condiciones basadas en $_GET
 
 if (!empty($id)) {
     // Suponiendo que 'name_event' es el campo a buscar para 'r'
@@ -79,7 +80,8 @@ if (!empty($region)) {
 
 
 
-$query = "SELECT e.*, t.* FROM events_public AS e JOIN tickets_public AS t ON e.id_event = t.id_event " . $condiciones . " GROUP BY e.id_user ORDER BY e.date_event ASC ";
+// $query = "SELECT e.*, t.* FROM events_public AS e JOIN tickets_public AS t ON e.id_event = t.id_event " . $condiciones . " GROUP BY e.id_event ORDER BY e.date_event ASC ";
+$query = "SELECT * FROM events_public " . $condiciones . "  ORDER BY date_event ASC ";
 
 $query .= " LIMIT $inicio, $resultadosPorPagina";
 

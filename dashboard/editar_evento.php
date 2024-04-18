@@ -6,6 +6,7 @@ require_once "model/model.php";
 $id = $_SESSION["id_user"];
 
 $idEvento = $_GET['id_evento']; // Asegúrate de validar y sanear este valor
+$edit = $_GET['edit']; // Asegúrate de validar y sanear este valor
 
 $datosEvento = Consultas::obtenerEventoPorId($idEvento); //  devuelve los datos del evento
 $entradasEvento = Consultas::obtenerEntradasPorEvento($idEvento); //  devuelve las entradas del evento
@@ -16,7 +17,6 @@ if (!isset($_SESSION["id_user"])) {
 } else {
 ?>
 
-    ?>
 
     <!DOCTYPE html>
     <html lang="es">
@@ -119,8 +119,6 @@ if (!isset($_SESSION["id_user"])) {
             <div class="plane-container">
                 <div class="preloader-wrapper small active">
                     <div class="spinner-layer spinner-blue-only">
-                        +*
-
 
                         <div class="circle-clipper left">
                             <div class="circle"></div>
@@ -222,6 +220,7 @@ if (!isset($_SESSION["id_user"])) {
                                             </div>
                                             <div class="card-header white">
                                                 <h2>Edita los datos de tu evento</h2>
+                                                <?php echo "Edit: " . $edit; ?>
                                             </div>
 
                                             <div class="card-body">
@@ -305,7 +304,7 @@ if (!isset($_SESSION["id_user"])) {
                                                             <div class="col-md-6 mb-6">
                                                                 <label for="validationCustom01">Fecha</label>
                                                                 <div class="input-group">
-                                                                    <input type="text" class="date-time-picker form-control" id="date_event" name="date_event" data-options='{"timepicker":true, "format":"d-m-Y H:i"}' value="<?php echo $fechaEventoFormato; ?>">
+                                                                    <input type="text" class="date-time-picker form-control" id="date_event" name="date_event" data-options='{"timepicker":true, "format":"d-m-Y H:i", "step":30}' value="<?php echo $fechaEventoFormato; ?>">
                                                                     <span class="input-group-append">
                                                                         <span class="input-group-text add-on white">
                                                                             <i class="icon-calendar"></i>
@@ -350,36 +349,51 @@ if (!isset($_SESSION["id_user"])) {
                                                         <div id="camposAdicionales">
 
                                                             <!-- Falta agregar uan condicional para que si está editando un evento que era GRATUITO y lo cambia a DE PAGO, muestre nuevamente los campos adicionales. si queito el if de abajo funciona pero debo quietar el indice 0 de camposAdicionales cuando es gratuito. Quizas porvar con un camposAdicionales2 -->
-                                                            <?php if ($datosEvento['id_type_event'] == 2) :
+                                                            <?php //if ($datosEvento['id_type_event'] == 2) :
                                                             ?>
-                                                                <?php foreach ($entradasEvento as $index => $entrada) : ?>
-                                                                    <div class="entrada" data-index="<?php echo $index; ?>">
-                                                                        <div class="form-row">
-                                                                            <div class="col-md-3 mb-3">
-                                                                                <label for="ticket_name<?php echo $index; ?>">Nombre de Entrada</label>
-                                                                                <input type="text" class="form-control" id="ticket_name<?php echo $index; ?>" name="ticket_name[<?php echo $index; ?>]" placeholder="Nombre de la entrada" value="<?php echo htmlspecialchars($entrada['ticket_name']); ?>">
-                                                                                <input type="hidden" class="form-control" id="id_ticket<?php echo $index; ?>" name="id_ticket[<?php echo $index; ?>]" value="<?php echo htmlspecialchars($entrada['id_ticket']); ?>">
+                                                            <?php foreach ($entradasEvento as $index => $entrada) : ?>
+                                                                <div class="entrada" data-index="<?php echo $index; ?>">
+                                                                    <div class="form-row">
+                                                                        <div class="col-md-3 mb-3">
+                                                                            <label for="ticket_name<?php echo $index; ?>">Nombre de Entrada</label>
+                                                                            <input type="text" class="form-control" id="ticket_name<?php echo $index; ?>" name="ticket_name[<?php echo $index; ?>]" placeholder="Nombre de la entrada" value="<?php echo htmlspecialchars($entrada['ticket_name']); ?>">
+                                                                            <input type="hidden" class="form-control" id="id_ticket<?php echo $index; ?>" name="id_ticket[<?php echo $index; ?>]" value="<?php echo htmlspecialchars($entrada['id_ticket']); ?>">
+                                                                        </div>
+                                                                        <div class="col-md-2 mb-3">
+                                                                            <label for="ticket_value<?php echo $index; ?>">Valor Entrada</label>
+                                                                            <input type="number" class="form-control" id="ticket_value<?php echo $index; ?>" name="ticket_value[<?php echo $index; ?>]" placeholder="Valor de la entrada" value="<?php echo htmlspecialchars($entrada['ticket_value']); ?>">
+                                                                        </div>
+                                                                        <div class="col-md-2 mb-3">
+                                                                            <label for="ticket_audience<?php echo $index; ?>">Cantidad</label>
+                                                                            <input type="number" class="form-control" id="ticket_audience<?php echo $index; ?>" name="ticket_audience[<?php echo $index; ?>]" placeholder="Cantidad" value="<?php echo htmlspecialchars($entrada['ticket_audience']); ?>">
+                                                                        </div>
+                                                                        <div class="col-md-2 mb-3">
+                                                                            <label for="ticket_dateStart<?php echo $index; ?>">Inicio Venta (Fecha y Hora)</label>
+                                                                            <div class="input-group">
+                                                                                <input type="text" class="date-time-picker form-control" id="ticket_dateStart<?php echo $index; ?>" name="ticket_dateStart[<?php echo $index; ?>]" value="<?php echo htmlspecialchars((new DateTime($entrada['ticket_dateStart']))->format('Y-m-d\TH:i')); ?>" data-options='{"timepicker":true, "format":"d-m-Y H:i", "step":30}'>
+                                                                                <span class="input-group-append">
+                                                                                    <span class="input-group-text add-on white">
+                                                                                        <i class="icon-calendar"></i>
+                                                                                    </span>
+                                                                                </span>
                                                                             </div>
-                                                                            <div class="col-md-2 mb-3">
-                                                                                <label for="ticket_value<?php echo $index; ?>">Valor Entrada</label>
-                                                                                <input type="number" class="form-control" id="ticket_value<?php echo $index; ?>" name="ticket_value[<?php echo $index; ?>]" placeholder="Valor de la entrada" value="<?php echo htmlspecialchars($entrada['ticket_value']); ?>">
-                                                                            </div>
-                                                                            <div class="col-md-2 mb-3">
-                                                                                <label for="ticket_audience<?php echo $index; ?>">Cantidad</label>
-                                                                                <input type="number" class="form-control" id="ticket_audience<?php echo $index; ?>" name="ticket_audience[<?php echo $index; ?>]" placeholder="Cantidad" value="<?php echo htmlspecialchars($entrada['ticket_audience']); ?>">
-                                                                            </div>
-                                                                            <div class="col-md-2 mb-3">
-                                                                                <label for="ticket_dateStart<?php echo $index; ?>">Inicio Venta (Fecha y Hora)</label>
-                                                                                <input type="datetime-local" class="form-control" id="ticket_dateStart<?php echo $index; ?>" name="ticket_dateStart[<?php echo $index; ?>]" value="<?php echo htmlspecialchars((new DateTime($entrada['ticket_dateStart']))->format('Y-m-d\TH:i')); ?>">
-                                                                            </div>
-                                                                            <div class="col-md-3 mb-3">
-                                                                                <label for="ticket_dateEnd<?php echo $index; ?>">Término Venta (Fecha y Hora)</label>
-                                                                                <input type="datetime-local" class="form-control" id="ticket_dateEnd<?php echo $index; ?>" name="ticket_dateEnd[<?php echo $index; ?>]" value="<?php echo htmlspecialchars((new DateTime($entrada['ticket_dateEnd']))->format('Y-m-d\TH:i')); ?>">
+                                                                        </div>
+                                                                        <div class="col-md-3 mb-3">
+                                                                            <label for="ticket_dateEnd<?php echo $index; ?>">Término Venta (Fecha y Hora)</label>
+                                                                            <div class="input-group">
+                                                                                <input type="text" class="date-time-picker form-control" id="ticket_dateEnd<?php echo $index; ?>" name="ticket_dateEnd[<?php echo $index; ?>]" value="<?php echo htmlspecialchars((new DateTime($entrada['ticket_dateEnd']))->format('Y-m-d\TH:i')); ?>" data-options='{"timepicker":true, "format":"d-m-Y H:i", "step":30}'>
+                                                                                <span class="input-group-append">
+                                                                                    <span class="input-group-text add-on white">
+                                                                                        <i class="icon-calendar"></i>
+                                                                                    </span>
+                                                                                </span>
                                                                             </div>
                                                                         </div>
                                                                     </div>
-                                                                <?php endforeach; ?>
-                                                            <?php endif;
+                                                                </div>
+                                                            <?php endforeach; ?>
+                                                            <?php
+                                                            //endif;
                                                             ?>
                                                         </div>
 
@@ -420,6 +434,8 @@ if (!isset($_SESSION["id_user"])) {
                                                             <div class="col-md-4 mb-3">
                                                                 <label for="eventPhoto">Foto del Evento</label>
                                                                 <input type="file" class="form-control-file" id="eventPhoto" name="eventPhoto">
+                                                                <!-- Carga la imagen por defecto -->
+                                                                <input type="hidden" name="currentImage" value="<?php echo htmlspecialchars($datosEvento['img']); ?>">
                                                             </div>
 
                                                             <!-- Campo para Video Promocional del Evento (opcional) -->
@@ -741,9 +757,38 @@ if (!isset($_SESSION["id_user"])) {
 
         <!-- Actualizar Evento -->
         <script>
+            // document.addEventListener('DOMContentLoaded', function() {
+            //     document.getElementById('formEvento').addEventListener('submit', function(e) {
+            //         e.preventDefault();
+
+            //         var formData = new FormData(this);
+            //         formData.append('id_evento', '<?php echo $idEvento; ?>'); // Asegúrate de tener el ID del evento en alguna parte de tu formulario o script
+
+            //         fetch('includes/actualizar_evento.php', {
+            //                 method: 'POST',
+            //                 body: formData
+            //             })
+            //             .then(response => response.json())
+            //             .then(data => {
+            //                 if (data.success) {
+            //                     swal("¡Actualizado!", data.message, "success")
+            //                         .then(() => {
+            //                             window.location.href = 'eventos.php';
+            //                         });
+            //                 } else {
+            //                     swal("Error", data.message, "error");
+            //                 }
+            //             })
+            //             .catch(error => {
+            //                 console.error('Error:', error);
+            //                 swal("Error", "Error al procesar la solicitud.", "error");
+            //             });
+            //     });
+            // });
             document.addEventListener('DOMContentLoaded', function() {
                 document.getElementById('formEvento').addEventListener('submit', function(e) {
                     e.preventDefault();
+                    var redireccionAdmin = "<?php echo htmlspecialchars($edit ?? '', ENT_QUOTES, 'UTF-8'); ?>";
 
                     var formData = new FormData(this);
                     formData.append('id_evento', '<?php echo $idEvento; ?>'); // Asegúrate de tener el ID del evento en alguna parte de tu formulario o script
@@ -757,7 +802,12 @@ if (!isset($_SESSION["id_user"])) {
                             if (data.success) {
                                 swal("¡Actualizado!", data.message, "success")
                                     .then(() => {
-                                        window.location.href = 'eventos.php';
+                                        // Usar la variable redireccionAdmin para decidir la URL de redirección
+                                        if (redireccionAdmin === 'admin') {
+                                            window.location.href = 'admin_eventos.php';
+                                        } else {
+                                            window.location.href = 'eventos.php';
+                                        }
                                     });
                             } else {
                                 swal("Error", data.message, "error");
@@ -791,40 +841,86 @@ if (!isset($_SESSION["id_user"])) {
                 tipoEventoSelector.dispatchEvent(new Event('change'));
             });
 
+            // document.addEventListener('DOMContentLoaded', function() {
+            //     var contadorEntradas = 1;
+
+            //     document.getElementById('btnAgregarEntradas').addEventListener('click', function() {
+            //         contadorEntradas++;
+            //         var camposAdicionales = document.getElementById('camposAdicionales');
+            //         var nuevosCampos = camposAdicionales.cloneNode(true);
+
+            //         // Actualizar los IDs y nombres de los campos clonados
+            //         nuevosCampos.id = 'camposAdicionales' + contadorEntradas;
+            //         nuevosCampos.querySelectorAll('input, select').forEach(function(input) {
+            //             input.name = input.name + contadorEntradas;
+            //             input.id = input.id + contadorEntradas;
+            //             if (input.type === 'text' || input.type === 'number' || input.type === 'datetime-local') {
+            //                 input.value = ''; // Limpiar valores para los nuevos campos
+            //             }
+            //         });
+
+            //         // Inserta los nuevos campos después del contenedor original
+            //         var siguienteElemento = camposAdicionales.nextElementSibling;
+            //         camposAdicionales.parentNode.insertBefore(nuevosCampos, siguienteElemento);
+
+            //         // Incrementar el contador
+            //         var contador = document.getElementById('contadorEntradas');
+            //         contador.value = parseInt(contador.value) + 1;
+            //     });
+
+            //     // Mostrar u ocultar campos adicionales según el tipo de evento
+            //     document.getElementById('id_type_event').addEventListener('change', function() {
+            //         if (this.value == '2') { // '2' corresponde a eventos de pago
+            //             document.getElementById('camposAdicionales').style.display = '';
+            //         } else {
+            //             document.getElementById('camposAdicionales').style.display = 'none';
+            //         }
+            //     });
+            // });
+
+
+
+            // Nueva función para clonar y agregar solo un nuevo conjunto de campos
             document.addEventListener('DOMContentLoaded', function() {
-                var contadorEntradas = 1;
+                var contadorEntradas = document.querySelectorAll('.entrada').length - 1;
 
                 document.getElementById('btnAgregarEntradas').addEventListener('click', function() {
                     contadorEntradas++;
-                    var camposAdicionales = document.getElementById('camposAdicionales');
-                    var nuevosCampos = camposAdicionales.cloneNode(true);
+                    var divEntrada = document.createElement('div');
+                    divEntrada.className = 'entrada';
+                    divEntrada.dataset.index = contadorEntradas;
+                    divEntrada.innerHTML = `
+                                    <div class="form-row">
+                                        <div class="col-md-3 mb-3">
+                                            <label for="ticket_name${contadorEntradas}">Nombre de Entrada</label>
+                                            <input type="text" class="form-control" id="ticket_name${contadorEntradas}" name="ticket_name[${contadorEntradas}]" placeholder="Nombre de la entrada">
+                                        </div>
+                                        <div class="col-md-2 mb-3">
+                                            <label for="ticket_value${contadorEntradas}">Valor Entrada</label>
+                                            <input type="number" class="form-control" id="ticket_value${contadorEntradas}" name="ticket_value[${contadorEntradas}]" placeholder="Valor de la entrada">
+                                        </div>
+                                        <div class="col-md-2 mb-3">
+                                            <label for="ticket_audience${contadorEntradas}">Cantidad</label>
+                                            <input type="number" class="form-control" id="ticket_audience${contadorEntradas}" name="ticket_audience[${contadorEntradas}]" placeholder="Cantidad">
+                                        </div>
+                                        <div class="col-md-2 mb-3">
+                                            <label for="ticket_dateStart${contadorEntradas}">Inicio Venta (Fecha y Hora)</label>
+                                            <input type="text" class="date-time-picker form-control" id="ticket_dateStart${contadorEntradas}" name="ticket_dateStart[${contadorEntradas}]" data-options='{"timepicker":true, "format":"d-m-Y H:i", "step":30}'>
+                                        </div>
+                                        <div class="col-md-3 mb-3">
+                                            <label for="ticket_dateEnd${contadorEntradas}">Término Venta (Fecha y Hora)</label>
+                                            <input type="text" class="date-time-picker form-control" id="ticket_dateEnd${contadorEntradas}" name="ticket_dateEnd[${contadorEntradas}]" data-options='{"timepicker":true, "format":"d-m-Y H:i", "step":30}'>
+                                        </div>
+                                    </div>
+                                `;
+                    document.getElementById('camposAdicionales').appendChild(divEntrada);
 
-                    // Actualizar los IDs y nombres de los campos clonados
-                    nuevosCampos.id = 'camposAdicionales' + contadorEntradas;
-                    nuevosCampos.querySelectorAll('input, select').forEach(function(input) {
-                        input.name = input.name + contadorEntradas;
-                        input.id = input.id + contadorEntradas;
-                        if (input.type === 'text' || input.type === 'number' || input.type === 'datetime-local') {
-                            input.value = ''; // Limpiar valores para los nuevos campos
-                        }
+                    // Reinicia los pickers de fecha/hora para los nuevos inputs
+                    $('.date-time-picker').datetimepicker({
+                        timepicker: true,
+                        format: 'd-m-Y H:i',
+                        step: 30
                     });
-
-                    // Inserta los nuevos campos después del contenedor original
-                    var siguienteElemento = camposAdicionales.nextElementSibling;
-                    camposAdicionales.parentNode.insertBefore(nuevosCampos, siguienteElemento);
-
-                    // Incrementar el contador
-                    var contador = document.getElementById('contadorEntradas');
-                    contador.value = parseInt(contador.value) + 1;
-                });
-
-                // Mostrar u ocultar campos adicionales según el tipo de evento
-                document.getElementById('id_type_event').addEventListener('change', function() {
-                    if (this.value == '2') { // '2' corresponde a eventos de pago
-                        document.getElementById('camposAdicionales').style.display = '';
-                    } else {
-                        document.getElementById('camposAdicionales').style.display = 'none';
-                    }
                 });
             });
         </script>

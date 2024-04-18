@@ -11,6 +11,8 @@ $response = ['success' => false, 'message' => ''];
 // echo "Nombre " . $name . ",  Location: " . $loca . "<br>";
 
 $data = [
+    'id_user_buy' =>      isset($_POST['id_user_buy']) ? $_POST['id_user_buy'] : '',
+    'id_user_sell' =>      isset($_POST['id_user_sell']) ? $_POST['id_user_sell'] : '',
     'id_plan' =>      isset($_POST['id_plan']) ? $_POST['id_plan'] : '',
     'id_plan_key' =>      isset($_POST['id_plan_key']) ? $_POST['id_plan_key'] : '',
     'value_plan_event' =>   isset($_POST['value_plan_event']) ? $_POST['value_plan_event'] : '',

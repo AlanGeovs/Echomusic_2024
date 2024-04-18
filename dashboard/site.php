@@ -92,7 +92,7 @@ if (!isset($_SESSION["id_user"])) {
 
                             <!-- descargar base de datos  -->
                             <?php
-                            if ($_SESSION["tipo"] == "admin") {
+                            if ($_SESSION["id_type_user"] == 4) {
                             ?>
                                 <div class="col-md-12 col-sm-12" style="padding-bottom: 15px;">
                                     <button type="button" class="btn btn-info btn-lg btn-block" onclick="window.location.href='includes/exporta.php'">
@@ -124,7 +124,7 @@ if (!isset($_SESSION["id_user"])) {
                             </div>
 
                             <?php
-                            if ($_SESSION["tipo"] == "admin") {
+                            if ($_SESSION["id_type_user"] == 4) {
                             ?>
 
                                 <div class="col-md-6 col-sm-6">
@@ -159,7 +159,7 @@ if (!isset($_SESSION["id_user"])) {
                         </div>
 
                         <?php
-                        if ($_SESSION["tipo"] == "admin") {
+                        if ($_SESSION["id_type_user"] == 4) {
                         ?>
                             <div class="row">
                                 <div class="col-md-6 col-sm-6">
@@ -215,7 +215,7 @@ if (!isset($_SESSION["id_user"])) {
 
                     <!-- Grafica de pastel -->
                     <?php
-                    if ($_SESSION["tipo"] == "admin") {
+                    if ($_SESSION["id_type_user"] == 4) {
                         $porGenero = Consultas::encuestaTipoUser();
                         $t1 = $porGenero[0]['TOTAL'];
                         $t2 = $porGenero[1]['TOTAL'];
@@ -476,7 +476,7 @@ if (!isset($_SESSION["id_user"])) {
         <!-- Right Sidebar -->
 
         <?php
-        if ($_SESSION["tipo"] == "admin") {
+        if ($_SESSION["id_type_user"] == 4) {
         ?>
             <aside class="control-sidebar fixed white ">
                 <div class="slimScroll">

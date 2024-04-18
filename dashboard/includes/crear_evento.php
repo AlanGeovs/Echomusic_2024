@@ -96,6 +96,13 @@ if ($resultado['success']) {
     //función para saber cuántos tickets se han agregado a ese evento
     $cantidadEntradas = $_POST['contadorEntradas'];
 
+    // Formato de Fechas
+    $date_eventStart = DateTime::createFromFormat('d-m-Y H:i', $_POST['ticket_dateStart']);
+    $formatted_date_eventStart = $date_eventStart->format('Y-m-d H:i:s');
+    $date_eventEnd = DateTime::createFromFormat('d-m-Y H:i', $_POST['ticket_dateEnd']);
+    $formatted_date_eventEnd = $date_eventEnd->format('Y-m-d H:i:s');
+
+
     if ($idEvento) {
         // Comprueba si el evento es de pago y procesa los tickets
         if ($_POST['id_type_event'] == '2') { // Si el evento es de pago
@@ -106,8 +113,8 @@ if ($resultado['success']) {
                         'ticket_name' => $_POST['ticket_name'],
                         'ticket_value' => $_POST['ticket_value'],
                         'ticket_audience' => $_POST['ticket_audience'],
-                        'ticket_dateStart' => $formatted_date_event,
-                        'ticket_dateEnd' => $formatted_date_event,
+                        'ticket_dateStart' => $formatted_date_eventStart,
+                        'ticket_dateEnd' => $formatted_date_eventEnd,
                         // 'ticket_dateStart' => $_POST['ticket_dateStart'],
                         // 'ticket_dateEnd' => $_POST['ticket_dateEnd'], 
                     ];
@@ -116,8 +123,8 @@ if ($resultado['success']) {
                         'ticket_name' => $_POST['ticket_name' . $i],
                         'ticket_value' => $_POST['ticket_value' . $i],
                         'ticket_audience' => $_POST['ticket_audience' . $i],
-                        'ticket_dateStart' => $formatted_date_event,
-                        'ticket_dateEnd' => $formatted_date_event,
+                        'ticket_dateStart' => $formatted_date_eventStart,
+                        'ticket_dateEnd' => $formatted_date_eventEnd,
                         // 'ticket_dateStart' => $_POST['ticket_dateStart' . $i],
                         // 'ticket_dateEnd' => $_POST['ticket_dateEnd' . $i], 
                     ];
@@ -134,8 +141,8 @@ if ($resultado['success']) {
                 // 'ticket_audience' => $_POST['ticket_audience'],
                 'ticket_audience' => $_POST['audience_event'],
                 // 'ticket_dateStart' => $_POST['ticket_dateStart'],
-                'ticket_dateStart' => $formatted_date_event,
-                'ticket_dateEnd' => $formatted_date_event
+                'ticket_dateStart' => $formatted_date_eventStart,
+                'ticket_dateEnd' => $formatted_date_eventEnd
             ];
             $crearTickets = Consultas::crearTickets($ticket, $idEvento);
         }

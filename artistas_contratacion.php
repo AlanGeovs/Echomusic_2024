@@ -140,8 +140,11 @@ $resultadosEventosPasa = Consultas::eventosPasadosArtista($respuesta[0]["id_user
                     </div>
 
                     <form id="contratarTarifa" method="post" enctype="multipart/form-data">
-                        <input type="hidden" id="id_plan" name="id_plan" value="<?php echo $tarifasArtista[0]["id_plan"]; ?>">
+                        <input type="hidden" id="id_user_buy" name="id_user_buy" value="<?php echo $_SESSION["id_user"];  ?>">
+                        <input type="hidden" id="id_user_sell" name="id_user_sell" value="<?php echo $_GET['a']; ?>">
+
                         <input type="hidden" id="id_plan_key" name="id_plan_key" value="<?php echo $tarifasArtista[0]["id_plan_key"]; ?>">
+                        <input type="hidden" id="id_plan" name="id_plan" value="<?php echo $tarifasArtista[0]["id_plan"]; ?>">
                         <input type="hidden" id="value_plan_event" name="value_plan_event" value="<?php echo $tarifasArtista[0]["value_plan"]; ?>">
                         <input type="hidden" id="id_name_plan" name="id_name_plan" value="<?php echo $id_name_plan; ?>">
                         <!-- Evento -->
@@ -202,7 +205,14 @@ $resultadosEventosPasa = Consultas::eventosPasadosArtista($respuesta[0]["id_user
                             <div class="col-md-6 col-sm-">
                                 <div class="form-group">
                                     <label for="date_event">Fecha y Hora</label>
-                                    <input type="datetime-local" class="form-control" id="date_event" name="date_event" required>
+
+                                    <?php
+                                    $fechaEventoFormato = date('d-m-Y H:i');
+                                    ?>
+
+                                    <input type="text" class="date-time-picker form-control" id="date_event" name="date_event" data-options='{"timepicker":true, "format":"d-m-Y H:i", "step":30}' value="<?php echo $fechaEventoFormato; ?>">
+
+
                                 </div>
                             </div>
                             <div class="col-md-6 col-sm-">
@@ -705,6 +715,30 @@ include 'modal.php';
         });
     });
 </script>
+
+<!-- Fecha con Date Picker -->
+<!-- flatpickr CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+
+<!-- flatpickr JS -->
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        flatpickr(".date-time-picker", {
+            enableTime: true, // Habilita el selector de tiempo
+            dateFormat: "Y-m-d H:i:S", // Ajusta el formato para coincidir con el formato de datetime de la base de datos
+            time_24hr: true, // Usa el formato de 24 horas
+            minuteIncrement: 1, // Permite incrementar los minutos de uno en uno
+            onClose: function(selectedDates, dateStr, instance) {
+                // Este callback se llama cuando el picker se cierra.
+                // Aquí puedes manejar el valor seleccionado si necesitas un procesamiento adicional antes de enviarlo.
+            }
+        });
+    });
+</script>
+
+
 
 
 

@@ -139,20 +139,21 @@ if (!isset($_SESSION["id_user"])) {
             <div class="container-fluid animatedParent animateOnce my-3">
                 <div class="animated fadeInUpShort">
 
-                    <div class="row">
+                    <div class="row justify-content-center">
                         <div class="col-md-12">
                             <div class="card no-b">
-                                <div class="col-md-4  mb-3 mt-15">
-                                    <div class="card-header white b-0 p-3">
-                                        <h4 class="card-title">Eventos</h4>
-                                        <small class="card-subtitle mb-2 text-muted">Listado de eventos próximos y pasados.</small>
+                                <div class="row justify-content-between mb-3 mt-15">
+                                    <div class="col-md-4">
+                                        <div class="card-header white b-0 p-3">
+                                            <h4 class="card-title">Eventos</h4>
+                                            <small class="card-subtitle mb-2 text-muted">Listado de eventos próximos y pasados.</small>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 d-flex align-items-center justify-content-center">
+                                        <a class="btn btn-primary btn-xs r-20" href="crear_evento.php"><i class="icon-plus-circle mr-2"></i>Crear Evento</a>
                                     </div>
                                 </div>
-                                <div class="col-md-4 mb-3 mt-15">
-                                    <a class="btn btn-primary btn-xs r-20" href="crear_evento.php"><i class="icon-plus-circle mr-2" data-bs-toggle="modal" data-bs-target="#crearEventoModal"></i>Crear Evento</a>
 
-
-                                </div>
 
                                 <div class="collapse show" id="invoiceCard">
                                     <div class="card-body p-0">

@@ -72,36 +72,39 @@ if (trim($_GET['r']) == '') {
 //    }
 //    $aKeyword = explode(" ", $_GET["r"]);
 
+//Para busquedas en blanco, solo muestra artistas destacados
 if ($_GET["r"] == '' and $_GET["tip"] == ''  and $_GET["gen"] == '' and  $_GET["reg"] == '') {
     //        $query = "SELECT * FROM datos_usuario ";
-    $query  = "SELECT u.*, gu.*, g.* FROM users u INNER JOIN genre_user gu ON u.id_user=gu.id_user INNER JOIN genres g ON gu.id_genre = g.id_genre ";
-    $query .= "WHERE picture_ready=1 AND verified like 'yes' AND user_destacado=1 ";
-    $condicionesPag = " AND user_destacado=1  ";
+    $query  = "SELECT * FROM users ";
+    // $query .= " WHERE verified like 'yes' AND picture_ready=1  ";
+    $query .= " WHERE verified like 'yes'   ";
+    $condicionesPag = " AND user_destacado=1 ";
     $artistasRelacionados = Consultas::busquedaArtistas($query);
 } else {
-
-    $query  = "SELECT u.*, gu.*, g.* FROM users u INNER JOIN genre_user gu ON u.id_user=gu.id_user INNER JOIN genres g ON gu.id_genre = g.id_genre ";
-    $query .= "WHERE picture_ready=1 AND verified like 'yes' ";
+    // Para búsquedas con una variante en los filtros, muestra resultados acotando el query con el filtro
+    $query  = "SELECT * FROM users ";
+    // $query .= " WHERE verified like 'yes' AND picture_ready=1  ";
+    $query .= " WHERE verified like 'yes'  ";
     $condicionesPag = "";
 
     if ($_GET["r"] != '') {
         $query .= " AND nick_user like '%" . $_GET["r"] . "%' ";
         $condicionesPag .= " AND nick_user like '%" . $_GET["r"] . "%' ";
-        //            echo 'Tipo: '.$_GET["tip"].'<br>';             
+        //            echo 'Tipo: '.$_GET["tip"].'<br>';
     }
     if ($_GET["tip"] != '') {
-        $query .= " AND u.id_musician = '" . $_GET["tip"] . "' ";
-        $condicionesPag .= " AND u.id_musician = '" . $_GET["tip"] . "' ";
-        //            echo 'Tipo: '.$_GET["tip"].'<br>';             
+        $query .= " AND id_musician = '" . $_GET["tip"] . "' ";
+        $condicionesPag .= " AND id_musician = '" . $_GET["tip"] . "' ";
+        //            echo 'Tipo: '.$_GET["tip"].'<br>';
     }
     if ($_GET["gen"] != '') {
-        $query .= " AND gu.id_genre = '" . $_GET["gen"] . "' ";
-        $condicionesPag .= " AND gu.id_genre = '" . $_GET["gen"] . "' ";
+        $query .= " AND id_genero = '" . $_GET["gen"] . "' ";
+        $condicionesPag .= " AND id_genre = '" . $_GET["gen"] . "' ";
         //            echo 'Genero: '.$_GET["gen"].'<br>';
     }
     if ($_GET["reg"] != '') {
-        $query .= " AND u.id_region = '" . $_GET["reg"] . "' ";
-        $condicionesPag .= " AND u.id_region = '" . $_GET["reg"] . "' ";
+        $query .= " AND id_region = '" . $_GET["reg"] . "' ";
+        $condicionesPag .= " AND id_region = '" . $_GET["reg"] . "' ";
         //            echo 'Region: '.$_GET["reg"].'<br>';
     }
 } //fin del ELSE
@@ -183,7 +186,7 @@ $artistasRelacionados = Consultas::busquedaArtistas($query);
 
                                             <div class="content text-center">
                                                 <h5><a href="artistas.php?a=' . htmlspecialchars($artista["id_user"]) . '"> ' . htmlspecialchars($artista["nick_user"]) . '</a></h5>
-                                                
+
                                             </div>
                                         </div>';
                                 }
@@ -208,7 +211,7 @@ $artistasRelacionados = Consultas::busquedaArtistas($query);
 
                                 <div class="content text-center">
                                     <h3><a href="artistas.php?a=7488"> Safo999</a></h3>
-                                     
+
                                 </div>
                             </div> -->
 
@@ -245,6 +248,7 @@ $artistasRelacionados = Consultas::busquedaArtistas($query);
             <!--<p>It is a long established fact that a reader will be distracted by the rea dable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more.</p>-->
         </div>
 
+        <!-- buscador de artistas con filtros -->
         <div class="row align-items-center choose-c justify-content-md-center">
             <div class="col-lg-12 col-md-12 ">
                 <div class="content">
@@ -353,7 +357,7 @@ $artistasRelacionados = Consultas::busquedaArtistas($query);
 
 
 
-<!-- Artistas -->
+<!-- Muestra resultados de Artistas -->
 <section class="home-case ptb-35">
     <div class="container">
         <div class="section-title">
@@ -367,7 +371,7 @@ $artistasRelacionados = Consultas::busquedaArtistas($query);
                     <ul class="all-case">
                         <li class="active" data-filter="*"><span>Todo</span></li>
                         <li class="active" data-filter="*"><span>Presencial</span></li>
-                        <li data-filter=".dev"><span>Online</span></li> 
+                        <li data-filter=".dev"><span>Online</span></li>
                     </ul>
                 </div>-->
 
@@ -376,8 +380,7 @@ $artistasRelacionados = Consultas::busquedaArtistas($query);
 
             <?php
 
-            #Notar que es lo mismo que hacer
-            # date("Y-m-d H:i:s")                                
+            # date("Y-m-d H:i:s")
             for ($k = 0; $k < count($artistasRelacionados); $k++) {
                 //Busca CIudad y Región
                 $respuestaCiudadRegion = Consultas::buscaCiudadRegion($artistasRelacionados[$k]["id_city"], $artistasRelacionados[$k]["id_region"]);
@@ -405,40 +408,44 @@ $artistasRelacionados = Consultas::busquedaArtistas($query);
                     $img = substr($artistasRelacionados[$k]["IMG"], 16);
                     //echo "falso";
                 }
-                echo '                    
+                echo '
                     <div class="col-lg-4 col-sm-6 item cyber">
                         <div class="single-case">
                             <div class="case-img ">
-                                <a href="artistas.php?a=' . $artistasRelacionados[$k]["id_user"] . '">
-                                    <img class="imgEvent tamano-1" src="https://echomusic.net/dashboard/images/usuarios/' . $artistasRelacionados[$k]["id_user"] . '.jpg" height="100%"  alt="case"/> 
-                                </a>
+                                <a href="artistas.php?a=' . $artistasRelacionados[$k]["id_user"] . '">';
+                if ($artistasRelacionados[$k]["picture_ready"] == 0) {
+                    echo   '<img class="imgEvent tamano-1" src="https://echomusic.net/dashboard/images/usuarios/profile_default.jpg" height="100%"  alt="case"/> ';
+                } else {
+                    echo   '<img class="imgEvent tamano-1" src="https://echomusic.net/dashboard/images/usuarios/' . $artistasRelacionados[$k]["id_user"] . '.jpg" height="100%"  alt="case"/> ';
+                }
+                echo '    </a>
                             </div>
 
                             <div class="content">
                                 <!--Titulo-->
                                 <div class="row text-center">
-                                    <div class="col-12"> 
+                                    <div class="col-12">
                                         <a href="artistas.php?a=' . $artistasRelacionados[$k]["id_user"] . '"> <h3>' . $artistasRelacionados[$k]["nick_user"] . '</h3></a>
-                                    </div> 
+                                    </div>
                                 </div>
-                                
+
                                 <!--Entrada Fecha hora Costo Compra-->
                                 <div class="row text-center ">
-                                    <div class="col-lg-6 col-sm-6"> 
+                                    <div class="col-lg-6 col-sm-6">
 
-                                        <a href="#" class="line-bnt"> 
+                                        <a href="#" class="line-bnt">
                                         ' . $respuestaCiudadRegion[0]["name_region"] . ', ' . $respuestaCiudadRegion[0]["name_city"] . '
                                         </a>
                                         <p>' . $resuestaBuscaGenero["name_genre"] . '</p>
                                     </div>
-                                    
-                                    <div class="col-lg-6 col-sm-6"> 
-                                
-                                                <a href="artistas.php?a=' . $artistasRelacionados[$k]["id_user"] . '" class="box-btn">Ver artista</a> 
-                                    </div> 
-                                </div>                                                                                               
+
+                                    <div class="col-lg-6 col-sm-6">
+
+                                                <a href="artistas.php?a=' . $artistasRelacionados[$k]["id_user"] . '" class="box-btn">Ver artista</a>
+                                    </div>
+                                </div>
                             </div>
-                            
+
                         </div>
                     </div>';
             }
@@ -554,7 +561,7 @@ $artistasRelacionados = Consultas::busquedaArtistas($query);
 
                     <div class="col-lg-6">
                         <div class="feature-img">
-                            <img src="assets/images/bg/echomusic-isostipo-rock-guitarra-1.png" alt="Artistas Echomusic"/> 
+                            <img src="assets/images/bg/echomusic-isostipo-rock-guitarra-1.png" alt="Artistas Echomusic"/>
                         </div>
                     </div>
                 </div>
@@ -794,7 +801,7 @@ $artistasRelacionados = Consultas::busquedaArtistas($query);
                         <h3>Steven Jony</h3>
                         <span>CEO of Company</span>
                     </div>
-                    
+
                     <div class="single-client">
                         <img src="assets/images/client/2.jpg" alt="img">
                         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem Ipsum is simply dummy text of the printing Quis suspendisse typesetting ipsum dolor sit amet,</p>
@@ -834,12 +841,12 @@ $artistasRelacionados = Consultas::busquedaArtistas($query);
                                         <a href="#">By Admin</a>
                                     </li>
                                 </ul>
-                                
+
                                 <a href="blog-details.html">
                                     <h3>Joe’s Company Software Development Case</h3>
                                 </a>
                                 <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptas in fugit minima modi perspiciatis nam aspernatur porro</p>
-                                
+
                                 <a href="blog-details.html" class="line-bnt">Read More</a>
                             </div>
                         </div>

@@ -2,6 +2,8 @@
 // session_start();
 
 include "includes/funciones.php";
+require_once "model/model.php";
+
 
 $fotos = "images/usuarios/";
 $fotosArray = obtener_estructura_directorios($fotos);
@@ -88,7 +90,7 @@ for ($i = 0; $i < count($fotosArray); $i++) {
                             <ul class="treeview-menu">
                                 <li><a href="eventos.php"><i class="icon icon-event_available"></i>Eventos</a>
                                 </li>
-                                <li><a href="#"><i class="icon icon-gear"></i>Herramientas</a>
+                                <li><a href="crear_evento.php"><i class="icon icon-gear"></i>Crear Evento</a>
                                 </li>
                                 <li><a href="#"><i class="icon icon-pie-chart"></i>Estadísticas</a>
                                 </li>
@@ -104,7 +106,7 @@ for ($i = 0; $i < count($fotosArray); $i++) {
                             <ul class="treeview-menu">
                                 <li><a href="crowdfunding.php"><i class="icon icon-clipboard-list2"></i>Proyectos</a>
                                 </li>
-                                <li><a href="#"><i class="icon icon-gear"></i>Herramientas</a>
+                                <li><a href="crear_proyecto.php"><i class="icon icon-gear"></i>Crear Proyecto</a>
                                 </li>
                             </ul>
                         </li>
@@ -125,19 +127,27 @@ for ($i = 0; $i < count($fotosArray); $i++) {
 
 
 
-                        <!--Marcas-->
-                        <li class="treeview"><a href="#">
-                                <i class="icon icon icon-business_center s-24"></i>
-                                Adminsitración<i class=" icon-angle-left  pull-right"></i>
-                                <!--<span class="badge r-3 badge-primary pull-right">4</span>-->
-                            </a>
-                            <!--                            <ul class="treeview-menu">
-                                <li><a href="listar_marcas.php"><i class="icon icon-search-plus"></i>Todas las marcas</a>
-                                </li>
-                                <li><a href="registrar_marca.php"><i class="icon icon-add"></i>Registrar marca </a>
-                                </li>
-                            </ul>-->
-                        </li>
+                        <!--Admin-->
+
+                        <?php
+                        if ($_SESSION["id_type_user"] == 4) {
+                        ?>
+                            <li class="treeview"><a href="admin.php">
+                                    <i class="icon icon icon-business_center s-24"></i>
+                                    Adminsitración<i class=" icon-angle-left  pull-right"></i>
+                                    <!--<span class="badge r-3 badge-primary pull-right">4</span>-->
+                                </a>
+                                <ul class="treeview-menu">
+                                    <li><a href="admin.php"><i class="icon icon-users"></i> Usuarios</a>
+                                    </li>
+                                    <li><a href="admin_eventos.php"><i class="icon icon-date_range"></i> Eventos </a>
+                                    </li>
+                                    <li><a href="admin_crowdfunding.php"><i class="icon icon-money"></i> Crowdfunding </a>
+                                    </li>
+                                </ul>
+                            </li>
+                        <?php }
+                        ?>
                         <!--Categorías-->
                         <!--                        <li class="treeview"><a href="#">
                                 <i class="icon icon icon-agenda s-24"></i>
@@ -165,7 +175,7 @@ for ($i = 0; $i < count($fotosArray); $i++) {
                         <li class="treeview"><a href="#"><i class="icon icon-account_box s-24"></i>Usuarios<i class=" icon-angle-left  pull-right"></i></a>
                             <ul class="treeview-menu">
                                 <?php
-                                if ($_SESSION["tipo"] == "admin") {
+                                if ($_SESSION["id_type_user"] == 4) {
                                     echo '<li><a href="listar_usuarios.php"><i class="icon icon-circle-o"></i>Todos los usuarios</a>
                                         </li>';
                                     echo '<li><a href="registrar_usuario.php"><i class="icon icon-add"></i>Crear usuario</a>
@@ -808,9 +818,25 @@ for ($i = 0; $i < count($fotosArray); $i++) {
                     </li>
                     <!-- Right Sidebar Toggle Button -->
                     <li>
-                        <a class="nav-link ml-2" data-toggle="control-sidebar">
-                            <i class="icon-format_align_right"></i>
-                        </a>
+                        <?php
+                        if ($_SESSION["id_type_user"] == 1 || $_SESSION["id_type_user"] == 4) { // usuario Admin o usuario Artista
+                            $id_type_user = 'id_user_sell';
+                            $status_event = 'pending';
+                        } elseif ($_SESSION["id_type_user"] == 2) { // Usuario 
+                            $id_type_user = 'id_user_buy';
+                            $status_event = 'reserved';
+                        }
+                        $cantidadSolicitudes = Consultas::obtenerNotificacionDeReservasPorUsuario($_SESSION["id_user"], $id_type_user, $status_event);
+                        if ($cantidadSolicitudes > 0) {
+                            echo '
+                            <!-- <a href="perfil-reservas.php" class="nav-link ml-2" data-toggle="control-sidebar"> -->
+                            <a href="perfil-reservas.php" class="nav-link ml-2" data-toggle="">
+                                    <i class="icon-notifications"></i>
+                                    <span class="badge badge-success badge-mini rounded-circle">' . $cantidadSolicitudes . '</span>
+                                  </a>';
+                        }
+
+                        ?>
                     </li>
                     <!-- User Account-->
                     <li class="dropdown custom-dropdown user user-menu ">

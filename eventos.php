@@ -75,24 +75,39 @@ $respuestaEventoCiudadRegion = Consultas::buscaCiudadRegion($respuesta[0]["id_ci
 <section class="feature-area bg-color pb-35 pt-35">
     <div class="container">
         <div class="row align-items-center ">
-            <div class="col-lg-6 col-sm-6 item dev design">
-                <div class="single-case">
-                    <!-- Carousel Start -->
-                    <div id="carouselsliderdemo" class="carousel slide" data-bs-ride="carousel">
-                        <div class="carousel-inner simple-evento-artista">
-                            <div class="carousel-item active">
-                                <img src="https://echomusic.net/dashboard/images/eventos/<?php echo $respuesta[0]["img"]; ?>.jpg" class="d-block w-100">
-                                <!-- <img src="https://echomusic.net/dashboard/images/eventos//<?php echo $idUsuario; ?>.jpg" class="d-block w-100"> -->
-                            </div>
-                            <!--                                    <div class="carousel-item">
+
+            <!-- Valida que el evento estpe activo -->
+            <?php
+            if ($respuesta[0]["active_event"] == 0) {
+                echo '<div class="col-lg-6 col-sm-6 item dev design mt-5 mb-5">
+                        <div class="single-case text-center">
+                             <div class="text-center">
+                                <h2>El evento no está activo</h2>
+                             </div>
+                        </div>
+                    </div> ';
+            } else {
+
+            ?>
+                <!-- Evento Activo -->
+                <div class="col-lg-6 col-sm-6 item dev design">
+                    <div class="single-case">
+                        <!-- Carousel Start -->
+                        <div id="carouselsliderdemo" class="carousel slide" data-bs-ride="carousel">
+                            <div class="carousel-inner simple-evento-artista">
+                                <div class="carousel-item active">
+                                    <img src="https://echomusic.net/dashboard/images/eventos/<?php echo $respuesta[0]["img"]; ?>.jpg" class="d-block w-100">
+                                    <!-- <img src="https://echomusic.net/dashboard/images/eventos//<?php echo $idUsuario; ?>.jpg" class="d-block w-100"> -->
+                                </div>
+                                <!--                                    <div class="carousel-item">
                                         <img src="assets/images/avatars/echo-2.jpg" class="d-block w-100">
                                     </div>
                                     <div class="carousel-item">
                                         <img src="assets/images/avatars/echo-3.jpg" class="d-block w-100">
                                     </div>-->
-                        </div>
-                        <!-- Indicator start -->
-                        <!-- <div class="carousel-indicators">
+                            </div>
+                            <!-- Indicator start -->
+                            <!-- <div class="carousel-indicators">
                             <button type="button" data-bs-target="#carouselsliderdemo" class="active img-thumbnail" data-bs-slide-to="0">
                                 <img src="https://echomusic.net/dashboard/images/eventos/<?php echo $respuesta[0]["img"]; ?>.jpg" alt="" class="d-block w-50">
                             </button>
@@ -103,106 +118,111 @@ $respuestaEventoCiudadRegion = Consultas::buscaCiudadRegion($respuesta[0]["id_ci
                                 <img src="assets/images/avatars/echo-3.jpg" alt="" class="d-block w-100">
                             </button>
                         </div> -->
-                        <!-- Indicator Close -->
-                    </div>
-                    <!-- Carousel Close -->
-                </div>
-            </div>
-
-
-            <div class=" col-lg-6">
-                <div class="row">
-                    <div class="col-12 col-sm-12">
-                        <div class="feature-tittle">
-                            <h2> <?php echo $respuesta[0]["name_event"]; ?> </h2>
-                            <span style="font-size: 20px"><?php echo $diaSemana . ' ' . $dia . ' de ' . $mes . ', ' . $anio . ' | ' . $hora . ':' . $minutos . ' hrs'; ?> </span>
-                            <span style="font-size: 15px">Evento presencial </span>
-                            <br>
-                            <span style="font-size: 12px"> <?php echo $respuestaEventoCiudadRegion[0]["name_city"]; ?> / Región <?php echo $respuestaEventoCiudadRegion[0]["name_region"]; ?></span><br>
-
-                            <span style="font-size: 12px">Lugar <?php echo $respuesta[0]["name_location"]; ?>, <?php echo $respuesta[0]["location"]; ?></span>
-
-                            <h3>Descripción del evento</h3>
-                            <p><?php echo $respuesta[0]["desc_event"]; ?></p>
+                            <!-- Indicator Close -->
                         </div>
+                        <!-- Carousel Close -->
                     </div>
+                </div>
 
-                    <?php
 
-                    // Fecha y hora del evento
-                    $fechaEvento = $respuesta[0]["date_event"];
-                    //  la fecha y hora del evento a timestamp
-                    $timestampEvento = strtotime($fechaEvento);
-                    // Obtener el timestamp actual
-                    $timestampActual = time();
+                <div class=" col-lg-6">
+                    <div class="row">
+                        <div class="col-12 col-sm-12">
+                            <div class="feature-tittle">
+                                <h2> <?php echo $respuesta[0]["name_event"]; ?> </h2>
+                                <span style="font-size: 20px"><?php echo $diaSemana . ' ' . $dia . ' de ' . $mes . ', ' . $anio . ' | ' . $hora . ':' . $minutos . ' hrs'; ?> </span>
+                                <span style="font-size: 15px">Evento presencial </span>
+                                <br>
+                                <span style="font-size: 12px"> <?php echo $respuestaEventoCiudadRegion[0]["name_city"]; ?> / Región <?php echo $respuestaEventoCiudadRegion[0]["name_region"]; ?></span><br>
 
-                    if ($timestampEvento < $timestampActual) {
-                        // La fecha del evento es anterior a la fecha actual 
-                    } else {
-                        // Muestra evento futuro
+                                <span style="font-size: 12px">Lugar <?php echo $respuesta[0]["name_location"]; ?>, <?php echo $respuesta[0]["location"]; ?></span>
 
-                        //   Botones de compra del evento
-                        for ($j = 0; $j < count($respuesta); $j++) {
+                                <h3>Descripción del evento</h3>
+                                <p><?php echo $respuesta[0]["desc_event"]; ?></p>
+                            </div>
+                        </div>
 
-                            echo '<!--<div class="col-12 col-sm-1 text-center"></div>-->
+                        <?php
+
+                        // Fecha y hora del evento
+                        $fechaEvento = $respuesta[0]["date_event"];
+                        //  la fecha y hora del evento a timestamp
+                        $timestampEvento = strtotime($fechaEvento);
+                        // Obtener el timestamp actual
+                        $timestampActual = time();
+
+                        if ($timestampEvento < $timestampActual) {
+                            // La fecha del evento es anterior a la fecha actual
+                        } else {
+                            // Muestra evento futuro
+
+                            //   Botones de compra del evento
+                            for ($j = 0; $j < count($respuesta); $j++) {
+
+                                echo '<!--<div class="col-12 col-sm-1 text-center"></div>-->
                                             <div class="col-6 col-sm-4 text-left">
                                                <h6><i class="bx bxs-coupon"></i> ' . $respuesta[$j]["ticket_name"] . ' (' . $respuesta[$j]["ticket_audience"] . ')</h6>
                                             </div>';
-                            echo '<div class="col-6 col-sm-3 text-center">';
+                                echo '<div class="col-6 col-sm-3 text-center">';
 
-                            if ($respuesta[$j]["ticket_value"] == 0) {
-                                echo ' <h3> Gratis </h3> 
+                                if ($respuesta[$j]["ticket_value"] == 0) {
+                                    echo ' <h3> Gratis </h3>
                                                 </div>
                                                 <div class="col-12 col-sm-4 text-center">
                                                     <a href="pago_entradas.php?e=' . $respuesta[$j]["id_event"] . '" class="box-btn">Reservar</a>
                                                 </div>';
-                            } else {
-                                echo ' <h3> $' . number_format(($respuesta[$j]["ticket_value"] + $respuesta[$j]["ticket_commission"]), 0, ',', '.') . ' </h3> 
+                                } else {
+                                    echo ' <h3> $' . number_format(($respuesta[$j]["ticket_value"] + $respuesta[$j]["ticket_commission"]), 0, ',', '.') . ' </h3>
                                             </div>
                                             <div class="col-12 col-sm-4 text-center">
                                                 <a href="pago_entradas.php?e=' . $respuesta[$j]["id_event"] . '" class="box-btn">Comprar</a>
                                             </div>';
+                                }
+
+                                echo '  <div class="col-12 col-sm-1 text-right"></div>';
                             }
 
-                            echo '  <div class="col-12 col-sm-1 text-right"></div>';
+                        ?>
+
+
+
+                            <div class="col-12 col-sm-6 text-center">Métodos de pago / <a href="terminos-y-condiciones.php" target="_blank"> Términos y Condiciones</a></div>
+                            <div class="col-12 col-sm-6 text-center">
+
+                                <span style="text-align: right;">
+                                    <ul class="social">
+                                        <li>
+                                            <p>Comparte</p>
+                                        </li>
+                                        <li>
+                                            <a href="https://wa.me/?text=https://echomusic.net/eventos.php?e=<?php echo $idEvento; ?>" target="_blank"><i class='bx bxl-whatsapp'></i></a>
+                                        </li>
+                                        <li>
+                                            <a href="https://www.facebook.com/sharer/sharer.php?u=https://echomusic.net/eventos.php?e=<?php echo $idEvento; ?>" target="_blank"><i class='bx bxl-facebook'></i></a>
+                                        </li>
+                                        <!-- Instagram no soporta compartir directamente la URL del evento -->
+                                        <li>
+                                            <a href="https://twitter.com/intent/tweet?url=https://echomusic.net/eventos.php?e=<?php echo $idEvento; ?>&text=Mira%20este%20evento%20en%20EchoMusic.net!" target="_blank"><i class='bx bxl-twitter'></i></a>
+                                        </li>
+                                    </ul>
+                                </span>
+
+
+                            </div>
+
+
+                        <?php
+                            // Fin de mostrar datos del evento futuro
                         }
+                        ?>
 
-                    ?>
-
-
-
-                        <div class="col-12 col-sm-6 text-center">Métodos de pago / <a href="terminos-y-condiciones.php" target="_blank"> Términos y Condiciones</a></div>
-                        <div class="col-12 col-sm-6 text-center">
-
-                            <span style="text-align: right;">
-                                <ul class="social">
-                                    <li>
-                                        <p>Comparte</p>
-                                    </li>
-                                    <li>
-                                        <a href="https://wa.me/?text=https://echomusic.net/eventos.php?e=<?php echo $idEvento; ?>" target="_blank"><i class='bx bxl-whatsapp'></i></a>
-                                    </li>
-                                    <li>
-                                        <a href="https://www.facebook.com/sharer/sharer.php?u=https://echomusic.net/eventos.php?e=<?php echo $idEvento; ?>" target="_blank"><i class='bx bxl-facebook'></i></a>
-                                    </li>
-                                    <!-- Instagram no soporta compartir directamente la URL del evento -->
-                                    <li>
-                                        <a href="https://twitter.com/intent/tweet?url=https://echomusic.net/eventos.php?e=<?php echo $idEvento; ?>&text=Mira%20este%20evento%20en%20EchoMusic.net!" target="_blank"><i class='bx bxl-twitter'></i></a>
-                                    </li>
-                                </ul>
-                            </span>
-
-
-                        </div>
-
-
-                    <?php
-                        // Fin de mostrar datos del evento futuro
-                    }
-                    ?>
-
+                    </div>
                 </div>
-            </div>
+
+                <!-- Fin del else de Evento Activo -->
+            <?php
+            }
+            ?>
 
             <!--<div class="">-->
 
@@ -250,7 +270,7 @@ if (empty($respuestaVideoEvento["embed_multi"])) {
 } else {
     echo '
         <section class="home-contact-area home-2-contact ptb-35">
-            <div class="container"> 
+            <div class="container">
 
                 <div class="row">
                     <div class="col-lg-2 col-md-2"></div>
@@ -260,7 +280,7 @@ if (empty($respuestaVideoEvento["embed_multi"])) {
                         </div>
                     </div>
 
-                    
+
                 </div>
             </div>
         </section>';
@@ -306,12 +326,12 @@ if (empty($respuestaVideoEvento["embed_multi"])) {
                     $eventosRelacionados = Consultas::eventosRelacionadosRegion($respuesta[0]["id_region"]);
                 }
             } else {
-                //   Si no tiene género envoio el ID región para recomendar´por region 
+                //   Si no tiene género envoio el ID región para recomendar´por region
                 $eventosRelacionados = Consultas::eventosRelacionadosGenero($idGenero);
             }
 
             #Notar que es lo mismo que hacer
-            # date("Y-m-d H:i:s")                                
+            # date("Y-m-d H:i:s")
             for ($k = 0; $k < count($eventosRelacionados); $k++) {
                 //Busca CIudad y Región
                 $respuestaCiudadRegion = Consultas::buscaCiudadRegion($eventosRelacionados[$k]["id_city"], $eventosRelacionados[$k]["id_region"]);
@@ -336,33 +356,33 @@ if (empty($respuestaVideoEvento["embed_multi"])) {
                     $img = substr($eventosRelacionados[$k]["IMG"], 16);
                     //echo "falso";
                 }
-                echo '                    
+                echo '
                     <div class="col-lg-4 col-sm-6 item cyber">
                         <div class="single-case">
                             <div class="case-img ">
                                 <a href="eventos.php?e=' . $eventosRelacionados[$k]["id_event"] . '">
-                                    <img class="imgEvent tamano-1" src="https://echomusic.net/dashboard/images/eventos/' . $eventosRelacionados[$k]["img"] . '.jpg" height="100%"  alt="case"/> 
+                                    <img class="imgEvent tamano-1" src="https://echomusic.net/dashboard/images/eventos/' . $eventosRelacionados[$k]["img"] . '.jpg" height="100%"  alt="case"/>
                                 </a>
                             </div>
 
                             <div class="content">
                                 <!--Titulo-->
                                 <div class="row text-center">
-                                    <div class="col-12"> 
+                                    <div class="col-12">
                                         <a href="eventos.php?e=' . $eventosRelacionados[$k]["id_event"] . '"> <h3>' . $eventosRelacionados[$k]["name_event"] . '</h3></a>
-                                    </div> 
+                                    </div>
                                 </div>
-                                
+
                                 <!--Entrada Fecha hora Costo Compra-->
                                 <div class="row text-center ">
                                     <div class="col-lg-6 col-sm-6">
                                         <p>' . $dia . '-' . $mes . '-' . $anio . ' | ' . $hora . ':' . $minutos . ' hrs.</p>
 
-                                        <a href="#" class="line-bnt"> 
+                                        <a href="#" class="line-bnt">
                                         ' . $respuestaCiudadRegion[0]["name_region"] . ', ' . $respuestaCiudadRegion[0]["name_city"] . '
                                         </a>
                                     </div>
-                                    
+
                                     <div class="col-lg-6 col-sm-6">';
                 if ($eventosRelacionados[$k]["ticket_value"] == 0) {
                     echo  '<h3>Gratuito</h3>
@@ -373,10 +393,10 @@ if (empty($respuestaVideoEvento["embed_multi"])) {
                 }
 
                 echo '
-                                    </div> 
-                                </div>                                                                                               
+                                    </div>
+                                </div>
                             </div>
-                            
+
                         </div>
                     </div>';
             }
@@ -434,7 +454,7 @@ if (empty($respuestaVideoEvento["embed_multi"])) {
 
                     <div class="col-lg-6">
                         <div class="feature-img">
-                            <img src="assets/images/bg/echomusic-isostipo-rock-guitarra-1.png" alt="Artistas Echomusic"/> 
+                            <img src="assets/images/bg/echomusic-isostipo-rock-guitarra-1.png" alt="Artistas Echomusic"/>
                         </div>
                     </div>
                 </div>
@@ -674,7 +694,7 @@ if (empty($respuestaVideoEvento["embed_multi"])) {
                         <h3>Steven Jony</h3>
                         <span>CEO of Company</span>
                     </div>
-                    
+
                     <div class="single-client">
                         <img src="assets/images/client/2.jpg" alt="img">
                         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem Ipsum is simply dummy text of the printing Quis suspendisse typesetting ipsum dolor sit amet,</p>
@@ -714,12 +734,12 @@ if (empty($respuestaVideoEvento["embed_multi"])) {
                                         <a href="#">By Admin</a>
                                     </li>
                                 </ul>
-                                
+
                                 <a href="blog-details.html">
                                     <h3>Joe’s Company Software Development Case</h3>
                                 </a>
                                 <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptas in fugit minima modi perspiciatis nam aspernatur porro</p>
-                                
+
                                 <a href="blog-details.html" class="line-bnt">Read More</a>
                             </div>
                         </div>

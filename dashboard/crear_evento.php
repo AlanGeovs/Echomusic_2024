@@ -308,7 +308,7 @@ if (!isset($_SESSION["id_user"])) {
                                                                 <label for="validationCustom01">Fecha</label>
                                                                 <div class="input-group">
                                                                     <!-- Poner Fecha actua -->
-                                                                    <input type="text" class="date-time-picker form-control" id="date_event" name="date_event" data-options='{"timepicker":true, "format":"d-m-Y H:i"}' value="<?php echo date("d-m-Y H:i"); ?>">
+                                                                    <input type="text" class="date-time-picker form-control" id="date_event" name="date_event" data-options='{"timepicker":true, "format":"d-m-Y H:i", "step":30}' value="<?php echo date("d-m-Y H:i"); ?>">
                                                                     <span class="input-group-append">
                                                                         <span class="input-group-text add-on white">
                                                                             <i class="icon-calendar"></i>
@@ -362,14 +362,32 @@ if (!isset($_SESSION["id_user"])) {
                                                                 <label for="ticket_audience">Cantidad</label>
                                                                 <input type="number" class="form-control" id="ticket_audience" name="ticket_audience" placeholder="Cantidad">
                                                             </div>
-                                                            <div class="col-md-3 mb-3">
+                                                            <div class="col-md-3 mb-3 ">
                                                                 <label for="ticket_dateStart">Inicio Venta (Fecha y Hora)</label>
-                                                                <input type="datetime-local" class="form-control" id="ticket_dateStart" name="ticket_dateStart">
+                                                                <div class="input-group">
+
+                                                                    <!-- <input type="datetime-local" class="form-control" id="ticket_dateStart" name="ticket_dateStart"> -->
+                                                                    <input type="text" class="date-time-picker form-control" id="ticket_dateStart" name="ticket_dateStart" data-options='{"timepicker":true, "format":"d-m-Y H:i", "step":30}' value="<?php echo date("d-m-Y H:i"); ?>">
+                                                                    <span class="input-group-append">
+                                                                        <span class="input-group-text add-on white">
+                                                                            <i class="icon-calendar"></i>
+                                                                        </span>
+                                                                    </span>
+                                                                </div>
                                                             </div>
                                                             <div class="col-md-3 mb-3">
                                                                 <label for="ticket_dateEnd">Término Venta (Fecha y Hora)</label>
-                                                                <input type="datetime-local" class="form-control" id="ticket_dateEnd" name="ticket_dateEnd">
-                                                                <input type="hidden" id="contadorEntradas" name="contadorEntradas" value="1">
+
+                                                                <div class="input-group">
+                                                                    <!-- <input type="text" class="date-time-picker form-control" id="ticket_dateEnd" name="ticket_dateEnd" data-options='{"timepicker":true, "format":"d-m-Y H:i", "step":30}' value="<?php echo date("d-m-Y H:i"); ?>"> -->
+                                                                    <input type="text" class="date-time-picker form-control" id="ticket_dateEnd" name="ticket_dateEnd" data-options='{"timepicker":true, "format":"d-m-Y H:i", "step":30}'>
+                                                                    <input type="hidden" id="contadorEntradas" name="contadorEntradas" value="1">
+                                                                    <span class="input-group-append">
+                                                                        <span class="input-group-text add-on white">
+                                                                            <i class="icon-calendar"></i>
+                                                                        </span>
+                                                                    </span>
+                                                                </div>
 
                                                             </div>
 
@@ -386,7 +404,7 @@ if (!isset($_SESSION["id_user"])) {
                                                             <!-- Campo para cargar foto -->
                                                             <div class="col-md-4 mb-3">
                                                                 <label for="eventPhoto">Foto del Evento</label>
-                                                                <input type="file" class="form-control-file" id="eventPhoto" name="eventPhoto">
+                                                                <input type="file" class="form-control-file" id="eventPhoto" name="eventPhoto" required="">
                                                             </div>
 
                                                             <!-- Campo para Video Promocional del Evento (opcional) -->

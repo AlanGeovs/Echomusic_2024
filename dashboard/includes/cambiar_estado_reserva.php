@@ -17,6 +17,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         if ($resultado) {
             $response['success'] = true;
             $response['message'] = 'Estado actualizado con éxito.';
+            // Aquí se despliego el mensaje via email de confirmación para el usuario
         } else {
             $response['message'] = 'Error al actualizar el estado.';
         }

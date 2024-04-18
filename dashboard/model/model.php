@@ -687,8 +687,6 @@ class Consultas  extends Conexion
 		} else {
 			return "error";
 		}
-
-		// No necesitas cerrar explícitamente la conexión aquí
 	}
 
 
@@ -806,6 +804,29 @@ class Consultas  extends Conexion
 		$stmt->bindParam(':name_photo', $nombreImagen, PDO::PARAM_STR);
 		$stmt->execute();
 	}
+
+	// Cambia el valor de picture_ready = 1 cuando se sube o actualzia foto de portada
+
+	public static function actualizarPictureReady($idUser)
+	{
+		try {
+			$db = self::conectar();
+			$stmt = $db->prepare("UPDATE users SET picture_ready = 1 WHERE id_user = :id_user");
+			$stmt->bindParam(':id_user', $idUser, PDO::PARAM_INT);
+
+			if ($stmt->execute()) {
+				return true; // Retornar verdadero si la actualización fue exitosa
+			} else {
+				return false; // Retornar falso si la actualización falló
+			}
+		} catch (PDOException $e) {
+			// Manejar la excepción o error aquí
+			error_log("Error al actualizar picture_ready: " . $e->getMessage());
+			return false; // Retornar falso en caso de error
+		}
+	}
+
+
 
 	public static function obtenerFotosUsuario($id_user)
 	{
@@ -1067,6 +1088,55 @@ class Consultas  extends Conexion
 		return $stmt->fetchAll(PDO::FETCH_ASSOC);
 	}
 
+	//Tarifas actuales por is_plan_key
+	public static function obtenerTarifasPorIDPlanKey($idPlanKey)
+	{
+		$conexion = Conexion::conectar();
+		$stmt = $conexion->prepare("SELECT * FROM plans WHERE id_plan_key = :idPlanKey");
+		$stmt->bindParam(':idPlanKey', $idPlanKey, PDO::PARAM_INT);
+		$stmt->execute();
+		return $stmt->fetchAll(PDO::FETCH_ASSOC);
+	}
+
+	//Actualizar Tarifa actualizarTarifa
+	public static function actualizarTarifa($data)
+	{
+		try {
+			$db = self::conectar();
+			$stmt = $db->prepare("UPDATE plans SET id_name_plan = :id_name_plan, 
+									value_plan = :value_plan, 
+									commission_plan = :commission_plan,
+									duration_hours = :duration_hours, 
+									duration_minutes = :duration_minutes, 
+									backline = :backline, 
+									sound_reinforcement = :sound_reinforcement, 
+									sound_engineer = :sound_engineer, 
+									artists_amount = :artists_amount, 
+									desc_plan = :desc_plan 
+								  WHERE id_plan_key = :id_plan_key");
+
+			// Vinculación de parámetros
+			$stmt->bindParam(':id_plan_key', $data['id_plan_key']);
+			$stmt->bindParam(':id_name_plan', $data['id_name_plan']);
+			$stmt->bindParam(':value_plan', $data['value_plan']);
+			$stmt->bindParam(':commission_plan', $data['commission_plan']);
+			$stmt->bindParam(':duration_hours', $data['duration_hours']);
+			$stmt->bindParam(':duration_minutes', $data['duration_minutes']);
+			$stmt->bindParam(':backline', $data['backline']);
+			$stmt->bindParam(':sound_reinforcement', $data['sound_reinforcement']);
+			$stmt->bindParam(':sound_engineer', $data['sound_engineer']);
+			$stmt->bindParam(':artists_amount', $data['artists_amount']);
+			$stmt->bindParam(':desc_plan', $data['desc_plan']);
+
+			return $stmt->execute();
+		} catch (PDOException $e) {
+			// Manejo del error
+			error_log('Error en Consultas::actualizarTarifa - ' . $e->getMessage());
+			return false;
+		}
+	}
+
+
 	//Borrrar tarifas
 	public static function borrarTarifa($idTarifa)
 	{
@@ -1083,6 +1153,7 @@ class Consultas  extends Conexion
 
 
 
+	// ------------------------------
 
 	public static function eliminarMarca($id, $tabla)
 	{
@@ -1407,6 +1478,21 @@ class Consultas  extends Conexion
 		return $stmt->fetchAll(PDO::FETCH_ASSOC);
 	}
 
+	public static function obtenerCiudadPorRegion($id_region)
+	{
+		$sql = "
+			SELECT cities.id_city, cities.name_city
+			FROM cities
+			JOIN regions_cities ON cities.id_city = regions_cities.id_city
+			WHERE regions_cities.id_region = :id_region
+		";
+		$stmt = self::conectar()->prepare($sql);
+		$stmt->bindValue(':id_region', $id_region, PDO::PARAM_INT);
+		$stmt->execute();
+		return $stmt->fetchAll(PDO::FETCH_ASSOC);
+	}
+
+
 
 	public static function listarVariable($variable)
 	{
@@ -1484,6 +1570,7 @@ class Consultas  extends Conexion
 		try {
 			$db = Conexion::conectar();
 			$stmt = $db->prepare("SELECT COUNT(*) AS total_tickets FROM tickets_public WHERE id_event = :id_event");
+			//$stmt = $db->prepare("SELECT count(*) FROM `tickets_public` WHERE `id_event` = :id_event");
 			$stmt->bindParam(":id_event", $idEvento, PDO::PARAM_INT);
 			$stmt->execute();
 
@@ -1503,12 +1590,12 @@ class Consultas  extends Conexion
 
 		$stmt = self::conectar()->prepare($sql);
 
-		$stmt->bindValue(':ticket_name', $ticket['ticket_name'], PDO::PARAM_INT);
+		$stmt->bindValue(':ticket_name', $ticket['ticket_name'], PDO::PARAM_STR);
 		$stmt->bindValue(':ticket_value', $ticket['ticket_value'], PDO::PARAM_INT);
 		$stmt->bindValue(':ticket_audience', $ticket['ticket_audience'], PDO::PARAM_INT);
 		$stmt->bindValue(':ticket_dateStart', $ticket['ticket_dateStart'], PDO::PARAM_STR);
 		$stmt->bindValue(':ticket_dateEnd', $ticket['ticket_dateStart'], PDO::PARAM_STR);
-		$stmt->bindValue(':id_event', $idEvento, PDO::PARAM_STR);
+		$stmt->bindValue(':id_event', $idEvento, PDO::PARAM_INT);
 		try {
 			$result = $stmt->execute();
 			return ['success' => $result];
@@ -1574,12 +1661,28 @@ class Consultas  extends Conexion
 		}
 	}
 
+	// Proyectos por ID de evento
+	public static function obtenerProyectoPorId($idProyecto)
+	{
+		try {
+			$db = Conexion::conectar();
+			$stmt = $db->prepare("SELECT * FROM projects_crowdfunding WHERE id_project = :idProyecto");
+			$stmt->bindParam(":idProyecto", $idProyecto, PDO::PARAM_INT);
+			$stmt->execute();
+			$evento = $stmt->fetch(PDO::FETCH_ASSOC);
+			return $evento; // Devuelve los datos del evento o null si no se encontró
+		} catch (PDOException $e) {
+			// Manejo de error
+			return null;
+		}
+	}
+
 	//función recupera todas las entradas (tickets) asociadas a un evento específico,
 	public static function obtenerEntradasPorEvento($idEvento)
 	{
 		try {
 			$db = Conexion::conectar();
-			$stmt = $db->prepare("SELECT * FROM tickets_public WHERE id_event = :idEvento ORDER BY ticket_dateStart ASC");
+			$stmt = $db->prepare("SELECT * FROM tickets_public WHERE id_event = :idEvento ORDER BY id_ticket ASC");
 			$stmt->bindParam(":idEvento", $idEvento, PDO::PARAM_INT);
 			$stmt->execute();
 			$entradas = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -1653,7 +1756,7 @@ class Consultas  extends Conexion
 			$db = Conexion::conectar();
 			$stmt = $db->prepare("UPDATE tickets_public SET ticket_name = :ticket_name, ticket_value = :ticket_value, ticket_audience = :ticket_audience, ticket_dateStart = :ticket_dateStart, ticket_dateEnd = :ticket_dateEnd WHERE id_ticket = :id_ticket");
 			$stmt->bindParam(":ticket_name", $dataTicket['ticket_name'], PDO::PARAM_STR);
-			$stmt->bindParam(":ticket_value", $dataTicket['ticket_value'], PDO::PARAM_STR);
+			$stmt->bindParam(":ticket_value", $dataTicket['ticket_value'], PDO::PARAM_INT);
 			$stmt->bindParam(":ticket_audience", $dataTicket['ticket_audience'], PDO::PARAM_INT);
 			$stmt->bindParam(":ticket_dateStart", $dataTicket['ticket_dateStart'], PDO::PARAM_STR);
 			$stmt->bindParam(":ticket_dateEnd", $dataTicket['ticket_dateEnd'], PDO::PARAM_STR);
@@ -1884,7 +1987,7 @@ class Consultas  extends Conexion
 	// }
 
 	// Mostrar reservar con paginador y agrego JOIN de nombre de Ciudades y Regiones
-	public static function obtenerReservasPorUsuario($id_usuario, $offset, $numPorPagina)
+	public static function obtenerReservasPorUsuario($id_usuario, $offset, $numPorPagina, $type_user)
 	{
 		$sql = "SELECT ep.*, p.*, c.name_city, r.name_region 
 				FROM events_private ep 
@@ -1892,17 +1995,1262 @@ class Consultas  extends Conexion
 				JOIN cities c ON ep.id_city = c.id_city 
 				JOIN regions_cities rc ON c.id_city = rc.id_city 
 				JOIN regions r ON rc.id_region = r.id_region 
-				WHERE p.id_user = :id_user 
-				ORDER BY ep.id_plan_key DESC 
+				-- WHERE p.id_user = :id_user 
+				WHERE ep.$type_user = :id_user 
+				ORDER BY ep.id_event DESC 
 				LIMIT :offset, :numPorPagina";
 		$stmt = self::conectar()->prepare($sql);
 		$stmt->bindValue(':id_user', $id_usuario, PDO::PARAM_INT);
+		//$stmt->bindValue(':type_user', $type_user, PDO::PARAM_STR);
 		// El bindValue para LIMIT debe ser específico para manejar correctamente los valores enteros
 		$stmt->bindParam(':offset', $offset, PDO::PARAM_INT);
 		$stmt->bindParam(':numPorPagina', $numPorPagina, PDO::PARAM_INT);
 		$stmt->execute();
 		return $stmt->fetchAll(PDO::FETCH_ASSOC);
 	}
+
+	/**
+	 * Obtiene los detalles de una reserva específica de la tabla events_private.
+	 * 
+	 * @param int $idReserva El ID de la reserva a buscar.
+	 * @return array Los detalles de la reserva o un mensaje de error.
+	 */
+	public static function obtenerDetalleReserva($idReserva)
+	{
+		try {
+			$sql = "SELECT * FROM events_private WHERE id_event = :id_event";
+			$stmt = Conexion::conectar()->prepare($sql);
+			$stmt->bindParam(':id_event', $idReserva, PDO::PARAM_INT);
+
+			$stmt->execute();
+
+			$resultado = $stmt->fetch(PDO::FETCH_ASSOC);
+
+			if ($resultado) {
+				return $resultado;
+			} else {
+				return ['error' => 'No se encontró la reserva con el ID especificado'];
+			}
+		} catch (PDOException $e) {
+			return ['error' => 'Error al obtener los detalles de la reserva: ' . $e->getMessage()];
+		}
+	}
+
+
+	// Actualiza los detalles de la reserva
+	public static function actualizarDetalleReserva($idReserva, $nameEvent, $location, $idRegion, $idCity, $dateEvent, $phoneEvent, $descEvent)
+	{
+		$sql = "UPDATE events_private SET name_event = :nameEvent, location = :location, id_region = :idRegion, id_city = :idCity, date_event = :dateEvent, phone_event = :phoneEvent, desc_event = :descEvent 
+				WHERE id_event = :idReserva";
+		$stmt = self::conectar()->prepare($sql);
+		$stmt->bindParam(':nameEvent', $nameEvent);
+		$stmt->bindParam(':location', $location);
+		$stmt->bindParam(':idRegion', $idRegion);
+		$stmt->bindParam(':idCity', $idCity);
+		$stmt->bindParam(':dateEvent', $dateEvent);
+		$stmt->bindParam(':phoneEvent', $phoneEvent);
+		$stmt->bindParam(':descEvent', $descEvent);
+		$stmt->bindParam(':idReserva', $idReserva);
+
+		return $stmt->execute();
+	}
+
+
+	// Mostrar Notificación de reservas nuevas
+	public static function obtenerNotificacionDeReservasPorUsuario($id_usuario, $id_type_user, $statusEvent)
+	{
+		try {
+			$db = Conexion::conectar();
+			$stmt = $db->prepare("SELECT count(*) AS total_reservas FROM events_private ep WHERE ep.status_event like '$statusEvent' AND ep.$id_type_user = :id_user");
+			$stmt->bindParam(":id_user", $id_usuario, PDO::PARAM_INT);
+			$stmt->execute();
+
+			$resultado = $stmt->fetch(PDO::FETCH_ASSOC);
+			return $resultado['total_reservas'];
+		} catch (PDOException $e) {
+			// Manejar el error o registrar
+			return false;
+		}
+	}
+
+	// Mostrar Proeyctos Crowdfounding
+	public static function obtenerProyectosPorUsuario($id_usuario, $offset, $numPorPagina)
+	{
+		// $sql = "SELECT pc.*, pd.* FROM `projects_crowdfunding` pc INNER JOIN project_desc pd ON pd.id_project = pc.id_project WHERE pc.id_user = :id_user ORDER BY pc.id_project DESC LIMIT :offset, :numPorPagina";
+		$sql = "SELECT pc.*, pd.*, pm.* FROM `projects_crowdfunding` pc INNER JOIN project_desc pd ON pd.id_project = pc.id_project INNER JOIN project_multimedia pm ON pc.id_project = pm.id_project WHERE pc.id_user = :id_user AND pm.project_multimedia_type=1 ORDER BY pc.id_project DESC LIMIT :offset, :numPorPagina";
+		$stmt = self::conectar()->prepare($sql);
+		$stmt->bindValue(':id_user', $id_usuario, PDO::PARAM_INT);
+		$stmt->bindValue(':offset', $offset, PDO::PARAM_INT);
+		$stmt->bindValue(':numPorPagina', $numPorPagina, PDO::PARAM_INT);
+		$stmt->execute();
+		return $stmt->fetchAll(PDO::FETCH_ASSOC);
+	}
+
+	// Mostrar poryecto por ID
+	public static function obtenerProyectosPorId($id_project)
+	{
+		// $sql = "SELECT pc.*, pd.* FROM `projects_crowdfunding` pc INNER JOIN project_desc pd ON pd.id_project = pc.id_project WHERE pc.id_user = :id_user ORDER BY pc.id_project DESC LIMIT :offset, :numPorPagina";
+		$sql = "SELECT pc.*, pd.*, pm.*, pca.*  FROM `projects_crowdfunding` pc 
+		INNER JOIN project_desc pd ON pd.id_project = pc.id_project 
+		INNER JOIN project_multimedia pm ON pc.id_project = pm.id_project 
+		INNER JOIN project_categories pca ON pc.id_project = pca.id_project  
+		WHERE pc.id_project = :id_project  AND pm.project_multimedia_type=1  ORDER BY pc.id_project ";
+		$stmt = self::conectar()->prepare($sql);
+		$stmt->bindValue(':id_project', $id_project, PDO::PARAM_INT);
+		$stmt->execute();
+		return $stmt->fetch(PDO::FETCH_ASSOC);
+	}
+
+	public static function obtenerMontosPorId($id_project)
+	{
+		$sql = "SELECT pc.*, pti.* FROM projects_crowdfunding pc
+				INNER JOIN project_times pti ON pc.id_project = pti.id_project 
+				WHERE pc.id_project = :id_project  ";
+		$stmt = self::conectar()->prepare($sql);
+		$stmt->bindValue(':id_project', $id_project, PDO::PARAM_INT);
+		$stmt->execute();
+		return $stmt->fetch(PDO::FETCH_ASSOC);
+	}
+
+	public static function obtenerRecompensasPorId($idProjectActual)
+	{
+		// Consulta para obtener las recompensas por ID de proyecto y filtrar por slots de tier del 1 al 5
+		$sql = "SELECT * FROM `project_tiers` 
+            WHERE id_project = :id_project 
+            AND tier_slot BETWEEN 1 AND 5
+            ORDER BY tier_slot ASC";
+		$stmt = self::conectar()->prepare($sql);
+		$stmt->bindValue(':id_project', $idProjectActual, PDO::PARAM_INT);
+		$stmt->execute();
+		return $stmt->fetchAll(PDO::FETCH_ASSOC);
+	}
+
+	public static function obtenerMultimediaPorId($idProjectActual)
+	{
+		// Consulta para obtener las recompensas por ID de proyecto y filtrar por slots de tier del 1 al 5
+		$sql = "SELECT * FROM `project_multimedia` 
+            WHERE id_project = :id_project 
+            AND project_multimedia_type BETWEEN 1 AND 2
+            ORDER BY project_multimedia_type ASC";
+		$stmt = self::conectar()->prepare($sql);
+		$stmt->bindValue(':id_project', $idProjectActual, PDO::PARAM_INT);
+		$stmt->execute();
+		return $stmt->fetchAll(PDO::FETCH_ASSOC);
+	}
+
+	// Validar poryectos en curso
+
+
+	// Función para verificar si el usuario tiene proyectos en curso
+	public static function proyectosEnCurso($id)
+	{
+		try {
+			$db = self::conectar(); // Asume que tienes un método conectar() que retorna la conexión a la base de datos
+			$stmt = $db->prepare("SELECT * FROM projects_crowdfunding WHERE id_user = :id_user AND status_project = 0");
+			$stmt->bindValue(':id_user', $id, PDO::PARAM_INT);
+			$stmt->execute();
+			$resultado = $stmt->fetch(PDO::FETCH_ASSOC);
+
+			if ($resultado) {
+				// Hay proyectos en curso, retorna el array con la información
+				return $resultado;
+			} else {
+				// No hay proyectos en curso
+				return null;
+			}
+		} catch (PDOException $e) {
+			// Manejo del error
+			error_log("Error al verificar proyectos en curso: " . $e->getMessage());
+			return null;
+		}
+	}
+
+	// Crear los montos y plazos de Crowdfunding
+	public static function crearMontos($idProject, $projectAmount)
+	{
+		try {
+			$db = self::conectar();
+			$stmt = $db->prepare("UPDATE projects_crowdfunding 
+							SET project_amount = :project_amount
+							WHERE id_project = :id_project");
+			$stmt->bindValue(':id_project', $idProject);
+			$stmt->bindValue(':project_amount', $projectAmount);
+
+			return $stmt->execute();
+		} catch (PDOException $e) {
+			// Manejar error
+			error_log('PDOException - ' . $e->getMessage(), 0);
+			return false;
+		}
+	}
+
+
+	// Crear los  plazos de Crowdfunding
+	public static function crearPlazos($idProject, $duration, $execution)
+	{
+		try {
+			$db = self::conectar();
+			// Preparar la consulta para actualizar los plazos en project_times
+			$stmt = $db->prepare("UPDATE project_times SET rec_time = :duration, exec_time = :execution WHERE id_project = :id_project");
+			$db->beginTransaction();
+
+			// Vincular los parámetros
+			$stmt->bindParam(':id_project', $idProject, PDO::PARAM_INT);
+			$stmt->bindParam(':duration', $duration, PDO::PARAM_INT);
+			$stmt->bindParam(':execution', $execution, PDO::PARAM_INT);
+
+			// Ejecutar la actualización
+			$stmt->execute();
+
+			// Si se afectaron filas, entonces el UPDATE fue exitoso
+			if ($stmt->rowCount() > 0) {
+				$db->commit();
+				return true; // Devuelve true si los plazos se actualizaron con éxito
+			} else {
+				// No se encontró el proyecto o los valores eran los mismos, no se actualizó nada
+				$db->rollBack();
+				return false; // Puede que no necesites retornar false aquí dependiendo de tu lógica de negocio
+			}
+		} catch (PDOException $e) {
+			// En caso de error, revertir la transacción
+			$db->rollBack();
+			error_log("Error al actualizar plazos en project_times: " . $e->getMessage());
+			return false; // Devuelve false en caso de error
+		}
+	}
+
+
+	//  Función para editar Plazos
+	public static function editarPlazos($idProject, $recTime, $execTime)
+	{
+		try {
+			$db = self::conectar();
+			$stmt = $db->prepare("UPDATE project_times SET rec_time = :recTime, exec_time = :execTime WHERE id_project = :idProject");
+			$stmt->bindParam(':recTime', $recTime);
+			$stmt->bindParam(':execTime', $execTime);
+			$stmt->bindParam(':idProject', $idProject);
+			$stmt->execute();
+			return $stmt->rowCount() > 0;
+		} catch (PDOException $e) {
+			// Manejo de error
+			return false;
+		}
+	}
+	// Función para edutar Montos
+	public static function editarMontos($idProject, $projectAmount)
+	{
+		try {
+			$db = self::conectar();
+			$stmt = $db->prepare("UPDATE projects_crowdfunding SET project_amount = :projectAmount WHERE id_project = :idProject");
+			$stmt->bindParam(':projectAmount', $projectAmount);
+			$stmt->bindParam(':idProject', $idProject);
+			$stmt->execute();
+			return $stmt->rowCount() > 0;
+		} catch (PDOException $e) {
+			// Manejo de error
+			return false;
+		}
+	}
+
+
+
+
+	// Actualiza las recompensas
+	public static function crearActualizarRecompensa($idProyecto, $tierSlot, $tierTitle, $tierAmount, $tierDesc, $rewards, $statusTier)
+	{
+		try {
+			$db = self::conectar();
+
+			// Prepara la consulta UPDATE
+			$stmt = $db->prepare("UPDATE project_tiers SET
+				tier_title = :tier_title,
+				tier_amount = :tier_amount,
+				tier_desc = :tier_desc,
+				t_reward_01 = :t_reward_01,
+				t_reward_02 = :t_reward_02,
+				t_reward_03 = :t_reward_03, 
+				t_reward_04 = :t_reward_04,
+				status_tier = :status_tier
+				WHERE id_project = :id_project AND tier_slot = :tier_slot");
+
+			// Vincula los parámetros a la consulta
+			$stmt->bindParam(':id_project', $idProyecto, PDO::PARAM_INT);
+			$stmt->bindParam(':tier_slot', $tierSlot, PDO::PARAM_INT);
+			$stmt->bindParam(':tier_title', $tierTitle);
+			$stmt->bindParam(':tier_amount', $tierAmount, PDO::PARAM_INT);
+			$stmt->bindParam(':tier_desc', $tierDesc);
+
+			// Se asume que $rewards tiene hasta 4 elementos. Si no, los faltantes se envían como NULL
+			for ($i = 0; $i < 4; $i++) {
+				$rewardParam = ":t_reward_" . sprintf("%02d", $i + 1);
+				$stmt->bindValue($rewardParam, $rewards[$i] ?? null);
+			}
+
+			$stmt->bindParam(':status_tier', $statusTier, PDO::PARAM_INT);
+
+			// Ejecuta la consulta
+			return $stmt->execute();
+		} catch (PDOException $e) {
+			error_log("Error al actualizar recompensa: " . $e->getMessage());
+			return false;
+		}
+	}
+
+
+	// Crear las 5 recompensas 
+	public static function crearRegistrosTiers($id_project)
+	{
+		try {
+			$db = self::conectar();
+			// Preparar la consulta para insertar los cinco registros
+			$stmt = $db->prepare("INSERT INTO project_tiers (id_project, tier_slot, status_tier) VALUES (:id_project, :tier_slot, 0)");
+
+			// Iniciar una transacción para asegurar que todos los registros se inserten juntos
+			$db->beginTransaction();
+
+			// Insertar los cinco registros con un bucle
+			for ($tierSlot = 1; $tierSlot <= 5; $tierSlot++) {
+				$stmt->bindParam(':id_project', $id_project, PDO::PARAM_INT);
+				$stmt->bindParam(':tier_slot', $tierSlot, PDO::PARAM_INT);
+				$stmt->execute();
+			}
+
+			// Comprometer (commit) la transacción
+			$db->commit();
+
+			return true; // Devuelve true si los registros se insertaron con éxito
+		} catch (PDOException $e) {
+			// En caso de error, revertir la transacción
+			$db->rollBack();
+			error_log("Error al insertar registros en project_tiers: " . $e->getMessage());
+			return false; // Devuelve false en caso de error
+		}
+	}
+
+	// Crea los 2 registros multimedia de proyectos
+	public static function crearRegistrosMultimedia($id_project)
+	{
+		try {
+			$db = self::conectar();
+			// Preparar la consulta para insertar los cinco registros
+			$stmt = $db->prepare("INSERT INTO project_multimedia (id_project, project_multimedia_type, project_multimedia_name  ) VALUES (:id_project, :project_multimedia_type,'' )");
+
+			// Iniciar una transacción para asegurar que todos los registros se inserten juntos
+			$db->beginTransaction();
+
+			// Insertar los cinco registros con un bucle
+			for ($multSlot = 1; $multSlot <= 2; $multSlot++) {
+				$stmt->bindParam(':id_project', $id_project, PDO::PARAM_INT);
+				$stmt->bindParam(':project_multimedia_type', $multSlot, PDO::PARAM_INT);
+				$stmt->execute();
+			}
+
+			// Comprometer (commit) la transacción
+			$db->commit();
+
+			return true; // Devuelve true si los registros se insertaron con éxito
+		} catch (PDOException $e) {
+			// En caso de error, revertir la transacción
+			$db->rollBack();
+			error_log("Error al insertar registros en project_multimedia: " . $e->getMessage());
+			return false; // Devuelve false en caso de error
+		}
+	}
+
+	// Crea registros de times en tabla 
+	public static function crearRegistrosTimes($id_project)
+	{
+		try {
+			$db = self::conectar();
+			// Preparar la consulta para insertar el registro 
+			$stmt = $db->prepare("INSERT INTO project_times (id_project, rec_time, exec_time) VALUES (:id_project, null, null)");
+
+			// Iniciar una transacción para asegurar la integridad
+			$db->beginTransaction();
+
+			// Vincular parámetros y ejecutar
+			$stmt->bindParam(':id_project', $id_project, PDO::PARAM_INT);
+			$stmt->execute();
+
+			$db->commit();
+
+			return true; // Devuelve true si el registro se insertó con éxito
+		} catch (PDOException $e) {
+			// En caso de error, revertir la transacción
+			$db->rollBack();
+			error_log("Error al insertar registro en project_times: " . $e->getMessage());
+			return false; // Devuelve false en caso de error
+		}
+	}
+
+
+	// Guardar los datos multimedia
+	public static function guardarMultimediaProyecto($projectId, $mediaType, $mediaName, $mediaService)
+	{
+		try {
+			$db = self::conectar(); // Asume que tienes un método para conectar a la base de datos
+
+			// Inserta o actualiza el registro multimedia del proyecto
+			$sql = "UPDATE project_multimedia SET project_multimedia_name = :project_multimedia_name, project_multimedia_service = :project_multimedia_service 
+			        WHERE id_project = :id_project AND project_multimedia_type = :project_multimedia_type";
+			// $sql = "INSERT INTO project_multimedia (id_project, project_multimedia_type, project_multimedia_name, project_multimedia_service) 
+			// VALUES (:id_project, :project_multimedia_type, :project_multimedia_name, :project_multimedia_service) 
+			// ON DUPLICATE KEY UPDATE project_multimedia_name = :project_multimedia_name, project_multimedia_service = :project_multimedia_service";
+
+			$stmt = $db->prepare($sql);
+			$stmt->bindParam(':id_project', $projectId, PDO::PARAM_INT);
+			$stmt->bindParam(':project_multimedia_type', $mediaType, PDO::PARAM_INT);
+			$stmt->bindParam(':project_multimedia_name', $mediaName, PDO::PARAM_STR);
+			$stmt->bindParam(':project_multimedia_service', $mediaService, PDO::PARAM_STR);
+
+			return $stmt->execute();
+		} catch (PDOException $e) {
+			// Manejo de error
+			error_log("Error al guardar multimedia del proyecto: " . $e->getMessage());
+			return false;
+		}
+	}
+
+	// Verificar datos multimedia
+	public static function verificarDatosMultimedia($idProject)
+	{
+		try {
+			$db = self::conectar();
+			// La consulta verifica si existen entradas para el proyecto dado con multimedia_name no nulo/vacío
+			$sql = "SELECT COUNT(*) AS cnt FROM project_multimedia 
+					WHERE id_project = :id_project 
+					AND project_multimedia_name IS NOT NULL 
+					AND project_multimedia_name <> '' 
+					AND (project_multimedia_type = 1 OR project_multimedia_type = 2)";
+
+			$stmt = $db->prepare($sql);
+			$stmt->bindValue(':id_project', $idProject, PDO::PARAM_INT);
+			$stmt->execute();
+
+			// Obtiene el resultado de la consulta
+			$result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+			// Si cnt es mayor que 0, entonces hay datos capturados
+			if ($result && $result['cnt'] > 0) {
+				return 1; // Existen datos capturados
+			} else {
+				return 0; // No existen datos capturados
+			}
+		} catch (PDOException $e) {
+			// Manejo del error
+			error_log("Error al verificar datos multimedia: " . $e->getMessage());
+			return false; // Indica error
+		}
+	}
+
+	// Verifica datos recompensas
+	public static function verificarDatosRecompensa($idProject)
+	{
+		try {
+			$db = self::conectar();
+			// La consulta verifica si existe una entrada para el proyecto y tier_slot con un tier_title no nulo/vacío
+			$sql = "SELECT COUNT(*) AS cnt FROM project_tiers 
+                WHERE id_project = :id_project 
+                AND tier_slot = 1 
+                AND tier_title IS NOT NULL 
+                AND tier_title <> ''";
+
+			$stmt = $db->prepare($sql);
+			$stmt->bindValue(':id_project', $idProject, PDO::PARAM_INT);
+			$stmt->execute();
+
+			// Obtiene el resultado de la consulta
+			$result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+			// Si cnt es mayor que 0, entonces hay un tier_title capturado para tier_slot = 1
+			if ($result && $result['cnt'] > 0) {
+				return 1; // Existe un tier_title capturado
+			} else {
+				return 0; // No existe un tier_title capturado
+			}
+		} catch (PDOException $e) {
+			// Manejo del error
+			error_log("Error al verificar datos de recompensa: " . $e->getMessage());
+			return false; // Indica error
+		}
+	}
+
+	// Verifica montos
+
+	public static function verificarMontoProyecto($idProject)
+	{
+		try {
+			$db = self::conectar(); // Asume que tienes un método para conectar a la base de datos
+
+			// La consulta verifica si existe una entrada para el proyecto con un project_amount no nulo/vacío
+			$sql = "SELECT COUNT(*) AS cnt FROM projects_crowdfunding 
+                WHERE id_project = :id_project 
+                AND project_amount IS NOT NULL 
+                AND project_amount <> ''";
+
+			$stmt = $db->prepare($sql);
+			$stmt->bindValue(':id_project', $idProject, PDO::PARAM_INT);
+			$stmt->execute();
+
+			// Obtiene el resultado de la consulta
+			$result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+			// Si cnt es mayor que 0, entonces hay un project_amount capturado
+			if ($result && $result['cnt'] > 0) {
+				return 1; // Existe un project_amount capturado
+			} else {
+				return 0; // No existe un project_amount capturado
+			}
+		} catch (PDOException $e) {
+			// Manejo del error
+			error_log("Error al verificar monto del proyecto: " . $e->getMessage());
+			return false; // Indica error
+		}
+	}
+
+	// Publicar poryecto
+	public static function publicarProyecto($idProject)
+	{
+		try {
+			$db = self::conectar();
+			$stmt = $db->prepare("UPDATE projects_crowdfunding SET status_project = 1 WHERE id_project = :id_project");
+			$stmt->bindParam(':id_project', $idProject, PDO::PARAM_INT);
+
+			return $stmt->execute();
+		} catch (PDOException $e) {
+			error_log("Error al publicar proyecto: " . $e->getMessage());
+			return false;
+		}
+	}
+
+
+
+
+	public static function totalProyectos($id_usuario)
+	{
+		$sql = "SELECT COUNT(id_event) FROM events_public WHERE id_user = :id_user";
+		$stmt = self::conectar()->prepare($sql);
+		$stmt->bindValue(':id_user', $id_usuario, PDO::PARAM_INT);
+		$stmt->execute();
+		return $stmt->fetchColumn();
+	}
+
+	// Total recaudado
+	static public function recaudadoCrowdfunding($idProject)
+	{
+		$conexion = Conexion::conectar();
+		$stmt = $conexion->prepare("SELECT SUM(backer_amount + backer_added_amount) AS total_recaudado FROM project_backers WHERE id_project = :id");
+		$stmt->bindParam(":id", $idProject, PDO::PARAM_INT);
+		$stmt->execute();
+
+		// Fetch  
+		$resultado = $stmt->fetch(PDO::FETCH_ASSOC);
+		$stmt = null;
+		if ($resultado && $resultado['total_recaudado'] !== null) {
+			return $resultado['total_recaudado'];
+		} else {
+			// Regresa  0 si no hay nada recaudado
+			return 0;
+		}
+	}
+
+
+
+	// ----------------
+	// Funciones de Administración
+	// Mostrar Usaurios con paginador
+	// public static function obtenerUsuarios($offset, $numPorPagina)
+	// {
+	// 	$sql = "SELECT * FROM users  ORDER BY id_user DESC LIMIT :offset, :numPorPagina";
+	// 	$stmt = self::conectar()->prepare($sql);
+	// 	$stmt->bindValue(':offset', $offset, PDO::PARAM_INT);
+	// 	$stmt->bindValue(':numPorPagina', $numPorPagina, PDO::PARAM_INT);
+	// 	$stmt->execute();
+	// 	return $stmt->fetchAll(PDO::FETCH_ASSOC);
+	// }
+
+	// Obtener Usuarios con filtro de búsqueda
+	public static function obtenerUsuarios($offset, $numPorPagina, $filtro = '')
+	{
+		$filtroSQL = '';
+		if (!empty($filtro)) {
+			$filtro = "%$filtro%";
+			// Asegúrate de usar placeholders únicos para cada condición
+			$filtroSQL = "WHERE id_user LIKE :filtro1 OR mail_user LIKE :filtro2 OR last_name_user LIKE :filtro3 OR first_name_user LIKE :filtro4 OR nick_user LIKE :filtro5";
+		}
+
+		$sql = "SELECT * FROM users $filtroSQL ORDER BY id_user DESC LIMIT :offset, :numPorPagina";
+		$stmt = self::conectar()->prepare($sql);
+		if (!empty($filtro)) {
+			// Vincula cada filtro a su respectivo placeholder
+			$stmt->bindParam(':filtro1', $filtro, PDO::PARAM_STR);
+			$stmt->bindParam(':filtro2', $filtro, PDO::PARAM_STR);
+			$stmt->bindParam(':filtro3', $filtro, PDO::PARAM_STR);
+			$stmt->bindParam(':filtro4', $filtro, PDO::PARAM_STR);
+			$stmt->bindParam(':filtro5', $filtro, PDO::PARAM_STR);
+		}
+		$stmt->bindValue(':offset', $offset, PDO::PARAM_INT);
+		$stmt->bindValue(':numPorPagina', $numPorPagina, PDO::PARAM_INT);
+		$stmt->execute();
+		return $stmt->fetchAll(PDO::FETCH_ASSOC);
+	}
+
+
+
+	// public static function totalUsuarios()
+	// {
+	// 	$sql = "SELECT COUNT(id_user) FROM users  ";
+	// 	$stmt = self::conectar()->prepare($sql);
+	// 	$stmt->bindValue(':id_user', $id_usuario, PDO::PARAM_INT);
+	// 	$stmt->execute();
+	// 	return $stmt->fetchColumn();
+	// }
+
+	public static function totalUsuarios($filtro = '')
+	{
+		$filtroSQL = '';
+		if (!empty($filtro)) {
+			$filtro = "%$filtro%";
+			// Utiliza placeholders únicos para cada condición en la consulta SQL
+			$filtroSQL = "WHERE id_user LIKE :filtro1 OR mail_user LIKE :filtro2 OR last_name_user LIKE :filtro3 OR first_name_user LIKE :filtro4 OR nick_user LIKE :filtro5";
+		}
+
+		$sql = "SELECT COUNT(id_user) FROM users $filtroSQL";
+		$stmt = self::conectar()->prepare($sql);
+		if (!empty($filtro)) {
+			// Vincula cada filtro a su respectivo placeholder
+			$stmt->bindParam(':filtro1', $filtro, PDO::PARAM_STR);
+			$stmt->bindParam(':filtro2', $filtro, PDO::PARAM_STR);
+			$stmt->bindParam(':filtro3', $filtro, PDO::PARAM_STR);
+			$stmt->bindParam(':filtro4', $filtro, PDO::PARAM_STR);
+			$stmt->bindParam(':filtro5', $filtro, PDO::PARAM_STR);
+		}
+		$stmt->execute();
+		return $stmt->fetchColumn();
+	}
+
+
+	// Nombres de Ciudades y Regiones
+	public static function obtenerNombresCiudadYRegion($id_city)
+	{
+		$sql = "SELECT CONCAT (c.name_city ,', <br>', r.name_region) nombre_ciudadyregion
+				FROM cities c JOIN regions_cities rc ON c.id_city = rc.id_city 
+				              JOIN regions r ON rc.id_region = r.id_region 
+				WHERE c.id_city = :id_city";
+		$stmt = self::conectar()->prepare($sql);
+		$stmt->bindValue(':id_city', $id_city, PDO::PARAM_INT);
+		$stmt->execute();
+		//return $stmt->fetchAll(PDO::FETCH_ASSOC);
+		// Fetch  
+		$resultado = $stmt->fetch(PDO::FETCH_ASSOC);
+		$stmt = null;
+		if ($resultado && $resultado['nombre_ciudadyregion'] !== null) {
+			return $resultado['nombre_ciudadyregion'];
+		} else {
+			// Regresa  0 si no hay nada recaudado
+			return 0;
+		}
+	}
+
+
+	// Borrar usuario
+	public static function borrarUsuario($idUser)
+	{
+		try {
+			$db = self::conectar();
+			// Inicia transacción
+			$db->beginTransaction();
+
+			$stmt = $db->prepare("DELETE FROM users WHERE id_user = :idUser");
+			$stmt->bindParam(':idUser', $idUser, PDO::PARAM_INT);
+			$stmt->execute();
+
+			// Confirma los cambios
+			$db->commit();
+			$stmt = null; // Opcional, cerrar el objeto de sentencia
+
+			return true;
+		} catch (PDOException $e) { // Captura una excepción específica si es posible
+			// En caso de error, revierte los cambios
+			$db->rollback();
+			// Opcional, registra el mensaje de error
+			error_log("Error al borrar usuario: " . $e->getMessage());
+			return false;
+		}
+	}
+
+	// Función para cambiar el estado de verificación del Usuario
+	public static function cambiarEstadoVerificacionUsuario($idUsuario, $verified)
+	{
+		try {
+			$db = self::conectar();
+			// Asegúrate de que la tabla y columna sean correctas
+			$stmt = $db->prepare("UPDATE users SET verified = :verified WHERE id_user = :id_user"); // Cambia 'events_public' por 'users' o la tabla correcta
+			$stmt->bindParam(':verified', $verified, PDO::PARAM_STR);
+			$stmt->bindParam(':id_user', $idUsuario, PDO::PARAM_INT);
+
+			return $stmt->execute();
+		} catch (PDOException $e) {
+			// Log o manejo del error
+			return false;
+		}
+	}
+
+	// Obtener datos del usuario para editar Datos desde Admin Usuarios
+	public static function obtenerDatosUsuarioPorId($id)
+	{
+		try {
+			$db = self::conectar();
+			$stmt = $db->prepare("SELECT * FROM users WHERE id_user = :id");
+			$stmt->bindParam(':id', $id, PDO::PARAM_INT);
+			$stmt->execute();
+
+			$resultado = $stmt->fetch(PDO::FETCH_ASSOC);
+
+			if ($resultado) {
+				return $resultado;
+			} else {
+				return null; // O maneja este caso según necesites
+			}
+		} catch (PDOException $e) {
+			// Maneja el error, por ejemplo, registrando en un log
+			return null;
+		}
+	}
+
+	// Modificar los datos de usuario
+	// En tu función actualizarDatosUsuario
+	// public static function actualizarDatosUsuario($datosModel)
+	// {
+	// 	$stmt = Conexion::conectar()->prepare("UPDATE users 
+	// 		SET nick_user=:nick_user, id_type_user=:id_type_user, mail_user=:mail_user, first_name_user=:first_name_user, 
+	// 		last_name_user=:last_name_user, id_region=:id_region, id_city=:id_city, id_genero=:id_genero, id_subgenero=:id_subgenero, id_musician=:id_musician 
+	// 		WHERE id_user=:id");
+
+	// 	foreach ($datosModel as $key => $value) {
+	// 		$stmt->bindValue(":$key", $value);
+	// 	}
+
+	// 	return $stmt->execute() ? "ok" : "error";
+	// }
+
+	// Nueva función para actualizar datos donde incluye solo acatualizar los datos que se hayan modificando, incluyendo dejar vacions los campos que no se hayan editado 
+	public static function actualizarDatosUsuario($datosModel)
+	{
+		$campos = [];
+		$parametros = [];
+
+		foreach ($datosModel as $campo => $valor) {
+			// Si el campo no está vacío, añádelo a la consulta
+			if ($campo != 'id' && $valor !== '') {
+				$campos[] = "$campo=:$campo";
+				$parametros[":$campo"] = $valor;
+			}
+		}
+
+		// Si no hay campos para actualizar, retorna un error o una notificación adecuada
+		if (empty($campos)) {
+			return 'No hay datos para actualizar.';
+		}
+
+		$sql = "UPDATE users SET " . implode(', ', $campos) . " WHERE id_user=:id";
+		$stmt = Conexion::conectar()->prepare($sql);
+
+		// Añade el ID al array de parámetros
+		$parametros[':id'] = $datosModel['id'];
+
+		foreach ($parametros as $param => $val) {
+			$stmt->bindValue($param, $val);
+		}
+
+		return $stmt->execute() ? "ok" : "error";
+	}
+
+
+	//ADMIN EVENTOS ********************* 
+	// Obtener Eventos con filtro de búsqueda
+	public static function obtenerEventos($offset, $numPorPagina, $filtro = '')
+	{
+		$filtroSQL = '';
+		if (!empty($filtro)) {
+			$filtro = "%$filtro%";
+			// Asegúrate de usar placeholders únicos para cada condición
+			$filtroSQL = "WHERE id_event LIKE :filtro1 OR id_user LIKE :filtro2 OR name_event LIKE :filtro3 OR name_location LIKE :filtro4 OR location LIKE :filtro5 OR organizer LIKE :filtro6";
+		}
+
+		$sql = "SELECT * FROM events_public $filtroSQL ORDER BY id_event DESC LIMIT :offset, :numPorPagina";
+		$stmt = self::conectar()->prepare($sql);
+		if (!empty($filtro)) {
+			// Vincula cada filtro a su respectivo placeholder
+			$stmt->bindParam(':filtro1', $filtro, PDO::PARAM_STR);
+			$stmt->bindParam(':filtro2', $filtro, PDO::PARAM_STR);
+			$stmt->bindParam(':filtro3', $filtro, PDO::PARAM_STR);
+			$stmt->bindParam(':filtro4', $filtro, PDO::PARAM_STR);
+			$stmt->bindParam(':filtro5', $filtro, PDO::PARAM_STR);
+			$stmt->bindParam(':filtro6', $filtro, PDO::PARAM_STR);
+		}
+		$stmt->bindValue(':offset', $offset, PDO::PARAM_INT);
+		$stmt->bindValue(':numPorPagina', $numPorPagina, PDO::PARAM_INT);
+		$stmt->execute();
+		return $stmt->fetchAll(PDO::FETCH_ASSOC);
+	}
+
+	public static function totalEventosAdmin($filtro = '')
+	{
+		$filtroSQL = '';
+		if (!empty($filtro)) {
+			$filtro = "%$filtro%";
+			// Utiliza placeholders únicos para cada condición en la consulta SQL			
+			$filtroSQL = "WHERE id_event LIKE :filtro1 OR id_user LIKE :filtro2 OR name_event LIKE :filtro3 OR name_location LIKE :filtro4 OR location LIKE :filtro5 OR organizer LIKE :filtro6";
+		}
+
+		$sql = "SELECT COUNT(id_event) FROM events_public $filtroSQL";
+		$stmt = self::conectar()->prepare($sql);
+		if (!empty($filtro)) {
+			// Vincula cada filtro a su respectivo placeholder
+			$stmt->bindParam(':filtro1', $filtro, PDO::PARAM_STR);
+			$stmt->bindParam(':filtro2', $filtro, PDO::PARAM_STR);
+			$stmt->bindParam(':filtro3', $filtro, PDO::PARAM_STR);
+			$stmt->bindParam(':filtro4', $filtro, PDO::PARAM_STR);
+			$stmt->bindParam(':filtro5', $filtro, PDO::PARAM_STR);
+			$stmt->bindParam(':filtro6', $filtro, PDO::PARAM_STR);
+		}
+		$stmt->execute();
+		return $stmt->fetchColumn();
+	}
+
+
+	// Nombres de usuarios
+	// public static function obtenerNombresUsuario($id_user)
+	// {
+	// 	$sql = "SELECT nick_user,first_name_user,last_name_user FROM users WHERE id_user= :id_user";
+	// 	$stmt = self::conectar()->prepare($sql);
+	// 	$stmt->bindValue(':id_user', $id_user, PDO::PARAM_INT);
+	// 	$stmt->execute();
+	// 	//return $stmt->fetchAll(PDO::FETCH_ASSOC);
+	// 	// Fetch  
+	// 	$resultado = $stmt->fetch(PDO::FETCH_ASSOC);
+	// 	$stmt = null;
+	// 	if ($resultado && $resultado['nombre_ciudadyregion'] !== null) {
+	// 		return $resultado['nick_user'];
+	// 	} else {
+	// 		// Regresa  0 si no hay nada recaudado
+	// 		return 0;
+	// 	}
+	// }
+
+	public static function obtenerNombresUsuario($id_user)
+	{
+		$sql = "SELECT nick_user, first_name_user, last_name_user, mail_user FROM users WHERE id_user= :id_user";
+		$stmt = self::conectar()->prepare($sql);
+		$stmt->bindValue(':id_user', $id_user, PDO::PARAM_INT);
+		$stmt->execute();
+		$resultado = $stmt->fetch(PDO::FETCH_ASSOC);
+		$stmt = null;
+		if ($resultado) {
+			return $resultado; // Retorna el array con nick_user, first_name_user, y last_name_user
+		} else {
+			// Regresa un array vacío o con valores predeterminados si no hay resultados
+			return ['nick_user' => '', 'first_name_user' => '', 'last_name_user' => ''];
+		}
+	}
+
+
+	// Entradas
+	// Obtener Tickets por  Eventos con filtro de búsqueda	
+	public static function obtenerTicketsPorEventos($evento, $offset, $numPorPagina, $filtro = '')
+	{
+		$filtroSQL = '';
+		if (!empty($filtro)) {
+			$filtro = "%$filtro%";
+			// Asegúrate de usar placeholders únicos para cada condición
+			$filtroSQL = " AND id_ticket LIKE :filtro1 OR subscribe_fname LIKE :filtro2 OR subscribe_lname LIKE :filtro3 OR subscribe_email LIKE :filtro4";
+		}
+		//SELECT s.*, t.* FROM subscribes_public s JOIN transactions_public t ON s.order_transaction = t.order_transaction WHERE s.id_event_public = 279
+		// $sql = "SELECT * FROM events_public WHERE id_event_public = id_event $filtroSQL ORDER BY id_event DESC LIMIT :offset, :numPorPagina";
+
+		$sql = "SELECT s.*, t.* FROM subscribes_public s JOIN transactions_public t ON s.order_transaction = t.order_transaction WHERE s.id_event_public = :id_event $filtroSQL ORDER BY id_subscribe_public DESC LIMIT :offset, :numPorPagina";
+		$stmt = self::conectar()->prepare($sql);
+
+		if (!empty($filtro)) {
+			// Vincula cada filtro a su respectivo placeholder
+			$stmt->bindParam(':filtro1', $filtro, PDO::PARAM_STR);
+			$stmt->bindParam(':filtro2', $filtro, PDO::PARAM_STR);
+			$stmt->bindParam(':filtro3', $filtro, PDO::PARAM_STR);
+			$stmt->bindParam(':filtro4', $filtro, PDO::PARAM_STR);
+		}
+		$stmt->bindParam(':id_event', $evento, PDO::PARAM_INT);
+		$stmt->bindParam(':offset', $offset, PDO::PARAM_INT);
+		$stmt->bindParam(':numPorPagina', $numPorPagina, PDO::PARAM_INT);
+		$stmt->execute();
+		return $stmt->fetchAll(PDO::FETCH_ASSOC);
+	}
+
+	// Proyectos
+	public static function obtenerAportacionesPorProyecto($id_project, $offset, $numPorPagina, $filtro = '')
+	{
+		$filtroSQL = '';
+		if (!empty($filtro)) {
+			$filtro = "%$filtro%";
+			// Asegúrate de usar placeholders únicos para cada condición
+			$filtroSQL = " AND id_project_backer LIKE :filtro1 OR id_user LIKE :filtro2 OR order_transaction LIKE :filtro3 OR id_project LIKE :filtro4";
+		}
+
+		$sql = "SELECT * FROM project_backers WHERE id_project = :id_project $filtroSQL ORDER BY id_project_backer DESC LIMIT :offset, :numPorPagina";
+		$stmt = self::conectar()->prepare($sql);
+
+		if (!empty($filtro)) {
+			// Vincula cada filtro a su respectivo placeholder
+			$stmt->bindParam(':filtro1', $filtro, PDO::PARAM_STR);
+			$stmt->bindParam(':filtro2', $filtro, PDO::PARAM_STR);
+			$stmt->bindParam(':filtro3', $filtro, PDO::PARAM_STR);
+			$stmt->bindParam(':filtro4', $filtro, PDO::PARAM_STR);
+		}
+		$stmt->bindParam(':id_project', $id_project, PDO::PARAM_INT);
+		$stmt->bindParam(':offset', $offset, PDO::PARAM_INT);
+		$stmt->bindParam(':numPorPagina', $numPorPagina, PDO::PARAM_INT);
+		$stmt->execute();
+		return $stmt->fetchAll(PDO::FETCH_ASSOC);
+	}
+
+	public static function totalAportacionesporProyectoAdmin($filtro = '', $idProyecto)
+	{
+		$filtroSQL = '';
+		if (!empty($filtro)) {
+			$filtro = "%$filtro%";
+			// Utiliza placeholders únicos para cada condición en la consulta SQL			
+			$filtroSQL = " AND id_project_backer LIKE :filtro1 OR id_user LIKE :filtro2 OR order_transaction LIKE :filtro3 OR id_project LIKE :filtro4";
+		}
+
+		$sql = "SELECT COUNT(id_project_backer) FROM project_backers WHERE id_project= :idProyecto $filtroSQL";
+		$stmt = self::conectar()->prepare($sql);
+		if (!empty($filtro)) {
+			// Vincula cada filtro a su respectivo placeholder
+			$stmt->bindParam(':filtro1', $filtro, PDO::PARAM_STR);
+			$stmt->bindParam(':filtro2', $filtro, PDO::PARAM_STR);
+			$stmt->bindParam(':filtro3', $filtro, PDO::PARAM_STR);
+			$stmt->bindParam(':filtro4', $filtro, PDO::PARAM_STR);
+		}
+		$stmt->bindParam(':idProyecto', $idProyecto, PDO::PARAM_INT);
+		$stmt->execute();
+		return $stmt->fetchColumn();
+	}
+
+
+
+
+
+	public static function totalTicketsporEventosAdmin($filtro = '', $idEvento)
+	{
+		$filtroSQL = '';
+		if (!empty($filtro)) {
+			$filtro = "%$filtro%";
+			// Utiliza placeholders únicos para cada condición en la consulta SQL			
+			$filtroSQL = " AND id_ticket LIKE :filtro1 OR subscribe_fname LIKE :filtro2 OR subscribe_lname LIKE :filtro3 OR subscribe_email LIKE :filtro4";
+		}
+
+		$sql = "SELECT COUNT(id_subscribe_public) FROM subscribes_public WHERE id_event_public= :idEvento $filtroSQL";
+		$stmt = self::conectar()->prepare($sql);
+		if (!empty($filtro)) {
+			// Vincula cada filtro a su respectivo placeholder
+			$stmt->bindParam(':filtro1', $filtro, PDO::PARAM_STR);
+			$stmt->bindParam(':filtro2', $filtro, PDO::PARAM_STR);
+			$stmt->bindParam(':filtro3', $filtro, PDO::PARAM_STR);
+			$stmt->bindParam(':filtro4', $filtro, PDO::PARAM_STR);
+		}
+		$stmt->bindParam(':idEvento', $idEvento, PDO::PARAM_INT);
+		$stmt->execute();
+		return $stmt->fetchColumn();
+	}
+
+	// Función en el modelo para cambiar el estado del evento 
+	public static function cambiarEstadoEntradas($idEntrada, $subscribeStatus)
+	{
+		try {
+			$db = self::conectar();
+			//UPDATE `subscribes_public` SET `subscribe_status` = '0' WHERE `subscribes_public`.`id_subscribe_public` = 18901;
+			$stmt = $db->prepare("UPDATE subscribes_public SET 	subscribe_status = :subscribe_status WHERE id_subscribe_public = :id_subscribe_public");
+			$stmt->bindParam(':subscribe_status', $subscribeStatus, PDO::PARAM_INT);
+			$stmt->bindParam(':id_subscribe_public', $idEntrada, PDO::PARAM_INT);
+
+			return $stmt->execute();
+		} catch (PDOException $e) {
+			// Log o manejo del error
+			return false;
+		}
+	}
+
+	// Aportaciones de poryectos
+	public static function cambiarEstadoAportaciones($idAportacion, $subscribeStatus)
+	{
+		try {
+			$db = self::conectar();
+			$stmt = $db->prepare("UPDATE project_backers SET status_backer = :status_backer WHERE id_project_backer = :id_project_backer");
+			$stmt->bindParam(':status_backer', $subscribeStatus, PDO::PARAM_INT);
+			$stmt->bindParam(':id_project_backer', $idAportacion, PDO::PARAM_INT);
+
+			return $stmt->execute();
+		} catch (PDOException $e) {
+			// Log o manejo del error
+			return false;
+		}
+	}
+
+	//borrar Entradas
+	public static function borrarEntradas($idEntrada)
+	{
+		try {
+			$db = self::conectar();
+			// Inicia transacción
+			$db->beginTransaction();
+
+			// Borrar reserva
+			$stmt = $db->prepare("DELETE FROM `subscribes_public` WHERE  `id_subscribe_public` =  :idEntrada");
+			$stmt->execute([':idEntrada' => $idEntrada]);
+
+			// Confirma los cambios
+			$db->commit();
+
+			return true;
+		} catch (Exception $e) {
+			// En caso de error, revierte los cambios
+			$db->rollback();
+			return false;
+		}
+	}
+
+
+	// PROYECTOS
+	// Muestra proyectos
+	public static function obtenerProyectos($offset, $numPorPagina, $filtro = '')
+	{
+		$filtroSQL = '';
+		if (!empty($filtro)) {
+			$filtro = "%$filtro%";
+			// Asegúrate de usar placeholders únicos para cada condición
+			$filtroSQL = "WHERE id_project LIKE :filtro1 OR id_user LIKE :filtro2 OR project_title LIKE :filtro3";
+		}
+
+		$sql = "SELECT * FROM projects_crowdfunding $filtroSQL ORDER BY id_project DESC LIMIT :offset, :numPorPagina";
+		$stmt = self::conectar()->prepare($sql);
+		if (!empty($filtro)) {
+			// Vincula cada filtro a su respectivo placeholder
+			$stmt->bindParam(':filtro1', $filtro, PDO::PARAM_STR);
+			$stmt->bindParam(':filtro2', $filtro, PDO::PARAM_STR);
+			$stmt->bindParam(':filtro3', $filtro, PDO::PARAM_STR);
+		}
+		$stmt->bindValue(':offset', $offset, PDO::PARAM_INT);
+		$stmt->bindValue(':numPorPagina', $numPorPagina, PDO::PARAM_INT);
+		$stmt->execute();
+		return $stmt->fetchAll(PDO::FETCH_ASSOC);
+	}
+
+	// Muestra el TOTAL de proyectos
+	public static function totalProyectosAdmin($filtro = '')
+	{
+		$filtroSQL = '';
+		if (!empty($filtro)) {
+			$filtro = "%$filtro%";
+			// Utiliza placeholders únicos para cada condición en la consulta SQL			
+			$filtroSQL = "WHERE id_project LIKE :filtro1 OR id_user LIKE :filtro2 OR project_title LIKE :filtro3";
+		}
+
+		$sql = "SELECT COUNT(id_project) FROM projects_crowdfunding $filtroSQL";
+		$stmt = self::conectar()->prepare($sql);
+		if (!empty($filtro)) {
+			// Vincula cada filtro a su respectivo placeholder
+			$stmt->bindParam(':filtro1', $filtro, PDO::PARAM_STR);
+			$stmt->bindParam(':filtro2', $filtro, PDO::PARAM_STR);
+			$stmt->bindParam(':filtro3', $filtro, PDO::PARAM_STR);
+		}
+		$stmt->execute();
+		return $stmt->fetchColumn();
+	}
+
+	// Nombres de Regiones
+	public static function obtenerNombresRegion($id_region)
+	{
+		$sql = "SELECT name_region FROM regions WHERE id_region = :id_region ";
+		$stmt = self::conectar()->prepare($sql);
+		$stmt->bindValue(':id_region', $id_region, PDO::PARAM_INT);
+		$stmt->execute();
+		//return $stmt->fetchAll(PDO::FETCH_ASSOC);
+		// Fetch  
+		$resultado = $stmt->fetch(PDO::FETCH_ASSOC);
+		$stmt = null;
+		if ($resultado && $resultado['name_region'] !== null) {
+			return $resultado['name_region'];
+		} else {
+			// Regresa  0 si no hay nada recaudado
+			return 0;
+		}
+	}
+
+	// Listar todas las regiones
+	public static function listarRegionesConNombre()
+	{
+		$sql = "SELECT id_region, name_region FROM regions ORDER BY name_region ASC";
+		$stmt = self::conectar()->prepare($sql);
+		$stmt->execute();
+		return $stmt->fetchAll(PDO::FETCH_ASSOC);
+	}
+
+
+	// Función en el modelo para cambiar el estado del Proyecto 
+	public static function cambiarEstadoProyecto($idProyecto, $activeEvent)
+	{
+		try {
+			$db = self::conectar();
+			$stmt = $db->prepare("UPDATE projects_crowdfunding SET status_project = :status_project WHERE id_project = :id_project");
+			$stmt->bindParam(':status_project', $activeEvent, PDO::PARAM_INT);
+			$stmt->bindParam(':id_project', $idProyecto, PDO::PARAM_INT);
+
+			return $stmt->execute();
+		} catch (PDOException $e) {
+			// Log o manejo del error
+			return false;
+		}
+	}
+
+	// Enlista las recoempensas por id_project
+	// public static function obtenerRecompensasProyecto($id_project)
+	// {
+	// 	$sql = "SELECT id_tier, tier_slot, tier_title, tier_amount, tier_desc, t_reward_01, t_reward_02, t_reward_03, t_reward_04 
+	// 			FROM project_tiers WHERE id_project= :id_project AND  status_tier = 1";
+	// 	$stmt = self::conectar()->prepare($sql);
+	// 	$stmt->bindValue(':id_project', $id_project, PDO::PARAM_INT);
+	// 	$stmt->execute();
+	// 	$resultado = $stmt->fetch(PDO::FETCH_ASSOC);
+	// 	$stmt = null;
+	// 	if ($resultado) {
+	// 		return $resultado; // Retorna el array con nick_user, first_name_user, y last_name_user
+	// 	} else {
+	// 		// Regresa un array vacío o con valores predeterminados si no hay resultados
+	// 		return [
+	// 			'id_tier' => '', 'tier_slot' => '', 'tier_title' => '',
+	// 			'tier_amount' => '',
+	// 			'tier_desc' => '',
+	// 			't_reward_01' => '',
+	// 			't_reward_02' => '',
+	// 			't_reward_03' => '',
+	// 			't_reward_04' => ''
+	// 		];
+	// 	}
+	// }
+	// Enlista las recompensas por id_project
+	public static function obtenerRecompensasProyecto($id_project)
+	{
+		$sql = "SELECT id_tier, tier_slot, tier_title, tier_amount, tier_desc, t_reward_01, t_reward_02, t_reward_03, t_reward_04 
+            FROM project_tiers WHERE id_project= :id_project AND status_tier = 1";
+		$stmt = self::conectar()->prepare($sql);
+		$stmt->bindValue(':id_project', $id_project, PDO::PARAM_INT);
+		$stmt->execute();
+		$resultado = $stmt->fetchAll(PDO::FETCH_ASSOC); // Cambio aquí
+		$stmt = null;
+		return $resultado; // Retorna el array de recompensas
+	}
+
+
+	// Borrar aportacion
+	public static function borrarAportaciones($idAporte)
+	{
+		try {
+			$db = self::conectar();
+			// Inicia transacción
+			$db->beginTransaction();
+
+			// Borrar reserva
+			$stmt = $db->prepare("DELETE FROM `project_backers` WHERE  `id_project_backer` =  :idAporte");
+			$stmt->execute([':idAporte' => $idAporte]);
+
+			// Confirma los cambios
+			$db->commit();
+
+			return true;
+		} catch (Exception $e) {
+			// En caso de error, revierte los cambios
+			$db->rollback();
+			return false;
+		}
+	}
+
+
+	// Crear Proyectos de Crowdfunding    
+	public static function crearProyecto($id_user, $project_title, $project_region)
+	{
+		$db = self::conectar();
+		$stmt = $db->prepare("INSERT INTO projects_crowdfunding (id_user, project_title, project_region, status_project) VALUES (?, ?, ?, 0)");
+		if ($stmt->execute([$id_user, $project_title, $project_region])) {
+			return $db->lastInsertId(); // Retorna el ID del proyecto creado
+		} else {
+			return false;
+		}
+	}
+
+	public static function crearDescProyecto($id_project, $project_desc)
+	{
+		$db = self::conectar();
+		$stmt = $db->prepare("INSERT INTO project_desc (id_project, project_desc) VALUES (?, ?)");
+		return $stmt->execute([$id_project, $project_desc]);
+	}
+
+	public static function crearCategoriaProyecto($id_project, $id_category)
+	{
+		$db = self::conectar();
+		$stmt = $db->prepare("INSERT INTO project_categories (id_project, id_category) VALUES (?, ?)");
+		return $stmt->execute([$id_project, $id_category]);
+	}
+
+
+	// Función para actualizar el proyecto de Crowdfunding
+	public static function actualizarProyecto($project_id, $id_user, $project_title, $project_region, $project_desc, $id_category)
+	{
+		try {
+			$db = self::conectar();
+			// Preparar la consulta de actualización
+			$stmt = $db->prepare("UPDATE projects_crowdfunding 
+                              SET id_user = :id_user, 
+                                  project_title = :project_title, 
+                                  project_region = :project_region
+                              WHERE id_project = :id_project");
+
+			// Vincular parámetros
+			$stmt->bindParam(':id_user', $id_user);
+			$stmt->bindParam(':project_title', $project_title);
+			$stmt->bindParam(':project_region', $project_region);
+			$stmt->bindParam(':id_project', $project_id);
+
+			// Ejecutar la consulta
+			$stmt->execute();
+
+			// Actualizar la descripción del proyecto
+			$stmt_desc = $db->prepare("UPDATE project_desc 
+                                   SET project_desc = :project_desc 
+                                   WHERE id_project = :id_project");
+			$stmt_desc->bindParam(':project_desc', $project_desc);
+			$stmt_desc->bindParam(':id_project', $project_id);
+			$stmt_desc->execute();
+
+			// Actualizar la categoría del proyecto
+			$stmt_cat = $db->prepare("UPDATE project_categories 
+                                  SET id_category = :id_category 
+                                  WHERE id_project = :id_project");
+			$stmt_cat->bindParam(':id_category', $id_category);
+			$stmt_cat->bindParam(':id_project', $project_id);
+			$stmt_cat->execute();
+
+			return true;
+		} catch (PDOException $e) {
+			// Manejo de errores
+			error_log("Error al actualizar el proyecto: " . $e->getMessage());
+			return false;
+		}
+	}
+
+
+
+
+
 
 
 

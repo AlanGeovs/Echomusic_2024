@@ -78,6 +78,17 @@ class Consultas
                 $stmt->close();
         }
 
+        //Incluye genero y subgenero desde la tabla de users
+        public static function buscarGeneroAdmin($id)
+        {
+                $stmt = Conexion::conectar()->prepare("SELECT u.*, g.*, s.* FROM users u INNER JOIN genres g ON u.id_genero = g.id_genre INNER JOIN sub_genres s ON u.id_subgenero = s.id_subGenre WHERE u.id_user=:id;");
+                $stmt->bindParam(":id", $id, PDO::PARAM_INT);
+                $stmt->execute();
+                return $stmt->fetch();
+                //return $id;
+                $stmt->close();
+        }
+
 
         public function listaBusqueda($palabra)
         {
@@ -146,7 +157,7 @@ class Consultas
         //Home Artistas
         static public function ultimosArtistas()
         {
-                $stmt = Conexion::conectar()->prepare("SELECT u.*, gu.*, g.* FROM users u INNER JOIN genre_user gu ON u.id_user=gu.id_user INNER JOIN genres g ON gu.id_genre = g.id_genre WHERE  picture_ready=1 AND verified like 'yes' AND user_destacado=1 ORDER BY RAND() LIMIT 12;");
+                $stmt = Conexion::conectar()->prepare("SELECT * FROM users  WHERE picture_ready=1 AND verified like 'yes' AND user_destacado=1 ORDER BY RAND() LIMIT 12;");
                 $stmt->execute();
                 return $stmt->fetchAll();
                 //return $id;
@@ -205,7 +216,7 @@ class Consultas
         public static function contarArtistas($condiciones)
         {
                 // Conectar a la base de datos usando Conexion::conectar
-                $stmt = Conexion::conectar()->prepare("SELECT COUNT(*) as total FROM users u INNER JOIN genre_user gu ON u.id_user=gu.id_user INNER JOIN genres g ON gu.id_genre = g.id_genre WHERE picture_ready=1 AND verified like 'yes'" . $condiciones);
+                $stmt = Conexion::conectar()->prepare("SELECT COUNT(*) as total FROM users WHERE verified like 'yes'" . $condiciones);
 
                 // Ejecutar la consulta
                 $stmt->execute();
@@ -318,9 +329,11 @@ class Consultas
         {
                 $conexion = Conexion::conectar();
                 $stmt = $conexion->prepare("INSERT INTO events_private (id_plan_key,id_plan, id_user_buy, id_user_sell, value_plan_event, id_name_plan, name_event, location, id_region, id_city, date_event, phone_event, desc_event) 
-                                            VALUES (:id_plan_key, :id_plan, 1,1, :value_plan, :id_name_plan, :name_event, :location, :id_region, :id_city, :date_event, :phone_event, :desc_event)");
+                                                 VALUES (:id_plan_key, :id_plan, :id_user_buy, :id_user_sell, :value_plan, :id_name_plan, :name_event, :location, :id_region, :id_city, :date_event, :phone_event, :desc_event)");
 
                 // Vincula los parámetros a la consulta SQL
+                $stmt->bindValue(':id_user_buy', $data['id_user_buy']);
+                $stmt->bindValue(':id_user_sell', $data['id_user_sell']);
                 $stmt->bindValue(':id_plan_key', $data['id_plan_key']);
                 $stmt->bindValue(':id_plan', $data['id_plan']);
                 $stmt->bindValue(':value_plan', $data['value_plan']);
@@ -432,7 +445,8 @@ class Consultas
 
         static public function ultimosEventos2()
         {
-                $stmt = Conexion::conectar()->prepare("SELECT e.*, t.* FROM events_public as e JOIN tickets_public as t ON e.id_event = t.id_event WHERE e.active_event=1 AND e.date_event >= CURDATE() GROUP BY e.id_user ORDER BY e.date_event ASC LIMIT 6;");
+                // $stmt = Conexion::conectar()->prepare("SELECT e.*, t.* FROM events_public as e JOIN tickets_public as t ON e.id_event = t.id_event WHERE e.active_event=1 AND e.date_event >= CURDATE() GROUP BY e.id_user ORDER BY e.date_event ASC LIMIT 6;");
+                $stmt = Conexion::conectar()->prepare("SELECT * FROM events_public WHERE active_event=1 AND date_event >= CURDATE()  ORDER BY date_event ASC LIMIT 6;");
                 $stmt->execute();
                 return $stmt->fetchAll();
                 $stmt->close();
