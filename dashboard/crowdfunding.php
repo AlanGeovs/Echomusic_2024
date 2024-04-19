@@ -379,7 +379,7 @@ if (!isset($_SESSION["id_user"])) {
                                             <?php echo $btnIcon; ?>Publicar proyecto
                                         </button>
                                                 <hr>` : 
-                                                `<!--<a href="crear_proyecto.php" type="button" class="btn btn-primary btn-xs">Editar</a>-->
+                                                `<a href="crear_proyecto.php?p=${proyecto.id_project}" type="button" class="btn btn-primary btn-xs">Editar</a>
                                                 <hr>
                                                 <span class="text-muted">Quedan ${proyecto.days_remaining} días</span>
                                                 <div class="progress mb-2">

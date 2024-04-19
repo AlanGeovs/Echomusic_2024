@@ -15,15 +15,28 @@ if (!isset($_SESSION["id_user"])) {
     //Función para verificar que el usuario actual tiene proyectos pendientes 
     // Llamada a la función
 
-    $idProjectActual = Consultas::proyectosEnCurso($id);
+    if (isset($_GET['p'])) {
+        $idProjectGET = $_GET['p'];
+        $editar = 1;
+        echo "EDITAR";
+        $idProjectActual = Consultas::proyectosEnCursoEditar($id, $idProjectGET);
+    } else {
+        $editar = 0;
+        echo "NOO EDITAR";
+        $idProjectActual = Consultas::proyectosEnCurso($id);
+    }
+
+    // $idProjectActual = Consultas::proyectosEnCurso($id);
     // Determina si se debe deshabilitar o no el botón basado en la existencia de un proyecto en curso
     $disabled = isset($idProjectActual) ? '' : 'disabled';
 
     $proyecto = 0;
-    if ($idProjectActual) {
+    if (isset($idProjectActual['id_project'])) {
         $proyecto = 1;
     }
-    // Verifica multimadia
+    // Verifica multimedia
+
+    // echo "Proyecto id: " . $idProjectActual['id_project'];
     $multimedia = Consultas::verificarDatosMultimedia($idProjectActual['id_project']);
     $recompensa = Consultas::verificarDatosRecompensa($idProjectActual['id_project']);
     $monto = Consultas::verificarMontoProyecto($idProjectActual['id_project']);
@@ -181,7 +194,7 @@ if (!isset($_SESSION["id_user"])) {
                                             <ul class="nav nav-pills mb-3" role="tablist">
                                                 <li class="nav-item">
                                                     <a class="nav-link r-20 active show" id="w3--tab1" data-toggle="tab" href="#w3-tab1" role="tab" aria-controls="tab1" aria-expanded="true" aria-selected="true">
-                                                        <?php if ($idProjectActual['status_project'] == 0) {
+                                                        <?php if (!empty($idProjectActual['project_title'])) {
                                                             echo "<span class='icon-check_circle'></span>";
                                                         } else {
                                                             echo "<span class='icon-remove_circle'></span>";
@@ -240,7 +253,7 @@ if (!isset($_SESSION["id_user"])) {
                                             <div class="card-body">
                                                 <!-- Tab 1 - Crear Proyecto -->
                                                 <?php
-                                                if ($idProjectActual['status_project'] == 0) {
+                                                if (!empty($idProjectActual['project_title'])) {
 
                                                     // Obtiene datos del proyecto  Multimadia y descripcion 
                                                     $datosProyectos = Consultas::obtenerProyectosPorId($idProjectActual['id_project']);

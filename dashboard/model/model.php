@@ -2165,6 +2165,29 @@ class Consultas  extends Conexion
 		}
 	}
 
+	public static function proyectosEnCursoEditar($id, $idProject)
+	{
+		try {
+			$db = self::conectar(); // Asume que tienes un método conectar() que retorna la conexión a la base de datos
+			$stmt = $db->prepare("SELECT * FROM projects_crowdfunding WHERE id_project = :idProject ORDER BY id_project DESC");
+			$stmt->bindValue(':idProject', $idProject, PDO::PARAM_INT);
+			$stmt->execute();
+			$resultado = $stmt->fetch(PDO::FETCH_ASSOC);
+
+			if ($resultado) {
+				// Hay proyectos en curso, retorna el array con la información
+				return $resultado;
+			} else {
+				// No hay proyectos en curso
+				return null;
+			}
+		} catch (PDOException $e) {
+			// Manejo del error
+			error_log("Error al verificar proyectos en curso: " . $e->getMessage());
+			return null;
+		}
+	}
+
 	// Crear los montos y plazos de Crowdfunding
 	public static function crearMontos($idProject, $projectAmount)
 	{
@@ -2508,13 +2531,17 @@ class Consultas  extends Conexion
 		}
 	}
 
-	// Publicar poryecto
-	public static function publicarProyecto($idProject)
+	// Publicar proyecto y activar el estado  de status_rpject ademas de actualziar las fechas de inicio, duración y ejecución 
+	public static function publicarProyecto($idProject, $projectDateStart, $projectDateEnd, $projectDateExecution)
 	{
 		try {
 			$db = self::conectar();
-			$stmt = $db->prepare("UPDATE projects_crowdfunding SET status_project = 1 WHERE id_project = :id_project");
+			$stmt = $db->prepare("UPDATE projects_crowdfunding SET status_project = 1, project_date_start = :project_date_start, project_date_end = :project_date_end, project_date_execution = :project_date_execution WHERE id_project = :id_project");
+
 			$stmt->bindParam(':id_project', $idProject, PDO::PARAM_INT);
+			$stmt->bindParam(':project_date_start', $projectDateStart);
+			$stmt->bindParam(':project_date_end', $projectDateEnd);
+			$stmt->bindParam(':project_date_execution', $projectDateExecution);
 
 			return $stmt->execute();
 		} catch (PDOException $e) {
@@ -2522,6 +2549,29 @@ class Consultas  extends Conexion
 			return false;
 		}
 	}
+
+
+	// Obtener los tiempos de fechas de duración y ejecución
+	public static function obtenerTiemposProyecto($idProject)
+	{
+		try {
+			$db = self::conectar();
+			$stmt = $db->prepare("SELECT rec_time, exec_time FROM project_times WHERE id_project = :id_project");
+			$stmt->bindParam(':id_project', $idProject, PDO::PARAM_INT);
+			$stmt->execute();
+
+			// Suponiendo que cada proyecto tiene una única fila en project_times
+			if ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+				return $row;
+			} else {
+				return false; // No se encontraron tiempos para el proyecto
+			}
+		} catch (PDOException $e) {
+			error_log("Error al obtener tiempos del proyecto: " . $e->getMessage());
+			return false;
+		}
+	}
+
 
 
 
