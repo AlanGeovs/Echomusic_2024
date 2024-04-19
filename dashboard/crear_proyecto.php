@@ -1458,18 +1458,19 @@ if (!isset($_SESSION["id_user"])) {
                     });
                 });
 
+                //Valida no escribir caracteres y montos numéricos en EDITAR
                 document.addEventListener('DOMContentLoaded', function() {
-                    // Añadir evento de input para validar en tiempo real los campos de monto 
-                    const camposDeMonto = document.querySelectorAll('[id^=edit_r][id$=_tier_amount]');
+                    // Validar en tiempo real los campos de monto de apoyo de la sección de edición
+                    const camposDeMontoEdicion = document.querySelectorAll('[id^="edit_r"][id$="_tier_amount"]');
 
-                    camposDeMonto.forEach(function(campo) {
+                    camposDeMontoEdicion.forEach(function(campo) {
                         campo.addEventListener('input', function() {
                             // Eliminar caracteres no numéricos excepto el punto (.)
                             this.value = this.value.replace(/[^\d.]/g, '');
 
-                            // Validación extra para asegurar que el valor sea mayor a 1000 y no negativo
+                            // Convertir el valor a número para la validación
                             let valor = parseInt(this.value.replace(/\./g, ''), 10);
-                            if (valor <= 1000) {
+                            if (isNaN(valor) || valor <= 1000) {
                                 this.setCustomValidity('El monto debe ser mayor a 1000');
                             } else {
                                 this.setCustomValidity('');
@@ -1477,6 +1478,7 @@ if (!isset($_SESSION["id_user"])) {
                         });
                     });
                 });
+
 
                 // Envía el form para guardar las recompensas
                 document.getElementById('formRecompensas').addEventListener('submit', function(e) {
@@ -1646,6 +1648,12 @@ if (!isset($_SESSION["id_user"])) {
                 document.addEventListener('DOMContentLoaded', function() {
                     // Encapsulando la lógica de envío en una función
                     function enviarFormularioRecompensas() {
+
+                        // Validar montos de apoyo antes de enviar el formulario
+                        if (!validarMontosEdit()) {
+                            return; // Detiene el envío del formulario si la validación falla
+                        }
+
                         const formEditarRecompensas = document.getElementById('editformRecompensas');
                         const formData = new FormData(formEditarRecompensas);
 
@@ -1694,6 +1702,57 @@ if (!isset($_SESSION["id_user"])) {
                         });
                     }
                 });
+
+                // Valida caracateres en form para Editar, en la cuenta considera los caracteres ya cargados 
+                document.addEventListener('DOMContentLoaded', function() {
+                    const descripciones = document.querySelectorAll('[id^="edit_r"][id$="_project_desc"]');
+
+                    descripciones.forEach(function(desc) {
+                        const numRecompensa = desc.id.match(/\d+/)[0];
+                        const contador = document.getElementById(`edit_caracteresRestantes${numRecompensa}`);
+
+                        // Función para actualizar el contador
+                        function actualizarContador() {
+                            const caracteresRestantes = 300 - desc.value.length;
+                            contador.textContent = `${caracteresRestantes} caracteres restantes`;
+
+                            // Cambiar el color del contador según la cantidad de caracteres restantes
+                            contador.style.color = caracteresRestantes < 50 ? 'red' : (caracteresRestantes < 100 ? 'orange' : 'green');
+
+                            // Prevenir que se escriban más de 300 caracteres
+                            if (desc.value.length > 300) {
+                                desc.value = desc.value.substring(0, 300);
+                            }
+                        }
+
+                        // Escuchar el evento de entrada y actualizar el contador
+                        desc.addEventListener('input', actualizarContador);
+
+                        // Actualizar el contador inmediatamente para reflejar el estado inicial
+                        actualizarContador();
+                    });
+                });
+
+
+
+
+                // Función para validar montos de apoyo
+                function validarMontosEdit() {
+                    for (let i = 1; i <= 5; i++) {
+                        let monto = document.getElementById(`edit_r${i}_tier_amount`).value.trim();
+                        monto = monto.replace(/\./g, ""); // Asume que el punto se usa para separar miles
+
+                        // Permitir que los campos de las recompensas 2 a la 5 estén vacíos
+                        if (monto === "" && i > 1) continue; // Si el campo está vacío y no es la recompensa 1, sigue con el siguiente
+
+                        // Verificar que el monto sea un número válido, mayor a 1000 y no negativo
+                        if (!monto || isNaN(monto) || Number(monto) <= 1000 || Number(monto) < 0) {
+                            swal("Error", `El monto de apoyo en Recompensa ${i} debe ser un número mayor a 1000 y no negativo.`, "error");
+                            return false;
+                        }
+                    }
+                    return true;
+                }
             </script>
 
             <!-- Tab 4 - Multimedia del Proyecto -->
